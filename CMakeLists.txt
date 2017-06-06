@@ -24,8 +24,8 @@ if(MSVC_VERSION EQUAL 1400 OR MSVC_VERSION GREATER 1400)
 endif() 
 
 add_definitions(-DIRICLIBDLL_LIBRARY)
-if(CMAKE_COMPILER_IS_GNUCXX)
-  add_definitions(-std=c++11)
+if(UNIX)
+  add_definitions(-std=c++11) # g++ and icpc
 endif()
 
 SET(iriclib_SOURCES
