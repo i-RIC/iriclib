@@ -1,6 +1,10 @@
 #include "macros.h"
 
+#if defined(HAVE_QT)
 #include <QFile>
+#else
+#include <fstream>
+#endif
 
 #include <cgnslib.h>
 #include <iriclib.h>
@@ -8,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -17,7 +22,15 @@ extern "C" {
 void case_BcRead()
 {
 	remove("case_bc.cgn");
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_bc.cgn");
+#else
+        {
+          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_bc.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 	int fid;
 	int ier = cg_open("case_bc.cgn", CG_MODE_MODIFY, &fid);
@@ -184,7 +197,15 @@ void case_BcRead()
 
 void case_BcWrite()
 {
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_bcwrite.cgn");
+#else
+        {
+          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_bcwrite.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 	int fid;
 	int fid_wrong = 9999;

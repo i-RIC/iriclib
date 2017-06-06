@@ -1,6 +1,10 @@
 #include "macros.h"
 
+#if defined(HAVE_QT)
 #include <QFile>
+#else
+#include <fstream>
+#endif
 
 #include <cgnslib.h>
 #include <iriclib.h>
@@ -12,7 +16,15 @@ extern "C" {
 void case_InitReadSuccess()
 {
 	remove("case_initreadsuccess.cgn");
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_initreadsuccess.cgn");
+#else
+        {
+          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_initreadsuccess.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 	int fid;
 	int ier = cg_open("case_initreadsuccess.cgn", CG_MODE_MODIFY, &fid);

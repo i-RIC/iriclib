@@ -1,6 +1,10 @@
 #include "macros.h"
 
+#if defined(HAVE_QT)
 #include <QFile>
+#else
+#include <fstream>
+#endif
 
 #include <cgnslib.h>
 #include <iriclib.h>
@@ -9,6 +13,7 @@
 #include <stdlib.h>
 
 #include <iostream>
+#include <cmath>
 #include <string>
 #include <vector>
 
@@ -17,7 +22,15 @@ extern "C" {
 void case_CalcCondRead()
 {
 	remove("case_cc.cgn");
-	QFile::copy("case_init.cgn", "case_cc.cgn");
+#if defined(HAVE_QT)
+        QFile::copy("case_init.cgn", "case_cc.cgn");
+#else
+        {
+          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_cc.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 	int fid;
 	int ier = cg_open("case_cc.cgn", CG_MODE_MODIFY, &fid);
@@ -151,7 +164,15 @@ void case_CalcCondRead()
 
 void case_CalcCondWrite()
 {
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_ccwrite.cgn");
+#else
+        {
+          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_ccwrite.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 	int fid;
 	int ier = cg_open("case_ccwrite.cgn", CG_MODE_MODIFY, &fid);

@@ -1,6 +1,10 @@
 #include "macros.h"
 
+#if defined(HAVE_QT)
 #include <QFile>
+#else
+#include <fstream>
+#endif
 
 #include <cgnslib.h>
 #include <iriclib.h>
@@ -16,7 +20,15 @@ extern "C" {
 
 void case_GridRead()
 {
-	QFile::copy("case_init.cgn", "case_grid.cgn");
+#if defined(HAVE_QT)
+        QFile::copy("case_init.cgn", "case_grid.cgn");
+#else
+        {
+          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_grid.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 	int fid;
 	int ier = cg_open("case_grid.cgn", CG_MODE_MODIFY, &fid);
@@ -97,7 +109,15 @@ void case_GridRead()
 
 void case_GridReadFunc()
 {
+#if defined(HAVE_QT)
 	QFile::copy("case_gridfunc.cgn", "case_gridreadfunc.cgn");
+#else
+        {
+          std::ifstream ifs("case_gridfunc.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_gridreadfunc.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 	int fid;
 	int ier = cg_open("case_gridreadfunc.cgn", CG_MODE_MODIFY, &fid);
@@ -151,7 +171,15 @@ void case_GridReadFunc()
 
 void case_GridWrite()
 {
+#if defined(HAVE_QT)
 	QFile::copy("case_nogrid.cgn", "case_gridwrite1d.cgn");
+#else
+        {
+          std::ifstream ifs("case_nogrid.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_gridwrite1d.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 	int fid;
 	int ier = cg_open("case_gridwrite1d.cgn", CG_MODE_MODIFY, &fid);
@@ -204,7 +232,15 @@ void case_GridWrite()
 
 	remove("case_gridwrite1d.cgn");
 
+#if defined(HAVE_QT)
 	QFile::copy("case_nogrid.cgn", "case_gridwrite2d.cgn");
+#else
+        {
+          std::ifstream ifs("case_nogrid.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_gridwrite2d.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 	ier = cg_open("case_gridwrite2d.cgn", CG_MODE_MODIFY, &fid);
 
@@ -328,7 +364,15 @@ void case_GridWrite()
 
 	remove("case_gridwrite2d.cgn");
 
+#if defined(HAVE_QT)
 	QFile::copy("case_nogrid.cgn", "case_gridwrite3d.cgn");
+#else
+        {
+          std::ifstream ifs("case_nogrid.cgn", std::ios_base::binary);
+          std::ofstream ofs("case_gridwrite3d.cgn", std::ios_base::binary|std::ios_base::trunc);
+          ofs << ifs.rdbuf();
+        }
+#endif
 
 
 	ier = cg_open("case_gridwrite3d.cgn", CG_MODE_MODIFY, &fid);
