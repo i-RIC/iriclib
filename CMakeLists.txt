@@ -24,9 +24,6 @@ if(MSVC_VERSION EQUAL 1400 OR MSVC_VERSION GREATER 1400)
 endif() 
 
 add_definitions(-DIRICLIBDLL_LIBRARY)
-if(UNIX)
-  add_definitions(-std=c++11) # g++ and icpc
-endif()
 
 SET(iriclib_SOURCES
 error_macros.h
@@ -65,13 +62,29 @@ private/iriclib_cgnsfile_solutionwriterstandard.cpp
 private/iriclib_cgnsfile_solutionwriterstandard.h
 )
 
+# cgns include (set CMAKE_PREFIX_PATH)
+find_path(CGNS_INC cgns_io.h)
+include_directories("${CGNS_INC}")
+
 # setup include directories
 include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/private")
 
 add_library(iriclib SHARED ${iriclib_SOURCES})
-if (OFF)
-  target_compile_features(iriclib PRIVATE cxx_nullptr) # cmake > 2.8 reqd
+if(CMAKE_VERSION VERSION_LESS "3.1")
+  if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # g++
+    set_target_properties(iriclib PROPERTIES COMPILE_OPTIONS -std=c++11)
+  endif()
+  if (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+    # icpc
+    set_target_properties(iriclib PROPERTIES COMPILE_OPTIONS -std=c++11)
+  endif()
+elseif(CMAKE_VERSION VERSION_LESS "3.6" AND CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+    # icpc compile_features not implemented until 3.6
+    set_target_properties(iriclib PROPERTIES COMPILE_OPTIONS -std=c++11)
+else()
+  target_compile_features(iriclib PRIVATE cxx_nullptr) # cmake >= 3.1 reqd
 endif()
 set_target_properties(iriclib PROPERTIES DEBUG_POSTFIX "d")
 set_target_properties(iriclib PROPERTIES MINSIZEREL_POSTFIX "msr")

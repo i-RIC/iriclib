@@ -27,8 +27,9 @@ add_executable(unittests_cgnsfile ${unittests_cgnsfile_SOURCES})
 
 # library dependencies
 find_library(CGNS_LIBRARY cgns)
-find_library(HDF5_LIBRARY hdf5)
-SET(EXTRA_LIBS ${EXTRA_LIBS} iriclib ${CGNS_LIBRARY} ${HDF5_LIBRARY})
+find_package(HDF5 NAMES hdf5)
+
+SET(EXTRA_LIBS ${EXTRA_LIBS} iriclib ${CGNS_LIBRARY} ${HDF5_LIBRARIES})
 
 # link
 target_link_libraries(unittests_cgnsfile ${EXTRA_LIBS})
