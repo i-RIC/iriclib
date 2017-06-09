@@ -72,9 +72,13 @@ include_directories("${PROJECT_SOURCE_DIR}/private")
 
 add_library(iriclib SHARED ${iriclib_SOURCES})
 if(CMAKE_VERSION VERSION_LESS "3.1")
-  if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # g++
-    set_target_properties(iriclib PROPERTIES COMPILE_OPTIONS -std=c++11)
+    if(NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.7)
+      set_target_properties(iriclib PROPERTIES COMPILE_OPTIONS -std=c++11)
+    elseif (NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.4)
+      message(FATAL_ERROR "g++ version must be at least 4.7")
+    endif()
   endif()
   if (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
     # icpc
@@ -84,7 +88,16 @@ elseif(CMAKE_VERSION VERSION_LESS "3.6" AND CMAKE_CXX_COMPILER_ID STREQUAL "Inte
     # icpc compile_features not implemented until 3.6
     set_target_properties(iriclib PROPERTIES COMPILE_OPTIONS -std=c++11)
 else()
-  target_compile_features(iriclib PRIVATE cxx_nullptr) # cmake >= 3.1 reqd
+  if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # g++
+    if(NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.7)
+      target_compile_features(iriclib PRIVATE cxx_nullptr) # cmake >= 3.1 reqd
+    else()
+      message(FATAL_ERROR "g++ version must be at least 4.7")
+    endif()
+  else()
+    target_compile_features(iriclib PRIVATE cxx_nullptr) # cmake >= 3.1 reqd
+  endif()
 endif()
 set_target_properties(iriclib PROPERTIES DEBUG_POSTFIX "d")
 set_target_properties(iriclib PROPERTIES MINSIZEREL_POSTFIX "msr")
