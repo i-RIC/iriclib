@@ -6,7 +6,7 @@ enable_language(Fortran)
 # set standard directory locations
 include(GNUInstallDirs)
 
-if (NOT DEFINED FORTRAN_NAMING)
+if(NOT DEFINED FORTRAN_NAMING)
   # set(FORTRAN_NAMING "UNKNOWN")
   # set(FORTRAN_NAMING "LOWERCASE")
   set(FORTRAN_NAMING "LOWERCASE_")  # gfortran and ifort
@@ -14,7 +14,11 @@ if (NOT DEFINED FORTRAN_NAMING)
   # set(FORTRAN_NAMING "UPPERCASE")
   # set(FORTRAN_NAMING "UPPERCASE_")
   # set(FORTRAN_NAMING "UPPERCASE__")
-endif ()
+  if(WIN32)
+    set(FORTRAN_NAMING "UPPERCASE")
+  endif()
+endif()
+add_definitions(-D${FORTRAN_NAMING})
 
 # Disable deprecation warnings for standard C and STL functions in VS2005
 # and later
@@ -71,6 +75,16 @@ include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/private")
 
 add_library(iriclib SHARED ${iriclib_SOURCES})
+
+if(WIN32)
+  # cgns library (set CMAKE_PREFIX_PATH)
+  find_library(CGNS_LIBRARY cgnsdll)
+  SET(EXTRA_LIBS ${EXTRA_LIBS} ${CGNS_LIBRARY})
+  
+  # link
+  target_link_libraries(iriclib ${EXTRA_LIBS})
+endif()
+
 if(CMAKE_VERSION VERSION_LESS "3.1")
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # g++
