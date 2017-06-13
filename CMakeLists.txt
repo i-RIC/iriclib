@@ -113,9 +113,9 @@ else()
     target_compile_features(iriclib PRIVATE cxx_nullptr) # cmake >= 3.1 reqd
   endif()
 endif()
-set_target_properties(iriclib PROPERTIES DEBUG_POSTFIX "d")
-set_target_properties(iriclib PROPERTIES MINSIZEREL_POSTFIX "msr")
-set_target_properties(iriclib PROPERTIES RELWITHDEBINFO_POSTFIX "rwdi")
+# set_target_properties(iriclib PROPERTIES DEBUG_POSTFIX "d")
+# set_target_properties(iriclib PROPERTIES MINSIZEREL_POSTFIX "msr")
+# set_target_properties(iriclib PROPERTIES RELWITHDEBINFO_POSTFIX "rwdi")
 
 
 SET(iriclib_Headers
