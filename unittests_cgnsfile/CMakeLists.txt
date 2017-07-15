@@ -26,6 +26,14 @@ main.cpp
 
 # test executable
 add_executable(unittests_cgnsfile ${unittests_cgnsfile_SOURCES})
+if (WIN32)
+  # copy iriclib.dll to unittests_cgnsfile directory
+  add_custom_command(TARGET unittests_cgnsfile POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${CMAKE_BINARY_DIR}/$(Configuration)/iriclib.dll"
+    "$<TARGET_FILE_DIR:unittests_cgnsfile>"
+    )
+endif()
 
 # library dependencies
 find_library(CGNS_LIBRARY cgns)
