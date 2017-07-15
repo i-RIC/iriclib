@@ -121,6 +121,10 @@ endif()
 SET(iriclib_Headers
 ${PROJECT_SOURCE_DIR}/iriclib.h
 ${PROJECT_SOURCE_DIR}/iriclib_f.h
+${PROJECT_SOURCE_DIR}/iriclib_global.h
+${PROJECT_SOURCE_DIR}/iriclib_pointmap.h
+${PROJECT_SOURCE_DIR}/iriclib_polygon.h
+${PROJECT_SOURCE_DIR}/iriclib_riversurvey.h
 )
 
 # install
