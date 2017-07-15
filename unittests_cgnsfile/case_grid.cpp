@@ -3,7 +3,7 @@
 #if defined(HAVE_QT)
 #include <QFile>
 #else
-#include <fstream>
+#include "fs_copy.h"
 #endif
 
 #include <cgnslib.h>
@@ -21,13 +21,9 @@ extern "C" {
 void case_GridRead()
 {
 #if defined(HAVE_QT)
-        QFile::copy("case_init.cgn", "case_grid.cgn");
+	QFile::copy("case_init.cgn", "case_grid.cgn");
 #else
-        {
-          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_grid.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_init.cgn", "case_grid.cgn");
 #endif
 
 	int fid;
@@ -112,11 +108,7 @@ void case_GridReadFunc()
 #if defined(HAVE_QT)
 	QFile::copy("case_gridfunc.cgn", "case_gridreadfunc.cgn");
 #else
-        {
-          std::ifstream ifs("case_gridfunc.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_gridreadfunc.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_gridfunc.cgn", "case_gridreadfunc.cgn");
 #endif
 
 	int fid;
@@ -174,11 +166,7 @@ void case_GridWrite()
 #if defined(HAVE_QT)
 	QFile::copy("case_nogrid.cgn", "case_gridwrite1d.cgn");
 #else
-        {
-          std::ifstream ifs("case_nogrid.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_gridwrite1d.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_nogrid.cgn", "case_gridwrite1d.cgn");
 #endif
 
 	int fid;
@@ -235,11 +223,7 @@ void case_GridWrite()
 #if defined(HAVE_QT)
 	QFile::copy("case_nogrid.cgn", "case_gridwrite2d.cgn");
 #else
-        {
-          std::ifstream ifs("case_nogrid.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_gridwrite2d.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_nogrid.cgn", "case_gridwrite2d.cgn");
 #endif
 
 	ier = cg_open("case_gridwrite2d.cgn", CG_MODE_MODIFY, &fid);
@@ -367,11 +351,7 @@ void case_GridWrite()
 #if defined(HAVE_QT)
 	QFile::copy("case_nogrid.cgn", "case_gridwrite3d.cgn");
 #else
-        {
-          std::ifstream ifs("case_nogrid.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_gridwrite3d.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_nogrid.cgn", "case_gridwrite3d.cgn");
 #endif
 
 

@@ -7,6 +7,7 @@ configure_file(case_init.cgn case_init.cgn COPYONLY)
 configure_file(case_nogrid.cgn case_nogrid.cgn COPYONLY)
 
 SET(unittests_cgnsfile_SOURCES
+fs_copy.h
 cases.h
 macros.h
 case_bc.cpp

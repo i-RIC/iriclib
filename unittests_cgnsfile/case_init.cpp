@@ -3,7 +3,7 @@
 #if defined(HAVE_QT)
 #include <QFile>
 #else
-#include <fstream>
+#include "fs_copy.h"
 #endif
 
 #include <cgnslib.h>
@@ -19,11 +19,7 @@ void case_InitSuccess()
 #if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_initsuccess.cgn");
 #else
-        {
-          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_initsuccess.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_init.cgn", "case_initsuccess.cgn");
 #endif
 
 	int fid;

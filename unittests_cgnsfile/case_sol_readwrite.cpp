@@ -3,7 +3,7 @@
 #if defined(HAVE_QT)
 #include <QFile>
 #else
-#include <fstream>
+#include "fs_copy.h"
 #endif
 
 #include <cgnslib.h>
@@ -223,11 +223,7 @@ void case_SolWriteStd()
 #if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_solstd.cgn");
 #else
-        {
-          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_solstd.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_init.cgn", "case_solstd.cgn");
 #endif
 
 	int fid;
@@ -264,11 +260,7 @@ void case_SolWriteStd()
 #if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_solstd3d.cgn");
 #else
-        {
-          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_solstd3d.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_init.cgn", "case_solstd3d.cgn");
 #endif
 
 	ier = cg_open("case_solstd3d.cgn", CG_MODE_MODIFY, &fid);
@@ -291,11 +283,7 @@ void case_SolWriteStd()
 #if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_solstditer.cgn");
 #else
-        {
-          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_solstditer.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_init.cgn", "case_solstditer.cgn");
 #endif
 
 	ier = cg_open("case_solstditer.cgn", CG_MODE_MODIFY, &fid);
@@ -330,11 +318,7 @@ void case_SolWriteDivide()
 #if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_soldivide.cgn");
 #else
-        {
-          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_soldivide.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_init.cgn", "case_soldivide.cgn");
 #endif
 
 	int fid;
@@ -383,11 +367,7 @@ void case_SolWriteDivide()
 #if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_soldivide3d.cgn");
 #else
-        {
-          std::ifstream ifs("case_init.cgn", std::ios_base::binary);
-          std::ofstream ofs("case_soldivide3d.cgn", std::ios_base::binary|std::ios_base::trunc);
-          ofs << ifs.rdbuf();
-        }
+	fs::copy("case_init.cgn", "case_soldivide3d.cgn");
 #endif
 
 	ier = cg_open("case_soldivide3d.cgn", CG_MODE_MODIFY, &fid);
