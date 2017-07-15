@@ -135,7 +135,7 @@ int CgnsFile::Sol_Write_Iteration(int index)
 int CgnsFile::Sol_Write_BaseIterative_Integer(const char *name, int value)
 {
 	bool found = false;
-	BaseIterativeT<int> data = name;
+	BaseIterativeT<int> data(name);
 	for (BaseIterativeT<int>& bit : impl->m_solBaseIterInts) {
 		if (bit.name() == name) {
 			bit.addValue(value);
@@ -144,7 +144,7 @@ int CgnsFile::Sol_Write_BaseIterative_Integer(const char *name, int value)
 		}
 	}
 	if (! found) {
-		BaseIterativeT<int> newData = name;
+		BaseIterativeT<int> newData(name);
 		newData.addValue(value);
 		impl->m_solBaseIterInts.push_back(newData);
 		data = newData;
@@ -158,7 +158,7 @@ int CgnsFile::Sol_Write_BaseIterative_Integer(const char *name, int value)
 int CgnsFile::Sol_Write_BaseIterative_Real(const char *name, double value)
 {
 	bool found = false;
-	BaseIterativeT<double> data = name;
+	BaseIterativeT<double> data(name);
 	for (BaseIterativeT<double>& bit : impl->m_solBaseIterReals) {
 		if (bit.name() == name) {
 			bit.addValue(value);
@@ -167,7 +167,7 @@ int CgnsFile::Sol_Write_BaseIterative_Real(const char *name, double value)
 		}
 	}
 	if (! found) {
-		BaseIterativeT<double> newData = name;
+		BaseIterativeT<double> newData(name);
 		newData.addValue(value);
 		impl->m_solBaseIterReals.push_back(newData);
 		data = newData;

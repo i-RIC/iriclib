@@ -1,6 +1,10 @@
 #include "macros.h"
 
+#if defined(HAVE_QT)
 #include <QFile>
+#else
+#include "fs_copy.h"
+#endif
 
 #include <cgnslib.h>
 #include <iriclib.h>
@@ -9,6 +13,7 @@
 #include <stdlib.h>
 
 #include <iostream>
+#include <cmath>
 #include <string>
 #include <vector>
 
@@ -17,7 +22,11 @@ extern "C" {
 void case_CalcCondRead()
 {
 	remove("case_cc.cgn");
-	QFile::copy("case_init.cgn", "case_cc.cgn");
+#if defined(HAVE_QT)
+        QFile::copy("case_init.cgn", "case_cc.cgn");
+#else
+	fs::copy("case_init.cgn", "case_cc.cgn");
+#endif
 
 	int fid;
 	int ier = cg_open("case_cc.cgn", CG_MODE_MODIFY, &fid);
@@ -151,7 +160,11 @@ void case_CalcCondRead()
 
 void case_CalcCondWrite()
 {
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_ccwrite.cgn");
+#else
+	fs::copy("case_init.cgn", "case_ccwrite.cgn");
+#endif
 
 	int fid;
 	int ier = cg_open("case_ccwrite.cgn", CG_MODE_MODIFY, &fid);

@@ -5,6 +5,7 @@
 #include "private/iriclib_cgnsfile_solutionwriterstandard.h"
 
 #include <string>
+#include <string.h>
 
 using namespace iRICLib;
 

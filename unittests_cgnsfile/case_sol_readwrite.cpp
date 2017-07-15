@@ -1,6 +1,10 @@
 #include "macros.h"
 
+#if defined(HAVE_QT)
 #include <QFile>
+#else
+#include "fs_copy.h"
+#endif
 
 #include <cgnslib.h>
 #include <iriclib.h>
@@ -216,7 +220,11 @@ void case_SolWriteStd()
 {
 	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);
 
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_solstd.cgn");
+#else
+	fs::copy("case_init.cgn", "case_solstd.cgn");
+#endif
 
 	int fid;
 	int ier = cg_open("case_solstd.cgn", CG_MODE_MODIFY, &fid);
@@ -249,7 +257,11 @@ void case_SolWriteStd()
 
 	// @todo add codes to test
 
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_solstd3d.cgn");
+#else
+	fs::copy("case_init.cgn", "case_solstd3d.cgn");
+#endif
 
 	ier = cg_open("case_solstd3d.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -268,7 +280,11 @@ void case_SolWriteStd()
 
 	// @todo add codes to test
 
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_solstditer.cgn");
+#else
+	fs::copy("case_init.cgn", "case_solstditer.cgn");
+#endif
 
 	ier = cg_open("case_solstditer.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -299,7 +315,11 @@ void case_SolWriteDivide()
 	remove("case_soldivide_Solution4.cgn");
 	remove("case_soldivide_Solution5.cgn");
 
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_soldivide.cgn");
+#else
+	fs::copy("case_init.cgn", "case_soldivide.cgn");
+#endif
 
 	int fid;
 	int ier = cg_open("case_soldivide.cgn", CG_MODE_MODIFY, &fid);
@@ -344,7 +364,11 @@ void case_SolWriteDivide()
 
 	// @todo add codes to test
 
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_soldivide3d.cgn");
+#else
+	fs::copy("case_init.cgn", "case_soldivide3d.cgn");
+#endif
 
 	ier = cg_open("case_soldivide3d.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);

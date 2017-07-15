@@ -4,8 +4,14 @@
 
 #include <vector>
 
+#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/stat.h>
+
+#if !defined(_MSC_VER)
+#define _stat stat
+#endif
 
 #define GET_F(id) if (id >= m_files.size()){return 98;};iRICLib::CgnsFile* f = m_files.at(id);if (f == nullptr){return 99;}
 #define GET_F_VOID(id) iRICLib::CgnsFile* f = m_files.at(id);if (f == nullptr){return;}

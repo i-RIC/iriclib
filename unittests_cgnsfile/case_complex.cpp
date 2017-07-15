@@ -1,6 +1,10 @@
 #include "macros.h"
 
+#if defined(HAVE_QT)
 #include <QFile>
+#else
+#include "fs_copy.h"
+#endif
 
 #include <cgnslib.h>
 #include <iriclib.h>
@@ -16,7 +20,11 @@ extern "C" {
 
 void case_Complex()
 {
+#if defined(HAVE_QT)
 	QFile::copy("case_init.cgn", "case_complex.cgn");
+#else
+	fs::copy("case_init.cgn", "case_complex.cgn");
+#endif
 
 	int fid;
 	int ier = cg_open("case_complex.cgn", CG_MODE_MODIFY, &fid);
