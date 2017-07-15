@@ -272,12 +272,12 @@ int CgnsFile::Impl::loadBcNames()
 		BCType_t bocoType;
 		PointSetType_t psType;
 		cgsize_t npnts;
-		int normalIndex;
+		// NormalIndex is optional (see http://cgns.sourceforge.net/news.html - September 7, 2007)
 		cgsize_t normalListFlag;
 		DataType_t normalDataType;
 		int ndataset;
 		ier = cg_boco_info(m_fileId, m_baseId, m_zoneId, BC, name, &bocoType, &psType,
-								 &npnts, &normalIndex, &normalListFlag, &normalDataType, &ndataset);
+								 &npnts, nullptr, &normalListFlag, &normalDataType, &ndataset);
 		RETURN_IF_ERR;
 
 		m_bcNames.push_back(std::string(name));

@@ -35,13 +35,13 @@ int CgnsFile::BC_Read_IndicesSize(const char *typeName, int num, cgsize_t* size)
 	BCType_t bctype;
 	PointSetType_t pstype;
 	cgsize_t npnts;
-	int nindex[3];
+	// NormalIndex is optional (see http://cgns.sourceforge.net/news.html - September 7, 2007)
 	cgsize_t nlistflag;
 	DataType_t ndtype;
 	int ndataset;
 
 	int ier = cg_boco_info(impl->m_fileId, impl->m_baseId, impl->m_zoneId, BC, bcname, &bctype,
-												 &pstype, &npnts, nindex, &nlistflag, &ndtype, &ndataset);
+												 &pstype, &npnts, nullptr, &nlistflag, &ndtype, &ndataset);
 	RETURN_IF_ERR;
 	*size = npnts;
 	return 0;
