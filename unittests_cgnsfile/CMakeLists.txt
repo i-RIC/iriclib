@@ -37,3 +37,4 @@ target_link_libraries(unittests_cgnsfile ${EXTRA_LIBS})
 
 # test
 add_test(UNITTESTS_CGNSFILE unittests_cgnsfile)
+set_tests_properties(UNITTESTS_CGNSFILE PROPERTIES FAIL_REGULAR_EXPRESSION "[[]NG[]]")
