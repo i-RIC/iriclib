@@ -10,6 +10,7 @@ SET(unittests_cgnsfile_SOURCES
 fs_copy.h
 cases.h
 macros.h
+case_add_grid_and_result.cpp
 case_bc.cpp
 case_calccond.cpp
 case_check.cpp

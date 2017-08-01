@@ -111,7 +111,7 @@ public:
 
 	std::vector<std::string> m_bcNames;
 
-	int m_solId;
+	int m_solId = 0;
 	std::vector<double> m_solTimes;
 	std::vector<int> m_solIndices;
 	std::vector<std::string> m_solGridCoordPointers;
