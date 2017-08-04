@@ -18,7 +18,7 @@
 
 extern "C" {
 
-void writeSolution(int fid, bool iterMode)
+void writeSolution(char* filename, int fid, bool iterMode)
 {
 	cgsize_t isize, jsize;
 
@@ -96,10 +96,13 @@ void writeSolution(int fid, bool iterMode)
 
 		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(fid, const_cast<char*>("Active"), particle_active.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer_Mul() for Active ier == 0", ier == 0);
+
+		ier = cg_iRIC_Flush(filename, &fid);
+		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
 }
 
-void writeSolution3d(int fid)
+void writeSolution3d(char* filename, int fid)
 {
 	cgsize_t isize, jsize;
 
@@ -179,6 +182,9 @@ void writeSolution3d(int fid)
 
 		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(fid, const_cast<char*>("Active"), particle_active.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer_Mul() for Active ier == 0", ier == 0);
+
+		ier = cg_iRIC_Flush(filename, &fid);
+		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
 }
 
@@ -236,7 +242,7 @@ void case_SolWriteStd()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution(fid, false);
+	writeSolution(const_cast<char*>("case_solstd.cgn"), fid, false);
 
 	cg_close(fid);
 
@@ -272,7 +278,7 @@ void case_SolWriteStd()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution3d(fid);
+	writeSolution3d(const_cast<char*>("case_solstd3d.cgn"), fid);
 
 	cg_close(fid);
 
@@ -295,7 +301,7 @@ void case_SolWriteStd()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution(fid, true);
+	writeSolution(const_cast<char*>("case_solstditer.cgn"), fid, true);
 
 	cg_close(fid);
 
@@ -331,7 +337,7 @@ void case_SolWriteDivide()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution(fid, false);
+	writeSolution(const_cast<char*>("case_soldivide.cgn"), fid, false);
 
 	cg_close(fid);
 
@@ -379,7 +385,7 @@ void case_SolWriteDivide()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution3d(fid);
+	writeSolution3d(const_cast<char*>("case_soldivide3d.cgn"), fid);
 
 	cg_close(fid);
 
