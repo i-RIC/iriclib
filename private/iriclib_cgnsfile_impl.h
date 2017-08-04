@@ -72,8 +72,6 @@ public:
 	int gotoBcChild(const char* typeName, int num, const char* name); // local_gotobcchild_Mul
 	int gotoBcChildCreateIfNotExist(const char* typeName, int num, const char* name); // local_gotobcchild_create_Mul
 
-	int followLinkIfNeeded();
-
 	static int findArray(const char* name, int* index, DataType_t* dt, int* dim, cgsize_t* dimVec); //local_find_array
 	static int readArray(const char* name, DataType_t dt, cgsize_t len, void* memory); // local_read_array
 	static int readArrayAs(const char* name, DataType_t dt, size_t length, void* memory); // local_read_array_as
