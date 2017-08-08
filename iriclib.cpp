@@ -100,12 +100,12 @@ int iRIC_InitOption(int option)
 		}
 		// close file.
 		fclose(fp);
-		return 0;
 	} else if (option == IRIC_OPTION_DIVIDESOLUTIONS){
 		m_divideSolutions = true;
 	} else if (option == IRIC_OPTION_STDSOLUTION) {
 		m_divideSolutions = false;
 	}
+	return 0;
 }
 
 int cg_iRIC_Flush(char* filename, int* fid){
