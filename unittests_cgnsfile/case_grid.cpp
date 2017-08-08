@@ -1,10 +1,6 @@
 #include "macros.h"
 
-#if defined(HAVE_QT)
-#include <QFile>
-#else
 #include "fs_copy.h"
-#endif
 
 #include <cgnslib.h>
 #include <iriclib.h>
@@ -20,11 +16,7 @@ extern "C" {
 
 void case_GridRead()
 {
-#if defined(HAVE_QT)
-	QFile::copy("case_init.cgn", "case_grid.cgn");
-#else
 	fs::copy("case_init.cgn", "case_grid.cgn");
-#endif
 
 	int fid;
 	int ier = cg_open("case_grid.cgn", CG_MODE_MODIFY, &fid);
@@ -105,11 +97,7 @@ void case_GridRead()
 
 void case_GridReadFunc()
 {
-#if defined(HAVE_QT)
-	QFile::copy("case_gridfunc.cgn", "case_gridreadfunc.cgn");
-#else
 	fs::copy("case_gridfunc.cgn", "case_gridreadfunc.cgn");
-#endif
 
 	int fid;
 	int ier = cg_open("case_gridreadfunc.cgn", CG_MODE_MODIFY, &fid);
@@ -163,11 +151,7 @@ void case_GridReadFunc()
 
 void case_GridWrite()
 {
-#if defined(HAVE_QT)
-	QFile::copy("case_nogrid.cgn", "case_gridwrite1d.cgn");
-#else
 	fs::copy("case_nogrid.cgn", "case_gridwrite1d.cgn");
-#endif
 
 	int fid;
 	int ier = cg_open("case_gridwrite1d.cgn", CG_MODE_MODIFY, &fid);
@@ -220,11 +204,7 @@ void case_GridWrite()
 
 	remove("case_gridwrite1d.cgn");
 
-#if defined(HAVE_QT)
-	QFile::copy("case_nogrid.cgn", "case_gridwrite2d.cgn");
-#else
 	fs::copy("case_nogrid.cgn", "case_gridwrite2d.cgn");
-#endif
 
 	ier = cg_open("case_gridwrite2d.cgn", CG_MODE_MODIFY, &fid);
 
@@ -359,12 +339,7 @@ void case_GridWrite()
 
 	remove("case_gridwrite2d.cgn");
 
-#if defined(HAVE_QT)
-	QFile::copy("case_nogrid.cgn", "case_gridwrite3d.cgn");
-#else
 	fs::copy("case_nogrid.cgn", "case_gridwrite3d.cgn");
-#endif
-
 
 	ier = cg_open("case_gridwrite3d.cgn", CG_MODE_MODIFY, &fid);
 

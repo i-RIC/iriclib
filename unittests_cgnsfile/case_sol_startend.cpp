@@ -1,9 +1,5 @@
 #include "macros.h"
 
-#if defined(HAVE_QT)
-#include <QFile>
-#endif
-
 #include <cgnslib.h>
 #include <iriclib.h>
 
