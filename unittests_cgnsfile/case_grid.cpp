@@ -235,7 +235,7 @@ void case_GridWrite()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 1", ier == 1);
 
-	isize = 10; jsize = 10;
+	isize = 10; jsize = 8;
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
 
@@ -289,6 +289,17 @@ void case_GridWrite()
 	ier = cg_open("case_gridwrite2d.cgn", CG_MODE_READ, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+
+	cgsize_t size[9];
+	ier = cg_zone_read(fid, 1, 1, name, size);
+	VERIFY_LOG("cg_zone_read() ier == 0", ier == 0);
+	VERIFY_LOG("cg_zone_read() name == iRICZone", strcmp(name, "iRICZone") == 0);
+	VERIFY_LOG("cg_zone_read() size[0] == isize",   size[0] == isize);
+	VERIFY_LOG("cg_zone_read() size[1] == jsize",   size[1] == jsize);
+	VERIFY_LOG("cg_zone_read() size[2] == isize-1", size[2] == isize-1);
+	VERIFY_LOG("cg_zone_read() size[3] == jsize-1", size[3] == jsize-1);
+	VERIFY_LOG("cg_zone_read() size[4] == 0",       size[4] == 0);
+	VERIFY_LOG("cg_zone_read() size[5] == 0",       size[5] == 0);
 
 	ier = cg_goto(fid, 1, "iRICZone", 0, "GridCoordinates", 0, NULL);
 	VERIFY_LOG("cg_goto() ier == 0", ier == 0);
@@ -364,7 +375,7 @@ void case_GridWrite()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 1", ier == 1);
 
-	isize = 10; jsize = 10; ksize = 5;
+	isize = 11; jsize = 9; ksize = 5;
 	x.assign(isize * jsize * ksize, 0);
 	y.assign(isize * jsize * ksize, 0);
 	z.assign(isize * jsize * ksize, 0);
@@ -386,6 +397,19 @@ void case_GridWrite()
 	ier = cg_open("case_gridwrite3d.cgn", CG_MODE_READ, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+
+	ier = cg_zone_read(fid, 2, 1, name, size);
+	VERIFY_LOG("cg_zone_read() ier == 0", ier == 0);
+	VERIFY_LOG("cg_zone_read() name == iRICZone", strcmp(name, "iRICZone") == 0);
+	VERIFY_LOG("cg_zone_read() size[0] == isize",   size[0] == isize);
+	VERIFY_LOG("cg_zone_read() size[1] == jsize",   size[1] == jsize);
+	VERIFY_LOG("cg_zone_read() size[2] == ksize",   size[2] == ksize);
+	VERIFY_LOG("cg_zone_read() size[3] == isize-1", size[3] == isize-1);
+	VERIFY_LOG("cg_zone_read() size[4] == jsize-1", size[4] == jsize-1);
+	VERIFY_LOG("cg_zone_read() size[5] == ksize-1", size[5] == ksize-1);
+	VERIFY_LOG("cg_zone_read() size[6] == 0",       size[6] == 0);
+	VERIFY_LOG("cg_zone_read() size[7] == 0",       size[7] == 0);
+	VERIFY_LOG("cg_zone_read() size[8] == 0",       size[8] == 0);
 
 	ier = cg_goto(fid, 2, "iRICZone", 0, "GridCoordinates", 0, NULL);
 	VERIFY_LOG("cg_goto() ier == 0", ier == 0);
