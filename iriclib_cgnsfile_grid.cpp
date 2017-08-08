@@ -258,6 +258,8 @@ int CgnsFile::Grid_WriteGridCoord2d(cgsize_t isize, cgsize_t jsize, double* x, d
 	impl->m_zoneSize[1] = jsize;
 	impl->m_zoneSize[2] = isize - 1;
 	impl->m_zoneSize[3] = jsize - 1;
+	impl->m_zoneSize[4] = 0;
+	impl->m_zoneSize[5] = 0;
 	int ier = cg_zone_write(impl->m_fileId, impl->m_baseId, Impl::IRICZONE.c_str(), impl->m_zoneSize, Structured, &(impl->m_zoneId));
 	RETURN_IF_ERR;
 	int G, C;
@@ -296,6 +298,9 @@ int CgnsFile::Grid_WriteGridCoord3d(cgsize_t isize, cgsize_t jsize, cgsize_t ksi
 	impl->m_zoneSize[3] = isize - 1;
 	impl->m_zoneSize[4] = jsize - 1;
 	impl->m_zoneSize[5] = ksize - 1;
+	impl->m_zoneSize[6] = 0;
+	impl->m_zoneSize[7] = 0;
+	impl->m_zoneSize[8] = 0;
 	int ier = cg_zone_write(impl->m_fileId, impl->m_baseId, Impl::IRICZONE.c_str(), impl->m_zoneSize, Structured, &(impl->m_zoneId));
 	RETURN_IF_ERR;
 	int G, C;
