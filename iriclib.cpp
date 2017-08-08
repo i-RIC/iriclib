@@ -109,11 +109,14 @@ int iRIC_InitOption(int option)
 }
 
 int cg_iRIC_Flush(char* filename, int* fid){
-	// close the CGNS fie first.
-	int ier = cg_close(*fid);
+	iRICLib::CgnsFile* cgnsFile = m_files.at(*fid);
+	int ier = cgnsFile->Flush();
 	RETURN_IF_ERR;
 
-	iRICLib::CgnsFile* cgnsFile = m_files.at(*fid);
+	// close the CGNS fie first.
+	ier = cg_close(*fid);
+	RETURN_IF_ERR;
+
 	m_files[*fid] = nullptr;
 
 	// open the file again
