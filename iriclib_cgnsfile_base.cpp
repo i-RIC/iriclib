@@ -843,7 +843,7 @@ int CgnsFile::GotoCC()
 
 int CgnsFile::GotoRawDataTop()
 {
-	int ier = impl->initBaseId(false);
+	int ier = impl->initBaseId(false, 0, true);
 	RETURN_IF_ERR;
 
 	ier = impl->gotoCCBase();

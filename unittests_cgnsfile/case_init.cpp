@@ -46,4 +46,28 @@ void case_InitFail()
 	VERIFY_LOG("cg_iRIC_Init() ier != 0", ier != 0);
 }
 
+void case_gotoRawDataTop()
+{
+	remove("case_rawdatatop.cgn");
+#if defined(HAVE_QT)
+	QFile::copy("case_nogrid.cgn", "case_rawdatatop.cgn");
+#else
+	fs::copy("case_nogrid.cgn", "case_rawdatatop.cgn");
+#endif
+
+	int fid;
+	int ier = cg_open("case_rawdatatop.cgn", CG_MODE_MODIFY, &fid);
+
+	VERIFY_LOG("cg_open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+
+	ier = cg_iRIC_GotoRawDataTop(fid);
+
+	VERIFY_LOG("cg_iRIC_GotoRawDataTop() ier == 0", ier == 0);
+
+	cg_close(fid);
+
+	remove("case_rawdatatop.cgn");
+}
+
 } // extern "C"
