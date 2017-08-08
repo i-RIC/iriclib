@@ -70,9 +70,6 @@ int CgnsFile::Sol_Read_GridCoord2d(int step, double* x, double* y)
 										"GridCoordinates_t", step + 1, NULL);
 	RETURN_IF_ERR;
 
-	ier = impl->followLinkIfNeeded();
-	RETURN_IF_ERR;
-
 	ier = Impl::readArray("CoordinateX", RealDouble, -1, x);
 	RETURN_IF_ERR;
 	ier = Impl::readArray("CoordinateY", RealDouble, -1, y);
@@ -84,9 +81,6 @@ int CgnsFile::Sol_Read_GridCoord3d(int step, double* x, double* y, double* z)
 {
 	int ier = cg_goto(impl->m_fileId, impl->m_baseId, "Zone_t", impl->m_zoneId,
 										"GridCoordinates_t", step + 1, NULL);
-	RETURN_IF_ERR;
-
-	ier = impl->followLinkIfNeeded();
 	RETURN_IF_ERR;
 
 	ier = Impl::readArray("CoordinateX", RealDouble, -1, x);
@@ -104,9 +98,6 @@ int CgnsFile::Sol_Read_Integer(int step, const char *name, int* data)
 										"FlowSolution_t", step, NULL);
 	RETURN_IF_ERR;
 
-	ier = impl->followLinkIfNeeded();
-	RETURN_IF_ERR;
-
 	return Impl::readArray(name, Integer, -1, data);
 }
 
@@ -114,9 +105,6 @@ int CgnsFile::Sol_Read_Real(int step, const char *name, double* data)
 {
 	int ier = cg_goto(impl->m_fileId, impl->m_baseId, "Zone_t", impl->m_zoneId,
 										"FlowSolution_t", step, NULL);
-	RETURN_IF_ERR;
-
-	ier = impl->followLinkIfNeeded();
 	RETURN_IF_ERR;
 
 	return Impl::readArray(name, RealDouble, -1, data);
