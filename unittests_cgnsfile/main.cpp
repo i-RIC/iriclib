@@ -10,6 +10,8 @@ int main(int argc, char* argv[])
 	case_InitReadSuccess();
 	case_InitReadFail();
 
+	case_gotoRawDataTop();
+
 	case_InitOptionCheck();
 
 	case_InitCC();
