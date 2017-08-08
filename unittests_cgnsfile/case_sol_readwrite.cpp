@@ -392,6 +392,8 @@ void case_SolWriteDivide()
 
 	// @todo add codes to test
 
+	// restore mode.
+	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);
 }
 
 } // extern "C"

@@ -28,7 +28,8 @@ INCLUDEPATH += ".."
 
 # Input
 HEADERS += cases.h macros.h
-SOURCES += case_bc.cpp \
+SOURCES += case_add_grid_and_result.cpp \
+           case_bc.cpp \
            case_calccond.cpp \
            case_check.cpp \
            case_complex.cpp \

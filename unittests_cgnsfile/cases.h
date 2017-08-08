@@ -27,4 +27,6 @@ void case_SolStartEnd();
 void case_SolWriteStd();
 void case_SolWriteDivide();
 
+void case_addGridAndResult();
+
 } // extern "C"
