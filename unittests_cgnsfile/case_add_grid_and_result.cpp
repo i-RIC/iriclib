@@ -1,10 +1,6 @@
 #include "macros.h"
 
-#if defined(HAVE_QT)
-#include <QFile>
-#else
 #include "fs_copy.h"
-#endif
 
 #include <cgnslib.h>
 #include <iriclib.h>
@@ -20,11 +16,7 @@ extern "C" {
 
 void case_addGridAndResult()
 {
-#if defined(HAVE_QT)
-	QFile::copy("case_nogrid.cgn", "case_grid_result.cgn");
-#else
 	fs::copy("case_nogrid.cgn", "case_grid_result.cgn");
-#endif
 
 	int fid;
 	int ier = cg_open("case_grid_result.cgn", CG_MODE_MODIFY, &fid);
