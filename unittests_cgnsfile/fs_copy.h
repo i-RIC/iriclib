@@ -7,8 +7,8 @@ namespace fs {
 
 inline void copy(const std::string& from, const std::string& to)
 {
-	std::ifstream ifs(from, std::ios_base::binary);
-	std::ofstream ofs(to, std::ios_base::binary | std::ios_base::trunc);
+	std::ifstream ifs(from.c_str(), std::ios_base::binary);
+	std::ofstream ofs(to.c_str(), std::ios_base::binary | std::ios_base::trunc);
 	ofs << ifs.rdbuf();
 }
 
