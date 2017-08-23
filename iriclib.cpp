@@ -633,10 +633,22 @@ int cg_iRIC_Read_Sol_Integer_Mul(int fid, int step, char *name, int* data)
 	return f->Sol_Read_Integer(step, name, data);
 }
 
+int cg_iRIC_Read_Sol_Cell_Integer_Mul(int fid, int step, char *name, int* data)
+{
+	GET_F(fid);
+	return f->Sol_Read_Cell_Integer(step, name, data);
+}
+
 int cg_iRIC_Read_Sol_Real_Mul(int fid, int step, char *name, double* data)
 {
 	GET_F(fid);
 	return f->Sol_Read_Real(step, name, data);
+}
+
+int cg_iRIC_Read_Sol_Cell_Real_Mul(int fid, int step, char *name, double* data)
+{
+	GET_F(fid);
+	return f->Sol_Read_Cell_Real(step, name, data);
 }
 
 int cg_iRIC_Write_Sol_Time_Mul(int fid, double time){
@@ -677,11 +689,24 @@ int cg_iRIC_Write_Sol_Integer_Mul(int fid, char *name, int* data)
 	return f->Sol_Write_Integer(name, data);
 }
 
+int cg_iRIC_Write_Sol_Cell_Integer_Mul(int fid, char *name, int* data)
+{
+	GET_F(fid);
+	return f->Sol_Write_Cell_Integer(name, data);
+}
+
 int cg_iRIC_Write_Sol_Real_Mul(int fid, char *name, double* data)
 {
 	GET_F(fid);
 	return f->Sol_Write_Real(name, data);
 }
+
+int cg_iRIC_Write_Sol_Cell_Real_Mul(int fid, char *name, double* data)
+{
+	GET_F(fid);
+	return f->Sol_Write_Cell_Real(name, data);
+}
+
 
 int cg_iRIC_Write_ErrorCode_Mul(int fid, int errorcode)
 {

@@ -24,6 +24,8 @@ void writeSolution(char* filename, int fid, bool iterMode)
 	std::vector<double> x, y;
 	std::vector<double> vx, vy, depth;
 	std::vector<int> wet;
+	std::vector<double> ccdepth;
+	std::vector<int> ccwet;
 
 	std::vector<double> particle_x, particle_y;
 	std::vector<double> particle_vx, particle_vy;
@@ -51,7 +53,7 @@ void writeSolution(char* filename, int fid, bool iterMode)
 
 	for (int i = 0; i < 5; ++i) {
 		if (iterMode) {
-			double IterVal = i;
+			int IterVal = i;
 			ier = cg_iRIC_Write_Sol_Iteration_Mul(fid, IterVal);
 			VERIFY_LOG("cg_iRIC_Write_Sol_Iteration_Mul() ier == 0", ier == 0);
 		} else {
@@ -62,6 +64,9 @@ void writeSolution(char* filename, int fid, bool iterMode)
 
 		cg_iRIC_Write_Sol_GridCoord2d_Mul(fid, x.data(), y.data());
 
+		// Vertex solutions
+
+		depth.assign(isize * jsize, (double)i);
 		cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("Depth"), depth.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for Depth ier == 0", ier == 0);
 
@@ -71,8 +76,21 @@ void writeSolution(char* filename, int fid, bool iterMode)
 		cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityY"), vy.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
 
+		wet.assign(isize * jsize, i);
 		cg_iRIC_Write_Sol_Integer_Mul(fid, const_cast<char*>("IBC"), wet.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
+
+		// CellCenter solutions
+
+		ccdepth.assign((isize - 1) * (jsize - 1), 0.2 + i);
+		ier = cg_iRIC_Write_Sol_Cell_Real("CCDepth", ccdepth.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Real() ier == 0", ier == 0);
+
+		ccwet.assign((isize - 1) * (jsize - 1), i + 1);
+		ier = cg_iRIC_Write_Sol_Cell_Integer("CCWet", ccwet.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Integer() ier == 0", ier == 0);
+
+		// BaseIterativeData
 
 		double Dist = i * - 0.2 + 20;
 		cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, const_cast<char*>("Discharge"), Dist);
@@ -80,6 +98,8 @@ void writeSolution(char* filename, int fid, bool iterMode)
 		int DamOpen = i;
 		cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, const_cast<char*>("DamOpen"), DamOpen);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
+
+		// Particle solutions
 
 		ier = cg_iRIC_Write_Sol_Particle_Pos2d_Mul(fid, particle_num, particle_x.data(), particle_y.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Pos2d_Mul() ier == 0", ier == 0);
@@ -118,7 +138,8 @@ void writeSolution3d(char* filename, int fid)
 	z.assign(isize * jsize, 0);
 	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
 
-	cg_iRIC_WriteGridCoord3d_Mul(fid, isize, jsize, 1, x.data(), y.data(), z.data());
+	ier = cg_iRIC_WriteGridCoord3d_Mul(fid, isize, jsize, 1, x.data(), y.data(), z.data());
+	VERIFY_LOG("cg_iRIC_WriteGridCoord3d_Mul() ier == 0", ier == 0);
 
 	vx.assign(isize * jsize, 1);
 	vy.assign(isize * jsize, 0.3);
@@ -143,25 +164,26 @@ void writeSolution3d(char* filename, int fid)
 		ier = cg_iRIC_Write_Sol_Time_Mul(fid, TimeVal);
 		VERIFY_LOG("cg_iRIC_Write_Sol_Time_Mul() ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_GridCoord3d_Mul(fid, x.data(), y.data(), z.data());
+		ier = cg_iRIC_Write_Sol_GridCoord3d_Mul(fid, x.data(), y.data(), z.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_GridCoord3d_Mul() ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("Depth"), depth.data());
+		ier = cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("Depth"), depth.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for Depth ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityX"), vx.data());
+		ier = cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityX"), vx.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityX ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityY"), vy.data());
+		ier = cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityY"), vy.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Integer_Mul(fid, const_cast<char*>("IBC"), wet.data());
+		ier = cg_iRIC_Write_Sol_Integer_Mul(fid, const_cast<char*>("IBC"), wet.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
 
 		double Dist = i * - 0.2 + 20;
-		cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, const_cast<char*>("Discharge"), Dist);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, const_cast<char*>("Discharge"), Dist);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real_Mul() for Discharge ier == 0", ier == 0);
 		int DamOpen = i;
-		cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, const_cast<char*>("DamOpen"), DamOpen);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, const_cast<char*>("DamOpen"), DamOpen);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
 
 		ier = cg_iRIC_Write_Sol_Particle_Pos3d_Mul(fid, particle_num, particle_x.data(), particle_y.data(), particle_z.data());
@@ -186,6 +208,7 @@ void writeSolution3d(char* filename, int fid)
 
 void readSolution(int fid)
 {
+	char buffer[200];
 	int sol_count;
 	int ier = cg_iRIC_Read_Sol_Count_Mul(fid, &sol_count);
 	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() ier == 0", ier == 0);
@@ -197,6 +220,8 @@ void readSolution(int fid)
 	std::vector<double> grid_x, grid_y;
 	std::vector<double> real_sol;
 	std::vector<int> int_sol;
+	std::vector<double> real_ccsol;
+	std::vector<int> int_ccsol;
 
 	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
 	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
@@ -205,16 +230,63 @@ void readSolution(int fid)
 	grid_y.assign(isize * jsize, 0);
 	real_sol.assign(isize * jsize, 0);
 	int_sol.assign(isize * jsize, 0);
+	real_ccsol.assign((isize - 1) * (jsize - 1), 0);
+	int_ccsol.assign((isize - 1) * (jsize - 1), 0);
 
 	for (int S = 1; S <= sol_count; ++S) {
+
+		// GridCoord
+
 		ier = cg_iRIC_Read_Sol_GridCoord2d_Mul(fid, S, grid_x.data(), grid_y.data());
 		VERIFY_LOG("cg_iRIC_Read_Sol_GridCoord2d_Mul() ier == 0", ier == 0);
 
+		// Vertex solutions
+
 		ier = cg_iRIC_Read_Sol_Real_Mul(fid, S, const_cast<char*>("Depth"), real_sol.data());
 		VERIFY_LOG("cg_iRIC_Read_Sol_Real_Mul() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[0] == %g", (double)(S - 1));
+		VERIFY_LOG(buffer, real_sol[0] == (double)(S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[%d] == %g", real_sol.size() - 1, (double)(S - 1));
+		VERIFY_LOG(buffer, real_sol[real_sol.size()-1] == (double)(S - 1));
 
 		ier = cg_iRIC_Read_Sol_Integer_Mul(fid, S, const_cast<char*>("IBC"), int_sol.data());
 		VERIFY_LOG("cg_iRIC_Read_Sol_Integer_Mul() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Integer_Mul() int_sol[0] == %d", (S - 1));
+		VERIFY_LOG(buffer, int_sol[0] == (S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Integer_Mul() int_sol[%d] == %d", int_sol.size() - 1, (S - 1));
+		VERIFY_LOG(buffer, int_sol[int_sol.size() - 1] == (S - 1));
+
+		// CellCenter solutions
+
+		ier = cg_iRIC_Read_Sol_Cell_Real_Mul(fid, S, const_cast<char*>("CCDepth"), real_ccsol.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Cell_Real_Mul() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Real_Mul() real_ccsol[0] == %g", 0.2 + (S - 1));
+		VERIFY_LOG(buffer, real_ccsol[0] == 0.2 + (S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Real_Mul() real_ccsol[%d] == %g", real_ccsol.size() - 1, 0.2 + (S - 1));
+		VERIFY_LOG(buffer, real_ccsol[real_ccsol.size() - 1] == 0.2 + (S - 1));
+
+		ier = cg_iRIC_Read_Sol_Cell_Integer_Mul(fid, S, const_cast<char*>("CCWet"), int_ccsol.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Cell_Integer_Mul() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer_Mul() int_ccsol[0] == %d", S);
+		VERIFY_LOG(buffer, int_ccsol[0] == S);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer_Mul() int_ccsol[%d] == %d", int_ccsol.size() - 1, S);
+		VERIFY_LOG(buffer, int_ccsol[int_ccsol.size() - 1] == S);
+
+		// BaseIterativeData
+
+		double d;
+		double Dist = (S - 1) * -0.2 + 20;
+		ier = cg_iRIC_Read_Sol_BaseIterative_Real_Mul(fid, S, const_cast<char*>("Discharge"), &d);
+		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_Real_Mul() for Discharge ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_Real_Mul() for Discharge d == %g", Dist);
+		VERIFY_LOG(buffer, d == Dist);
+
+		int i;
+		int DamOpen = (S - 1);
+		ier = cg_iRIC_Read_Sol_BaseIterative_Integer_Mul(fid, S, const_cast<char*>("DamOpen"), &i);
+		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_Integer_Mul() for DamOpen i == %d", DamOpen);
+		VERIFY_LOG(buffer, i == DamOpen);
 	}
 }
 

@@ -4,6 +4,8 @@
 #include "private/iriclib_cgnsfile_baseiterativet.h"
 #include "private/iriclib_cgnsfile_solutionwriter.h"
 
+#include <assert.h>
+
 using namespace iRICLib;
 
 namespace {
@@ -14,7 +16,13 @@ static const std::string ECNODE = "ErrorCode";
 
 int CgnsFile::Sol_Read_Count(int* count)
 {
-	*count = impl->m_solId;
+	if (impl->m_hasCellSols) {
+		assert((impl->m_solId % 2) == 0);
+		*count = impl->m_solId / 2;
+	}
+	else {
+		*count = impl->m_solId;
+	}
 	return 0;
 }
 
@@ -94,8 +102,19 @@ int CgnsFile::Sol_Read_GridCoord3d(int step, double* x, double* y, double* z)
 
 int CgnsFile::Sol_Read_Integer(int step, const char *name, int* data)
 {
+	int idx = impl->solIndex(Vertex, step);
 	int ier = cg_goto(impl->m_fileId, impl->m_baseId, "Zone_t", impl->m_zoneId,
-										"FlowSolution_t", step, NULL);
+										"FlowSolution_t", idx, NULL);
+	RETURN_IF_ERR;
+
+	return Impl::readArray(name, Integer, -1, data);
+}
+
+int CgnsFile::Sol_Read_Cell_Integer(int step, const char *name, int* data)
+{
+	int idx = impl->solIndex(CellCenter, step);
+	int ier = cg_goto(impl->m_fileId, impl->m_baseId, "Zone_t", impl->m_zoneId,
+										"FlowSolution_t", idx, NULL);
 	RETURN_IF_ERR;
 
 	return Impl::readArray(name, Integer, -1, data);
@@ -103,8 +122,19 @@ int CgnsFile::Sol_Read_Integer(int step, const char *name, int* data)
 
 int CgnsFile::Sol_Read_Real(int step, const char *name, double* data)
 {
+	int idx = impl->solIndex(Vertex, step);
 	int ier = cg_goto(impl->m_fileId, impl->m_baseId, "Zone_t", impl->m_zoneId,
-										"FlowSolution_t", step, NULL);
+										"FlowSolution_t", idx, NULL);
+	RETURN_IF_ERR;
+
+	return Impl::readArray(name, RealDouble, -1, data);
+}
+
+int CgnsFile::Sol_Read_Cell_Real(int step, const char *name, double* data)
+{
+	int idx = impl->solIndex(CellCenter, step);
+	int ier = cg_goto(impl->m_fileId, impl->m_baseId, "Zone_t", impl->m_zoneId,
+		"FlowSolution_t", idx, NULL);
 	RETURN_IF_ERR;
 
 	return Impl::readArray(name, RealDouble, -1, data);
@@ -181,9 +211,19 @@ int CgnsFile::Sol_Write_Integer(const char *name, int* data)
 	return impl->m_solutionWriter->Sol_Write_Integer(name, data);
 }
 
+int CgnsFile::Sol_Write_Cell_Integer(const char *name, int* data)
+{
+	return impl->m_solutionWriter->Sol_Write_Cell_Integer(name, data);
+}
+
 int CgnsFile::Sol_Write_Real(const char *name, double* data)
 {
 	return impl->m_solutionWriter->Sol_Write_Real(name, data);
+}
+
+int CgnsFile::Sol_Write_Cell_Real(const char *name, double* data)
+{
+	return impl->m_solutionWriter->Sol_Write_Cell_Real(name, data);
 }
 
 int CgnsFile::ErrorCode_Write(int errorcode)

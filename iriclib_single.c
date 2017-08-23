@@ -397,9 +397,19 @@ int cg_iRIC_Write_Sol_Integer(char* name, int* data)
 	return cg_iRIC_Write_Sol_Integer_Mul(lastfileid, name, data);
 }
 
+int cg_iRIC_Write_Sol_Cell_Integer(char* name, int* data)
+{
+	return cg_iRIC_Write_Sol_Cell_Integer_Mul(lastfileid, name, data);
+}
+
 int cg_iRIC_Write_Sol_Real(char* name, double* data)
 {
 	return cg_iRIC_Write_Sol_Real_Mul(lastfileid, name, data);
+}
+
+int cg_iRIC_Write_Sol_Cell_Real(char* name, double* data)
+{
+	return cg_iRIC_Write_Sol_Cell_Real_Mul(lastfileid, name, data);
 }
 
 int cg_iRIC_Write_ErrorCode(int errorcode)

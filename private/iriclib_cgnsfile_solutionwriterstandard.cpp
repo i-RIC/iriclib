@@ -16,7 +16,7 @@ int CgnsFile::SolutionWriterStandard::Sol_Write_Time(double time)
 	int ier = stdSolWriteTime(time, i);
 	RETURN_IF_ERR;
 
-	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers));
+	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers), &(i->m_cellSolPointers));
 }
 
 int CgnsFile::SolutionWriterStandard::Sol_Write_Iteration(int index)
@@ -45,13 +45,33 @@ int CgnsFile::SolutionWriterStandard::Sol_Write_GridCoord3d(double *x, double *y
 int CgnsFile::SolutionWriterStandard::Sol_Write_Integer(const char *name, int* data)
 {
 	int F;
-	return cg_field_write(impl()->m_fileId, impl()->m_baseId, impl()->m_zoneId, impl()->m_solId, Integer, name, data, &F);
+	Impl* i = impl();
+	int solId = i->solIndex(Vertex, i->m_solId);
+	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, Integer, name, data, &F);
+}
+
+int CgnsFile::SolutionWriterStandard::Sol_Write_Cell_Integer(const char *name, int* data)
+{
+	int F;
+	Impl* i = impl();
+	int solId = i->solIndex(CellCenter, i->m_solId);
+	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, Integer, name, data, &F);
 }
 
 int CgnsFile::SolutionWriterStandard::Sol_Write_Real(const char *name, double* data)
 {
 	int F;
-	return cg_field_write(impl()->m_fileId, impl()->m_baseId, impl()->m_zoneId, impl()->m_solId, RealDouble, name, data, &F);
+	Impl* i = impl();
+	int solId = i->solIndex(Vertex, i->m_solId);
+	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, RealDouble, name, data, &F);
+}
+
+int CgnsFile::SolutionWriterStandard::Sol_Write_Cell_Real(const char *name, double* data)
+{
+	int F;
+	Impl* i = impl();
+	int solId = i->solIndex(CellCenter, i->m_solId);
+	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, RealDouble, name, data, &F);
 }
 
 int CgnsFile::SolutionWriterStandard::Sol_Particle_Write_Pos2d(cgsize_t count, double* x, double* y)
@@ -128,7 +148,7 @@ int CgnsFile::SolutionWriterStandard::stdSolWriteIteration(int index, CgnsFile::
 	RETURN_IF_ERR;
 
 	// add solution node
-	return Impl::addSolutionNode(impl->m_fileId, impl->m_baseId, impl->m_zoneId, impl->m_solId, &(impl->m_solPointers));
+	return Impl::addSolutionNode(impl->m_fileId, impl->m_baseId, impl->m_zoneId, impl->m_solId, &(impl->m_solPointers), &(impl->m_cellSolPointers));
 }
 
 int CgnsFile::SolutionWriterStandard::stdSolWriteGridCoord2d(double* x, double* y, int fid, int bid, int zid, int gcid, CgnsFile::Impl* impl)

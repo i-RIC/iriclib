@@ -5,6 +5,7 @@
 
 #include <cgnslib.h>
 
+#include <assert.h>
 #include <string>
 #include <sstream>
 
@@ -148,7 +149,8 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Time(double time)
 	RETURN_IF_ERR;
 
 	std::vector<std::string> sols;
-	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols);
+	std::vector<std::string> cellsols;
+	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols);
 	RETURN_IF_ERR;
 
 	char solname[CgnsFile::Impl::NAME_MAXLENGTH];
@@ -158,7 +160,17 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Time(double time)
 	RETURN_IF_ERR;
 
 	i->m_solPointers.push_back(solname);
-	return CgnsFile::Impl::writeFlowSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solPointers);
+	ier = CgnsFile::Impl::writeFlowSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solPointers);
+	RETURN_IF_ERR;
+
+	char cellsolname[CgnsFile::Impl::NAME_MAXLENGTH];
+	CgnsFile::Impl::getCellSolName(i->m_solId, cellsolname);
+
+	ier = linkSolution(m_fileName.c_str(), m_fileId, m_baseId, m_zoneId, 2, i->m_fileId, i->m_baseId, i->m_zoneId, cellsolname);
+	RETURN_IF_ERR;
+
+	i->m_cellSolPointers.push_back(cellsolname);
+	return CgnsFile::Impl::writeFlowCellSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_cellSolPointers);
 }
 
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Iteration(int index)
@@ -180,7 +192,8 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Iteration(int index)
 	RETURN_IF_ERR;
 
 	std::vector<std::string> sols;
-	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols);
+	std::vector<std::string> cellsols;
+	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols);
 	RETURN_IF_ERR;
 
 	char solname[CgnsFile::Impl::NAME_MAXLENGTH];
@@ -190,7 +203,17 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Iteration(int index)
 	RETURN_IF_ERR;
 
 	i->m_solPointers.push_back(solname);
-	return CgnsFile::Impl::writeFlowSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solPointers);
+	ier = CgnsFile::Impl::writeFlowSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solPointers);
+	RETURN_IF_ERR;
+
+	char cellsolname[CgnsFile::Impl::NAME_MAXLENGTH];
+	CgnsFile::Impl::getCellSolName(i->m_solId, cellsolname);
+
+	ier = linkSolution(m_fileName.c_str(), m_fileId, m_baseId, m_zoneId, 2, i->m_fileId, i->m_baseId, i->m_zoneId, cellsolname);
+	RETURN_IF_ERR;
+
+	i->m_cellSolPointers.push_back(cellsolname);
+	return CgnsFile::Impl::writeFlowCellSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_cellSolPointers);
 }
 
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_GridCoord2d(double *x, double *y)
@@ -237,10 +260,23 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Integer(const char *name,
 	return cg_field_write(m_fileId, m_baseId, m_zoneId, 1, Integer, name, data, &F);
 }
 
+int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Cell_Integer(const char *name, int* data)
+{
+	int F;
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, 2, Integer, name, data, &F);
+}
+
+
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Real(const char *name, double* data)
 {
 	int F;
 	return cg_field_write(m_fileId, m_baseId, m_zoneId, 1, RealDouble, name, data, &F);
+}
+
+int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Cell_Real(const char *name, double* data)
+{
+	int F;
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, 2, RealDouble, name, data, &F);
 }
 
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Particle_Write_Pos2d(cgsize_t count, double* x, double* y)

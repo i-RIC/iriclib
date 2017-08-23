@@ -6,6 +6,14 @@ configure_file(case_init.cgn case_init.cgn COPYONLY)
 
 configure_file(case_nogrid.cgn case_nogrid.cgn COPYONLY)
 
+configure_file(case_read_adf.cgn case_read_adf.cgn COPYONLY)
+
+configure_file(case_read_hdf5.cgn case_read_hdf5.cgn COPYONLY)
+
+configure_file(case_read_adf_no_sols.cgn case_read_adf_no_sols.cgn COPYONLY)
+
+configure_file(case_read_hdf5_no_sols.cgn case_read_hdf5_no_sols.cgn COPYONLY)
+
 SET(unittests_cgnsfile_SOURCES
 fs_copy.h
 cases.h
@@ -20,6 +28,7 @@ case_init.cpp
 case_initcc.cpp
 case_initoption_check.cpp
 case_initread.cpp
+case_sol_cell_readwrite.cpp
 case_sol_readwrite.cpp
 case_sol_startend.cpp
 main.cpp
