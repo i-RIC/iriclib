@@ -246,14 +246,14 @@ void readSolution(int fid)
 		VERIFY_LOG("cg_iRIC_Read_Sol_Real_Mul() ier == 0", ier == 0);
 		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[0] == %g", (double)(S - 1));
 		VERIFY_LOG(buffer, real_sol[0] == (double)(S - 1));
-		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[%d] == %g", real_sol.size() - 1, (double)(S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[%lu] == %g", real_sol.size() - 1, (double)(S - 1));
 		VERIFY_LOG(buffer, real_sol[real_sol.size()-1] == (double)(S - 1));
 
 		ier = cg_iRIC_Read_Sol_Integer_Mul(fid, S, const_cast<char*>("IBC"), int_sol.data());
 		VERIFY_LOG("cg_iRIC_Read_Sol_Integer_Mul() ier == 0", ier == 0);
 		sprintf(buffer, "cg_iRIC_Read_Sol_Integer_Mul() int_sol[0] == %d", (S - 1));
 		VERIFY_LOG(buffer, int_sol[0] == (S - 1));
-		sprintf(buffer, "cg_iRIC_Read_Sol_Integer_Mul() int_sol[%d] == %d", int_sol.size() - 1, (S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Integer_Mul() int_sol[%lu] == %d", int_sol.size() - 1, (S - 1));
 		VERIFY_LOG(buffer, int_sol[int_sol.size() - 1] == (S - 1));
 
 		// CellCenter solutions
@@ -262,14 +262,14 @@ void readSolution(int fid)
 		VERIFY_LOG("cg_iRIC_Read_Sol_Cell_Real_Mul() ier == 0", ier == 0);
 		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Real_Mul() real_ccsol[0] == %g", 0.2 + (S - 1));
 		VERIFY_LOG(buffer, real_ccsol[0] == 0.2 + (S - 1));
-		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Real_Mul() real_ccsol[%d] == %g", real_ccsol.size() - 1, 0.2 + (S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Real_Mul() real_ccsol[%lu] == %g", real_ccsol.size() - 1, 0.2 + (S - 1));
 		VERIFY_LOG(buffer, real_ccsol[real_ccsol.size() - 1] == 0.2 + (S - 1));
 
 		ier = cg_iRIC_Read_Sol_Cell_Integer_Mul(fid, S, const_cast<char*>("CCWet"), int_ccsol.data());
 		VERIFY_LOG("cg_iRIC_Read_Sol_Cell_Integer_Mul() ier == 0", ier == 0);
 		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer_Mul() int_ccsol[0] == %d", S);
 		VERIFY_LOG(buffer, int_ccsol[0] == S);
-		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer_Mul() int_ccsol[%d] == %d", int_ccsol.size() - 1, S);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer_Mul() int_ccsol[%lu] == %d", int_ccsol.size() - 1, S);
 		VERIFY_LOG(buffer, int_ccsol[int_ccsol.size() - 1] == S);
 
 		// BaseIterativeData
