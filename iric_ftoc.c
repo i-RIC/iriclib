@@ -737,6 +737,15 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_integer_mul_f, CG_IRIC_WRITE_SOL_INTEGE
 	*ier = cg_iRIC_Write_Sol_Integer_Mul(*fid, c_name, data);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_write_sol_cell_integer_mul_f, CG_IRIC_WRITE_SOL_CELL_INTEGER_MUL_F) (int *fid, STR_PSTR(name), int *data, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH + 1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_Cell_Integer_Mul(*fid, c_name, data);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_write_sol_real_mul_f, CG_IRIC_WRITE_SOL_REAL_MUL_F) (int *fid, STR_PSTR(name), double *data, int *ier STR_PLEN(name)) {
 	char c_name[CGIO_MAX_NAME_LENGTH+1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name),
@@ -744,6 +753,15 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_real_mul_f, CG_IRIC_WRITE_SOL_REAL_MUL_
 	if (*ier) return;
 
 	*ier = cg_iRIC_Write_Sol_Real_Mul(*fid, c_name, data);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_cell_real_mul_f, CG_IRIC_WRITE_SOL_CELL_REAL_MUL_F) (int *fid, STR_PSTR(name), double *data, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH + 1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_Cell_Real_Mul(*fid, c_name, data);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_errorcode_mul_f, CG_IRIC_WRITE_ERRORCODE_MUL_F) (int *fid, int *errorcode, int *ier) {
@@ -1685,6 +1703,15 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_integer_f, CG_IRIC_WRITE_SOL_INTEGER_F)
 	*ier = cg_iRIC_Write_Sol_Integer(c_name, data);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_write_sol_cell_integer_f, CG_IRIC_WRITE_SOL_CELL_INTEGER_F) (STR_PSTR(name), int *data, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH + 1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_Cell_Integer(c_name, data);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_write_sol_real_f, CG_IRIC_WRITE_SOL_REAL_F) (STR_PSTR(name), double *data, int *ier STR_PLEN(name)) {
 	char c_name[CGIO_MAX_NAME_LENGTH+1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name),
@@ -1692,6 +1719,15 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_real_f, CG_IRIC_WRITE_SOL_REAL_F) (STR_
 	if (*ier) return;
 
 	*ier = cg_iRIC_Write_Sol_Real(c_name, data);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_cell_real_f, CG_IRIC_WRITE_SOL_CELL_REAL_F) (STR_PSTR(name), double *data, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH + 1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_Cell_Real(c_name, data);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_errorcode_f, CG_IRIC_WRITE_ERRORCODE_F) (int *errorcode, int *ier) {
