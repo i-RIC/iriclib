@@ -28,7 +28,7 @@ void case_read_adf()
 	int sol_count;
 	ier = cg_iRIC_Read_Sol_Count_Mul(fid, &sol_count);
 	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() sol_count == 1", sol_count == 3);
+	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() sol_count == 3", sol_count == 3);
 
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
@@ -47,7 +47,7 @@ void case_read_hdf5()
 	int sol_count;
 	ier = cg_iRIC_Read_Sol_Count_Mul(fid, &sol_count);
 	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() sol_count == 1", sol_count == 3);
+	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() sol_count == 3", sol_count == 3);
 
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
