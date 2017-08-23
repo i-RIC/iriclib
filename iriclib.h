@@ -521,6 +521,10 @@ int IRICLIBDLL cg_iRIC_Read_Sol_Integer(int step, char *name, int* data);
 
 int IRICLIBDLL cg_iRIC_Read_Sol_Real(int step, char *name, double* data);
 
+int IRICLIBDLL cg_iRIC_Read_Sol_Cell_Integer(int step, char *name, int* data);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_Cell_Real(int step, char *name, double* data);
+
 int IRICLIBDLL cg_iRIC_Write_Sol_Time(double time);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Iteration(int index);
