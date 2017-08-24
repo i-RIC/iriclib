@@ -2,6 +2,7 @@
 #include "iriclib.h"
 #include "iriclib_cgnsfile.h"
 
+#include <string>
 #include <vector>
 
 #include <string.h>
@@ -59,6 +60,14 @@ iRICLib::CgnsFile* initCgnsFile(int fid)
 
 	lastfileid = fid;
 	return f;
+}
+
+std::string lock_filename(char* filename)
+{
+	std::string lockfilename(filename);
+	lockfilename.append(".lock");
+
+	return lockfilename;
 }
 
 } // namespace
@@ -153,66 +162,40 @@ int cg_iRIC_Set_ZoneId_Mul(int fid, int zid)
 	return f->Set_ZoneId(zid);
 }
 
-static char* local_iRIC_lock_filename(char* filename)
-{
-	char* lockfilename;
-	size_t len;
-	len	= strlen(filename);
-	lockfilename = static_cast<char*> (malloc(sizeof(char) * (len + 6)));
-	strcpy(lockfilename, filename);
-	strcpy(lockfilename + len, ".lock");
-	return lockfilename;
-}
-
 int iRIC_Write_Sol_Start(char* filename)
 {
-	char* lockfilename;
 	FILE* fp;
-	int ret;
+	int ret = 0;
 
-	ret = 0;
-	lockfilename = local_iRIC_lock_filename(filename);
-	fp = fopen(lockfilename, "w");
-	// error handling.
-	if (fp == NULL){
-		ret = 1;
-		goto FREENAME;
+	std::string lockfilename = lock_filename(filename);
+	fp = fopen(lockfilename.c_str(), "w");
+	if (fp != NULL) {
+		fclose(fp);
+		return 0;
+	} else {
+		return 1;
 	}
-	fclose(fp);
-
-FREENAME:
-	free(lockfilename);
-
-	return ret;
 }
  int iRIC_Write_Sol_End(char* filename)
 {
-	char* lockfilename;
-	int ret;
-
-	lockfilename = local_iRIC_lock_filename(filename);
-	ret = remove(lockfilename);
-
-	free(lockfilename);
-	return ret;
+	std::string lockfilename = lock_filename(filename);
+	return remove(lockfilename.c_str());
 }
 
 int iRIC_Check_Lock(char* filename)
 {
-	char* lockfilename;
 	int ret, result;
 	struct _stat buf;
 
 	ret = 0;
-	lockfilename = local_iRIC_lock_filename(filename);
-	result = _stat(lockfilename, &buf);
+	std::string lockfilename = lock_filename(filename);
+	result = _stat(lockfilename.c_str(), &buf);
 
 	if (result == 0){
 		// Getting information. succeeded. Lock file exist.
 		ret = IRIC_LOCKED;
 	}
 
-	free(lockfilename);
 	return ret;
 }
 
