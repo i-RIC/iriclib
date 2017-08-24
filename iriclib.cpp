@@ -199,19 +199,18 @@ int iRIC_Write_Sol_End(char* filename)
 
 int iRIC_Check_Lock(char* filename)
 {
-	int ret, result;
-	struct _stat buf;
+	// iRIC_Check_Lock() do nothing now, because it does not need
+	// to do any more.
+	//
+	// In the previous implementation, solver had to call iRIC_Check_Lock()
+	// and if it returned IRIC_LOCKED, the solver needed to sleep manually,
+	// until it returns 0.
+	//
+	// But in the new implementation of iRIC_Write_Sol_Start(), it
+	// waits automatically until the GUI unlock the lock file,
+	// so the solver do not need iRIC_Check_Lock for sleeping.
 
-	ret = 0;
-	std::string lockfilename = lock_filename(filename);
-	result = _stat(lockfilename.c_str(), &buf);
-
-	if (result == 0){
-		// Getting information. succeeded. Lock file exist.
-		ret = IRIC_LOCKED;
-	}
-
-	return ret;
+	return 0;
 }
 
 int iRIC_Check_Cancel()
