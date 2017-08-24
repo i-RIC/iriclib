@@ -1,8 +1,10 @@
 #include "error_macros.h"
+#include "filelocker.h"
 #include "iriclib.h"
 #include "iriclib_cgnsfile.h"
 
 #include <string>
+#include <map>
 #include <vector>
 
 #include <string.h>
@@ -27,6 +29,7 @@ namespace {
 
 const int FILES_LEN_UNIT = 10;
 std::vector<iRICLib::CgnsFile*> m_files;
+std::map<std::string, FileLocker*> m_fileLockers;
 bool m_divideSolutions = false;
 
 void initFilesFor(int fid)
@@ -68,6 +71,20 @@ std::string lock_filename(char* filename)
 	lockfilename.append(".lock");
 
 	return lockfilename;
+}
+
+FileLocker& getFileLocker(char* cgnsFileName)
+{
+	std::string lockFileName = lock_filename(cgnsFileName);
+	std::map<std::string, FileLocker*>::iterator it = m_fileLockers.find(lockFileName);
+	if (it != m_fileLockers.end()) {
+		return *(it->second);
+	}
+	FileLocker* newLocker = new FileLocker(lockFileName);
+	std::pair<std::map<std::string, FileLocker*>::iterator, bool> result =
+			m_fileLockers.insert({lockFileName, newLocker});
+	it = result.first;
+	return *(it->second);
 }
 
 } // namespace
@@ -164,22 +181,20 @@ int cg_iRIC_Set_ZoneId_Mul(int fid, int zid)
 
 int iRIC_Write_Sol_Start(char* filename)
 {
-	FILE* fp;
-	int ret = 0;
+	FileLocker& locker = getFileLocker(filename);
 
-	std::string lockfilename = lock_filename(filename);
-	fp = fopen(lockfilename.c_str(), "w");
-	if (fp != NULL) {
-		fclose(fp);
-		return 0;
-	} else {
-		return 1;
-	}
+	bool result = locker.lock();
+	if (! result) {return 1;}
+
+	return 0;
 }
- int iRIC_Write_Sol_End(char* filename)
+
+int iRIC_Write_Sol_End(char* filename)
 {
-	std::string lockfilename = lock_filename(filename);
-	return remove(lockfilename.c_str());
+	FileLocker& locker = getFileLocker(filename);
+
+	locker.unlock();
+	return 0;
 }
 
 int iRIC_Check_Lock(char* filename)
