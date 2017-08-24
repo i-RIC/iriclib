@@ -31,6 +31,8 @@ add_definitions(-DIRICLIBDLL_LIBRARY)
 
 SET(iriclib_SOURCES
 error_macros.h
+filelocker.h
+filelocker.cpp
 fortran_macros.h
 iric_ftoc.c
 iriclib.cpp
@@ -119,6 +121,7 @@ endif()
 
 
 SET(iriclib_Headers
+${PROJECT_SOURCE_DIR}/filelocker.h
 ${PROJECT_SOURCE_DIR}/iriclib.h
 ${PROJECT_SOURCE_DIR}/iriclib_f.h
 ${PROJECT_SOURCE_DIR}/iriclib_global.h

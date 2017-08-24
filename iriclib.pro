@@ -41,6 +41,7 @@ unix {
 
 # Input
 HEADERS += error_macros.h \
+           filelocker.h \
            fortran_macros.h \
            iriclib.h \
            iriclib_bstream.h \
@@ -49,13 +50,15 @@ HEADERS += error_macros.h \
            iriclib_pointmap.h \
            iriclib_polygon.h \
            iriclib_riversurvey.h \
+           private/filelocker_impl.h \
            private/iriclib_cgnsfile_baseiterativet.h \
            private/iriclib_cgnsfile_baseiterativet_detail.h \
            private/iriclib_cgnsfile_impl.h \
            private/iriclib_cgnsfile_solutionwriter.h \
            private/iriclib_cgnsfile_solutionwriterdividesolutions.h \
            private/iriclib_cgnsfile_solutionwriterstandard.h
-SOURCES += iric_ftoc.c \
+SOURCES += filelocker.cpp \
+           iric_ftoc.c \
            iriclib.cpp \
            iriclib_bstream.cpp \
            iriclib_cgnsfile_base.cpp \
