@@ -136,3 +136,4 @@ install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 enable_testing()
 add_subdirectory(unittests_cgnsfile)
+add_subdirectory(unittest_lock)
