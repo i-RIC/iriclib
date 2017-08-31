@@ -30,4 +30,11 @@ void case_SolWriteDivide();
 
 void case_addGridAndResult();
 
+void case_read_adf();
+void case_read_adf_no_results();
+
+void case_read_hdf5();
+void case_read_hdf5_no_results();
+
+
 } // extern "C"

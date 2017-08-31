@@ -4,6 +4,7 @@
 #include "private/iriclib_cgnsfile_solutionwriterdividesolutions.h"
 #include "private/iriclib_cgnsfile_solutionwriterstandard.h"
 
+#include <assert.h>
 #include <string>
 #include <string.h>
 
@@ -211,7 +212,10 @@ int CgnsFile::Impl::clearResultGrids()
 
 int CgnsFile::Impl::loadResultData()
 {
-	int ier = gotoBase();
+	int ier = cg_gopath(m_fileId, "/iRIC/iRICZone/ZoneIterativeData/FlowCellSolutionPointers");
+	m_hasCellSols = (ier == 0);
+
+	ier = gotoBase();
 	RETURN_IF_ERR;
 
 	ier = cg_nsols(m_fileId, m_baseId, m_zoneId, &m_solId);
@@ -677,6 +681,11 @@ void CgnsFile::Impl::getSolName(int num, char* name)
 	sprintf(name, "FlowSolution%d", num);
 }
 
+void CgnsFile::Impl::getCellSolName(int num, char* name)
+{
+	sprintf(name, "FlowCellSolution%d", num);
+}
+
 void CgnsFile::Impl::getSolGridCoordName(int num, char* name)
 {
 	sprintf(name, "GridCoordinatesForSolution%d", num);
@@ -687,11 +696,15 @@ void CgnsFile::Impl::getParticleSolName(int num, char* name)
 	sprintf(name, "ParticleSolution%d", num);
 }
 
-int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols)
+int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols)
 {
 	char solname[NAME_MAXLENGTH];
 	getSolName(sid, solname);
 	sols->push_back(solname);
+
+	char cellsolname[NAME_MAXLENGTH];
+	getCellSolName(sid, cellsolname);
+	cellsols->push_back(cellsolname);
 
 	int ier = cg_goto(fid, bid, "Zone_t", zid, ZINAME.c_str(), 0, NULL);
 	RETURN_IF_ERR;
@@ -700,7 +713,13 @@ int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vec
 	ier = cg_sol_write(fid, bid, zid, solname, Vertex, &S);
 	RETURN_IF_ERR;
 
-	return writeFlowSolutionPointers(fid, bid, zid, *sols);
+	ier = cg_sol_write(fid, bid, zid, cellsolname, CellCenter, &S);
+	RETURN_IF_ERR;
+
+	ier = writeFlowSolutionPointers(fid, bid, zid, *sols);
+	RETURN_IF_ERR;
+
+	return writeFlowCellSolutionPointers(fid, bid, zid, *cellsols);
 }
 
 int CgnsFile::Impl::addSolutionGridCoordNode(int fid, int bid, int zid, int sid, std::vector<std::string>* coords)
@@ -728,39 +747,55 @@ int CgnsFile::Impl::addParticleSolutionNode(int fid, int bid, int zid, int sid)
 	return cg_user_data_write(solname);
 }
 
-int CgnsFile::Impl::writeFlowSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols)
+int CgnsFile::Impl::solIndex(CGNS_ENUMT(GridLocation_t) location, int step)
+{
+	int index = step;
+	if (this->m_hasCellSols) {
+		switch (location) {
+		case CGNS_ENUMV(Vertex):
+			index = 2 * (step - 1) + 1;
+			break;
+		case CGNS_ENUMV(CellCenter):
+			index = 2 * (step - 1) + 2;
+			break;
+		default:
+			assert(false);
+		}
+	}
+	return index;
+}
+
+int CgnsFile::Impl::writePointers(int fid, int bid, int zid, const char* name, const std::vector<std::string>& strs)
 {
 	int ier = cg_goto(fid, bid, "Zone_t", zid, ZINAME.c_str(), 0, NULL);
 	RETURN_IF_ERR;
 
 	std::vector<char> pointers;
-	pointers.assign(32 * sols.size(), ' ');
-	for (int i = 0; i < sols.size(); ++i) {
-		std::string sol = sols.at(i);
-		memcpy(pointers.data() + 32 * i, sol.c_str(), sol.length());
+	pointers.assign(32 * strs.size(), ' ');
+	for (int i = 0; i < strs.size(); ++i) {
+		std::string s = strs.at(i);
+		memcpy(pointers.data() + 32 * i, s.c_str(), s.length());
 	}
 
 	cgsize_t dimVec[2];
 	dimVec[0] = 32;
-	dimVec[1] = static_cast<cgsize_t> (sols.size());
-	return cg_array_write("FlowSolutionPointers", Character, 2, dimVec, pointers.data());
+	dimVec[1] = static_cast<cgsize_t> (strs.size());
+	return cg_array_write(name, Character, 2, dimVec, pointers.data());
+}
+
+int CgnsFile::Impl::writeFlowSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols)
+{
+	return writePointers(fid, bid, zid, "FlowSolutionPointers", sols);
+}
+
+int CgnsFile::Impl::writeFlowCellSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols)
+{
+	return writePointers(fid, bid, zid, "FlowCellSolutionPointers", sols);
 }
 
 int CgnsFile::Impl::writeGridCoordinatesPointers(int fid, int bid, int zid, const std::vector<std::string>& coords)
 {
-	int ier = cg_goto(fid, bid, "Zone_t", zid, ZINAME.c_str(), 0, NULL);
-	RETURN_IF_ERR;
-
-	std::vector<char> pointers;
-	pointers.assign(32 * coords.size(), ' ');
-	for (int i = 0; i < coords.size(); ++i) {
-		std::string coordsName = coords.at(i);
-		memcpy(pointers.data() + 32 * i, coordsName.c_str(), coordsName.length());
-	}
-	cgsize_t dimVec[2];
-	dimVec[0] = 32;
-	dimVec[1] = static_cast<cgsize_t>(coords.size());
-	return cg_array_write("GridCoordinatesPointers", Character, 2, dimVec, pointers.data());
+	return writePointers(fid, bid, zid, "GridCoordinatesPointers", coords);
 }
 
 // public interfaces

@@ -362,6 +362,16 @@ int cg_iRIC_Read_Sol_Real(int step, char* name, double* data)
 	return cg_iRIC_Read_Sol_Real_Mul(lastfileid, step, name, data);
 }
 
+int cg_iRIC_Read_Sol_Cell_Integer(int step, char* name, int* data)
+{
+	return cg_iRIC_Read_Sol_Cell_Integer_Mul(lastfileid, step, name, data);
+}
+
+int cg_iRIC_Read_Sol_Cell_Real(int step, char* name, double* data)
+{
+	return cg_iRIC_Read_Sol_Cell_Real_Mul(lastfileid, step, name, data);
+}
+
 int cg_iRIC_Write_Sol_Time(double time)
 {
 	return cg_iRIC_Write_Sol_Time_Mul(lastfileid, time);
@@ -397,9 +407,19 @@ int cg_iRIC_Write_Sol_Integer(char* name, int* data)
 	return cg_iRIC_Write_Sol_Integer_Mul(lastfileid, name, data);
 }
 
+int cg_iRIC_Write_Sol_Cell_Integer(char* name, int* data)
+{
+	return cg_iRIC_Write_Sol_Cell_Integer_Mul(lastfileid, name, data);
+}
+
 int cg_iRIC_Write_Sol_Real(char* name, double* data)
 {
 	return cg_iRIC_Write_Sol_Real_Mul(lastfileid, name, data);
+}
+
+int cg_iRIC_Write_Sol_Cell_Real(char* name, double* data)
+{
+	return cg_iRIC_Write_Sol_Cell_Real_Mul(lastfileid, name, data);
 }
 
 int cg_iRIC_Write_ErrorCode(int errorcode)

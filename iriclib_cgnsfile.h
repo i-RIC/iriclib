@@ -150,7 +150,9 @@ public:
 	int Sol_Read_GridCoord2d(int step, double* x, double* y);
 	int Sol_Read_GridCoord3d(int step, double* x, double* y, double* z);
 	int Sol_Read_Integer(int step, const char *name, int* data);
+	int Sol_Read_Cell_Integer(int step, const char *name, int* data);
 	int Sol_Read_Real(int step, const char *name, double* data);
+	int Sol_Read_Cell_Real(int step, const char *name, double* data);
 
 	int Sol_Write_Time(double time);
 	int Sol_Write_Iteration(int index);
@@ -159,7 +161,9 @@ public:
 	int Sol_Write_GridCoord2d(double *x, double *y);
 	int Sol_Write_GridCoord3d(double *x, double *y, double *z);
 	int Sol_Write_Integer(const char *name, int* data);
+	int Sol_Write_Cell_Integer(const char *name, int* data);
 	int Sol_Write_Real(const char *name, double* data);
+	int Sol_Write_Cell_Real(const char *name, double* data);
 
 	// --------------
 	// ErrorCode I/O
