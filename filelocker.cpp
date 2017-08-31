@@ -61,6 +61,7 @@ bool FileLocker::lock()
 	if (! result) {
 		return false;
 	}
+	impl->m_isLocked = true;
 	return true;
 
 #else
@@ -74,6 +75,7 @@ bool FileLocker::lock()
 	if (result != 0){
 		return false;
 	}
+	impl->m_isLocked = true;
 	return true;
 
 #endif
