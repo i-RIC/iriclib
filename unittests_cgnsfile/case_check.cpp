@@ -10,16 +10,8 @@ extern "C" {
 
 void case_CheckLock()
 {
-	FILE* f = fopen("Case1.cgn.lock", "w");
-	fclose(f);
-
-	int locked = iRIC_Check_Lock(const_cast<char*>("Case1.cgn"));
-	VERIFY_LOG("iRIC_Check_Lock() checked lock file, and it existed.", locked == IRIC_LOCKED);
-
-	remove("Case1.cgn.lock");
-
-	locked = iRIC_Check_Lock(const_cast<char*>("Case1.cgn"));
-	VERIFY_LOG("iRIC_Check_Lock() checked lock file, and it did not exist.", locked != IRIC_LOCKED);
+	// to test for Case1.cgn.lock creation this needs to be
+	// multi-threaded or multi-process
 }
 
 void case_CheckCancel()
