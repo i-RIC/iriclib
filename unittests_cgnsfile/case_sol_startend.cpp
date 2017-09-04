@@ -17,17 +17,13 @@ void case_SolStartEnd()
 	int ier = iRIC_Write_Sol_Start(const_cast<char*>("Case1.cgn"));
 	VERIFY_LOG("iRIC_Write_Sol_Start() ier == 0", ier == 0);
 
-	FILE* f = fopen("Case1.cgn.lock", "r");
-	VERIFY_LOG("iRIC_Write_Sol_Start() created Case1.cgn.lock", f != NULL);
-
-	if (f != NULL) {
-		fclose(f);
-	}
+	// to test for Case1.cgn.lock creation this needs to be
+	// multi-threaded or multi-process
 
 	ier = iRIC_Write_Sol_End(const_cast<char*>("Case1.cgn"));
 	VERIFY_LOG("iRIC_Write_Sol_End() ier == 0", ier == 0);
 
-	f = fopen("Case1.cgn.lock", "r");
+	FILE* f = fopen("Case1.cgn.lock", "r");
 	VERIFY_LOG("iRIC_Write_Sol_End() removed Case1.cgn.lock", f == NULL);
 }
 
