@@ -148,6 +148,9 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Time(double time)
 	ier = cg_array_write("TimeValues", RealDouble, 1, &dimVec, &time);
 	RETURN_IF_ERR;
 
+	ier = cg_ziter_write(m_fileId, m_baseId, m_zoneId, ZINAME.c_str());
+	RETURN_IF_ERR;
+
 	std::vector<std::string> sols;
 	std::vector<std::string> cellsols;
 	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols);
@@ -340,9 +343,6 @@ int CgnsFile::SolutionWriterDivideSolutions::setupSolutionFile(const std::string
 	RETURN_IF_ERR;
 
 	ier = linkGrid(i->m_fileName.c_str(), i->m_fileId, i->m_baseId, i->m_zoneId, 1, *fileId, *baseId, *zoneId, nullptr);
-	RETURN_IF_ERR;
-
-	ier = cg_ziter_write(*fileId, *baseId, *zoneId, ZINAME.c_str());
 	RETURN_IF_ERR;
 
 	cg_close(*fileId);

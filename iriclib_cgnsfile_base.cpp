@@ -706,10 +706,8 @@ int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vec
 	getCellSolName(sid, cellsolname);
 	cellsols->push_back(cellsolname);
 
-	int ier = cg_goto(fid, bid, "Zone_t", zid, ZINAME.c_str(), 0, NULL);
-	RETURN_IF_ERR;
+	int S, ier;
 
-	int S;
 	ier = cg_sol_write(fid, bid, zid, solname, Vertex, &S);
 	RETURN_IF_ERR;
 
