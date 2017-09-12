@@ -83,11 +83,11 @@ void writeSolution(char* filename, int fid, bool iterMode)
 		// CellCenter solutions
 
 		ccdepth.assign((isize - 1) * (jsize - 1), 0.2 + i);
-		ier = cg_iRIC_Write_Sol_Cell_Real("CCDepth", ccdepth.data());
+		ier = cg_iRIC_Write_Sol_Cell_Real(const_cast<char*>("CCDepth"), ccdepth.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Real() ier == 0", ier == 0);
 
 		ccwet.assign((isize - 1) * (jsize - 1), i + 1);
-		ier = cg_iRIC_Write_Sol_Cell_Integer("CCWet", ccwet.data());
+		ier = cg_iRIC_Write_Sol_Cell_Integer(const_cast<char*>("CCWet"), ccwet.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Integer() ier == 0", ier == 0);
 
 		// BaseIterativeData
