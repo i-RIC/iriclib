@@ -113,7 +113,7 @@ int cg_iRIC_Flush(char* filename, int* fid){
 	int ier = cgnsFile->Flush();
 	RETURN_IF_ERR;
 
-	// close the CGNS fie first.
+	// close the CGNS file first.
 	ier = cg_close(*fid);
 	RETURN_IF_ERR;
 
