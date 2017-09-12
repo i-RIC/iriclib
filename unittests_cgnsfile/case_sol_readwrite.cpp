@@ -290,11 +290,11 @@ void readSolution(int fid)
 	}
 }
 
-void case_SolWriteStd()
+void case_SolWriteStd(const std::string& origCgnsName)
 {
 	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);
 
-	fs::copy("case_init.cgn", "case_solstd.cgn");
+	fs::copy(origCgnsName, "case_solstd.cgn");
 
 	int fid;
 	int ier = cg_open("case_solstd.cgn", CG_MODE_MODIFY, &fid);
@@ -327,7 +327,7 @@ void case_SolWriteStd()
 
 	// @todo add codes to test
 
-	fs::copy("case_init.cgn", "case_solstd3d.cgn");
+	fs::copy(origCgnsName, "case_solstd3d.cgn");
 
 	ier = cg_open("case_solstd3d.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -346,7 +346,7 @@ void case_SolWriteStd()
 
 	// @todo add codes to test
 
-	fs::copy("case_init.cgn", "case_solstditer.cgn");
+	fs::copy(origCgnsName, "case_solstditer.cgn");
 
 	ier = cg_open("case_solstditer.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -366,7 +366,7 @@ void case_SolWriteStd()
 	// @todo add codes to test
 }
 
-void case_SolWriteDivide()
+void case_SolWriteDivide(const std::string& origCgnsName)
 {
 	iRIC_InitOption(IRIC_OPTION_DIVIDESOLUTIONS);
 
@@ -377,7 +377,7 @@ void case_SolWriteDivide()
 	remove("case_soldivide_Solution4.cgn");
 	remove("case_soldivide_Solution5.cgn");
 
-	fs::copy("case_init.cgn", "case_soldivide.cgn");
+	fs::copy(origCgnsName, "case_soldivide.cgn");
 
 	int fid;
 	int ier = cg_open("case_soldivide.cgn", CG_MODE_MODIFY, &fid);
@@ -422,7 +422,7 @@ void case_SolWriteDivide()
 
 	// @todo add codes to test
 
-	fs::copy("case_init.cgn", "case_soldivide3d.cgn");
+	fs::copy(origCgnsName, "case_soldivide3d.cgn");
 
 	ier = cg_open("case_soldivide3d.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -448,6 +448,26 @@ void case_SolWriteDivide()
 
 	// restore mode.
 	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);
+}
+
+void case_SolWriteStd_adf()
+{
+	case_SolWriteStd("case_init.cgn");
+}
+
+void case_SolWriteStd_hdf5()
+{
+	case_SolWriteStd("case_init_hdf5.cgn");
+}
+
+void case_SolWriteDivide_adf()
+{
+	case_SolWriteDivide("case_init.cgn");
+}
+
+void case_SolWriteDivide_hdf5()
+{
+	case_SolWriteDivide("case_init_hdf5.cgn");
 }
 
 } // extern "C"
