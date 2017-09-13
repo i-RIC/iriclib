@@ -1,7 +1,10 @@
 #include "error_macros.h"
+#include "filelocker.h"
 #include "iriclib.h"
 #include "iriclib_cgnsfile.h"
 
+#include <string>
+#include <map>
 #include <vector>
 
 #include <string.h>
@@ -26,6 +29,7 @@ namespace {
 
 const int FILES_LEN_UNIT = 10;
 std::vector<iRICLib::CgnsFile*> m_files;
+std::map<std::string, FileLocker*> m_fileLockers;
 bool m_divideSolutions = false;
 
 void initFilesFor(int fid)
@@ -59,6 +63,28 @@ iRICLib::CgnsFile* initCgnsFile(int fid)
 
 	lastfileid = fid;
 	return f;
+}
+
+std::string lock_filename(char* filename)
+{
+	std::string lockfilename(filename);
+	lockfilename.append(".lock");
+
+	return lockfilename;
+}
+
+FileLocker& getFileLocker(char* cgnsFileName)
+{
+	std::string lockFileName = lock_filename(cgnsFileName);
+	std::map<std::string, FileLocker*>::iterator it = m_fileLockers.find(lockFileName);
+	if (it != m_fileLockers.end()) {
+		return *(it->second);
+	}
+	FileLocker* newLocker = new FileLocker(lockFileName);
+	std::pair<std::map<std::string, FileLocker*>::iterator, bool> result =
+			m_fileLockers.insert({lockFileName, newLocker});
+	it = result.first;
+	return *(it->second);
 }
 
 } // namespace
@@ -153,67 +179,38 @@ int cg_iRIC_Set_ZoneId_Mul(int fid, int zid)
 	return f->Set_ZoneId(zid);
 }
 
-static char* local_iRIC_lock_filename(char* filename)
-{
-	char* lockfilename;
-	size_t len;
-	len	= strlen(filename);
-	lockfilename = static_cast<char*> (malloc(sizeof(char) * (len + 6)));
-	strcpy(lockfilename, filename);
-	strcpy(lockfilename + len, ".lock");
-	return lockfilename;
-}
-
 int iRIC_Write_Sol_Start(char* filename)
 {
-	char* lockfilename;
-	FILE* fp;
-	int ret;
+	FileLocker& locker = getFileLocker(filename);
 
-	ret = 0;
-	lockfilename = local_iRIC_lock_filename(filename);
-	fp = fopen(lockfilename, "w");
-	// error handling.
-	if (fp == NULL){
-		ret = 1;
-		goto FREENAME;
-	}
-	fclose(fp);
+	bool result = locker.lock();
+	if (! result) {return 1;}
 
-FREENAME:
-	free(lockfilename);
-
-	return ret;
+	return 0;
 }
- int iRIC_Write_Sol_End(char* filename)
+
+int iRIC_Write_Sol_End(char* filename)
 {
-	char* lockfilename;
-	int ret;
+	FileLocker& locker = getFileLocker(filename);
 
-	lockfilename = local_iRIC_lock_filename(filename);
-	ret = remove(lockfilename);
-
-	free(lockfilename);
-	return ret;
+	locker.unlock();
+	return 0;
 }
 
 int iRIC_Check_Lock(char* filename)
 {
-	char* lockfilename;
-	int ret, result;
-	struct _stat buf;
+	// iRIC_Check_Lock() do nothing now, because it does not need
+	// to do any more.
+	//
+	// In the previous implementation, solver had to call iRIC_Check_Lock()
+	// and if it returned IRIC_LOCKED, the solver needed to sleep manually,
+	// until it returns 0.
+	//
+	// But in the new implementation of iRIC_Write_Sol_Start(), it
+	// waits automatically until the GUI unlock the lock file,
+	// so the solver do not need iRIC_Check_Lock for sleeping.
 
-	ret = 0;
-	lockfilename = local_iRIC_lock_filename(filename);
-	result = _stat(lockfilename, &buf);
-
-	if (result == 0){
-		// Getting information. succeeded. Lock file exist.
-		ret = IRIC_LOCKED;
-	}
-
-	free(lockfilename);
-	return ret;
+	return 0;
 }
 
 int iRIC_Check_Cancel()
