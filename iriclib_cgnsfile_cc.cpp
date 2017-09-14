@@ -125,7 +125,7 @@ int CgnsFile::CC_Write_Functional(const char *name, int length, double* realarra
 	return 0;
 }
 
-int CgnsFile::CC_Write_FunctionalWithName(const char *name, char* paramname, int length, double* data)
+int CgnsFile::CC_Write_FunctionalWithName(const char *name, const char* paramname, int length, double* data)
 {
 	int ier = impl->gotoCCChildCreateIfNotExist(name);
 	RETURN_IF_ERR;

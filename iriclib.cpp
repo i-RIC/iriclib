@@ -70,7 +70,7 @@ int cg_iRIC_Init(int fid){
 	return f->Init();
 }
 
-int cg_iRIC_InitRead_Base(int fid, char* bname)
+int cg_iRIC_InitRead_Base(int fid, const char* bname)
 {
 	iRICLib::CgnsFile* f = initCgnsFile(fid);
 	return f->InitRead_Base(bname);
@@ -82,7 +82,7 @@ int cg_iRIC_InitRead(int fid)
 	return f->InitRead();
 }
 
-void cg_iRIC_SetFilename(int fid, char* fname)
+void cg_iRIC_SetFilename(int fid, const char* fname)
 {
 	GET_F_VOID(fid);
 	f->setFileName(fname);
@@ -108,7 +108,7 @@ int iRIC_InitOption(int option)
 	return 0;
 }
 
-int cg_iRIC_Flush(char* filename, int* fid){
+int cg_iRIC_Flush(const char* filename, int* fid){
 	iRICLib::CgnsFile* cgnsFile = m_files.at(*fid);
 	int ier = cgnsFile->Flush();
 	RETURN_IF_ERR;
@@ -153,7 +153,7 @@ int cg_iRIC_Set_ZoneId_Mul(int fid, int zid)
 	return f->Set_ZoneId(zid);
 }
 
-static char* local_iRIC_lock_filename(char* filename)
+static char* local_iRIC_lock_filename(const char* filename)
 {
 	char* lockfilename;
 	size_t len;
@@ -164,7 +164,7 @@ static char* local_iRIC_lock_filename(char* filename)
 	return lockfilename;
 }
 
-int iRIC_Write_Sol_Start(char* filename)
+int iRIC_Write_Sol_Start(const char* filename)
 {
 	char* lockfilename;
 	FILE* fp;
@@ -185,7 +185,7 @@ FREENAME:
 
 	return ret;
 }
- int iRIC_Write_Sol_End(char* filename)
+int iRIC_Write_Sol_End(const char* filename)
 {
 	char* lockfilename;
 	int ret;
@@ -197,7 +197,7 @@ FREENAME:
 	return ret;
 }
 
-int iRIC_Check_Lock(char* filename)
+int iRIC_Check_Lock(const char* filename)
 {
 	char* lockfilename;
 	int ret, result;
@@ -233,157 +233,157 @@ int iRIC_Check_Cancel()
 	return 0;
 }
 
-int cg_iRIC_Read_Integer_Mul(int fid, char* name, int* intvalue){
+int cg_iRIC_Read_Integer_Mul(int fid, const char* name, int* intvalue){
 	GET_F(fid);
 	return f->CC_Read_Integer(name, intvalue);
 }
 
-int cg_iRIC_Read_Real_Mul(int fid, char* name, double* realvalue){
+int cg_iRIC_Read_Real_Mul(int fid, const char* name, double* realvalue){
 	GET_F(fid);
 	return f->CC_Read_Real(name, realvalue);
 }
 
-int cg_iRIC_Read_RealSingle_Mul(int fid, char* name, float* realvalue){
+int cg_iRIC_Read_RealSingle_Mul(int fid, const char* name, float* realvalue){
 	GET_F(fid);
 	return f->CC_Read_RealSingle(name, realvalue);
 }
 
-int cg_iRIC_Read_StringLen_Mul(int fid, char* name, int* length){
+int cg_iRIC_Read_StringLen_Mul(int fid, const char* name, int* length){
 	GET_F(fid);
 	return f->CC_Read_StringLen(name, length);
 }
 
-int cg_iRIC_Read_String_Mul(int fid, char* name, char* strvalue){
+int cg_iRIC_Read_String_Mul(int fid, const char* name, char* strvalue){
 	GET_F(fid);
 	return f->CC_Read_String(name, strvalue);
 }
 
-int cg_iRIC_Read_FunctionalSize_Mul(int fid, char* name, cgsize_t* size)
+int cg_iRIC_Read_FunctionalSize_Mul(int fid, const char* name, cgsize_t* size)
 {
 	GET_F(fid);
 	return f->CC_Read_FunctionalSize(name, size);
 }
 
-int cg_iRIC_Read_Functional_Mul(int fid, char* name, double* x, double* y){
+int cg_iRIC_Read_Functional_Mul(int fid, const char* name, double* x, double* y){
 	GET_F(fid);
 	return f->CC_Read_Functional(name, x, y);
 }
 
-int cg_iRIC_Read_FunctionalWithName_Mul(int fid, char* name, char* paramname, double* data)
+int cg_iRIC_Read_FunctionalWithName_Mul(int fid, const char* name, const char* paramname, double* data)
 {
 	GET_F(fid);
 	return f->CC_Read_FunctionalWithName(name, paramname, data);
 }
 
-int cg_iRIC_Read_Functional_RealSingle_Mul(int fid, char* name, float* x, float* y){
+int cg_iRIC_Read_Functional_RealSingle_Mul(int fid, const char* name, float* x, float* y){
 	GET_F(fid);
 	return f->CC_Read_Functional_RealSingle(name, x, y);
 }
 
-int cg_iRIC_Read_FunctionalWithName_RealSingle_Mul(int fid, char* name, char* paramname, float* data){
+int cg_iRIC_Read_FunctionalWithName_RealSingle_Mul(int fid, const char* name, const char* paramname, float* data){
 	GET_F(fid);
 	return f->CC_Read_FunctionalWithName_RealSingle(name, paramname, data);
 }
 
-int cg_iRIC_Write_Integer_Mul(int fid, char* name, int intvalue){
+int cg_iRIC_Write_Integer_Mul(int fid, const char* name, int intvalue){
 	GET_F(fid);
 	return f->CC_Write_Integer(name, intvalue);
 }
 
-int cg_iRIC_Write_Real_Mul(int fid, char* name, double realvalue){
+int cg_iRIC_Write_Real_Mul(int fid, const char* name, double realvalue){
 	GET_F(fid);
 	return f->CC_Write_Real(name, realvalue);
 }
 
-int cg_iRIC_Write_String_Mul(int fid, char* name, char* strvalue){
+int cg_iRIC_Write_String_Mul(int fid, const char* name, char* strvalue){
 	GET_F(fid);
 	return f->CC_Write_String(name, strvalue);
 }
 
-int cg_iRIC_Write_Functional_Mul(int fid, char* name, int length, double* realarray_x, double* realarray_y){
+int cg_iRIC_Write_Functional_Mul(int fid, const char* name, int length, double* realarray_x, double* realarray_y){
 	GET_F(fid);
 	return f->CC_Write_Functional(name, length, realarray_x, realarray_y);
 }
 
-int cg_iRIC_Write_FunctionalWithName_Mul(int fid, char* name, char* paramname, int length, double* data)
+int cg_iRIC_Write_FunctionalWithName_Mul(int fid, const char* name, const char* paramname, int length, double* data)
 {
 	GET_F(fid);
 	return f->CC_Write_FunctionalWithName(name, paramname, length, data);
 }
 
-int cg_iRIC_Read_Complex_Count_Mul(int fid, char* groupname, int* count)
+int cg_iRIC_Read_Complex_Count_Mul(int fid, const char* groupname, int* count)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_Count(groupname, count);
 }
 
-int cg_iRIC_Read_Complex_Integer_Mul(int fid, char* groupname, int num, char* name, int* intvalue)
+int cg_iRIC_Read_Complex_Integer_Mul(int fid, const char* groupname, int num, const char* name, int* intvalue)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_Integer(groupname, num, name, intvalue);
 }
 
-int cg_iRIC_Read_Complex_Real_Mul(int fid, char* groupname, int num, char* name, double* realvalue)
+int cg_iRIC_Read_Complex_Real_Mul(int fid, const char* groupname, int num, const char* name, double* realvalue)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_Real(groupname, num, name, realvalue);
 }
 
-int cg_iRIC_Read_Complex_RealSingle_Mul(int fid, char* groupname, int num, char* name, float* realvalue)
+int cg_iRIC_Read_Complex_RealSingle_Mul(int fid, const char* groupname, int num, const char* name, float* realvalue)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_RealSingle(groupname, num, name, realvalue);
 }
 
-int cg_iRIC_Read_Complex_StringLen_Mul(int fid, char* groupname, int num, char* name, int* length)
+int cg_iRIC_Read_Complex_StringLen_Mul(int fid, const char* groupname, int num, const char* name, int* length)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_StringLen(groupname, num, name, length);
 }
 
-int cg_iRIC_Read_Complex_String_Mul(int fid, char* groupname, int num, char* name, char* strvalue)
+int cg_iRIC_Read_Complex_String_Mul(int fid, const char* groupname, int num, const char* name, char* strvalue)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_String(groupname, num, name, strvalue);
 }
 
-int cg_iRIC_Read_Complex_FunctionalSize_Mul(int fid, char* groupname, int num, char* name, cgsize_t* size)
+int cg_iRIC_Read_Complex_FunctionalSize_Mul(int fid, const char* groupname, int num, const char* name, cgsize_t* size)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_FunctionalSize(groupname, num, name, size);
 }
 
-int cg_iRIC_Read_Complex_Functional_Mul(int fid, char* groupname, int num, char* name, double* x, double* y)
+int cg_iRIC_Read_Complex_Functional_Mul(int fid, const char* groupname, int num, const char* name, double* x, double* y)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_Functional(groupname, num, name, x, y);
 }
 
-int cg_iRIC_Read_Complex_FunctionalWithName_Mul(int fid, char* groupname, int num, char* name, char* paramname, double* data)
+int cg_iRIC_Read_Complex_FunctionalWithName_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, double* data)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_FunctionalWithName(groupname, num, name, paramname, data);
 }
 
-int cg_iRIC_Read_Complex_Functional_RealSingle_Mul(int fid, char* groupname, int num, char* name, float* x, float* y)
+int cg_iRIC_Read_Complex_Functional_RealSingle_Mul(int fid, const char* groupname, int num, const char* name, float* x, float* y)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_Functional_RealSingle(groupname, num, name, x, y);
 }
 
-int cg_iRIC_Read_Complex_FunctionalWithName_RealSingle_Mul(int fid, char* groupname, int num, char* name, char* paramname, float* data)
+int cg_iRIC_Read_Complex_FunctionalWithName_RealSingle_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, float* data)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_FunctionalWithName_RealSingle(groupname, num, name, paramname, data);
 }
 
-int cg_iRIC_Read_Grid_Complex_Node_Mul(int fid, char* groupname, int* values)
+int cg_iRIC_Read_Grid_Complex_Node_Mul(int fid, const char* groupname, int* values)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_Grid_Node(groupname, values);
 }
 
-int cg_iRIC_Read_Grid_Complex_Cell_Mul(int fid, char *groupname, int* values)
+int cg_iRIC_Read_Grid_Complex_Cell_Mul(int fid, const char *groupname, int* values)
 {
 	GET_F(fid);
 	return f->Complex_CC_Read_Grid_Cell(groupname, values);
@@ -395,43 +395,43 @@ int cg_iRIC_Clear_Complex_Mul(int fid)
 	return f->Complex_CC_Clear_Complex();
 }
 
-int cg_iRIC_Write_Complex_Integer_Mul(int fid, char* groupname, int num, char* name, int intvalue)
+int cg_iRIC_Write_Complex_Integer_Mul(int fid, const char* groupname, int num, const char* name, int intvalue)
 {
 	GET_F(fid);
 	return f->Complex_CC_Write_Integer(groupname, num, name, intvalue);
 }
 
-int cg_iRIC_Write_Complex_Real_Mul(int fid, char* groupname, int num, char* name, double realvalue)
+int cg_iRIC_Write_Complex_Real_Mul(int fid, const char* groupname, int num, const char* name, double realvalue)
 {
 	GET_F(fid);
 	return f->Complex_CC_Write_Real(groupname, num, name, realvalue);
 }
 
-int cg_iRIC_Write_Complex_String_Mul(int fid, char* groupname, int num, char* name, char* strvalue)
+int cg_iRIC_Write_Complex_String_Mul(int fid, const char* groupname, int num, const char* name, char* strvalue)
 {
 	GET_F(fid);
 	return f->Complex_CC_Write_String(groupname, num, name, strvalue);
 }
 
-int cg_iRIC_Write_Complex_Functional_Mul(int fid, char* groupname, int num, char* name, int length, double* realarray_x, double* realarray_y)
+int cg_iRIC_Write_Complex_Functional_Mul(int fid, const char* groupname, int num, const char* name, int length, double* realarray_x, double* realarray_y)
 {
 	GET_F(fid);
 	return f->Complex_CC_Write_Functional(groupname, num, name, length, realarray_x, realarray_y);
 }
 
-int cg_iRIC_Write_Complex_FunctionalWithName_Mul(int fid, char* groupname, int num, char* name, char* paramname, int length, double* data)
+int cg_iRIC_Write_Complex_FunctionalWithName_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, int length, double* data)
 {
 	GET_F(fid);
 	return f->Complex_CC_Write_FunctionalWithName(groupname, num, name, paramname, length, data);
 }
 
-int cg_iRIC_Write_Grid_Complex_Node_Mul(int fid, char* groupname, int* values)
+int cg_iRIC_Write_Grid_Complex_Node_Mul(int fid, const char* groupname, int* values)
 {
 	GET_F(fid);
 	return f->Complex_CC_Write_Grid_Node(groupname, values);
 }
 
-int cg_iRIC_Write_Grid_Complex_Cell_Mul(int fid, char *groupname, int* values)
+int cg_iRIC_Write_Grid_Complex_Cell_Mul(int fid, const char *groupname, int* values)
 {
 	GET_F(fid);
 	return f->Complex_CC_Write_Grid_Cell(groupname, values);
@@ -461,79 +461,79 @@ int cg_iRIC_GetGridCoord3d_Mul(int fid, double *x, double *y, double *z)
 	return f->Grid_GetCoord3d(x, y, z);
 }
 
-int cg_iRIC_Read_Grid_Real_Node_Mul(int fid, char* name, double* values)
+int cg_iRIC_Read_Grid_Real_Node_Mul(int fid, const char* name, double* values)
 {
 	GET_F(fid);
 	return f->Grid_Read_Real_Node(name, values);
 }
 
-int cg_iRIC_Read_Grid_Integer_Node_Mul(int fid, char* name, int* values)
+int cg_iRIC_Read_Grid_Integer_Node_Mul(int fid, const char* name, int* values)
 {
 	GET_F(fid);
 	return f->Grid_Read_Integer_Node(name, values);
 }
 
-int cg_iRIC_Read_Grid_Real_Cell_Mul(int fid, char *name, double* values)
+int cg_iRIC_Read_Grid_Real_Cell_Mul(int fid, const char *name, double* values)
 {
 	GET_F(fid);
 	return f->Grid_Read_Real_Cell(name, values);
 }
 
-int cg_iRIC_Read_Grid_Integer_Cell_Mul(int fid, char *name, int* values)
+int cg_iRIC_Read_Grid_Integer_Cell_Mul(int fid, const char *name, int* values)
 {
 	GET_F(fid);
 	return f->Grid_Read_Integer_Cell(name, values);
 }
 
-int cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul(int fid, char* name, char* dimname, cgsize_t* count)
+int cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul(int fid, const char* name, const char* dimname, cgsize_t* count)
 {
 	GET_F(fid);
 	return f->Grid_Read_FunctionalDimensionSize(name, dimname, count);
 }
 
-int cg_iRIC_Read_Grid_FunctionalDimension_Integer_Mul(int fid, char* name, char* dimname, int* value)
+int cg_iRIC_Read_Grid_FunctionalDimension_Integer_Mul(int fid, const char* name, const char* dimname, int* value)
 {
 	GET_F(fid);
 	return f->Grid_Read_FunctionalDimension_Integer(name, dimname, value);
 }
 
-int cg_iRIC_Read_Grid_FunctionalDimension_Real_Mul(int fid, char* name, char* dimname, double* value)
+int cg_iRIC_Read_Grid_FunctionalDimension_Real_Mul(int fid, const char* name, const char* dimname, double* value)
 {
 	GET_F(fid);
 	return f->Grid_Read_FunctionalDimension_Real(name, dimname, value);
 }
 
-int cg_iRIC_Read_Grid_FunctionalTimeSize_Mul(int fid, char* name, cgsize_t* count)
+int cg_iRIC_Read_Grid_FunctionalTimeSize_Mul(int fid, const char* name, cgsize_t* count)
 {
 	GET_F(fid);
 	return f->Grid_Read_FunctionalTimeSize(name, count);
 }
 
-int cg_iRIC_Read_Grid_FunctionalTime_Mul(int fid, char* name, double* time)
+int cg_iRIC_Read_Grid_FunctionalTime_Mul(int fid, const char* name, double* time)
 {
 	GET_F(fid);
 	return f->Grid_Read_FunctionalTime(name, time);
 }
 
-int cg_iRIC_Read_Grid_Functional_Integer_Node_Mul(int fid, char* name, int dimid, int* value)
+int cg_iRIC_Read_Grid_Functional_Integer_Node_Mul(int fid, const char* name, int dimid, int* value)
 {
 	GET_F(fid);
 	return f->Grid_Read_Functional_Integer_Node(name, dimid, value);
 }
 
-int cg_iRIC_Read_Grid_Functional_Real_Node_Mul(int fid, char* name, int dimid, double* value)
+int cg_iRIC_Read_Grid_Functional_Real_Node_Mul(int fid, const char* name, int dimid, double* value)
 {
 	GET_F(fid);
 	return f->Grid_Read_Functional_Real_Node(name, dimid, value);
 }
 
-int cg_iRIC_Read_Grid_Functional_Integer_Cell_Mul(int fid, char* name, int dimid, int* value)
+int cg_iRIC_Read_Grid_Functional_Integer_Cell_Mul(int fid, const char* name, int dimid, int* value)
 {
 	GET_F(fid);
 	return f->Grid_Read_Functional_Integer_Cell(name, dimid, value);
 }
 
-int cg_iRIC_Read_Grid_Functional_Real_Cell_Mul(int fid, char* name, int dimid, double* value)
+int cg_iRIC_Read_Grid_Functional_Real_Cell_Mul(int fid, const char* name, int dimid, double* value)
 {
 	GET_F(fid);
 	return f->Grid_Read_Functional_Real_Cell(name, dimid, value);
@@ -563,25 +563,25 @@ int cg_iRIC_InitGrid_Mul(int fid, int zoneId)
 	return f->Grid_Init(zoneId);
 }
 
-int cg_iRIC_Write_Grid_Real_Node_Mul(int fid, char* name, double* values)
+int cg_iRIC_Write_Grid_Real_Node_Mul(int fid, const char* name, double* values)
 {
 	GET_F(fid);
 	return f->Grid_Write_Real_Node(name, values);
 }
 
-int cg_iRIC_Write_Grid_Integer_Node_Mul(int fid, char* name, int* values)
+int cg_iRIC_Write_Grid_Integer_Node_Mul(int fid, const char* name, int* values)
 {
 	GET_F(fid);
 	return f->Grid_Write_Integer_Node(name, values);
 }
 
-int cg_iRIC_Write_Grid_Real_Cell_Mul(int fid, char* name, double* values)
+int cg_iRIC_Write_Grid_Real_Cell_Mul(int fid, const char* name, double* values)
 {
 	GET_F(fid);
 	return f->Grid_Write_Real_Cell(name, values);
 }
 
-int cg_iRIC_Write_Grid_Integer_Cell_Mul(int fid, char* name, int* values)
+int cg_iRIC_Write_Grid_Integer_Cell_Mul(int fid, const char* name, int* values)
 {
 	GET_F(fid);
 	return f->Grid_Write_Integer_Cell(name, values);
@@ -603,13 +603,13 @@ int cg_iRIC_Read_Sol_Iteration_Mul(int fid, int step, int* index){
 	return f->Sol_Read_Iteration(step, index);
 }
 
-int cg_iRIC_Read_Sol_BaseIterative_Integer_Mul(int fid, int step, char* name, int* value)
+int cg_iRIC_Read_Sol_BaseIterative_Integer_Mul(int fid, int step, const char* name, int* value)
 {
 	GET_F(fid);
 	return f->Sol_Read_BaseIterative_Integer(step, name, value);
 }
 
-int cg_iRIC_Read_Sol_BaseIterative_Real_Mul(int fid, int step, char* name, double* value)
+int cg_iRIC_Read_Sol_BaseIterative_Real_Mul(int fid, int step, const char* name, double* value)
 {
 	GET_F(fid);
 	return f->Sol_Read_BaseIterative_Real(step, name, value);
@@ -627,25 +627,25 @@ int cg_iRIC_Read_Sol_GridCoord3d_Mul(int fid, int step, double* x, double* y, do
 	return f->Sol_Read_GridCoord3d(step, x, y, z);
 }
 
-int cg_iRIC_Read_Sol_Integer_Mul(int fid, int step, char *name, int* data)
+int cg_iRIC_Read_Sol_Integer_Mul(int fid, int step, const char *name, int* data)
 {
 	GET_F(fid);
 	return f->Sol_Read_Integer(step, name, data);
 }
 
-int cg_iRIC_Read_Sol_Cell_Integer_Mul(int fid, int step, char *name, int* data)
+int cg_iRIC_Read_Sol_Cell_Integer_Mul(int fid, int step, const char *name, int* data)
 {
 	GET_F(fid);
 	return f->Sol_Read_Cell_Integer(step, name, data);
 }
 
-int cg_iRIC_Read_Sol_Real_Mul(int fid, int step, char *name, double* data)
+int cg_iRIC_Read_Sol_Real_Mul(int fid, int step, const char *name, double* data)
 {
 	GET_F(fid);
 	return f->Sol_Read_Real(step, name, data);
 }
 
-int cg_iRIC_Read_Sol_Cell_Real_Mul(int fid, int step, char *name, double* data)
+int cg_iRIC_Read_Sol_Cell_Real_Mul(int fid, int step, const char *name, double* data)
 {
 	GET_F(fid);
 	return f->Sol_Read_Cell_Real(step, name, data);
@@ -661,12 +661,12 @@ int cg_iRIC_Write_Sol_Iteration_Mul(int fid, int index){
 	return f->Sol_Write_Iteration(index);
 }
 
-int cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(int fid, char *name, int value){
+int cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(int fid, const char *name, int value){
 	GET_F(fid);
 	return f->Sol_Write_BaseIterative_Integer(name, value);
 }
 
-int cg_iRIC_Write_Sol_BaseIterative_Real_Mul(int fid, char *name, double value){
+int cg_iRIC_Write_Sol_BaseIterative_Real_Mul(int fid, const char *name, double value){
 	GET_F(fid);
 	return f->Sol_Write_BaseIterative_Real(name, value);
 }
@@ -683,25 +683,25 @@ int cg_iRIC_Write_Sol_GridCoord3d_Mul(int fid, double *x, double *y, double *z)
 	return f->Sol_Write_GridCoord3d(x, y, z);
 }
 
-int cg_iRIC_Write_Sol_Integer_Mul(int fid, char *name, int* data)
+int cg_iRIC_Write_Sol_Integer_Mul(int fid, const char *name, int* data)
 {
 	GET_F(fid);
 	return f->Sol_Write_Integer(name, data);
 }
 
-int cg_iRIC_Write_Sol_Cell_Integer_Mul(int fid, char *name, int* data)
+int cg_iRIC_Write_Sol_Cell_Integer_Mul(int fid, const char *name, int* data)
 {
 	GET_F(fid);
 	return f->Sol_Write_Cell_Integer(name, data);
 }
 
-int cg_iRIC_Write_Sol_Real_Mul(int fid, char *name, double* data)
+int cg_iRIC_Write_Sol_Real_Mul(int fid, const char *name, double* data)
 {
 	GET_F(fid);
 	return f->Sol_Write_Real(name, data);
 }
 
-int cg_iRIC_Write_Sol_Cell_Real_Mul(int fid, char *name, double* data)
+int cg_iRIC_Write_Sol_Cell_Real_Mul(int fid, const char *name, double* data)
 {
 	GET_F(fid);
 	return f->Sol_Write_Cell_Real(name, data);
@@ -720,71 +720,71 @@ void cg_iRIC_Init_BC_Names_Mul(int fid)
 	f->BC_Init_Names();
 }
 
-void cg_iRIC_Read_BC_Count_Mul(int fid, char* type, int* num)
+void cg_iRIC_Read_BC_Count_Mul(int fid, const char* type, int* num)
 {
 	GET_F_VOID(fid);
 	return f->BC_Read_Count(type, num);
 }
 
-int cg_iRIC_Read_BC_IndicesSize_Mul(int fid, char* type, int num, cgsize_t* size)
+int cg_iRIC_Read_BC_IndicesSize_Mul(int fid, const char* type, int num, cgsize_t* size)
 {
 	GET_F(fid);
 	return f->BC_Read_IndicesSize(type, num, size);
 }
 
-int cg_iRIC_Read_BC_Indices_Mul(int fid, char* type, int num, cgsize_t* indices)
+int cg_iRIC_Read_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t* indices)
 {
 	GET_F(fid);
 	return f->BC_Read_Indices(type, num, indices);
 }
 
-int cg_iRIC_Read_BC_Integer_Mul(int fid, char* type, int num, char* name, int* intvalue)
+int cg_iRIC_Read_BC_Integer_Mul(int fid, const char* type, int num, const char* name, int* intvalue)
 {
 	GET_F(fid);
 	return f->BC_Read_Integer(type, num, name, intvalue);
 }
 
-int cg_iRIC_Read_BC_Real_Mul(int fid, char* type, int num, char* name, double* realvalue){
+int cg_iRIC_Read_BC_Real_Mul(int fid, const char* type, int num, const char* name, double* realvalue){
 	GET_F(fid);
 	return f->BC_Read_Real(type, num, name, realvalue);
 }
 
-int cg_iRIC_Read_BC_RealSingle_Mul(int fid, char* type, int num, char* name, float* realvalue){
+int cg_iRIC_Read_BC_RealSingle_Mul(int fid, const char* type, int num, const char* name, float* realvalue){
 	GET_F(fid);
 	return f->BC_Read_RealSingle(type, num, name, realvalue);
 }
 
-int cg_iRIC_Read_BC_StringLen_Mul(int fid, char* type, int num, char* name, int* length){
+int cg_iRIC_Read_BC_StringLen_Mul(int fid, const char* type, int num, const char* name, int* length){
 	GET_F(fid);
 	return f->BC_Read_StringLen(type, num, name, length);
 }
 
-int cg_iRIC_Read_BC_String_Mul(int fid, char* type, int num, char* name, char* strvalue){
+int cg_iRIC_Read_BC_String_Mul(int fid, const char* type, int num, const char* name, char* strvalue){
 	GET_F(fid);
 	return f->BC_Read_String(type, num, name, strvalue);
 }
 
-int cg_iRIC_Read_BC_FunctionalSize_Mul(int fid, char* type, int num, char* name, cgsize_t* size){
+int cg_iRIC_Read_BC_FunctionalSize_Mul(int fid, const char* type, int num, const char* name, cgsize_t* size){
 	GET_F(fid);
 	return f->BC_Read_FunctionalSize(type, num, name, size);
 }
 
-int cg_iRIC_Read_BC_Functional_Mul(int fid, char* type, int num, char* name, double* x, double* y){
+int cg_iRIC_Read_BC_Functional_Mul(int fid, const char* type, int num, const char* name, double* x, double* y){
 	GET_F(fid);
 	return f->BC_Read_Functional(type, num, name, x, y);
 }
 
-int cg_iRIC_Read_BC_FunctionalWithName_Mul(int fid, char* type, int num, char* name, char* paramname, double* data){
+int cg_iRIC_Read_BC_FunctionalWithName_Mul(int fid, const char* type, int num, const char* name, const char* paramname, double* data){
 	GET_F(fid);
 	return f->BC_Read_FunctionalWithName(type, num, name, paramname, data);
 }
 
-int cg_iRIC_Read_BC_Functional_RealSingle_Mul(int fid, char* type, int num, char* name, float* x, float* y){
+int cg_iRIC_Read_BC_Functional_RealSingle_Mul(int fid, const char* type, int num, const char* name, float* x, float* y){
 	GET_F(fid);
 	return f->BC_Read_Functional_RealSingle(type, num, name, x, y);
 }
 
-int cg_iRIC_Read_BC_FunctionalWithName_RealSingle_Mul(int fid, char* type, int num, char* name, char* paramname, float* data){
+int cg_iRIC_Read_BC_FunctionalWithName_RealSingle_Mul(int fid, const char* type, int num, const char* name, const char* paramname, float* data){
 	GET_F(fid);
 	return f->BC_Read_FunctionalWithName_RealSingle(type, num, name, paramname, data);
 }
@@ -794,45 +794,45 @@ int cg_iRIC_Clear_BC_Mul(int fid){
 	return f->BC_Clear();
 }
 
-int cg_iRIC_Write_BC_Indices_Mul(int fid, char* type, int num, cgsize_t size, cgsize_t* indices){
+int cg_iRIC_Write_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t size, cgsize_t* indices){
 	GET_F(fid);
 	return f->BC_Write_Indices(type, num, size, indices);
 }
 
-int cg_iRIC_Write_BC_Integer_Mul(int fid, char* type, int num, char* name, int intvalue){
+int cg_iRIC_Write_BC_Integer_Mul(int fid, const char* type, int num, const char* name, int intvalue){
 	GET_F(fid);
 	return f->BC_Write_Integer(type, num, name, intvalue);
 }
 
-int cg_iRIC_Write_BC_Real_Mul(int fid, char* type, int num, char* name, double realvalue)
+int cg_iRIC_Write_BC_Real_Mul(int fid, const char* type, int num, const char* name, double realvalue)
 {
 	GET_F(fid);
 	return f->BC_Write_Real(type, num, name, realvalue);
 }
 
-int cg_iRIC_Write_BC_String_Mul(int fid, char* type, int num, char* name, char* strvalue)
+int cg_iRIC_Write_BC_String_Mul(int fid, const char* type, int num, const char* name, char* strvalue)
 {
 	GET_F(fid);
 	return f->BC_Write_String(type, num, name, strvalue);
 }
 
-int cg_iRIC_Write_BC_Functional_Mul(int fid, char* type, int num, char* name, int length, double* realarray_x, double* realarray_y){
+int cg_iRIC_Write_BC_Functional_Mul(int fid, const char* type, int num, const char* name, int length, double* realarray_x, double* realarray_y){
 	GET_F(fid);
 	return f->BC_Write_Functional(type, num, name, length, realarray_x, realarray_y);
 }
 
-int cg_iRIC_Write_BC_FunctionalWithName_Mul(int fid, char* type, int num, char* name, char* paramname, int length, double* data){
+int cg_iRIC_Write_BC_FunctionalWithName_Mul(int fid, const char* type, int num, const char* name, const char* paramname, int length, double* data){
 	GET_F(fid);
 	return f->BC_Write_FunctionalWithName(type, num, name, paramname, length, data);
 }
 
-int cg_iRIC_Read_Geo_Count_Mul(int fid, char* name, int* count)
+int cg_iRIC_Read_Geo_Count_Mul(int fid, const char* name, int* count)
 {
 	GET_F(fid);
 	return f->Geo_Count(name, count);
 }
 
-int cg_iRIC_Read_Geo_Filename_Mul(int fid, char* name, int geoid, char* filename, int* type)
+int cg_iRIC_Read_Geo_Filename_Mul(int fid, const char* name, int geoid, char* filename, int* type)
 {
 	GET_F(fid);
 	return f->Geo_Filename(name, geoid, filename, type);
@@ -850,13 +850,13 @@ int cg_iRIC_Write_Sol_Particle_Pos3d_Mul(int fid, cgsize_t count, double* x, dou
 	return f->Sol_Particle_Write_Pos3d(count, x, y, z);
 }
 
-int cg_iRIC_Write_Sol_Particle_Real_Mul(int fid, char* name, double* value)
+int cg_iRIC_Write_Sol_Particle_Real_Mul(int fid, const char* name, double* value)
 {
 	GET_F(fid);
 	return f->Sol_Particle_Write_Real(name, value);
 }
 
-int cg_iRIC_Write_Sol_Particle_Integer_Mul(int fid, char* name, int* value)
+int cg_iRIC_Write_Sol_Particle_Integer_Mul(int fid, const char* name, int* value)
 {
 	GET_F(fid);
 	return f->Sol_Particle_Write_Integer(name, value);

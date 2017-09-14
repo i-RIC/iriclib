@@ -20,7 +20,7 @@ public:
 	// Initialization and Basic functions
 	// -----------------------------------
 	int Init();
-	int InitRead_Base(char* basename);
+	int InitRead_Base(const char* basename);
 	int InitRead();
 
 	void OptionDivideSolutions();
@@ -51,7 +51,7 @@ public:
 	int CC_Write_Real(const char* name, double realvalue);
 	int CC_Write_String(const char* name, char* strvalue);
 	int CC_Write_Functional(const char* name, int length, double* realarray_x, double* realarray_y);
-	int CC_Write_FunctionalWithName(const char* name, char* paramname, int length, double* data);
+	int CC_Write_FunctionalWithName(const char* name, const char* paramname, int length, double* data);
 
 	// --------------------------------------
 	// Complex Calculation Condition Reading
@@ -177,8 +177,8 @@ public:
 
 	int Sol_Particle_Write_Pos2d(cgsize_t count, double* x, double* y);
 	int Sol_Particle_Write_Pos3d(cgsize_t count, double* x, double* y, double* z);
-	int Sol_Particle_Write_Real(char* name, double* value);
-	int Sol_Particle_Write_Integer(char* name, int* value);
+	int Sol_Particle_Write_Real(const char* name, double* value);
+	int Sol_Particle_Write_Integer(const char* name, int* value);
 
 	// --------------------
 	// Geographic data I/O
