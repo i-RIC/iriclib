@@ -297,12 +297,12 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Particle_Write_Pos3d(cgsize_t c
 	return linkParticleSolution(m_fileName.c_str(), m_fileId, m_baseId, m_zoneId, 1, i->m_fileId, i->m_baseId, i->m_zoneId, linkname);
 }
 
-int CgnsFile::SolutionWriterDivideSolutions::Sol_Particle_Write_Real(char* name, double* value)
+int CgnsFile::SolutionWriterDivideSolutions::Sol_Particle_Write_Real(const char* name, double* value)
 {
 	return SolutionWriterStandard::stdSolParticleWriteReal(name, value, m_fileId, m_baseId, m_zoneId, 1);
 }
 
-int CgnsFile::SolutionWriterDivideSolutions::Sol_Particle_Write_Integer(char* name, int* value)
+int CgnsFile::SolutionWriterDivideSolutions::Sol_Particle_Write_Integer(const char* name, int* value)
 {
 	return SolutionWriterStandard::stdSolParticleWriteInteger(name, value, m_fileId, m_baseId, m_zoneId, 1);
 }
@@ -352,7 +352,7 @@ int CgnsFile::SolutionWriterDivideSolutions::setupSolutionFile(const std::string
 	return cg_open(solFileName.c_str(), CG_MODE_MODIFY, fileId);
 }
 
-int CgnsFile::SolutionWriterDivideSolutions::linkParticleSolution(const char* filename_src, int fid_src, int bid_src, int zid_src, int sid_src, int fid_tgt, int bid_tgt, int zid_tgt, char* linkname)
+int CgnsFile::SolutionWriterDivideSolutions::linkParticleSolution(const char* filename_src, int fid_src, int bid_src, int zid_src, int sid_src, int fid_tgt, int bid_tgt, int zid_tgt, const char* linkname)
 {
 	char name[32];
 	int celldim, physdim;

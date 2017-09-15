@@ -32,7 +32,7 @@ void case_CalcCondRead()
 
 	int cond_int;
 
-	ier = cg_iRIC_Read_Integer_Mul(fid, const_cast<char*>("intval"), &cond_int);
+	ier = cg_iRIC_Read_Integer_Mul(fid, "intval", &cond_int);
 	VERIFY_LOG("cg_iRIC_Read_Integer_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Integer_Mul() val == 1", cond_int == 1);
 
@@ -41,7 +41,7 @@ void case_CalcCondRead()
 
 	double cond_double;
 
-	ier = cg_iRIC_Read_Real_Mul(fid, const_cast<char*>("doubleval"), &cond_double);
+	ier = cg_iRIC_Read_Real_Mul(fid, "doubleval", &cond_double);
 	VERIFY_LOG("cg_iRIC_Read_Real_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Real_Mul() val == 1", cond_double == 4.21);
 
@@ -51,12 +51,12 @@ void case_CalcCondRead()
 	int string_len;
 	std::vector<char> strbuffer;
 
-	ier = cg_iRIC_Read_StringLen_Mul(fid, const_cast<char*>("stringval"), &string_len);
+	ier = cg_iRIC_Read_StringLen_Mul(fid, "stringval", &string_len);
 	VERIFY_LOG("cg_iRIC_Read_StringLen_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_StringLen_Mul() val == 10", string_len == 10);
 
 	strbuffer.assign(string_len + 1, ' ');
-	ier = cg_iRIC_Read_String_Mul(fid, const_cast<char*>("stringval"), strbuffer.data());
+	ier = cg_iRIC_Read_String_Mul(fid, "stringval", strbuffer.data());
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() val == TESTSTRING", std::string("TESTSTRING") == std::string(strbuffer.data()));
 
@@ -99,7 +99,7 @@ void case_CalcCondRead()
 	params.assign(fsize, 0);
 	values.assign(fsize, 0);
 
-	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, const_cast<char*>("func2"), const_cast<char*>("time"), params.data());
+	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, const_cast<char*>("func2"), "time", params.data());
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() ier == 0", ier == 0);
 	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, const_cast<char*>("func2"), const_cast<char*>("value2"), values.data());
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() ier == 0", ier == 0);
@@ -116,12 +116,12 @@ void case_CalcCondRead()
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() value value[3]", values.at(3) == 4);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() value value[4]", values.at(4) == 4.2);
 
-	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, const_cast<char*>("func200"), const_cast<char*>("time"), params.data());
+	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, const_cast<char*>("func200"), "time", params.data());
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() ier != 0 for invalid value", ier != 0);
 
 	float floatv;
 
-	ier = cg_iRIC_Read_RealSingle_Mul(fid, const_cast<char*>("singleval"), &floatv);
+	ier = cg_iRIC_Read_RealSingle_Mul(fid, "singleval", &floatv);
 	VERIFY_LOG("cg_iRIC_Read_RealSingle_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_RealSingle_Mul() val == 3.88", fabs(floatv - 3.88) < 0.001);
 

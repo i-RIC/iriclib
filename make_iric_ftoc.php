@@ -1,4 +1,72 @@
 <?php
+print <<< END
+#define NAME_MAXLENGTH 200
+#include "fortran_macros.h"
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#include <cgnslib.h>
+#include <cgns_io.h>
+
+#include "iriclib.h"
+
+#define CCNODE "CalculationConditions"
+#define GCNODE "GridConditions"
+#define STRINGMAXLEN 2048
+
+
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - *\
+ *      Convert between Fortran and C strings                            *
+\* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+static void string_2_C_string(char *string, int string_length,
+		char *c_string, int max_len, int *ierr) {
+		int i, iend;
+
+		if (string == NULL || c_string == NULL) {
+//				cgi_error ("NULL string pointer");
+				*ierr = CG_ERROR;
+				return;
+		}
+
+		/** Skip and trailing blanks **/
+		for (iend = string_length-1; iend >= 0; iend--) {
+				if (string[iend] != ' ') break;
+		}
+		if (iend >= max_len) iend = max_len - 1;
+
+		/** Copy the non-trailing blank portion of the string **/
+		for (i = 0; i <= iend; i++)
+				c_string[i] = string[i];
+
+		/** NULL terminate the C string **/
+		c_string[i] = '\0';
+		*ierr = CG_OK;
+}
+
+static void string_2_F_string(char *c_string, char *string,
+		int string_length, int *ierr) {
+		int i;
+		size_t len;
+
+		if (c_string == NULL || string == NULL) {
+//				cgi_error ("NULL string pointer");
+				*ierr = CG_ERROR;
+				return;
+		}
+		len = strlen(c_string);
+		if (len > string_length) len = string_length;
+
+		for (i = 0; i < len; i++)
+				string[i] = c_string[i];
+		while (i < string_length)
+				string[i++] = ' ';
+		*ierr = CG_OK;
+}
+
+
+END;
 $fp = fopen("iriclib.h", "r");
 $fp2 = fopen("iric_ftoc_part.c", "w");
 
@@ -77,6 +145,8 @@ while (! feof($fp)){
 		$args = array();
 		foreach ($argstrs as $tmparg){
 			$tmparg = trim($tmparg);
+			// replace const char* with char*
+			$tmparg = str_replace("const char", "char", $tmparg);
 			$arg = array();
 			$arg['pointer'] = (FALSE !== strpos($tmparg, "*"));
 			$tmparg = str_replace("*", " ", $tmparg);
