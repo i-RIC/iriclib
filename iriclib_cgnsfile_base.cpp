@@ -45,7 +45,7 @@ CgnsFile::Impl::~Impl()
 	}
 }
 
-int CgnsFile::Impl::initBaseId(bool clearResults, char* bname, bool skipInitZone)
+int CgnsFile::Impl::initBaseId(bool clearResults, const char* bname, bool skipInitZone)
 {
 	std::string baseName = IRICBASE;
 	if (bname != NULL) {
@@ -632,7 +632,7 @@ int CgnsFile::Impl::readString(const char* name, size_t bufferLen, char* buffer)
 	return 0;
 }
 
-int CgnsFile::Impl::writeArray(const char* name, DataType_t dt, size_t length, void* memory)
+int CgnsFile::Impl::writeArray(const char* name, DataType_t dt, size_t length, const void* memory)
 {
 	int dim = 1;
 	cgsize_t dimvec = static_cast<cgsize_t> (length);
@@ -646,7 +646,7 @@ int CgnsFile::Impl::writeArray(const char* name, DataType_t dt, size_t length, v
 	return cg_array_write(name, dt, dim, &dimvec, memory);
 }
 
-int CgnsFile::Impl::writeString(const char* name, char* value)
+int CgnsFile::Impl::writeString(const char* name, const char* value)
 {
 	size_t length = strlen(value);
 	return writeArray(name, Character, length, value);
@@ -826,7 +826,7 @@ int CgnsFile::Init()
 	return impl->initBaseId(true, NULL);
 }
 
-int CgnsFile::InitRead_Base(char* bname)
+int CgnsFile::InitRead_Base(const char* bname)
 {
 	cg_configure(CG_CONFIG_COMPRESS, 0);
 

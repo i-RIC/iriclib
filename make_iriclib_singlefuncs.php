@@ -1,4 +1,16 @@
 <?php
+print <<< END
+#include "iriclib.h"
+
+extern int lastfileid;
+
+/*********************************************************/
+/* The following function implementations are generated  */
+/* using make_iriclib_singlefuncs.php                    */
+/*********************************************************/
+
+
+END;
 $fp = fopen("iriclib.h", "r");
 
 while (! feof($fp)){
@@ -29,6 +41,7 @@ while (! feof($fp)){
 				if (preg_match("/^(.+) *\\* *([a-zA-Z_]+)/", $tmparg, $matches)){
 					// print_r($matches);
 					$arg['type'] = str_replace(" ", "", $matches[1]) . "*";
+					$arg['type'] = str_replace("constchar", "const char", $arg['type']);
 					$arg['name'] = $matches[2];
 				} else {
 					echo "HANDLE Error: ", $tmparg, "\n";

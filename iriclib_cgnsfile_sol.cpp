@@ -249,12 +249,12 @@ int CgnsFile::Sol_Particle_Write_Pos3d(cgsize_t count, double* x, double* y, dou
 	return impl->m_solutionWriter->Sol_Particle_Write_Pos3d(count, x, y, z);
 }
 
-int CgnsFile::Sol_Particle_Write_Real(char* name, double* value)
+int CgnsFile::Sol_Particle_Write_Real(const char* name, double* value)
 {
 	return impl->m_solutionWriter->Sol_Particle_Write_Real(name, value);
 }
 
-int CgnsFile::Sol_Particle_Write_Integer(char* name, int* value)
+int CgnsFile::Sol_Particle_Write_Integer(const char* name, int* value)
 {
 	return impl->m_solutionWriter->Sol_Particle_Write_Integer(name, value);
 }

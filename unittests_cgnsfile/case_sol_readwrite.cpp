@@ -67,17 +67,17 @@ void writeSolution(char* filename, int fid, bool iterMode)
 		// Vertex solutions
 
 		depth.assign(isize * jsize, (double)i);
-		cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("Depth"), depth.data());
+		cg_iRIC_Write_Sol_Real_Mul(fid, "Depth", depth.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for Depth ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityX"), vx.data());
+		cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityX", vx.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityX ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityY"), vy.data());
+		cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityY", vy.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
 
 		wet.assign(isize * jsize, i);
-		cg_iRIC_Write_Sol_Integer_Mul(fid, const_cast<char*>("IBC"), wet.data());
+		cg_iRIC_Write_Sol_Integer_Mul(fid, "IBC", wet.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
 
 		// CellCenter solutions
@@ -93,10 +93,10 @@ void writeSolution(char* filename, int fid, bool iterMode)
 		// BaseIterativeData
 
 		double Dist = i * - 0.2 + 20;
-		cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, const_cast<char*>("Discharge"), Dist);
+		cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, "Discharge", Dist);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real_Mul() for Discharge ier == 0", ier == 0);
 		int DamOpen = i;
-		cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, const_cast<char*>("DamOpen"), DamOpen);
+		cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, "DamOpen", DamOpen);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
 
 		// Particle solutions

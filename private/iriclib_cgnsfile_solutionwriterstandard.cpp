@@ -86,13 +86,13 @@ int CgnsFile::SolutionWriterStandard::Sol_Particle_Write_Pos3d(cgsize_t count, d
 	return stdSolParticleWritePos3d(count, x, y, z, i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId);
 }
 
-int CgnsFile::SolutionWriterStandard::Sol_Particle_Write_Real(char* name, double* value)
+int CgnsFile::SolutionWriterStandard::Sol_Particle_Write_Real(const char* name, double* value)
 {
 	Impl* i = impl();
 	return stdSolParticleWriteReal(name, value, i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId);
 }
 
-int CgnsFile::SolutionWriterStandard::Sol_Particle_Write_Integer(char* name, int* value)
+int CgnsFile::SolutionWriterStandard::Sol_Particle_Write_Integer(const char* name, int* value)
 {
 	Impl* i = impl();
 	return stdSolParticleWriteInteger(name, value, i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId);
@@ -220,7 +220,7 @@ int CgnsFile::SolutionWriterStandard::stdSolParticleWritePos3d(cgsize_t count, d
 	return 0;
 }
 
-int CgnsFile::SolutionWriterStandard::stdSolParticleWriteReal(char* name, double* value, int fid, int bid, int zid, int sid)
+int CgnsFile::SolutionWriterStandard::stdSolParticleWriteReal(const char* name, double* value, int fid, int bid, int zid, int sid)
 {
 	char particleNodeName[Impl::NAME_MAXLENGTH];
 	Impl::getParticleSolName(sid, particleNodeName);
@@ -237,7 +237,7 @@ int CgnsFile::SolutionWriterStandard::stdSolParticleWriteReal(char* name, double
 	return Impl::writeArray(name, RealDouble, static_cast<size_t> (dimVec), value);
 }
 
-int CgnsFile::SolutionWriterStandard::stdSolParticleWriteInteger(char* name, int* value, int fid, int bid, int zid, int sid)
+int CgnsFile::SolutionWriterStandard::stdSolParticleWriteInteger(const char* name, int* value, int fid, int bid, int zid, int sid)
 {
 	char particleNodeName[Impl::NAME_MAXLENGTH];
 	Impl::getParticleSolName(sid, particleNodeName);

@@ -27,7 +27,7 @@ INCLUDEPATH += "E:/iricdev_2013/lib/install/cgnslib-3.2.1/debug/include"
 INCLUDEPATH += ".."
 
 # Input
-HEADERS += cases.h macros.h
+HEADERS += cases.h fs_copy.h macros.h
 SOURCES += case_add_grid_and_result.cpp \
            case_bc.cpp \
            case_calccond.cpp \
@@ -38,6 +38,7 @@ SOURCES += case_add_grid_and_result.cpp \
            case_initcc.cpp \
            case_initoption_check.cpp \
            case_initread.cpp \
+           case_sol_cell_readwrite.cpp \
            case_sol_readwrite.cpp \
            case_sol_startend.cpp \
            main.cpp

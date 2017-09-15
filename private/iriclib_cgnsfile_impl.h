@@ -20,7 +20,7 @@ public:
 	Impl();
 	~Impl();
 
-	int initBaseId(bool clearResults, char* baseName = NULL, bool skipInitZone = false);
+	int initBaseId(bool clearResults, const char* baseName = NULL, bool skipInitZone = false);
 	int initZoneId(bool clearResults);
 
 	void optionDivideSolutions();
@@ -78,8 +78,8 @@ public:
 	static int readStringLen(const char* name, int* length); // local_read_string_len
 	static int readString(const char* name, size_t bufferLen, char* buffer); // local_read_string
 
-	static int writeArray(const char* name, DataType_t dt, size_t length, void* memory); //local_write_array
-	static int writeString(const char* name, char* value); // local_write_string
+	static int writeArray(const char* name, DataType_t dt, size_t length, const void* memory); //local_write_array
+	static int writeString(const char* name, const char* value); // local_write_string
 
 	static void getComplexName(int num, char *name); // local_get_complex_name
 	static void getDimensionArrayName(const char* dimName, char* name);
