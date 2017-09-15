@@ -65,7 +65,7 @@ iRICLib::CgnsFile* initCgnsFile(int fid)
 	return f;
 }
 
-std::string lock_filename(char* filename)
+std::string lock_filename(const char* filename)
 {
 	std::string lockfilename(filename);
 	lockfilename.append(".lock");
@@ -73,7 +73,7 @@ std::string lock_filename(char* filename)
 	return lockfilename;
 }
 
-FileLocker& getFileLocker(char* cgnsFileName)
+FileLocker& getFileLocker(const char* cgnsFileName)
 {
 	std::string lockFileName = lock_filename(cgnsFileName);
 	std::map<std::string, FileLocker*>::iterator it = m_fileLockers.find(lockFileName);
