@@ -31,6 +31,8 @@ add_definitions(-DIRICLIBDLL_LIBRARY)
 
 SET(iriclib_SOURCES
 error_macros.h
+filelocker.h
+filelocker.cpp
 fortran_macros.h
 iric_ftoc.c
 iriclib.cpp
@@ -119,6 +121,7 @@ endif()
 
 
 SET(iriclib_Headers
+${PROJECT_SOURCE_DIR}/filelocker.h
 ${PROJECT_SOURCE_DIR}/iriclib.h
 ${PROJECT_SOURCE_DIR}/iriclib_f.h
 ${PROJECT_SOURCE_DIR}/iriclib_global.h
@@ -133,3 +136,6 @@ install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 enable_testing()
 add_subdirectory(unittests_cgnsfile)
+add_subdirectory(unittest_lock)
+add_subdirectory(unittest_cg_open_modify)
+add_subdirectory(unittest_cg_open_read)
