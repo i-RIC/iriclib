@@ -12,7 +12,7 @@ extern "C" {
 void case_InitReadSuccess()
 {
 	remove("case_initreadsuccess.cgn");
-	fs::copy("case_init.cgn", "case_initreadsuccess.cgn");
+	fs::copy("case_initread.cgn", "case_initreadsuccess.cgn");
 
 	int fid;
 	int ier = cg_open("case_initreadsuccess.cgn", CG_MODE_MODIFY, &fid);
