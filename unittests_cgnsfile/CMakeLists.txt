@@ -4,6 +4,10 @@ configure_file(case_gridfunc.cgn case_gridfunc.cgn COPYONLY)
 
 configure_file(case_init.cgn case_init.cgn COPYONLY)
 
+configure_file(case_init_hdf5.cgn case_init_hdf5.cgn COPYONLY)
+
+configure_file(case_initread.cgn case_initread.cgn COPYONLY)
+
 configure_file(case_nogrid.cgn case_nogrid.cgn COPYONLY)
 
 configure_file(case_read_adf.cgn case_read_adf.cgn COPYONLY)

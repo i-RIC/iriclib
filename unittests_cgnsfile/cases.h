@@ -25,8 +25,10 @@ void case_GridWrite();
 
 void case_SolStartEnd();
 
-void case_SolWriteStd();
-void case_SolWriteDivide();
+void case_SolWriteStd_adf();
+void case_SolWriteStd_hdf5();
+void case_SolWriteDivide_adf();
+void case_SolWriteDivide_hdf5();
 
 void case_addGridAndResult();
 

@@ -14,11 +14,11 @@
 
 extern "C" {
 
-void writeSolution(char* filename, int fid, bool iterMode)
+void writeSolution(char* filename, int* fid, bool iterMode)
 {
 	cgsize_t isize, jsize;
 
-	int ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
+	int ier = cg_iRIC_GotoGridCoord2d_Mul(*fid, &isize, &jsize);
 	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
 
 	std::vector<double> x, y;
@@ -33,7 +33,7 @@ void writeSolution(char* filename, int fid, bool iterMode)
 
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
-	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
+	ier = cg_iRIC_GetGridCoord2d_Mul(*fid, x.data(), y.data());
 
 	vx.assign(isize * jsize, 1);
 	vy.assign(isize * jsize, 0.3);
@@ -54,30 +54,30 @@ void writeSolution(char* filename, int fid, bool iterMode)
 	for (int i = 0; i < 5; ++i) {
 		if (iterMode) {
 			int IterVal = i;
-			ier = cg_iRIC_Write_Sol_Iteration_Mul(fid, IterVal);
+			ier = cg_iRIC_Write_Sol_Iteration_Mul(*fid, IterVal);
 			VERIFY_LOG("cg_iRIC_Write_Sol_Iteration_Mul() ier == 0", ier == 0);
 		} else {
 			double TimeVal = i * 2.13;
-			ier = cg_iRIC_Write_Sol_Time_Mul(fid, TimeVal);
+			ier = cg_iRIC_Write_Sol_Time_Mul(*fid, TimeVal);
 			VERIFY_LOG("cg_iRIC_Write_Sol_Time_Mul() ier == 0", ier == 0);
 		}
 
-		cg_iRIC_Write_Sol_GridCoord2d_Mul(fid, x.data(), y.data());
+		cg_iRIC_Write_Sol_GridCoord2d_Mul(*fid, x.data(), y.data());
 
 		// Vertex solutions
 
 		depth.assign(isize * jsize, (double)i);
-		cg_iRIC_Write_Sol_Real_Mul(fid, "Depth", depth.data());
+		cg_iRIC_Write_Sol_Real_Mul(*fid, "Depth", depth.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for Depth ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityX", vx.data());
+		cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityX", vx.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityX ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityY", vy.data());
+		cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityY", vy.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
 
 		wet.assign(isize * jsize, i);
-		cg_iRIC_Write_Sol_Integer_Mul(fid, "IBC", wet.data());
+		cg_iRIC_Write_Sol_Integer_Mul(*fid, "IBC", wet.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
 
 		// CellCenter solutions
@@ -93,36 +93,36 @@ void writeSolution(char* filename, int fid, bool iterMode)
 		// BaseIterativeData
 
 		double Dist = i * - 0.2 + 20;
-		cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, "Discharge", Dist);
+		cg_iRIC_Write_Sol_BaseIterative_Real_Mul(*fid, "Discharge", Dist);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real_Mul() for Discharge ier == 0", ier == 0);
 		int DamOpen = i;
-		cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, "DamOpen", DamOpen);
+		cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(*fid, "DamOpen", DamOpen);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
 
 		// Particle solutions
 
-		ier = cg_iRIC_Write_Sol_Particle_Pos2d_Mul(fid, particle_num, particle_x.data(), particle_y.data());
+		ier = cg_iRIC_Write_Sol_Particle_Pos2d_Mul(*fid, particle_num, particle_x.data(), particle_y.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Pos2d_Mul() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(fid, const_cast<char*>("VelX"), particle_vx.data());
+		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, const_cast<char*>("VelX"), particle_vx.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelX ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(fid, const_cast<char*>("VelY"), particle_vy.data());
+		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, const_cast<char*>("VelY"), particle_vy.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelY ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(fid, const_cast<char*>("Active"), particle_active.data());
+		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(*fid, const_cast<char*>("Active"), particle_active.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer_Mul() for Active ier == 0", ier == 0);
 
-		ier = cg_iRIC_Flush(filename, &fid);
+		ier = cg_iRIC_Flush(filename, fid);
 		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
 }
 
-void writeSolution3d(char* filename, int fid)
+void writeSolution3d(char* filename, int* fid)
 {
 	cgsize_t isize, jsize;
 
-	int ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
+	int ier = cg_iRIC_GotoGridCoord2d_Mul(*fid, &isize, &jsize);
 	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
 
 	std::vector<double> x, y, z;
@@ -136,9 +136,9 @@ void writeSolution3d(char* filename, int fid)
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
 	z.assign(isize * jsize, 0);
-	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
+	ier = cg_iRIC_GetGridCoord2d_Mul(*fid, x.data(), y.data());
 
-	ier = cg_iRIC_WriteGridCoord3d_Mul(fid, isize, jsize, 1, x.data(), y.data(), z.data());
+	ier = cg_iRIC_WriteGridCoord3d_Mul(*fid, isize, jsize, 1, x.data(), y.data(), z.data());
 	VERIFY_LOG("cg_iRIC_WriteGridCoord3d_Mul() ier == 0", ier == 0);
 
 	vx.assign(isize * jsize, 1);
@@ -161,47 +161,47 @@ void writeSolution3d(char* filename, int fid)
 
 	for (int i = 0; i < 5; ++i) {
 		double TimeVal = i * 2.13;
-		ier = cg_iRIC_Write_Sol_Time_Mul(fid, TimeVal);
+		ier = cg_iRIC_Write_Sol_Time_Mul(*fid, TimeVal);
 		VERIFY_LOG("cg_iRIC_Write_Sol_Time_Mul() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_GridCoord3d_Mul(fid, x.data(), y.data(), z.data());
+		ier = cg_iRIC_Write_Sol_GridCoord3d_Mul(*fid, x.data(), y.data(), z.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_GridCoord3d_Mul() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("Depth"), depth.data());
+		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, const_cast<char*>("Depth"), depth.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for Depth ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityX"), vx.data());
+		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, const_cast<char*>("VelocityX"), vx.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityX ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityY"), vy.data());
+		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, const_cast<char*>("VelocityY"), vy.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Integer_Mul(fid, const_cast<char*>("IBC"), wet.data());
+		ier = cg_iRIC_Write_Sol_Integer_Mul(*fid, const_cast<char*>("IBC"), wet.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
 
 		double Dist = i * - 0.2 + 20;
-		ier = cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, const_cast<char*>("Discharge"), Dist);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Real_Mul(*fid, const_cast<char*>("Discharge"), Dist);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real_Mul() for Discharge ier == 0", ier == 0);
 		int DamOpen = i;
-		ier = cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, const_cast<char*>("DamOpen"), DamOpen);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(*fid, const_cast<char*>("DamOpen"), DamOpen);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Pos3d_Mul(fid, particle_num, particle_x.data(), particle_y.data(), particle_z.data());
+		ier = cg_iRIC_Write_Sol_Particle_Pos3d_Mul(*fid, particle_num, particle_x.data(), particle_y.data(), particle_z.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Pos2d_Mul() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(fid, const_cast<char*>("VelX"), particle_vx.data());
+		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, const_cast<char*>("VelX"), particle_vx.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelX ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(fid, const_cast<char*>("VelY"), particle_vy.data());
+		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, const_cast<char*>("VelY"), particle_vy.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelY ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(fid, const_cast<char*>("VelZ"), particle_vz.data());
+		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, const_cast<char*>("VelZ"), particle_vz.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelZ ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(fid, const_cast<char*>("Active"), particle_active.data());
+		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(*fid, const_cast<char*>("Active"), particle_active.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer_Mul() for Active ier == 0", ier == 0);
 
-		ier = cg_iRIC_Flush(filename, &fid);
+		ier = cg_iRIC_Flush(filename, fid);
 		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
 }
@@ -290,11 +290,11 @@ void readSolution(int fid)
 	}
 }
 
-void case_SolWriteStd()
+void case_SolWriteStd(const std::string& origCgnsName)
 {
 	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);
 
-	fs::copy("case_init.cgn", "case_solstd.cgn");
+	fs::copy(origCgnsName, "case_solstd.cgn");
 
 	int fid;
 	int ier = cg_open("case_solstd.cgn", CG_MODE_MODIFY, &fid);
@@ -306,7 +306,7 @@ void case_SolWriteStd()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution(const_cast<char*>("case_solstd.cgn"), fid, false);
+	writeSolution(const_cast<char*>("case_solstd.cgn"), &fid, false);
 
 	cg_close(fid);
 
@@ -327,7 +327,7 @@ void case_SolWriteStd()
 
 	// @todo add codes to test
 
-	fs::copy("case_init.cgn", "case_solstd3d.cgn");
+	fs::copy(origCgnsName, "case_solstd3d.cgn");
 
 	ier = cg_open("case_solstd3d.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -338,7 +338,7 @@ void case_SolWriteStd()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution3d(const_cast<char*>("case_solstd3d.cgn"), fid);
+	writeSolution3d(const_cast<char*>("case_solstd3d.cgn"), &fid);
 
 	cg_close(fid);
 
@@ -346,7 +346,7 @@ void case_SolWriteStd()
 
 	// @todo add codes to test
 
-	fs::copy("case_init.cgn", "case_solstditer.cgn");
+	fs::copy(origCgnsName, "case_solstditer.cgn");
 
 	ier = cg_open("case_solstditer.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -357,7 +357,7 @@ void case_SolWriteStd()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution(const_cast<char*>("case_solstditer.cgn"), fid, true);
+	writeSolution(const_cast<char*>("case_solstditer.cgn"), &fid, true);
 
 	cg_close(fid);
 
@@ -366,7 +366,7 @@ void case_SolWriteStd()
 	// @todo add codes to test
 }
 
-void case_SolWriteDivide()
+void case_SolWriteDivide(const std::string& origCgnsName)
 {
 	iRIC_InitOption(IRIC_OPTION_DIVIDESOLUTIONS);
 
@@ -377,7 +377,7 @@ void case_SolWriteDivide()
 	remove("case_soldivide_Solution4.cgn");
 	remove("case_soldivide_Solution5.cgn");
 
-	fs::copy("case_init.cgn", "case_soldivide.cgn");
+	fs::copy(origCgnsName, "case_soldivide.cgn");
 
 	int fid;
 	int ier = cg_open("case_soldivide.cgn", CG_MODE_MODIFY, &fid);
@@ -389,7 +389,7 @@ void case_SolWriteDivide()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution(const_cast<char*>("case_soldivide.cgn"), fid, false);
+	writeSolution(const_cast<char*>("case_soldivide.cgn"), &fid, false);
 
 	cg_close(fid);
 
@@ -422,7 +422,7 @@ void case_SolWriteDivide()
 
 	// @todo add codes to test
 
-	fs::copy("case_init.cgn", "case_soldivide3d.cgn");
+	fs::copy(origCgnsName, "case_soldivide3d.cgn");
 
 	ier = cg_open("case_soldivide3d.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -433,7 +433,7 @@ void case_SolWriteDivide()
 
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	writeSolution3d(const_cast<char*>("case_soldivide3d.cgn"), fid);
+	writeSolution3d(const_cast<char*>("case_soldivide3d.cgn"), &fid);
 
 	cg_close(fid);
 
@@ -448,6 +448,26 @@ void case_SolWriteDivide()
 
 	// restore mode.
 	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);
+}
+
+void case_SolWriteStd_adf()
+{
+	case_SolWriteStd("case_init.cgn");
+}
+
+void case_SolWriteStd_hdf5()
+{
+	case_SolWriteStd("case_init_hdf5.cgn");
+}
+
+void case_SolWriteDivide_adf()
+{
+	case_SolWriteDivide("case_init.cgn");
+}
+
+void case_SolWriteDivide_hdf5()
+{
+	case_SolWriteDivide("case_init_hdf5.cgn");
 }
 
 } // extern "C"
