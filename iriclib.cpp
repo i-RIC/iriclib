@@ -292,7 +292,7 @@ int cg_iRIC_Write_Real_Mul(int fid, const char* name, double realvalue){
 	return f->CC_Write_Real(name, realvalue);
 }
 
-int cg_iRIC_Write_String_Mul(int fid, const char* name, char* strvalue){
+int cg_iRIC_Write_String_Mul(int fid, const char* name, const char* strvalue){
 	GET_F(fid);
 	return f->CC_Write_String(name, strvalue);
 }
@@ -404,7 +404,7 @@ int cg_iRIC_Write_Complex_Real_Mul(int fid, const char* groupname, int num, cons
 	return f->Complex_CC_Write_Real(groupname, num, name, realvalue);
 }
 
-int cg_iRIC_Write_Complex_String_Mul(int fid, const char* groupname, int num, const char* name, char* strvalue)
+int cg_iRIC_Write_Complex_String_Mul(int fid, const char* groupname, int num, const char* name, const char* strvalue)
 {
 	GET_F(fid);
 	return f->Complex_CC_Write_String(groupname, num, name, strvalue);
@@ -807,7 +807,7 @@ int cg_iRIC_Write_BC_Real_Mul(int fid, const char* type, int num, const char* na
 	return f->BC_Write_Real(type, num, name, realvalue);
 }
 
-int cg_iRIC_Write_BC_String_Mul(int fid, const char* type, int num, const char* name, char* strvalue)
+int cg_iRIC_Write_BC_String_Mul(int fid, const char* type, int num, const char* name, const char* strvalue)
 {
 	GET_F(fid);
 	return f->BC_Write_String(type, num, name, strvalue);

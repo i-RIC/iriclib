@@ -184,7 +184,7 @@ int CgnsFile::BC_Write_Real(const char *typeName, int num, const char *name, dou
 	return Impl::writeArray("Value", RealDouble, 1, &realvalue);
 }
 
-int CgnsFile::BC_Write_String(const char *typeName, int num, const char *name, char* strvalue)
+int CgnsFile::BC_Write_String(const char *typeName, int num, const char *name, const char* strvalue)
 {
 	int ier = impl->gotoBcChildCreateIfNotExist(typeName, num, name);
 	RETURN_IF_ERR;

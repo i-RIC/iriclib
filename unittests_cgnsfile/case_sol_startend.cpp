@@ -14,13 +14,13 @@ extern "C" {
 
 void case_SolStartEnd()
 {
-	int ier = iRIC_Write_Sol_Start(const_cast<char*>("Case1.cgn"));
+	int ier = iRIC_Write_Sol_Start("Case1.cgn");
 	VERIFY_LOG("iRIC_Write_Sol_Start() ier == 0", ier == 0);
 
 	// to test for Case1.cgn.lock creation this needs to be
 	// multi-threaded or multi-process
 
-	ier = iRIC_Write_Sol_End(const_cast<char*>("Case1.cgn"));
+	ier = iRIC_Write_Sol_End("Case1.cgn");
 	VERIFY_LOG("iRIC_Write_Sol_End() ier == 0", ier == 0);
 
 	FILE* f = fopen("Case1.cgn.lock", "r");

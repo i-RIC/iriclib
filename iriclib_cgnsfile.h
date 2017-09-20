@@ -49,7 +49,7 @@ public:
 
 	int CC_Write_Integer(const char* name, int intvalue);
 	int CC_Write_Real(const char* name, double realvalue);
-	int CC_Write_String(const char* name, char* strvalue);
+	int CC_Write_String(const char* name, const char* strvalue);
 	int CC_Write_Functional(const char* name, int length, double* realarray_x, double* realarray_y);
 	int CC_Write_FunctionalWithName(const char* name, const char* paramname, int length, double* data);
 
@@ -74,7 +74,7 @@ public:
 	int Complex_CC_Clear_Complex();
 	int Complex_CC_Write_Integer(const char* groupname, int num, const char* name, int intvalue);
 	int Complex_CC_Write_Real(const char* groupname, int num, const char* name, double realvalue);
-	int Complex_CC_Write_String(const char* groupname, int num, const char* name, char* strvalue);
+	int Complex_CC_Write_String(const char* groupname, int num, const char* name, const char* strvalue);
 	int Complex_CC_Write_Functional(const char* groupname, int num, const char* name, int length, double* realarray_x, double* realarray_y);
 	int Complex_CC_Write_FunctionalWithName(const char* groupname, int num, const char* name, const char *paramname, int length, double* data);
 	int Complex_CC_Write_Grid_Node(const char* groupname, int* values);
@@ -134,7 +134,7 @@ public:
 	int BC_Write_Indices(const char* typeName, int num, cgsize_t size, cgsize_t* indices);
 	int BC_Write_Integer(const char* typeName, int num, const char* name, int intvalue);
 	int BC_Write_Real(const char* typeName, int num, const char* name, double realvalue);
-	int BC_Write_String(const char* typeName, int num, const char* name, char* strvalue);
+	int BC_Write_String(const char* typeName, int num, const char* name, const char* strvalue);
 	int BC_Write_Functional(const char* typeName, int num, const char* name, int length, double* realarray_x, double* realarray_y);
 	int BC_Write_FunctionalWithName(const char* typeName, int num, const char* name, const char *paramname, int length, double* data);
 

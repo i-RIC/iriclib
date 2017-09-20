@@ -36,7 +36,7 @@ void case_CalcCondRead()
 	VERIFY_LOG("cg_iRIC_Read_Integer_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Integer_Mul() val == 1", cond_int == 1);
 
-	ier = cg_iRIC_Read_Integer_Mul(fid, const_cast<char*>("intval2"), &cond_int);
+	ier = cg_iRIC_Read_Integer_Mul(fid, "intval2", &cond_int);
 	VERIFY_LOG("cg_iRIC_Read_Integer_Mul() ier != 0 for invalid value", ier != 0);
 
 	double cond_double;
@@ -45,7 +45,7 @@ void case_CalcCondRead()
 	VERIFY_LOG("cg_iRIC_Read_Real_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Real_Mul() val == 1", cond_double == 4.21);
 
-	ier = cg_iRIC_Read_Real_Mul(fid, const_cast<char*>("doubleval2"), &cond_double);
+	ier = cg_iRIC_Read_Real_Mul(fid, "doubleval2", &cond_double);
 	VERIFY_LOG("cg_iRIC_Read_Real_Mul() ier != 0 for invalid value", ier != 0);
 
 	int string_len;
@@ -60,14 +60,14 @@ void case_CalcCondRead()
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() val == TESTSTRING", std::string("TESTSTRING") == std::string(strbuffer.data()));
 
-	ier = cg_iRIC_Read_StringLen_Mul(fid, const_cast<char*>("stringval2"), &string_len);
+	ier = cg_iRIC_Read_StringLen_Mul(fid, "stringval2", &string_len);
 	VERIFY_LOG("cg_iRIC_Read_StringLen_Mul() ier != 0 for invalid value", ier != 0);
 
-	ier = cg_iRIC_Read_String_Mul(fid, const_cast<char*>("stringval2"), strbuffer.data());
+	ier = cg_iRIC_Read_String_Mul(fid, "stringval2", strbuffer.data());
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() ier != 0 for invalid value", ier != 0);
 
 	cgsize_t fsize;
-	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, const_cast<char*>("func1"), &fsize);
+	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, "func1", &fsize);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() val == 4", fsize == 4);
 
@@ -75,7 +75,7 @@ void case_CalcCondRead()
 	params.assign(fsize, 0);
 	values.assign(fsize, 0);
 
-	ier = cg_iRIC_Read_Functional_Mul(fid, const_cast<char*>("func1"), params.data(), values.data());
+	ier = cg_iRIC_Read_Functional_Mul(fid, "func1", params.data(), values.data());
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() param value[0]", params.at(0) == 0);
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() param value[1]", params.at(1) == 1);
@@ -86,22 +86,22 @@ void case_CalcCondRead()
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() value value[2]", values.at(2) == 4.5);
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() value value[3]", values.at(3) == 2.8);
 
-	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, const_cast<char*>("func100"), &fsize);
+	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, "func100", &fsize);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() ier != 0 for invalid value", ier != 0);
 
-	ier = cg_iRIC_Read_Functional_Mul(fid, const_cast<char*>("func100"), params.data(), values.data());
+	ier = cg_iRIC_Read_Functional_Mul(fid, "func100", params.data(), values.data());
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() ier != 0 for invalid value", ier != 0);
 
-	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, const_cast<char*>("func2"), &fsize);
+	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, "func2", &fsize);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() val == 5", fsize == 5);
 
 	params.assign(fsize, 0);
 	values.assign(fsize, 0);
 
-	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, const_cast<char*>("func2"), "time", params.data());
+	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, "func2", "time", params.data());
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() ier == 0", ier == 0);
-	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, const_cast<char*>("func2"), const_cast<char*>("value2"), values.data());
+	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, "func2", "value2", values.data());
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() ier == 0", ier == 0);
 
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() param value[0]", params.at(0) == 0);
@@ -116,7 +116,7 @@ void case_CalcCondRead()
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() value value[3]", values.at(3) == 4);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() value value[4]", values.at(4) == 4.2);
 
-	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, const_cast<char*>("func200"), "time", params.data());
+	ier = cg_iRIC_Read_FunctionalWithName_Mul(fid, "func200", "time", params.data());
 	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_Mul() ier != 0 for invalid value", ier != 0);
 
 	float floatv;
@@ -125,7 +125,7 @@ void case_CalcCondRead()
 	VERIFY_LOG("cg_iRIC_Read_RealSingle_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_RealSingle_Mul() val == 3.88", fabs(floatv - 3.88) < 0.001);
 
-	ier = cg_iRIC_Read_RealSingle_Mul(fid, const_cast<char*>("singleval2"), &floatv);
+	ier = cg_iRIC_Read_RealSingle_Mul(fid, "singleval2", &floatv);
 	VERIFY_LOG("cg_iRIC_Read_RealSingle_Mul() ier != 0 for invalid name ", ier != 0);
 
 	std::vector<float> floatparams, floatvalues;
@@ -133,7 +133,7 @@ void case_CalcCondRead()
 	floatparams.assign(4, 0);
 	floatvalues.assign(4, 0);
 
-	ier = cg_iRIC_Read_Functional_RealSingle_Mul(fid, const_cast<char*>("func1"), floatparams.data(), floatvalues.data());
+	ier = cg_iRIC_Read_Functional_RealSingle_Mul(fid, "func1", floatparams.data(), floatvalues.data());
 	VERIFY_LOG("cg_iRIC_Read_Functional_RealSingle_Mul() ier == 0", ier == 0);
 
 	VERIFY_LOG("cg_iRIC_Read_Functional_RealSingle_Mul() param value[0]", floatparams.at(0) == 0);
@@ -163,24 +163,24 @@ void case_CalcCondWrite()
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	int write_int = 121;
-	ier = cg_iRIC_Write_Integer_Mul(fid, const_cast<char*>("write_int"), write_int);
+	ier = cg_iRIC_Write_Integer_Mul(fid, "write_int", write_int);
 	VERIFY_LOG("cg_iRIC_Write_Integer_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Integer_Mul(fid_wrong, const_cast<char*>("write_int"), write_int);
+	ier = cg_iRIC_Write_Integer_Mul(fid_wrong, "write_int", write_int);
 	VERIFY_LOG("cg_iRIC_Write_Integer_Mul() ier != 0 for invalid fid", ier != 0);
 
 	double write_double = 3.14159;
-	ier = cg_iRIC_Write_Real_Mul(fid, const_cast<char*>("write_double"), write_double);
+	ier = cg_iRIC_Write_Real_Mul(fid, "write_double", write_double);
 	VERIFY_LOG("cg_iRIC_Write_Real_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Real_Mul(fid_wrong, const_cast<char*>("write_double"), write_double);
+	ier = cg_iRIC_Write_Real_Mul(fid_wrong, "write_double", write_double);
 	VERIFY_LOG("cg_iRIC_Write_Real_Mul() ier != 0 for invalid fid", ier != 0);
 
 	std::string write_str = "TEST_STRING_3.14";
-	ier = cg_iRIC_Write_String_Mul(fid, const_cast<char*>("write_string"), const_cast<char*>(write_str.c_str()));
+	ier = cg_iRIC_Write_String_Mul(fid, "write_string", write_str.c_str());
 	VERIFY_LOG("cg_iRIC_Write_String_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_String_Mul(fid_wrong, const_cast<char*>("write_string"), const_cast<char*>(write_str.c_str()));
+	ier = cg_iRIC_Write_String_Mul(fid_wrong, "write_string", write_str.c_str());
 	VERIFY_LOG("cg_iRIC_Write_String_Mul() ier != 0 for invalid fid", ier != 0);
 
 	std::vector<double> params, vals;
@@ -191,47 +191,47 @@ void case_CalcCondWrite()
 		params[i] = 2.3 * i + 1.2;
 		vals[i] = 5.1 * i + 0.8;
 	}
-	ier = cg_iRIC_Write_Functional_Mul(fid, const_cast<char*>("write_func"), 5, params.data(), vals.data());
+	ier = cg_iRIC_Write_Functional_Mul(fid, "write_func", 5, params.data(), vals.data());
 	VERIFY_LOG("cg_iRIC_Write_Functional_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Functional_Mul(fid_wrong, const_cast<char*>("write_func"), 5, params.data(), vals.data());
+	ier = cg_iRIC_Write_Functional_Mul(fid_wrong, "write_func", 5, params.data(), vals.data());
 	VERIFY_LOG("cg_iRIC_Write_String_Mul() ier != 0 for invalid fid", ier != 0);
 
-	ier = cg_iRIC_Write_FunctionalWithName_Mul(fid, const_cast<char*>("write_func_withname"), const_cast<char*> ("time"), params.size(), params.data());
+	ier = cg_iRIC_Write_FunctionalWithName_Mul(fid, "write_func_withname", "time", params.size(), params.data());
 	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_Mul() ier == 0", ier == 0);
-	ier = cg_iRIC_Write_FunctionalWithName_Mul(fid, const_cast<char*>("write_func_withname"), const_cast<char*> ("elev"), vals.size(), vals.data());
+	ier = cg_iRIC_Write_FunctionalWithName_Mul(fid, "write_func_withname", "elev", vals.size(), vals.data());
 	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_FunctionalWithName_Mul(fid_wrong, const_cast<char*>("write_func_withname"), const_cast<char*> ("time"), params.size(), params.data());
+	ier = cg_iRIC_Write_FunctionalWithName_Mul(fid_wrong, "write_func_withname", "time", params.size(), params.data());
 	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_Mul() ier != 0 for invalid fid", ier != 0);
 
 	int read_int;
-	ier = cg_iRIC_Read_Integer_Mul(fid, const_cast<char*>("write_int"), &read_int);
+	ier = cg_iRIC_Read_Integer_Mul(fid, "write_int", &read_int);
 	VERIFY_LOG("cg_iRIC_Read_Integer_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Integer_Mul() value match", read_int == write_int);
 
 	double read_double;
-	ier = cg_iRIC_Read_Real_Mul(fid, const_cast<char*>("write_double"), &read_double);
+	ier = cg_iRIC_Read_Real_Mul(fid, "write_double", &read_double);
 	VERIFY_LOG("cg_iRIC_Read_Real_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Real_Mul() value match", read_double == read_double);
 
 	int read_strlen;
 	std::vector<char> read_str;
-	ier = cg_iRIC_Read_StringLen_Mul(fid, const_cast<char*>("write_string"), &read_strlen);
+	ier = cg_iRIC_Read_StringLen_Mul(fid, "write_string", &read_strlen);
 	read_str.assign(read_strlen + 1, ' ');
-	ier = cg_iRIC_Read_String_Mul(fid, const_cast<char*>("write_string"), read_str.data());
+	ier = cg_iRIC_Read_String_Mul(fid, "write_string", read_str.data());
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() value match", std::string(read_str.data()) == write_str);
 
 	cgsize_t func_len;
 	std::vector<double> read_params, read_vals;
-	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, const_cast<char*>("write_func"), &func_len);
+	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, "write_func", &func_len);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() value == 5", func_len == 5);
 
 	read_params.assign(func_len, 0);
 	read_vals.assign(func_len, 0);
-	ier = cg_iRIC_Read_Functional_Mul(fid, const_cast<char*>("write_func"), read_params.data(), read_vals.data());
+	ier = cg_iRIC_Read_Functional_Mul(fid, "write_func", read_params.data(), read_vals.data());
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() param match", params == read_params);
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() value match", vals == read_vals);

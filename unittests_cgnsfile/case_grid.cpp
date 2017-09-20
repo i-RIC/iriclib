@@ -49,7 +49,7 @@ void case_GridRead()
 	doubleArr.assign(isize * jsize, 0);
 	intArr.assign(isize * jsize, 0);
 
-	ier = cg_iRIC_Read_Grid_Real_Node_Mul(fid, const_cast<char*>("node_real"), doubleArr.data());
+	ier = cg_iRIC_Read_Grid_Real_Node_Mul(fid, "node_real", doubleArr.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[0] == 2", doubleArr[0] == 2);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[1] == 2", doubleArr[1] == 2);
@@ -62,7 +62,7 @@ void case_GridRead()
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[8] == 0", doubleArr[8] == 0);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[9] == 0", doubleArr[9] == 0);
 
-	ier = cg_iRIC_Read_Grid_Integer_Node_Mul(fid, const_cast<char*>("node_int"), intArr.data());
+	ier = cg_iRIC_Read_Grid_Integer_Node_Mul(fid, "node_int", intArr.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[0] == 0", intArr[0] == 0);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[1] == 0", intArr[1] == 0);
@@ -78,14 +78,14 @@ void case_GridRead()
 	doubleArr.assign((isize - 1) * (jsize - 1), 0);
 	intArr.assign((isize - 1) * (jsize - 1), 0);
 
-	ier = cg_iRIC_Read_Grid_Real_Cell_Mul(fid, const_cast<char*>("cell_real"), doubleArr.data());
+	ier = cg_iRIC_Read_Grid_Real_Cell_Mul(fid, "cell_real", doubleArr.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() value[0] == 4.2", doubleArr[0] == 4.2);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() value[1] == 4.2", doubleArr[1] == 4.2);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() value[2] == 0", doubleArr[2] == 0);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() value[3] == 0", doubleArr[3] == 0);
 
-	ier = cg_iRIC_Read_Grid_Integer_Cell_Mul(fid, const_cast<char*>("cell_int"), intArr.data());
+	ier = cg_iRIC_Read_Grid_Integer_Cell_Mul(fid, "cell_int", intArr.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[0] == 0", intArr[0] == 0);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[15] == 1", intArr[15] == 1);
@@ -125,23 +125,23 @@ void case_GridReadFunc()
 	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
 
 	cgsize_t time_count;
-	ier = cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul(fid, const_cast<char*>("Xrain"), const_cast<char*>("Time"), &time_count);
+	ier = cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul(fid, "Xrain", "Time", &time_count);
 	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul() time_count == 24", time_count == 24);
 
 	std::vector<double> timeArr;
 	timeArr.assign(time_count, 0);
-	ier = cg_iRIC_Read_Grid_FunctionalDimension_Real_Mul(fid, const_cast<char*>("Xrain"), const_cast<char*>("Time"), timeArr.data());
+	ier = cg_iRIC_Read_Grid_FunctionalDimension_Real_Mul(fid, "Xrain", "Time", timeArr.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalDimension_Real_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Read_Grid_FunctionalTime_Mul(fid, const_cast<char*>("Xrain"), timeArr.data());
+	ier = cg_iRIC_Read_Grid_FunctionalTime_Mul(fid, "Xrain", timeArr.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalTime_Mul() ier == 0", ier == 0);
 
 	std::vector<double> rain;
 	rain.assign(isize * jsize, 0);
 
 	for (int i = 0; i < timeArr.size(); ++i) {
-		ier = cg_iRIC_Read_Grid_Functional_Real_Node_Mul(fid, const_cast<char*>("Xrain"), i + 1, rain.data());
+		ier = cg_iRIC_Read_Grid_Functional_Real_Node_Mul(fid, "Xrain", i + 1, rain.data());
 		VERIFY_LOG("cg_iRIC_Read_Grid_Functional_Real_Node_Mul() ier == 0", ier == 0);
 	}
 
@@ -253,16 +253,16 @@ void case_GridWrite()
 		int_cell_write[i] = i * i - i * 4 + 414;
 	}
 
-	ier = cg_iRIC_Write_Grid_Real_Node_Mul(fid, const_cast<char*>("realnode_test"), real_node_write.data());
+	ier = cg_iRIC_Write_Grid_Real_Node_Mul(fid, "realnode_test", real_node_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Grid_Real_Node_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Grid_Integer_Node_Mul(fid, const_cast<char*>("intnode_test"), int_node_write.data());
+	ier = cg_iRIC_Write_Grid_Integer_Node_Mul(fid, "intnode_test", int_node_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Grid_Integer_Node_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Grid_Real_Cell_Mul(fid, const_cast<char*>("realcell_test"), real_cell_write.data());
+	ier = cg_iRIC_Write_Grid_Real_Cell_Mul(fid, "realcell_test", real_cell_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Grid_Real_Cell_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Grid_Integer_Cell_Mul(fid, const_cast<char*>("intcell_test"), int_cell_write.data());
+	ier = cg_iRIC_Write_Grid_Integer_Cell_Mul(fid, "intcell_test", int_cell_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Grid_Integer_Cell_Mul() ier == 0", ier == 0);
 
 	cg_close(fid);
