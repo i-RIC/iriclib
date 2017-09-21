@@ -60,11 +60,11 @@ void case_Complex()
 	VERIFY_LOG("cg_iRIC_Write_Grid_Complex_Cell_Mul() ier == 0", ier == 0);
 
 	std::string strparam_write = "iriclib1";
-	ier = cg_iRIC_Write_Complex_String_Mul(fid, "nodeparam", 1, "strparam", const_cast<char*>(strparam_write.c_str()));
+	ier = cg_iRIC_Write_Complex_String_Mul(fid, "nodeparam", 1, "strparam", strparam_write.c_str());
 	VERIFY_LOG("cg_iRIC_Write_Complex_String_Mul() ier == 0", ier == 0);
 
 	std::string strparam2_write = "cgnslib2";
-	ier = cg_iRIC_Write_Complex_String_Mul(fid, "nodeparam", 2, "strparam", const_cast<char*>(strparam2_write.c_str()));
+	ier = cg_iRIC_Write_Complex_String_Mul(fid, "nodeparam", 2, "strparam", strparam2_write.c_str());
 	VERIFY_LOG("cg_iRIC_Write_Complex_String_Mul() ier == 0", ier == 0);
 
 	std::vector<double> params_write, vals_write;
@@ -78,9 +78,9 @@ void case_Complex()
 	ier = cg_iRIC_Write_Complex_Functional_Mul(fid, "nodeparam", 1, "funcparam", 5, params_write.data(), vals_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Complex_Functional_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", const_cast<char*>("Time"), 5, params_write.data());
+	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", "Time", 5, params_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Complex_FunctionalWithName_Mul() ier == 0", ier == 0);
-	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", const_cast<char*>("Elevation"), 5, vals_write.data());
+	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", "Elevation", 5, vals_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Complex_FunctionalWithName_Mul() ier == 0", ier == 0);
 
 	std::vector<int> complex_node;
@@ -107,7 +107,7 @@ void case_Complex()
 	VERIFY_LOG("cg_iRIC_Read_Complex_Count_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Complex_Count_Mul() cellnum == 2", ier == 0);
 
-	ier = cg_iRIC_Read_Complex_Count_Mul(fid, const_cast<char*>("dummy_param"), &cellnum);
+	ier = cg_iRIC_Read_Complex_Count_Mul(fid, "dummy_param", &cellnum);
 	VERIFY_LOG("cg_iRIC_Read_Complex_Count_Mul() ier != 0 for invalid name", ier != 0);
 
 	int intparam_read;
@@ -153,11 +153,11 @@ void case_Complex()
 	times_read.assign(funclen, 0);
 	elevs_read.assign(funclen, 0);
 
-	ier = cg_iRIC_Read_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", const_cast<char*>("Time"), times_read.data());
+	ier = cg_iRIC_Read_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", "Time", times_read.data());
 	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_Mul() Time valid", times_read == params_write);
 
-	ier = cg_iRIC_Read_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", const_cast<char*>("Elevation"), elevs_read.data());
+	ier = cg_iRIC_Read_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", "Elevation", elevs_read.data());
 	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_Mul() Elevation valid", elevs_read == vals_write);
 

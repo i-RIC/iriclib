@@ -45,21 +45,21 @@ void writeSolution(int fid, int i)
 	// Vertex solutions
 
 	depth.assign(isize * jsize, (double)i);
-	cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("Depth"), depth.data());
+	cg_iRIC_Write_Sol_Real_Mul(fid, "Depth", depth.data());
 
-	cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityX"), vx.data());
+	cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityX", vx.data());
 
-	cg_iRIC_Write_Sol_Real_Mul(fid, const_cast<char*>("VelocityY"), vy.data());
+	cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityY", vy.data());
 
 	wet.assign(isize * jsize, i);
-	cg_iRIC_Write_Sol_Integer_Mul(fid, const_cast<char*>("IBC"), wet.data());
+	cg_iRIC_Write_Sol_Integer_Mul(fid, "IBC", wet.data());
 
 	// BaseIterativeData
 
 	double Dist = i * - 0.2 + 20;
-	cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, const_cast<char*>("Discharge"), Dist);
+	cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, "Discharge", Dist);
 	int DamOpen = i;
-	cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, const_cast<char*>("DamOpen"), DamOpen);
+	cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, "DamOpen", DamOpen);
 }
 
 int main(int, char* [])

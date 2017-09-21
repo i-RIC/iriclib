@@ -87,7 +87,7 @@ int IRICLIBDLL cg_iRIC_Write_Integer_Mul(int fid, const char* name, int intvalue
 
 int IRICLIBDLL cg_iRIC_Write_Real_Mul(int fid, const char* name, double realvalue);
 
-int IRICLIBDLL cg_iRIC_Write_String_Mul(int fid, const char* name, char* strvalue);
+int IRICLIBDLL cg_iRIC_Write_String_Mul(int fid, const char* name, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_Functional_Mul(int fid, const char* name, int length, double* realarray_x, double* realarray_y);
 
@@ -133,7 +133,7 @@ int IRICLIBDLL cg_iRIC_Write_Complex_Integer_Mul(int fid, const char* groupname,
 
 int IRICLIBDLL cg_iRIC_Write_Complex_Real_Mul(int fid, const char* groupname, int num, const char* name, double realvalue);
 
-int IRICLIBDLL cg_iRIC_Write_Complex_String_Mul(int fid, const char* groupname, int num, const char* name, char* strvalue);
+int IRICLIBDLL cg_iRIC_Write_Complex_String_Mul(int fid, const char* groupname, int num, const char* name, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_Complex_Functional_Mul(int fid, const char* groupname, int num, const char* name, int length, double* realarray_x, double* realarray_y);
 
@@ -297,7 +297,7 @@ int IRICLIBDLL cg_iRIC_Write_BC_Integer_Mul(int fid, const char* type, int num, 
 
 int IRICLIBDLL cg_iRIC_Write_BC_Real_Mul(int fid, const char* type, int num, const char* name, double realvalue);
 
-int IRICLIBDLL cg_iRIC_Write_BC_String_Mul(int fid, const char* type, int num, const char* name, char* strvalue);
+int IRICLIBDLL cg_iRIC_Write_BC_String_Mul(int fid, const char* type, int num, const char* name, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_BC_Functional_Mul(int fid, const char* type, int num, const char* name, int length, double* realarray_x, double* realarray_y);
 
@@ -583,7 +583,7 @@ int IRICLIBDLL cg_iRIC_Write_BC_Integer(const char* type, int num, const char* n
 
 int IRICLIBDLL cg_iRIC_Write_BC_Real(const char* type, int num, const char* name, double realvalue);
 
-int IRICLIBDLL cg_iRIC_Write_BC_String(const char* type, int num, const char* name, char* strvalue);
+int IRICLIBDLL cg_iRIC_Write_BC_String(const char* type, int num, const char* name, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_BC_Functional(const char* type, int num, const char* name, int length, double* realarray_x, double* realarray_y);
 

@@ -125,7 +125,7 @@ int CgnsFile::Complex_CC_Write_Real(const char *groupname, int num, const char *
 	return Impl::writeArray("Value", RealDouble, 1, &realvalue);
 }
 
-int CgnsFile::Complex_CC_Write_String(const char *groupname, int num, const char *name, char* strvalue)
+int CgnsFile::Complex_CC_Write_String(const char *groupname, int num, const char *name, const char* strvalue)
 {
 	int ier = impl->gotoComplexChildCreateIfNotExist(groupname, num, name);
 	RETURN_IF_ERR;

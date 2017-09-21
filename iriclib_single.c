@@ -517,7 +517,7 @@ int cg_iRIC_Write_BC_Real(const char* type, int num, const char* name, double re
 	return cg_iRIC_Write_BC_Real_Mul(lastfileid, type, num, name, realvalue);
 }
 
-int cg_iRIC_Write_BC_String(const char* type, int num, const char* name, char* strvalue)
+int cg_iRIC_Write_BC_String(const char* type, int num, const char* name, const char* strvalue)
 {
 	return cg_iRIC_Write_BC_String_Mul(lastfileid, type, num, name, strvalue);
 }

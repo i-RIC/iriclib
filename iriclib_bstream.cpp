@@ -61,7 +61,7 @@ OutputBStream& OutputBStream::operator << (const std::string& str)
 	const char* cstr = str.c_str();
 	size_t size = strlen(cstr) + 1;
 	m_stream->write(reinterpret_cast<char*>(&size), sizeof(int));
-	m_stream->write(const_cast<char*>(cstr), sizeof(char) * size);
+	m_stream->write(cstr, sizeof(char) * size);
 
 	return *this;
 }
