@@ -2,6 +2,7 @@
 
 #include "fs_copy.h"
 
+#include <cgns_io.h>
 #include <cgnslib.h>
 #include <iriclib.h>
 
@@ -290,10 +291,22 @@ void readSolution(int fid)
 	}
 }
 
+bool is_hdf(const std::string& cgnsName)
+{
+	int cgio_num, filetype;
+	if (cgio_open_file(cgnsName.c_str(), 'r', CGIO_FILE_NONE, &cgio_num))
+		return false;
+	if (cgio_get_file_type(cgio_num, &filetype))
+		return false;
+	cgio_close_file(cgio_num);
+	return (filetype == CGIO_FILE_HDF5 || filetype == CGIO_FILE_PHDF5);
+}
+
 void case_SolWriteStd(const std::string& origCgnsName)
 {
 	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);
 
+	bool hdf = is_hdf(origCgnsName);
 	fs::copy(origCgnsName, "case_solstd.cgn");
 
 	int fid;
@@ -308,7 +321,8 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	writeSolution("case_solstd.cgn", &fid, false);
 
-	cg_close(fid);
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
 	ier = cg_open("case_solstd.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -321,9 +335,10 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	readSolution(fid);
 
-	cg_close(fid);
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	remove("case_solstd.cgn");
+	VERIFY_REMOVE("case_solstd.cgn", hdf);
 
 	// @todo add codes to test
 
@@ -340,9 +355,10 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	writeSolution3d("case_solstd3d.cgn", &fid);
 
-	cg_close(fid);
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	remove("case_solstd3d.cgn");
+	VERIFY_REMOVE("case_solstd3d.cgn", hdf);
 
 	// @todo add codes to test
 
@@ -359,9 +375,10 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	writeSolution("case_solstditer.cgn", &fid, true);
 
-	cg_close(fid);
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	remove("case_solstditer.cgn");
+	VERIFY_REMOVE("case_solstditer.cgn", hdf);
 
 	// @todo add codes to test
 }
@@ -377,6 +394,7 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	remove("case_soldivide_Solution4.cgn");
 	remove("case_soldivide_Solution5.cgn");
 
+	bool hdf = is_hdf(origCgnsName);
 	fs::copy(origCgnsName, "case_soldivide.cgn");
 
 	int fid;
@@ -391,7 +409,8 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	writeSolution("case_soldivide.cgn", &fid, false);
 
-	cg_close(fid);
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
 	ier = cg_open("case_soldivide.cgn", CG_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
@@ -404,14 +423,15 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	readSolution(fid);
 
-	cg_close(fid);
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	remove("case_soldivide.cgn");
-	remove("case_soldivide_Solution1.cgn");
-	remove("case_soldivide_Solution2.cgn");
-	remove("case_soldivide_Solution3.cgn");
-	remove("case_soldivide_Solution4.cgn");
-	remove("case_soldivide_Solution5.cgn");
+	VERIFY_REMOVE("case_soldivide.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide_Solution1.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide_Solution2.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide_Solution3.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide_Solution4.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide_Solution5.cgn", hdf);
 
 	remove("case_soldivide3d.cgn");
 	remove("case_soldivide3d_Solution1.cgn");
@@ -435,14 +455,15 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	writeSolution3d("case_soldivide3d.cgn", &fid);
 
-	cg_close(fid);
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	remove("case_soldivide3d.cgn");
-	remove("case_soldivide3d_Solution1.cgn");
-	remove("case_soldivide3d_Solution2.cgn");
-	remove("case_soldivide3d_Solution3.cgn");
-	remove("case_soldivide3d_Solution4.cgn");
-	remove("case_soldivide3d_Solution5.cgn");
+	VERIFY_REMOVE("case_soldivide3d.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide3d_Solution1.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide3d_Solution2.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide3d_Solution3.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide3d_Solution4.cgn", hdf);
+	VERIFY_REMOVE("case_soldivide3d_Solution5.cgn", hdf);
 
 	// @todo add codes to test
 
