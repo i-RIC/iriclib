@@ -57,6 +57,7 @@ iriclib_polygon.h
 iriclib_riversurvey.cpp
 iriclib_riversurvey.h
 iriclib_single.c
+private/filelocker_impl.h
 private/iriclib_cgnsfile_baseiterativet.h
 private/iriclib_cgnsfile_baseiterativet_detail.h
 private/iriclib_cgnsfile_impl.h
@@ -130,9 +131,14 @@ ${PROJECT_SOURCE_DIR}/iriclib_polygon.h
 ${PROJECT_SOURCE_DIR}/iriclib_riversurvey.h
 )
 
+SET(iriclib_private_Headers
+${PROJECT_SOURCE_DIR}/private/filelocker_impl.h
+)
+
 # install
 install(TARGETS iriclib DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
 
 enable_testing()
 add_subdirectory(unittests_cgnsfile)
