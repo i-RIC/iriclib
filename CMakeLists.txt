@@ -139,6 +139,11 @@ ${PROJECT_SOURCE_DIR}/private/filelocker_impl.h
 install(TARGETS iriclib DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
+if(MSVC)
+  install(FILES ${PROJECT_BINARY_DIR}/Debug/iriclib.pdb
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    CONFIGURATIONS Debug)
+endif()
 
 enable_testing()
 add_subdirectory(unittests_cgnsfile)
