@@ -5,6 +5,9 @@
 #include <cgns_io.h>
 #include <cgnslib.h>
 #include <iriclib.h>
+#ifdef _MSC_VER
+#include <hdf5.h>
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -426,6 +429,14 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
+#ifdef _MSC_VER
+	if (hdf) {
+		// this seems necessary when IRIC_OPTION_DIVIDESOLUTIONS is set on windows
+		herr_t err = H5close();
+		VERIFY_LOG("H5close() ier == 0", err >= 0);
+	}
+#endif
+
 	VERIFY_REMOVE("case_soldivide.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide_Solution1.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide_Solution2.cgn", hdf);
@@ -457,6 +468,14 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+
+#ifdef _MSC_VER
+	if (hdf) {
+		// this seems necessary when IRIC_OPTION_DIVIDESOLUTIONS is set on windows
+		herr_t err = H5close();
+		VERIFY_LOG("H5close() ier == 0", err >= 0);
+	}
+#endif
 
 	VERIFY_REMOVE("case_soldivide3d.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide3d_Solution1.cgn", hdf);
