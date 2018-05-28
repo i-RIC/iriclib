@@ -3,6 +3,9 @@
 #include "iriclib.h"
 #include "iriclib_cgnsfile.h"
 
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include <string>
 #include <map>
 #include <vector>
@@ -31,6 +34,10 @@ const int FILES_LEN_UNIT = 10;
 std::vector<iRICLib::CgnsFile*> m_files;
 std::map<std::string, FileLocker*> m_fileLockers;
 bool m_divideSolutions = false;
+
+const char* flush_filename() {
+	return ".flush";
+}
 
 void initFilesFor(int fid)
 {
@@ -87,6 +94,53 @@ FileLocker& getFileLocker(const char* cgnsFileName)
 	return *(it->second);
 }
 
+int check_flush_request()
+{
+	int result;
+	struct _stat buf;
+
+	result = _stat(flush_filename(), &buf);
+
+	if (result == 0){
+		// Getting information. succeeded. flush file exist.
+		std::ifstream f(flush_filename());
+		int flushIndex;
+		f >> flushIndex;
+
+		return flushIndex;
+	}
+	return 0;
+}
+
+void update_flushfile()
+{
+	std::ofstream f(flush_filename());
+	f << "copying" << std::endl;
+	f.close();
+}
+
+void unlink_flushfile()
+{
+	unlink(flush_filename());
+}
+
+bool copy(const char* src, const char* dst)
+{
+	FILE *fpr = fopen(src, "rb");
+	FILE *fpw = fopen(dst, "wb");
+
+	std::vector<char> buffer( 1024*1024 );
+	while(! feof(fpr))
+	{
+		size_t size = fread( &buffer[0], 1, buffer.size(), fpr );
+		fwrite( &buffer[0], 1, size, fpw );
+	}
+	fclose(fpr);
+	fclose(fpw);
+
+	return true;
+}
+
 } // namespace
 
 extern "C" {
@@ -135,6 +189,12 @@ int iRIC_InitOption(int option)
 }
 
 int cg_iRIC_Flush(const char* filename, int* fid){
+	int flushIndex = check_flush_request();
+	if (flushIndex == 0) {
+		// flushing is not requested
+		return 0;
+	}
+
 	iRICLib::CgnsFile* cgnsFile = m_files.at(*fid);
 	int ier = cgnsFile->Flush();
 	RETURN_IF_ERR;
@@ -145,6 +205,18 @@ int cg_iRIC_Flush(const char* filename, int* fid){
 
 	m_files[*fid] = nullptr;
 
+	update_flushfile();
+
+	// copy the CGNS file
+	std::ostringstream oss;
+	oss << filename << ".copy" << flushIndex;
+	std::string copyedFile = oss.str();
+	std::cout << "Copying CGNS file. This may takes a long time. " << std::endl;
+	bool ok = copy(filename, copyedFile.c_str());
+	if (! ok) {
+		std::cout << "Copy operation in flushing failed" << std::endl;
+	}
+
 	// open the file again
 	ier = cg_open(filename, CG_MODE_MODIFY, fid);
 	RETURN_IF_ERR;
@@ -154,6 +226,8 @@ int cg_iRIC_Flush(const char* filename, int* fid){
 	initFilesFor(*fid);
 	cgnsFile->setFileId(*fid);
 	m_files[*fid] = cgnsFile;
+
+	unlink_flushfile();
 	return 0;
 }
 
