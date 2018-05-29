@@ -209,7 +209,7 @@ int cg_iRIC_Flush(const char* filename, int* fid){
 
 	// copy the CGNS file
 	std::ostringstream oss;
-	oss << filename << ".copy" << flushIndex;
+	oss << "tmp/" << filename << ".copy" << flushIndex;
 	std::string copyedFile = oss.str();
 	std::cout << "Copying CGNS file. This may takes a long time. " << std::endl;
 	bool ok = copy(filename, copyedFile.c_str());
