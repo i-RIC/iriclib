@@ -195,6 +195,9 @@ int cg_iRIC_Flush(const char* filename, int* fid){
 		return 0;
 	}
 
+	std::cout << "Copying CGNS file. This may takes a long time. " << std::endl;
+	update_flushfile();
+
 	iRICLib::CgnsFile* cgnsFile = m_files.at(*fid);
 	int ier = cgnsFile->Flush();
 	RETURN_IF_ERR;
@@ -205,13 +208,10 @@ int cg_iRIC_Flush(const char* filename, int* fid){
 
 	m_files[*fid] = nullptr;
 
-	update_flushfile();
-
 	// copy the CGNS file
 	std::ostringstream oss;
 	oss << "tmp/" << filename << ".copy" << flushIndex;
 	std::string copyedFile = oss.str();
-	std::cout << "Copying CGNS file. This may takes a long time. " << std::endl;
 	bool ok = copy(filename, copyedFile.c_str());
 	if (! ok) {
 		std::cout << "Copy operation in flushing failed" << std::endl;
