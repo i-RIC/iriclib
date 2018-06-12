@@ -195,7 +195,7 @@ int cg_iRIC_Flush(const char* filename, int* fid){
 		return 0;
 	}
 
-	std::cout << "Copying CGNS file. This may takes a long time. " << std::endl;
+	std::cout << "Copying CGNS file. This may take a long time. " << std::endl;
 	update_flushfile();
 
 	iRICLib::CgnsFile* cgnsFile = m_files.at(*fid);
