@@ -189,6 +189,12 @@ int iRIC_InitOption(int option)
 }
 
 int cg_iRIC_Flush(const char* filename, int* fid){
+
+	// this closes the last divided file otherwise it's a noop
+	iRICLib::CgnsFile* cgnsFile = m_files.at(*fid);
+	int ier = cgnsFile->Flush();
+	RETURN_IF_ERR;
+
 	int flushIndex = check_flush_request();
 	if (flushIndex == 0) {
 		// flushing is not requested
@@ -197,10 +203,6 @@ int cg_iRIC_Flush(const char* filename, int* fid){
 
 	std::cout << "Copying CGNS file. This may take a long time. " << std::endl;
 	update_flushfile();
-
-	iRICLib::CgnsFile* cgnsFile = m_files.at(*fid);
-	int ier = cgnsFile->Flush();
-	RETURN_IF_ERR;
 
 	// close the CGNS file first.
 	ier = cg_close(*fid);
