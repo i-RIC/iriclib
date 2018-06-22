@@ -16,14 +16,6 @@ void case_CheckLock()
 
 void case_CheckCancel()
 {
-	FILE* f = fopen(".cancel", "w");
-	fclose(f);
-
-	int canceled = iRIC_Check_Cancel();
-	VERIFY_LOG("iRIC_Check_Cancel() checked .cancel, and it existed.", canceled == 1);
-
-	remove(".cancel");
-
 	canceled = iRIC_Check_Cancel();
 	VERIFY_LOG("iRIC_Check_Cancel() checked .cancel, and it did not exist.", canceled == 0);
 }
