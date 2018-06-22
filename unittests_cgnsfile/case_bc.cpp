@@ -243,13 +243,25 @@ void case_BcWrite()
 	ier = cg_iRIC_Write_BC_Functional_Mul(fid_wrong, "testbc", 1, "write_func", 5, params.data(), vals.data());
 	VERIFY_LOG("cg_iRIC_BC_Write_Functional_Mul() ier != 0 for invalid fid", ier != 0);
 
-	ier = cg_iRIC_Write_BC_FunctionalWithName_Mul(fid, "testbc", 1, "write_func_withname", "time", params.size(), params.data());
+	ier = cg_iRIC_Write_BC_FunctionalWithName_Mul(fid, "testbc", 1, "write_func_withname", "time", (int)params.size(), params.data());
 	VERIFY_LOG("cg_iRIC_BC_Write_FunctionalWithName_Mul() ier == 0", ier == 0);
-	ier = cg_iRIC_Write_BC_FunctionalWithName_Mul(fid, "testbc", 1, "write_func_withname", "elev", vals.size(), vals.data());
+	ier = cg_iRIC_Write_BC_FunctionalWithName_Mul(fid, "testbc", 1, "write_func_withname", "elev", (int)vals.size(), vals.data());
 	VERIFY_LOG("cg_iRIC_BC_Write_FunctionalWithName_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_BC_FunctionalWithName_Mul(fid_wrong, "testbc", 1, "write_func_withname", "time", params.size(), params.data());
+	ier = cg_iRIC_Write_BC_FunctionalWithName_Mul(fid_wrong, "testbc", 1, "write_func_withname", "time", (int)params.size(), params.data());
 	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_Mul() ier != 0 for invalid fid", ier != 0);
+
+	ier = cg_iRIC_Write_BC_FunctionalWithName_Mul(fid, "testbc", 1, "write_func_withname_string", "time", (int)params.size(), params.data());
+	VERIFY_LOG("cg_iRIC_BC_Write_FunctionalWithName_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_BC_FunctionalWithName_Mul(fid, "testbc", 1, "write_func_withname_string", "elev", (int)vals.size(), vals.data());
+	VERIFY_LOG("cg_iRIC_BC_Write_FunctionalWithName_Mul() ier == 0", ier == 0);
+
+	ier = cg_iRIC_Write_BC_FunctionalWithName_String_Mul(fid, "testbc", 1, "write_func_withname_string", "_siteID", "01646500");
+	VERIFY_LOG("cg_iRIC_Write_BC_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_BC_FunctionalWithName_String_Mul(fid, "testbc", 1, "write_func_withname_string", "_startDate", "2017-06-01T06:00");
+	VERIFY_LOG("cg_iRIC_Write_BC_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_BC_FunctionalWithName_String_Mul(fid, "testbc", 1, "write_func_withname_string", "_endDate", "2017-06-01T10:00");
+	VERIFY_LOG("cg_iRIC_Write_BC_FunctionalWithName_String_Mul() ier == 0", ier == 0);
 
 	int read_num;
 	cg_iRIC_Read_BC_Count_Mul(fid, "testbc", &read_num);
@@ -290,6 +302,30 @@ void case_BcWrite()
 	VERIFY_LOG("cg_iRIC_Read_BC_Functional_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_BC_Functional_Mul() param match", params == read_params);
 	VERIFY_LOG("cg_iRIC_Read_BC_Functional_Mul() value match", vals == read_vals);
+
+	ier = cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul(fid, "testbc", 1, "write_func_withname_string", "_siteID", &read_strlen);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_StringLen_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_StringLen_Mul() length == 8", 8 == read_strlen);
+	read_str.assign(read_strlen + 1, ' ');
+	ier = cg_iRIC_Read_BC_FunctionalWithName_String_Mul(fid, "testbc", 1, "write_func_withname_string", "_siteID", read_str.data());
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "01646500");
+
+	ier = cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul(fid, "testbc", 1, "write_func_withname_string", "_startDate", &read_strlen);
+	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul() length == 16", 16 == read_strlen);
+	read_str.assign(read_strlen + 1, ' ');
+	ier = cg_iRIC_Read_BC_FunctionalWithName_String_Mul(fid, "testbc", 1, "write_func_withname_string", "_startDate", read_str.data());
+	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "2017-06-01T06:00");
+
+	ier = cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul(fid, "testbc", 1, "write_func_withname_string", "_endDate", &read_strlen);
+	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul() length == 16", 16 == read_strlen);
+	read_str.assign(read_strlen + 1, ' ');
+	ier = cg_iRIC_Read_BC_FunctionalWithName_String_Mul(fid, "testbc", 1, "write_func_withname_string", "_endDate", read_str.data());
+	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "2017-06-01T10:00");
 
 	cg_close(fid);
 

@@ -101,6 +101,20 @@ int CgnsFile::Complex_CC_Read_FunctionalWithName_RealSingle(const char *groupnam
 	return Impl::readArrayAs(paramname, RealSingle, -1, data);
 }
 
+int CgnsFile::Complex_CC_Read_FunctionalWithName_StringLen(const char *groupname, int num, const char *name, const char* paramname, int* length)
+{
+	int ier = impl->gotoComplexChild(groupname, num, name);
+	RETURN_IF_ERR;
+	return Impl::readStringLen(paramname, length);
+}
+
+int CgnsFile::Complex_CC_Read_FunctionalWithName_String(const char *groupname, int num, const char *name, const char* paramname, char* strvalue)
+{
+	int ier = impl->gotoComplexChild(groupname, num, name);
+	RETURN_IF_ERR;
+	return Impl::readString(paramname, -1, strvalue);
+}
+
 int CgnsFile::Complex_CC_Read_Grid_Node(const char *groupname, int* values)
 {
 	return Grid_Read_Integer_Node(groupname, values);
@@ -147,6 +161,13 @@ int CgnsFile::Complex_CC_Write_FunctionalWithName(const char *groupname, int num
 	int ier = impl->gotoComplexChildCreateIfNotExist(groupname, num, name);
 	RETURN_IF_ERR;
 	return Impl::writeArray(paramname, RealDouble, length, data);
+}
+
+int CgnsFile::Complex_CC_Write_FunctionalWithName_String(const char *groupname, int num, const char *name, const char* paramname, const char* strvalue)
+{
+	int ier = impl->gotoComplexChildCreateIfNotExist(groupname, num, name);
+	RETURN_IF_ERR;
+	return Impl::writeString(paramname, strvalue);
 }
 
 int CgnsFile::Complex_CC_Write_Grid_Node(const char *groupname, int* values)

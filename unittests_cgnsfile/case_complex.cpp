@@ -78,10 +78,22 @@ void case_Complex()
 	ier = cg_iRIC_Write_Complex_Functional_Mul(fid, "nodeparam", 1, "funcparam", 5, params_write.data(), vals_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Complex_Functional_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", "Time", 5, params_write.data());
+	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", "Time", (int)params_write.size(), params_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Complex_FunctionalWithName_Mul() ier == 0", ier == 0);
-	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", "Elevation", 5, vals_write.data());
+	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", "Elevation", (int)params_write.size(), vals_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Complex_FunctionalWithName_Mul() ier == 0", ier == 0);
+
+	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 3, "funcparam", "Time", (int)params_write.size(), params_write.data());
+	VERIFY_LOG("cg_iRIC_Write_Complex_FunctionalWithName_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Complex_FunctionalWithName_Mul(fid, "nodeparam", 3, "funcparam", "Elevation", (int)params_write.size(), vals_write.data());
+	VERIFY_LOG("cg_iRIC_Write_Complex_FunctionalWithName_Mul() ier == 0", ier == 0);
+
+	ier = cg_iRIC_Write_Complex_FunctionalWithName_String_Mul(fid, "nodeparam", 3, "funcparam", "_siteID", "01646500");
+	VERIFY_LOG("cg_iRIC_Write_Complex_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Complex_FunctionalWithName_String_Mul(fid, "nodeparam", 3, "funcparam", "_startDate", "2017-06-01T06:00");
+	VERIFY_LOG("cg_iRIC_Write_Complex_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Complex_FunctionalWithName_String_Mul(fid, "nodeparam", 3, "funcparam", "_endDate", "2017-06-01T10:00");
+	VERIFY_LOG("cg_iRIC_Write_Complex_FunctionalWithName_String_Mul() ier == 0", ier == 0);
 
 	std::vector<int> complex_node;
 	complex_node.assign(isize * jsize, 1);
@@ -160,6 +172,32 @@ void case_Complex()
 	ier = cg_iRIC_Read_Complex_FunctionalWithName_Mul(fid, "nodeparam", 2, "funcparam", "Elevation", elevs_read.data());
 	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_Mul() Elevation valid", elevs_read == vals_write);
+
+	int read_strlen;
+	std::vector<char> read_str;
+	ier = cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul(fid, "nodeparam", 3, "funcparam", "_siteID", &read_strlen);
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul() length == 8", 8 == read_strlen);
+	read_str.assign(read_strlen + 1, ' ');
+	ier = cg_iRIC_Read_Complex_FunctionalWithName_String_Mul(fid, "nodeparam", 3, "funcparam", "_siteID", read_str.data());
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "01646500");
+
+	ier = cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul(fid, "nodeparam", 3, "funcparam", "_startDate", &read_strlen);
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul() length == 16", 16 == read_strlen);
+	read_str.assign(read_strlen + 1, ' ');
+	ier = cg_iRIC_Read_Complex_FunctionalWithName_String_Mul(fid, "nodeparam", 3, "funcparam", "_startDate", read_str.data());
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "2017-06-01T06:00");
+
+	ier = cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul(fid, "nodeparam", 3, "funcparam", "_endDate", &read_strlen);
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul() length == 16", 16 == read_strlen);
+	read_str.assign(read_strlen + 1, ' ');
+	ier = cg_iRIC_Read_Complex_FunctionalWithName_String_Mul(fid, "nodeparam", 3, "funcparam", "_endDate", read_str.data());
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "2017-06-01T10:00");
 
 	cg_close(fid);
 

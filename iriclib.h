@@ -79,6 +79,10 @@ int IRICLIBDLL cg_iRIC_Read_Functional_RealSingle_Mul(int fid, const char* name,
 
 int IRICLIBDLL cg_iRIC_Read_FunctionalWithName_RealSingle_Mul(int fid, const char* name, const char* paramname, float* data);
 
+int IRICLIBDLL cg_iRIC_Read_FunctionalWithName_String_Mul(int fid, const char* name, const char* paramname, char* strvalue);
+
+int IRICLIBDLL cg_iRIC_Read_FunctionalWithName_StringLen_Mul(int fid, const char* name, const char* paramname, int* length);
+
 /**********************************************/
 /* Writing Calculation Conditions             */
 /**********************************************/
@@ -92,6 +96,8 @@ int IRICLIBDLL cg_iRIC_Write_String_Mul(int fid, const char* name, const char* s
 int IRICLIBDLL cg_iRIC_Write_Functional_Mul(int fid, const char* name, int length, double* realarray_x, double* realarray_y);
 
 int IRICLIBDLL cg_iRIC_Write_FunctionalWithName_Mul(int fid, const char* name, const char* paramname, int length, double* data);
+
+int IRICLIBDLL cg_iRIC_Write_FunctionalWithName_String_Mul(int fid, const char* groupname, const char* name, const char* strvalue);
 
 /**********************************************/
 /* Reading Complex Calculation Conditions     */
@@ -119,6 +125,10 @@ int IRICLIBDLL cg_iRIC_Read_Complex_Functional_RealSingle_Mul(int fid, const cha
 
 int IRICLIBDLL cg_iRIC_Read_Complex_FunctionalWithName_RealSingle_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, float* data);
 
+int IRICLIBDLL cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, int* length);
+
+int IRICLIBDLL cg_iRIC_Read_Complex_FunctionalWithName_String_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, char* strvalue);
+
 int IRICLIBDLL cg_iRIC_Read_Grid_Complex_Node_Mul(int fid, const char* groupname, int* values);
 
 int IRICLIBDLL cg_iRIC_Read_Grid_Complex_Cell_Mul(int fid, const char *groupname, int* values);
@@ -138,6 +148,8 @@ int IRICLIBDLL cg_iRIC_Write_Complex_String_Mul(int fid, const char* groupname, 
 int IRICLIBDLL cg_iRIC_Write_Complex_Functional_Mul(int fid, const char* groupname, int num, const char* name, int length, double* realarray_x, double* realarray_y);
 
 int IRICLIBDLL cg_iRIC_Write_Complex_FunctionalWithName_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, int length, double* data);
+
+int IRICLIBDLL cg_iRIC_Write_Complex_FunctionalWithName_String_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Node_Mul(int fid, const char* groupname, int* values);
 
@@ -285,6 +297,10 @@ int IRICLIBDLL cg_iRIC_Read_BC_Functional_RealSingle_Mul(int fid, const char* ty
 
 int IRICLIBDLL cg_iRIC_Read_BC_FunctionalWithName_RealSingle_Mul(int fid, const char* type, int num, const char* name, const char* paramname, float* data);
 
+int IRICLIBDLL cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul(int fid, const char* type, int num, const char* name, const char* paramname, int* length);
+
+int IRICLIBDLL cg_iRIC_Read_BC_FunctionalWithName_String_Mul(int fid, const char* type, int num, const char* name, const char* paramname, char* strvalue);
+
 /**********************************************/
 /* Writing Boundary Conditions                */
 /**********************************************/
@@ -302,6 +318,8 @@ int IRICLIBDLL cg_iRIC_Write_BC_String_Mul(int fid, const char* type, int num, c
 int IRICLIBDLL cg_iRIC_Write_BC_Functional_Mul(int fid, const char* type, int num, const char* name, int length, double* realarray_x, double* realarray_y);
 
 int IRICLIBDLL cg_iRIC_Write_BC_FunctionalWithName_Mul(int fid, const char* type, int num, const char* name, const char* paramname, int length, double* data);
+
+int IRICLIBDLL cg_iRIC_Write_BC_FunctionalWithName_String_Mul(int fid, const char* type, int num, const char* name, const char* paramname, const char* strvalue);
 
 /**********************************************/
 /* Writing Particles                          */
@@ -401,15 +419,21 @@ int IRICLIBDLL cg_iRIC_Read_Functional_RealSingle(const char* name, float* x, fl
 
 int IRICLIBDLL cg_iRIC_Read_FunctionalWithName_RealSingle(const char* name, const char* paramname, float* data);
 
+int IRICLIBDLL cg_iRIC_Read_FunctionalWithName_String(const char* name, const char* paramname, char* strvalue);
+
+int IRICLIBDLL cg_iRIC_Read_FunctionalWithName_StringLen(const char* name, const char* paramname, int* length);
+
 int IRICLIBDLL cg_iRIC_Write_Integer(const char* name, int intvalue);
 
 int IRICLIBDLL cg_iRIC_Write_Real(const char* name, double realvalue);
 
-int IRICLIBDLL cg_iRIC_Write_String(const char* name, char* strvalue);
+int IRICLIBDLL cg_iRIC_Write_String(const char* name, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_Functional(const char* name, int length, double* realarray_x, double* realarray_y);
 
 int IRICLIBDLL cg_iRIC_Write_FunctionalWithName(const char* name, const char* paramname, int length, double* data);
+
+int IRICLIBDLL cg_iRIC_Write_FunctionalWithName_String(const char* groupname, const char* name, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Read_Complex_Count(const char* groupname, int* num);
 
@@ -433,6 +457,10 @@ int IRICLIBDLL cg_iRIC_Read_Complex_Functional_RealSingle(const char* groupname,
 
 int IRICLIBDLL cg_iRIC_Read_Complex_FunctionalWithName_RealSingle(const char* groupname, int num, const char* name, const char* paramname, float* data);
 
+int IRICLIBDLL cg_iRIC_Read_Complex_FunctionalWithName_StringLen(const char* groupname, int num, const char* name, const char* paramname, int* length);
+
+int IRICLIBDLL cg_iRIC_Read_Complex_FunctionalWithName_String(const char* groupname, int num, const char* name, const char* paramname, char* strvalue);
+
 int IRICLIBDLL cg_iRIC_Read_Grid_Complex_Node(const char* groupname, int* values);
 
 int IRICLIBDLL cg_iRIC_Read_Grid_Complex_Cell(const char *groupname, int* values);
@@ -443,11 +471,13 @@ int IRICLIBDLL cg_iRIC_Write_Complex_Integer(const char* groupname, int num, con
 
 int IRICLIBDLL cg_iRIC_Write_Complex_Real(const char* groupname, int num, const char* name, double realvalue);
 
-int IRICLIBDLL cg_iRIC_Write_Complex_String(const char* groupname, int num, const char* name, char* strvalue);
+int IRICLIBDLL cg_iRIC_Write_Complex_String(const char* groupname, int num, const char* name, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_Complex_Functional(const char* groupname, int num, const char* name, int length, double* realarray_x, double* realarray_y);
 
 int IRICLIBDLL cg_iRIC_Write_Complex_FunctionalWithName(const char* groupname, int num, const char* name, const char* paramname, int length, double* data);
+
+int IRICLIBDLL cg_iRIC_Write_Complex_FunctionalWithName_String(const char* groupname, int num, const char* name, const char* paramname, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Node(const char* groupname, int* values);
 
@@ -575,6 +605,10 @@ int IRICLIBDLL cg_iRIC_Read_BC_Functional_RealSingle(const char* type, int num, 
 
 int IRICLIBDLL cg_iRIC_Read_BC_FunctionalWithName_RealSingle(const char* type, int num, const char* name, const char* paramname, float* data);
 
+int IRICLIBDLL cg_iRIC_Read_BC_FunctionalWithName_StringLen(const char* type, int num, const char* name, const char* paramname, int* length);
+
+int IRICLIBDLL cg_iRIC_Read_BC_FunctionalWithName_String(const char* type, int num, const char* name, const char* paramname, char* strvalue);
+
 int IRICLIBDLL cg_iRIC_Clear_BC();
 
 int IRICLIBDLL cg_iRIC_Write_BC_Indices(const char* type, int num, cgsize_t size, cgsize_t* indices);
@@ -589,6 +623,8 @@ int IRICLIBDLL cg_iRIC_Write_BC_Functional(const char* type, int num, const char
 
 int IRICLIBDLL cg_iRIC_Write_BC_FunctionalWithName(const char* type, int num, const char* name, const char* paramname, int length, double* data);
 
+int IRICLIBDLL cg_iRIC_Write_BC_FunctionalWithName_String(const char* type, int num, const char* name, const char* paramname, const char* strvalue);
+
 int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Pos2d(cgsize_t count, double* x, double* y);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Pos3d(cgsize_t count, double* x, double* y, double* z);
@@ -600,6 +636,7 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Integer(const char* name, int* value);
 int IRICLIBDLL cg_iRIC_Read_Geo_Count(const char* name, int* count);
 
 int IRICLIBDLL cg_iRIC_Read_Geo_Filename(const char* name, int geoid, char* filename, int* type);
+
 
 #ifdef __cplusplus
 }

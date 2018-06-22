@@ -148,6 +148,20 @@ int CgnsFile::BC_Read_FunctionalWithName_RealSingle(const char *typeName, int nu
 	return Impl::readArrayAs(paramname, RealSingle, -1, data);
 }
 
+int CgnsFile::BC_Read_FunctionalWithName_StringLen(const char *typeName, int num, const char* name, const char* paramname, int* length)
+{
+	int ier = impl->gotoBcChild(typeName, num, name);
+	RETURN_IF_ERR;
+	return Impl::readStringLen(paramname, length);
+}
+
+int CgnsFile::BC_Read_FunctionalWithName_String(const char *typeName, int num, const char* name, const char* paramname, char* strvalue)
+{
+	int ier = impl->gotoBcChild(typeName, num, name);
+	RETURN_IF_ERR;
+	return Impl::readString(paramname, -1, strvalue);
+}
+
 int CgnsFile::BC_Clear()
 {
 	int ier = impl->gotoZone();
@@ -206,4 +220,11 @@ int CgnsFile::BC_Write_FunctionalWithName(const char *typeName, int num, const c
 	int ier = impl->gotoBcChildCreateIfNotExist(typeName, num, name);
 	RETURN_IF_ERR;
 	return Impl::writeArray(paramname, RealDouble, length, data);
+}
+
+int CgnsFile::BC_Write_FunctionalWithName_String(const char* typeName, int num, const char* name, const char* paramname, const char* strvalue)
+{
+	int ier = impl->gotoBcChildCreateIfNotExist(typeName, num, name);
+	RETURN_IF_ERR;
+	return Impl::writeString(paramname, strvalue);
 }
