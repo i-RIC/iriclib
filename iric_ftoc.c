@@ -239,6 +239,53 @@ void IRICLIBDLL FMNAME(cg_iric_read_functionalwithname_realsingle_mul_f, CG_IRIC
 	*ier = cg_iRIC_Read_FunctionalWithName_RealSingle_Mul(*fid, c_name, c_paramname, data);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_read_functionalwithname_string_mul_f, CG_IRIC_READ_FUNCTIONALWITHNAME_STRING_MUL_F) (int *fid, STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_FunctionalWithName_String_Mul(*fid, c_name, c_paramname, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_functionalwithname_stringlen_mul_f, CG_IRIC_READ_FUNCTIONALWITHNAME_STRINGLEN_MUL_F) (int *fid, STR_PSTR(name), STR_PSTR(paramname), int *length, int *ier STR_PLEN(name) STR_PLEN(paramname)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_FunctionalWithName_StringLen_Mul(*fid, c_name, c_paramname, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_functionalwithname_string_mul_f, CG_IRIC_WRITE_FUNCTIONALWITHNAME_STRING_MUL_F) (int *fid, STR_PSTR(groupname), STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(groupname) STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
+		c_groupname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_FunctionalWithName_String_Mul(*fid, c_groupname, c_name, c_strvalue);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_read_complex_count_mul_f, CG_IRIC_READ_COMPLEX_COUNT_MUL_F) (int *fid, STR_PSTR(groupname), int *num, int *ier STR_PLEN(groupname)) {
 	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
 	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
@@ -393,6 +440,44 @@ void IRICLIBDLL FMNAME(cg_iric_read_complex_functionalwithname_realsingle_mul_f,
 	*ier = cg_iRIC_Read_Complex_FunctionalWithName_RealSingle_Mul(*fid, c_groupname, *num, c_name, c_paramname, data);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_read_complex_functionalwithname_stringlen_mul_f, CG_IRIC_READ_COMPLEX_FUNCTIONALWITHNAME_STRINGLEN_MUL_F) (int *fid, STR_PSTR(groupname), int *num, STR_PSTR(name), STR_PSTR(paramname), int *length, int *ier STR_PLEN(groupname) STR_PLEN(name) STR_PLEN(paramname)) {
+	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
+		c_groupname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul(*fid, c_groupname, *num, c_name, c_paramname, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_complex_functionalwithname_string_mul_f, CG_IRIC_READ_COMPLEX_FUNCTIONALWITHNAME_STRING_MUL_F) (int *fid, STR_PSTR(groupname), int *num, STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(groupname) STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
+		c_groupname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Complex_FunctionalWithName_String_Mul(*fid, c_groupname, *num, c_name, c_paramname, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_read_grid_complex_node_mul_f, CG_IRIC_READ_GRID_COMPLEX_NODE_MUL_F) (int *fid, STR_PSTR(groupname), int *values, int *ier STR_PLEN(groupname)) {
 	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
 	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
@@ -409,6 +494,27 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_complex_cell_mul_f, CG_IRIC_READ_GRID_C
 	if (*ier) return;
 
 	*ier = cg_iRIC_Read_Grid_Complex_Cell_Mul(*fid, c_groupname, values);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_complex_functionalwithname_string_mul_f, CG_IRIC_WRITE_COMPLEX_FUNCTIONALWITHNAME_STRING_MUL_F) (int *fid, STR_PSTR(groupname), int *num, STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(groupname) STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
+		c_groupname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Complex_FunctionalWithName_String_Mul(*fid, c_groupname, *num, c_name, c_paramname, c_strvalue);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_gotogridcoord2d_mul_f, CG_IRIC_GOTOGRIDCOORD2D_MUL_F) (int *fid, int *isize, int *jsize, int *ier) {
@@ -962,6 +1068,65 @@ void IRICLIBDLL FMNAME(cg_iric_read_bc_functionalwithname_realsingle_mul_f, CG_I
 	*ier = cg_iRIC_Read_BC_FunctionalWithName_RealSingle_Mul(*fid, c_type, *num, c_name, c_paramname, data);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_read_bc_functionalwithname_stringlen_mul_f, CG_IRIC_READ_BC_FUNCTIONALWITHNAME_STRINGLEN_MUL_F) (int *fid, STR_PSTR(type), int *num, STR_PSTR(name), STR_PSTR(paramname), int *length, int *ier STR_PLEN(type) STR_PLEN(name) STR_PLEN(paramname)) {
+	char c_type[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(type), STR_LEN(type),
+		c_type, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul(*fid, c_type, *num, c_name, c_paramname, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_bc_functionalwithname_string_mul_f, CG_IRIC_READ_BC_FUNCTIONALWITHNAME_STRING_MUL_F) (int *fid, STR_PSTR(type), int *num, STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(type) STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_type[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(type), STR_LEN(type),
+		c_type, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_BC_FunctionalWithName_String_Mul(*fid, c_type, *num, c_name, c_paramname, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_bc_functionalwithname_string_mul_f, CG_IRIC_WRITE_BC_FUNCTIONALWITHNAME_STRING_MUL_F) (int *fid, STR_PSTR(type), int *num, STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(type) STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_type[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(type), STR_LEN(type),
+		c_type, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_BC_FunctionalWithName_String_Mul(*fid, c_type, *num, c_name, c_paramname, c_strvalue);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos2d_mul_f, CG_IRIC_WRITE_SOL_PARTICLE_POS2D_MUL_F) (int *fid, int *count, double *x, double *y, int *ier) {
 	int c_count;
 	c_count = (cgsize_t)(*count);
@@ -1223,6 +1388,53 @@ void IRICLIBDLL FMNAME(cg_iric_read_functionalwithname_realsingle_f, CG_IRIC_REA
 	*ier = cg_iRIC_Read_FunctionalWithName_RealSingle(c_name, c_paramname, data);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_read_functionalwithname_string_f, CG_IRIC_READ_FUNCTIONALWITHNAME_STRING_F) (STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_FunctionalWithName_String(c_name, c_paramname, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_functionalwithname_stringlen_f, CG_IRIC_READ_FUNCTIONALWITHNAME_STRINGLEN_F) (STR_PSTR(name), STR_PSTR(paramname), int *length, int *ier STR_PLEN(name) STR_PLEN(paramname)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_FunctionalWithName_StringLen(c_name, c_paramname, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_functionalwithname_string_f, CG_IRIC_WRITE_FUNCTIONALWITHNAME_STRING_F) (STR_PSTR(groupname), STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(groupname) STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
+		c_groupname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_FunctionalWithName_String(c_groupname, c_name, c_strvalue);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_read_complex_count_f, CG_IRIC_READ_COMPLEX_COUNT_F) (STR_PSTR(groupname), int *num, int *ier STR_PLEN(groupname)) {
 	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
 	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
@@ -1377,6 +1589,44 @@ void IRICLIBDLL FMNAME(cg_iric_read_complex_functionalwithname_realsingle_f, CG_
 	*ier = cg_iRIC_Read_Complex_FunctionalWithName_RealSingle(c_groupname, *num, c_name, c_paramname, data);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_read_complex_functionalwithname_stringlen_f, CG_IRIC_READ_COMPLEX_FUNCTIONALWITHNAME_STRINGLEN_F) (STR_PSTR(groupname), int *num, STR_PSTR(name), STR_PSTR(paramname), int *length, int *ier STR_PLEN(groupname) STR_PLEN(name) STR_PLEN(paramname)) {
+	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
+		c_groupname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Complex_FunctionalWithName_StringLen(c_groupname, *num, c_name, c_paramname, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_complex_functionalwithname_string_f, CG_IRIC_READ_COMPLEX_FUNCTIONALWITHNAME_STRING_F) (STR_PSTR(groupname), int *num, STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(groupname) STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
+		c_groupname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Complex_FunctionalWithName_String(c_groupname, *num, c_name, c_paramname, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_read_grid_complex_node_f, CG_IRIC_READ_GRID_COMPLEX_NODE_F) (STR_PSTR(groupname), int *values, int *ier STR_PLEN(groupname)) {
 	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
 	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
@@ -1393,6 +1643,27 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_complex_cell_f, CG_IRIC_READ_GRID_COMPL
 	if (*ier) return;
 
 	*ier = cg_iRIC_Read_Grid_Complex_Cell(c_groupname, values);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_complex_functionalwithname_string_f, CG_IRIC_WRITE_COMPLEX_FUNCTIONALWITHNAME_STRING_F) (STR_PSTR(groupname), int *num, STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(groupname) STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_groupname[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(groupname), STR_LEN(groupname),
+		c_groupname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Complex_FunctionalWithName_String(c_groupname, *num, c_name, c_paramname, c_strvalue);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_gotogridcoord2d_f, CG_IRIC_GOTOGRIDCOORD2D_F) (int *isize, int *jsize, int *ier) {
@@ -1944,6 +2215,65 @@ void IRICLIBDLL FMNAME(cg_iric_read_bc_functionalwithname_realsingle_f, CG_IRIC_
 	if (*ier) return;
 
 	*ier = cg_iRIC_Read_BC_FunctionalWithName_RealSingle(c_type, *num, c_name, c_paramname, data);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_bc_functionalwithname_stringlen_f, CG_IRIC_READ_BC_FUNCTIONALWITHNAME_STRINGLEN_F) (STR_PSTR(type), int *num, STR_PSTR(name), STR_PSTR(paramname), int *length, int *ier STR_PLEN(type) STR_PLEN(name) STR_PLEN(paramname)) {
+	char c_type[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(type), STR_LEN(type),
+		c_type, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_BC_FunctionalWithName_StringLen(c_type, *num, c_name, c_paramname, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_bc_functionalwithname_string_f, CG_IRIC_READ_BC_FUNCTIONALWITHNAME_STRING_F) (STR_PSTR(type), int *num, STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(type) STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_type[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(type), STR_LEN(type),
+		c_type, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_BC_FunctionalWithName_String(c_type, *num, c_name, c_paramname, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_bc_functionalwithname_string_f, CG_IRIC_WRITE_BC_FUNCTIONALWITHNAME_STRING_F) (STR_PSTR(type), int *num, STR_PSTR(name), STR_PSTR(paramname), STR_PSTR(strvalue), int *ier STR_PLEN(type) STR_PLEN(name) STR_PLEN(paramname) STR_PLEN(strvalue)) {
+	char c_type[CGIO_MAX_NAME_LENGTH+1];
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_paramname[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(type), STR_LEN(type),
+		c_type, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(paramname), STR_LEN(paramname),
+		c_paramname, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_BC_FunctionalWithName_String(c_type, *num, c_name, c_paramname, c_strvalue);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos2d_f, CG_IRIC_WRITE_SOL_PARTICLE_POS2D_F) (int *count, double *x, double *y, int *ier) {

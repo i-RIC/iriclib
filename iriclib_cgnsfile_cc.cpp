@@ -94,6 +94,20 @@ int CgnsFile::CC_Read_FunctionalWithName_RealSingle(const char* name, const char
 	return Impl::readArrayAs(paramname, RealSingle, -1, data);
 }
 
+int CgnsFile::CC_Read_FunctionalWithName_String(const char *name, const char *paramname, char* strvalue)
+{
+	int ier = impl->gotoCCChild(name);
+	RETURN_IF_ERR;
+	return Impl::readString(paramname, -1, strvalue);
+}
+
+int CgnsFile::CC_Read_FunctionalWithName_StringLen(const char* name, const char* paramname, int* length)
+{
+	int ier = impl->gotoCCChild(name);
+	RETURN_IF_ERR;
+	return Impl::readStringLen(paramname, length);
+}
+
 int CgnsFile::CC_Write_Integer(const char *name, int intvalue)
 {
 	int ier = impl->gotoCCChildCreateIfNotExist(name);
@@ -123,6 +137,13 @@ int CgnsFile::CC_Write_Functional(const char *name, int length, double* realarra
 	ier = CC_Write_FunctionalWithName(name, "Value", length, realarray_y);
 	RETURN_IF_ERR;
 	return 0;
+}
+
+int CgnsFile::CC_Write_FunctionalWithName_String(const char* name, const char* paramname, const char* value)
+{
+	int ier = impl->gotoCCChildCreateIfNotExist(name);
+	RETURN_IF_ERR;
+	return Impl::writeString(paramname, value);
 }
 
 int CgnsFile::CC_Write_FunctionalWithName(const char *name, const char* paramname, int length, double* data)

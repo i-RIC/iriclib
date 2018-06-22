@@ -358,6 +358,16 @@ int cg_iRIC_Read_FunctionalWithName_RealSingle_Mul(int fid, const char* name, co
 	return f->CC_Read_FunctionalWithName_RealSingle(name, paramname, data);
 }
 
+int cg_iRIC_Read_FunctionalWithName_String_Mul(int fid, const char* name, const char* paramname, char* strvalue){
+	GET_F(fid);
+	return f->CC_Read_FunctionalWithName_String(name, paramname, strvalue);
+}
+
+int cg_iRIC_Read_FunctionalWithName_StringLen_Mul(int fid, const char* name, const char* paramname, int* length){
+	GET_F(fid);
+	return f->CC_Read_FunctionalWithName_StringLen(name, paramname, length);
+}
+
 int cg_iRIC_Write_Integer_Mul(int fid, const char* name, int intvalue){
 	GET_F(fid);
 	return f->CC_Write_Integer(name, intvalue);
@@ -382,6 +392,12 @@ int cg_iRIC_Write_FunctionalWithName_Mul(int fid, const char* name, const char* 
 {
 	GET_F(fid);
 	return f->CC_Write_FunctionalWithName(name, paramname, length, data);
+}
+
+int cg_iRIC_Write_FunctionalWithName_String_Mul(int fid, const char* name, const char* paramname, const char* strvalue)
+{
+	GET_F(fid);
+	return f->CC_Write_FunctionalWithName_String(name, paramname, strvalue);
 }
 
 int cg_iRIC_Read_Complex_Count_Mul(int fid, const char* groupname, int* count)
@@ -450,6 +466,18 @@ int cg_iRIC_Read_Complex_FunctionalWithName_RealSingle_Mul(int fid, const char* 
 	return f->Complex_CC_Read_FunctionalWithName_RealSingle(groupname, num, name, paramname, data);
 }
 
+int cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, int* length)
+{
+	GET_F(fid);
+	return f->Complex_CC_Read_FunctionalWithName_StringLen(groupname, num, name, paramname, length);
+}
+
+int cg_iRIC_Read_Complex_FunctionalWithName_String_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, char* strvalue)
+{
+	GET_F(fid);
+	return f->Complex_CC_Read_FunctionalWithName_String(groupname, num, name, paramname, strvalue);
+}
+
 int cg_iRIC_Read_Grid_Complex_Node_Mul(int fid, const char* groupname, int* values)
 {
 	GET_F(fid);
@@ -496,6 +524,12 @@ int cg_iRIC_Write_Complex_FunctionalWithName_Mul(int fid, const char* groupname,
 {
 	GET_F(fid);
 	return f->Complex_CC_Write_FunctionalWithName(groupname, num, name, paramname, length, data);
+}
+
+int cg_iRIC_Write_Complex_FunctionalWithName_String_Mul(int fid, const char* groupname, int num, const char* name, const char* paramname, const char* strvalue)
+{
+	GET_F(fid);
+	return f->Complex_CC_Write_FunctionalWithName_String(groupname, num, name, paramname, strvalue);
 }
 
 int cg_iRIC_Write_Grid_Complex_Node_Mul(int fid, const char* groupname, int* values)
@@ -862,6 +896,16 @@ int cg_iRIC_Read_BC_FunctionalWithName_RealSingle_Mul(int fid, const char* type,
 	return f->BC_Read_FunctionalWithName_RealSingle(type, num, name, paramname, data);
 }
 
+int cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul(int fid, const char* type, int num, const char* name, const char* paramname, int* length){
+	GET_F(fid);
+	return f->BC_Read_FunctionalWithName_StringLen(type, num, name, paramname, length);
+}
+
+int cg_iRIC_Read_BC_FunctionalWithName_String_Mul(int fid, const char* type, int num, const char* name, const char* paramname, char* strvalue){
+	GET_F(fid);
+	return f->BC_Read_FunctionalWithName_String(type, num, name, paramname, strvalue);
+}
+
 int cg_iRIC_Clear_BC_Mul(int fid){
 	GET_F(fid);
 	return f->BC_Clear();
@@ -897,6 +941,11 @@ int cg_iRIC_Write_BC_Functional_Mul(int fid, const char* type, int num, const ch
 int cg_iRIC_Write_BC_FunctionalWithName_Mul(int fid, const char* type, int num, const char* name, const char* paramname, int length, double* data){
 	GET_F(fid);
 	return f->BC_Write_FunctionalWithName(type, num, name, paramname, length, data);
+}
+
+int cg_iRIC_Write_BC_FunctionalWithName_String_Mul(int fid, const char* type, int num, const char* name, const char* paramname, const char* strvalue){
+	GET_F(fid);
+	return f->BC_Write_FunctionalWithName_String(type, num, name, paramname, strvalue);
 }
 
 int cg_iRIC_Read_Geo_Count_Mul(int fid, const char* name, int* count)

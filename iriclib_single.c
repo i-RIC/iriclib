@@ -62,6 +62,16 @@ int cg_iRIC_Read_FunctionalWithName_RealSingle(const char* name, const char* par
 	return cg_iRIC_Read_FunctionalWithName_RealSingle_Mul(lastfileid, name, paramname, data);
 }
 
+int cg_iRIC_Read_FunctionalWithName_String(const char* name, const char* paramname, char* strvalue)
+{
+	return cg_iRIC_Read_FunctionalWithName_String_Mul(lastfileid, name, paramname, strvalue);
+}
+
+int cg_iRIC_Read_FunctionalWithName_StringLen(const char* name, const char* paramname, int* length)
+{
+	return cg_iRIC_Read_FunctionalWithName_StringLen_Mul(lastfileid, name, paramname, length);
+}
+
 int cg_iRIC_Write_Integer(const char* name, int intvalue)
 {
 	return cg_iRIC_Write_Integer_Mul(lastfileid, name, intvalue);
@@ -72,7 +82,7 @@ int cg_iRIC_Write_Real(const char* name, double realvalue)
 	return cg_iRIC_Write_Real_Mul(lastfileid, name, realvalue);
 }
 
-int cg_iRIC_Write_String(const char* name, char* strvalue)
+int cg_iRIC_Write_String(const char* name, const char* strvalue)
 {
 	return cg_iRIC_Write_String_Mul(lastfileid, name, strvalue);
 }
@@ -85,6 +95,11 @@ int cg_iRIC_Write_Functional(const char* name, int length, double* realarray_x, 
 int cg_iRIC_Write_FunctionalWithName(const char* name, const char* paramname, int length, double* data)
 {
 	return cg_iRIC_Write_FunctionalWithName_Mul(lastfileid, name, paramname, length, data);
+}
+
+int cg_iRIC_Write_FunctionalWithName_String(const char* groupname, const char* name, const char* strvalue)
+{
+	return cg_iRIC_Write_FunctionalWithName_String_Mul(lastfileid, groupname, name, strvalue);
 }
 
 int cg_iRIC_Read_Complex_Count(const char* groupname, int* num)
@@ -142,6 +157,16 @@ int cg_iRIC_Read_Complex_FunctionalWithName_RealSingle(const char* groupname, in
 	return cg_iRIC_Read_Complex_FunctionalWithName_RealSingle_Mul(lastfileid, groupname, num, name, paramname, data);
 }
 
+int cg_iRIC_Read_Complex_FunctionalWithName_StringLen(const char* groupname, int num, const char* name, const char* paramname, int* length)
+{
+	return cg_iRIC_Read_Complex_FunctionalWithName_StringLen_Mul(lastfileid, groupname, num, name, paramname, length);
+}
+
+int cg_iRIC_Read_Complex_FunctionalWithName_String(const char* groupname, int num, const char* name, const char* paramname, char* strvalue)
+{
+	return cg_iRIC_Read_Complex_FunctionalWithName_String_Mul(lastfileid, groupname, num, name, paramname, strvalue);
+}
+
 int cg_iRIC_Read_Grid_Complex_Node(const char* groupname, int* values)
 {
 	return cg_iRIC_Read_Grid_Complex_Node_Mul(lastfileid, groupname, values);
@@ -167,7 +192,7 @@ int cg_iRIC_Write_Complex_Real(const char* groupname, int num, const char* name,
 	return cg_iRIC_Write_Complex_Real_Mul(lastfileid, groupname, num, name, realvalue);
 }
 
-int cg_iRIC_Write_Complex_String(const char* groupname, int num, const char* name, char* strvalue)
+int cg_iRIC_Write_Complex_String(const char* groupname, int num, const char* name, const char* strvalue)
 {
 	return cg_iRIC_Write_Complex_String_Mul(lastfileid, groupname, num, name, strvalue);
 }
@@ -180,6 +205,11 @@ int cg_iRIC_Write_Complex_Functional(const char* groupname, int num, const char*
 int cg_iRIC_Write_Complex_FunctionalWithName(const char* groupname, int num, const char* name, const char* paramname, int length, double* data)
 {
 	return cg_iRIC_Write_Complex_FunctionalWithName_Mul(lastfileid, groupname, num, name, paramname, length, data);
+}
+
+int cg_iRIC_Write_Complex_FunctionalWithName_String(const char* groupname, int num, const char* name, const char* paramname, const char* strvalue)
+{
+	return cg_iRIC_Write_Complex_FunctionalWithName_String_Mul(lastfileid, groupname, num, name, paramname, strvalue);
 }
 
 int cg_iRIC_Write_Grid_Complex_Node(const char* groupname, int* values)
@@ -497,6 +527,16 @@ int cg_iRIC_Read_BC_FunctionalWithName_RealSingle(const char* type, int num, con
 	return cg_iRIC_Read_BC_FunctionalWithName_RealSingle_Mul(lastfileid, type, num, name, paramname, data);
 }
 
+int cg_iRIC_Read_BC_FunctionalWithName_StringLen(const char* type, int num, const char* name, const char* paramname, int* length)
+{
+	return cg_iRIC_Read_BC_FunctionalWithName_StringLen_Mul(lastfileid, type, num, name, paramname, length);
+}
+
+int cg_iRIC_Read_BC_FunctionalWithName_String(const char* type, int num, const char* name, const char* paramname, char* strvalue)
+{
+	return cg_iRIC_Read_BC_FunctionalWithName_String_Mul(lastfileid, type, num, name, paramname, strvalue);
+}
+
 int cg_iRIC_Clear_BC()
 {
 	return cg_iRIC_Clear_BC_Mul(lastfileid);
@@ -530,6 +570,11 @@ int cg_iRIC_Write_BC_Functional(const char* type, int num, const char* name, int
 int cg_iRIC_Write_BC_FunctionalWithName(const char* type, int num, const char* name, const char* paramname, int length, double* data)
 {
 	return cg_iRIC_Write_BC_FunctionalWithName_Mul(lastfileid, type, num, name, paramname, length, data);
+}
+
+int cg_iRIC_Write_BC_FunctionalWithName_String(const char* type, int num, const char* name, const char* paramname, const char* strvalue)
+{
+	return cg_iRIC_Write_BC_FunctionalWithName_String_Mul(lastfileid, type, num, name, paramname, strvalue);
 }
 
 int cg_iRIC_Write_Sol_Particle_Pos2d(cgsize_t count, double* x, double* y)

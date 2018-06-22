@@ -205,6 +205,18 @@ void case_CalcCondWrite()
 	ier = cg_iRIC_Write_FunctionalWithName_Mul(fid_wrong, "write_func_withname", "time", params.size(), params.data());
 	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_Mul() ier != 0 for invalid fid", ier != 0);
 
+	ier = cg_iRIC_Write_FunctionalWithName_Mul(fid, "write_func_withname_string", "time", params.size(), params.data());
+	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_FunctionalWithName_Mul(fid, "write_func_withname_string", "discharge", vals.size(), vals.data());
+	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_Mul() ier == 0", ier == 0);
+
+	ier = cg_iRIC_Write_FunctionalWithName_String_Mul(fid, "write_func_withname_string", "_siteID", "01646500");
+	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_FunctionalWithName_String_Mul(fid, "write_func_withname_string", "_startDate", "2017-06-01T06:00");
+	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_FunctionalWithName_String_Mul(fid, "write_func_withname_string", "_endDate", "2017-06-01T10:00");
+	VERIFY_LOG("cg_iRIC_Write_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+
 	int read_int;
 	ier = cg_iRIC_Read_Integer_Mul(fid, "write_int", &read_int);
 	VERIFY_LOG("cg_iRIC_Read_Integer_Mul() ier == 0", ier == 0);
@@ -235,6 +247,30 @@ void case_CalcCondWrite()
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() param match", params == read_params);
 	VERIFY_LOG("cg_iRIC_Read_Functional_Mul() value match", vals == read_vals);
+
+	ier = cg_iRIC_Read_FunctionalWithName_StringLen_Mul(fid, "write_func_withname_string", "_siteID", &read_strlen);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_StringLen_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_StringLen_Mul() length == 8", 8 == read_strlen);
+	read_str.assign(read_strlen + 1, ' ');
+	ier = cg_iRIC_Read_FunctionalWithName_String_Mul(fid, "write_func_withname_string", "_siteID", read_str.data());
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "01646500");
+
+	ier = cg_iRIC_Read_FunctionalWithName_StringLen_Mul(fid, "write_func_withname_string", "_startDate", &read_strlen);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_StringLen_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_StringLen_Mul() length == 16", 16 == read_strlen);
+	read_str.assign(read_strlen + 1, ' ');
+	ier = cg_iRIC_Read_FunctionalWithName_String_Mul(fid, "write_func_withname_string", "_startDate", read_str.data());
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "2017-06-01T06:00");
+
+	ier = cg_iRIC_Read_FunctionalWithName_StringLen_Mul(fid, "write_func_withname_string", "_endDate", &read_strlen);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_StringLen_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_StringLen_Mul() length == 16", 16 == read_strlen);
+	read_str.assign(read_strlen + 1, ' ');
+	ier = cg_iRIC_Read_FunctionalWithName_String_Mul(fid, "write_func_withname_string", "_endDate", read_str.data());
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_String_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "2017-06-01T10:00");
 
 	cg_close(fid);
 
