@@ -299,7 +299,18 @@ int iRIC_Check_Cancel()
 
 	if (result == 0){
 		// Getting information. succeeded. Cancel file exist.
-		return IRIC_CANCELED;
+		// Close all CGNS files.
+		for (int fid = 0; fid < m_files.size(); ++fid) {
+			iRICLib::CgnsFile* file = m_files[fid];
+			if (file == nullptr) {continue;}
+
+			delete file;
+			m_files[fid] = nullptr;
+			cg_close(fid);
+		}
+		// exits running
+		std::cout << "Solver is stopped because the STOP button was clicked." << std::endl;
+		exit(0);
 	}
 
 	// not canceled.
