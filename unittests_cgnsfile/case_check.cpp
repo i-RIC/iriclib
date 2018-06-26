@@ -16,7 +16,7 @@ void case_CheckLock()
 
 void case_CheckCancel()
 {
-	canceled = iRIC_Check_Cancel();
+	int canceled = iRIC_Check_Cancel();
 	VERIFY_LOG("iRIC_Check_Cancel() checked .cancel, and it did not exist.", canceled == 0);
 }
 
