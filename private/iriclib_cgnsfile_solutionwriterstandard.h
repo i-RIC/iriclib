@@ -1,6 +1,7 @@
 #ifndef IRICLIB_CGNSFILE_SOLUTIONWRITERSTANDARD_H
 #define IRICLIB_CGNSFILE_SOLUTIONWRITERSTANDARD_H
 
+#include "iriclib_cgnsfile_baseiterativet.h"
 #include "iriclib_cgnsfile_solutionwriter.h"
 
 namespace iRICLib {
@@ -24,6 +25,8 @@ public:
 	int Sol_Particle_Write_Real(const char* name, double* value) override;
 	int Sol_Particle_Write_Integer(const char* name, int* value) override;
 	int Sol_PolyData_Write_GroupEnd() override;
+	int Sol_Write_BaseIterative_Integer(const char *name, int value) override;
+	int Sol_Write_BaseIterative_Real(const char *name, double value) override;
 
 	int Flush() override;
 
@@ -31,6 +34,13 @@ public:
 	static int stdSolWriteIteration(int index, CgnsFile::Impl* impl);
 	static int stdSolWriteGridCoord2d(double* x, double* y, int fid, int bid, int zid, int gcid, CgnsFile::Impl* impl);
 	static int stdSolWriteGridCoord3d(double* x, double* y, double* z, int fid, int bid, int zid, int gcid, CgnsFile::Impl* impl);
+
+	static int stdSolWriteBaseIterativeInteger(const char* name, int value, CgnsFile::Impl* impl);
+	static int stdSolWriteBaseIterativeReal(const char* name, double value, CgnsFile::Impl* impl);
+
+	static BaseIterativeT<int>* stdSolAddBaseIterativeInteger(const char* name, int value, CgnsFile::Impl* impl);
+	static BaseIterativeT<double>* stdSolAddBaseIterativeReal(const char* name, double value, CgnsFile::Impl* impl);
+	static int stdSolWriteBaseIterativeData(int num, CgnsFile::Impl* impl);
 
 	static int stdSolParticleWritePos2d(cgsize_t count, double* x, double* y, int fid, int bid, int zid, int sid);
 	static int stdSolParticleWritePos3d(cgsize_t count, double* x, double* y, double* z, int fid, int bid, int zid, int sid);

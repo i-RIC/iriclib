@@ -104,6 +104,18 @@ int CgnsFile::SolutionWriterStandard::Sol_PolyData_Write_GroupEnd()
 	return stdSolPolyDataGroupEnd(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId);
 }
 
+int CgnsFile::SolutionWriterStandard::Sol_Write_BaseIterative_Integer(const char *name, int value)
+{
+	Impl* i = impl();
+	return stdSolWriteBaseIterativeInteger(name, value, i);
+}
+
+int CgnsFile::SolutionWriterStandard::Sol_Write_BaseIterative_Real(const char *name, double value)
+{
+	Impl* i = impl();
+	return stdSolWriteBaseIterativeReal(name, value, i);
+}
+
 int CgnsFile::SolutionWriterStandard::Flush()
 {
 	return 0;
@@ -187,6 +199,81 @@ int CgnsFile::SolutionWriterStandard::stdSolWriteGridCoord3d(double* x, double* 
 	RETURN_IF_ERR;
 	ier = cg_array_write("CoordinateZ", RealDouble, 3, dimVec, z);
 	RETURN_IF_ERR;
+	return 0;
+}
+
+int CgnsFile::SolutionWriterStandard::stdSolWriteBaseIterativeInteger(const char* name, int value, CgnsFile::Impl* impl)
+{
+	BaseIterativeT<int>* data = stdSolAddBaseIterativeInteger(name, value, impl);
+
+	// write the value.
+	cgsize_t dimVec = static_cast<cgsize_t> (data->values().size());
+	impl->gotoBaseIter();
+	return cg_array_write(data->name().c_str(), Integer, 1, &dimVec, data->values().data());
+}
+
+int CgnsFile::SolutionWriterStandard::stdSolWriteBaseIterativeReal(const char* name, double value, CgnsFile::Impl* impl)
+{
+	BaseIterativeT<double>* data = stdSolAddBaseIterativeReal(name, value, impl);
+
+	// write the value.
+	cgsize_t dimVec = static_cast<cgsize_t> (data->values().size());
+	impl->gotoBaseIter();
+	return cg_array_write(data->name().c_str(), RealDouble, 1, &dimVec, data->values().data());
+}
+
+BaseIterativeT<int>* CgnsFile::SolutionWriterStandard::stdSolAddBaseIterativeInteger(const char* name, int value, CgnsFile::Impl* impl)
+{
+	BaseIterativeT<int>* data = nullptr;
+	auto& ints = impl->m_solBaseIterInts;
+	auto it = ints.find(std::string(name));
+	if (it == ints.end()) {
+		data = new BaseIterativeT<int>(name);
+		ints.insert({name, data});
+	} else {
+		data = it->second;
+	}
+	data->addValue(value);
+
+	return data;
+}
+
+BaseIterativeT<double>* CgnsFile::SolutionWriterStandard::stdSolAddBaseIterativeReal(const char* name, double value, CgnsFile::Impl* impl)
+{
+	BaseIterativeT<double>* data = nullptr;
+	auto& reals = impl->m_solBaseIterReals;
+	auto it = reals.find(std::string(name));
+	if (it == reals.end()) {
+		data = new BaseIterativeT<double>(name);
+		reals.insert({name, data});
+	} else {
+		data = it->second;
+	}
+	data->addValue(value);
+
+	return data;
+}
+
+int CgnsFile::SolutionWriterStandard::stdSolWriteBaseIterativeData(int num, CgnsFile::Impl* impl)
+{
+	cg_biter_write(impl->m_fileId, impl->m_baseId, Impl::BINAME.c_str(), num);
+
+	impl->gotoBaseIter();
+
+	cgsize_t dimvec = num;
+
+	// write int values
+	for (const auto& pair : impl->m_solBaseIterInts) {
+		const auto& data = pair.second;
+		int ier = cg_array_write(data->name().c_str(), Integer, 1, &dimvec, data->values().data());
+		RETURN_IF_ERR
+	}
+	// write double values
+	for (const auto& pair : impl->m_solBaseIterReals) {
+		const auto& data = pair.second;
+		int ier = cg_array_write(data->name().c_str(), RealDouble, 1, &dimvec, data->values().data());
+		RETURN_IF_ERR
+	}
 	return 0;
 }
 

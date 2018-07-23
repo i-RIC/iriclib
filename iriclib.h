@@ -60,6 +60,14 @@ int IRICLIBDLL iRIC_Check_Lock(const char* fname);
 int IRICLIBDLL iRIC_Check_Cancel();
 
 /**********************************************/
+/* Combining CGNS files                       */
+/**********************************************/
+
+int IRICLIBDLL cg_iRIC_Link_Solutions(int fid, int* progress, int* invaliddata_id);
+
+int IRICLIBDLL cg_iRIC_Combine_Solutions(int fid, int* progress, int* invaliddata_id, int maxid);
+
+/**********************************************/
 /* Reading Calculation Conditions             */
 /**********************************************/
 

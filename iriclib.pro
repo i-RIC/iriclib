@@ -46,6 +46,7 @@ HEADERS += error_macros.h \
            iriclib.h \
            iriclib_bstream.h \
            iriclib_cgnsfile.h \
+           iriclib_cgnsfiles.h \
            iriclib_global.h \
            iriclib_pointmap.h \
            iriclib_polygon.h \
@@ -69,6 +70,7 @@ SOURCES += filelocker.cpp \
            iriclib_cgnsfile_geo.cpp \
            iriclib_cgnsfile_grid.cpp \
            iriclib_cgnsfile_sol.cpp \
+           iriclib_cgnsfiles.cpp \
            iriclib_geo.cpp \
            iriclib_pointmap.cpp \
            iriclib_polygon.cpp \

@@ -2,6 +2,7 @@
 #include "filelocker.h"
 #include "iriclib.h"
 #include "iriclib_cgnsfile.h"
+#include "iriclib_cgnsfiles.h"
 
 #include <fstream>
 #include <iostream>
@@ -32,9 +33,9 @@ int lastfileid = 0;
 namespace {
 
 const int FILES_LEN_UNIT = 10;
-std::vector<iRICLib::CgnsFile*> m_files;
+iRICLib::CgnsFiles m_files;
 std::map<std::string, FileLocker*> m_fileLockers;
-bool m_divideSolutions = false;
+bool m_divideSolutions = true;
 
 const char* flush_filename() {
 	return ".flush";
@@ -189,48 +190,11 @@ int iRIC_InitOption(int option)
 	return 0;
 }
 
-int cg_iRIC_Flush(const char* filename, int* fid){
-
-	// this closes the last divided file otherwise it's a noop
-	iRICLib::CgnsFile* cgnsFile = m_files.at(*fid);
-	int ier = cgnsFile->Flush();
+int cg_iRIC_Flush(const char* /*filename*/, int* fid){
+	GET_F(*fid);
+	int ier = f->Flush();
 	RETURN_IF_ERR;
 
-	int flushIndex = check_flush_request();
-	if (flushIndex == 0) {
-		// flushing is not requested
-		return 0;
-	}
-
-	std::cout << "Copying CGNS file. This may take a long time. " << std::endl;
-	update_flushfile();
-
-	// close the CGNS file first.
-	ier = cg_close(*fid);
-	RETURN_IF_ERR;
-
-	m_files[*fid] = nullptr;
-
-	// copy the CGNS file
-	std::ostringstream oss;
-	oss << "tmp/" << filename << ".copy" << flushIndex;
-	std::string copyedFile = oss.str();
-	bool ok = copy(filename, copyedFile.c_str());
-	if (! ok) {
-		std::cout << "Copy operation in flushing failed" << std::endl;
-	}
-
-	// open the file again
-	ier = cg_open(filename, CG_MODE_MODIFY, fid);
-	RETURN_IF_ERR;
-
-	lastfileid = *fid;
-
-	initFilesFor(*fid);
-	cgnsFile->setFileId(*fid);
-	m_files[*fid] = cgnsFile;
-
-	unlink_flushfile();
 	return 0;
 }
 
@@ -304,23 +268,25 @@ int iRIC_Check_Cancel()
 	result = _stat(cancelfilename, &buf);
 
 	if (result == 0){
-		// Getting information. succeeded. Cancel file exist.
-		// Close all CGNS files.
-		for (int fid = 0; fid < m_files.size(); ++fid) {
-			iRICLib::CgnsFile* file = m_files[fid];
-			if (file == nullptr) {continue;}
-
-			delete file;
-			m_files[fid] = nullptr;
-			cg_close(fid);
-		}
-		// exits running
+		// Getting information. succeeded. Cancel file exist. Exits running.
 		std::cout << "Solver is stopped because the STOP button was clicked." << std::endl;
 		exit(0);
 	}
 
 	// not canceled.
 	return 0;
+}
+
+int cg_iRIC_Link_Solutions(int fid, int* progress, int* invaliddata_id)
+{
+	GET_F(fid);
+	return f->LinkSolutions(progress, invaliddata_id);
+}
+
+int cg_iRIC_Combine_Solutions(int fid, int* progress, int* invaliddata_id, int maxid)
+{
+	GET_F(fid);
+	return f->CombineSolutions(progress, invaliddata_id, maxid);
 }
 
 int cg_iRIC_Read_Integer_Mul(int fid, const char* name, int* intvalue){

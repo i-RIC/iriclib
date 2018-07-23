@@ -26,8 +26,13 @@ public:
 	int Sol_Particle_Write_Real(const char* name, double* value) override;
 	int Sol_Particle_Write_Integer(const char* name, int* value) override;
 	int Sol_PolyData_Write_GroupEnd() override;
+	int Sol_Write_BaseIterative_Integer(const char *name, int value) override;
+	int Sol_Write_BaseIterative_Real(const char *name, double value) override;
 
 	int Flush() override;
+
+	int LinkSolutions(int* progress, int* invaliddata_id);
+	int CombineSolutions(int* progress, int* invaliddata_id, int maxid);
 
 private:
 	int closeFileIfOpen();

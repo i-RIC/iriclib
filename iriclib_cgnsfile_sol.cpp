@@ -49,13 +49,14 @@ int CgnsFile::Sol_Read_BaseIterative_Integer(int step, const char *name, int* va
 	if (step > impl->m_solId) {
 		return 1;
 	}
-	for (BaseIterativeT<int> bit : impl->m_solBaseIterInts) {
-		if (bit.name() == name) {
-			*value = bit.values().at(step - 1);
-			return 0;
-		}
+	auto& ints = impl->m_solBaseIterInts;
+	auto it = ints.find(std::string(name));
+	if (it == ints.end()) {
+		return 2;
 	}
-	return 2;
+	BaseIterativeT<int>* bit = it->second;
+	*value = bit->values().at(step - 1);
+	return 0;
 }
 
 int CgnsFile::Sol_Read_BaseIterative_Real(int step, const char *name, double* value)
@@ -63,13 +64,14 @@ int CgnsFile::Sol_Read_BaseIterative_Real(int step, const char *name, double* va
 	if (step > impl->m_solId) {
 		return 1;
 	}
-	for (BaseIterativeT<double> bit : impl->m_solBaseIterReals) {
-		if (bit.name() == name) {
-			*value = bit.values().at(step - 1);
-			return 0;
-		}
+	auto& reals = impl->m_solBaseIterReals;
+	auto it = reals.find(std::string(name));
+	if (it == reals.end()) {
+		return 2;
 	}
-	return 2;
+	BaseIterativeT<double>* bit = it->second;
+	*value = bit->values().at(step - 1);
+	return 0;
 }
 
 int CgnsFile::Sol_Read_GridCoord2d(int step, double* x, double* y)
@@ -152,48 +154,12 @@ int CgnsFile::Sol_Write_Iteration(int index)
 
 int CgnsFile::Sol_Write_BaseIterative_Integer(const char *name, int value)
 {
-	bool found = false;
-	BaseIterativeT<int> data(name);
-	for (BaseIterativeT<int>& bit : impl->m_solBaseIterInts) {
-		if (bit.name() == name) {
-			bit.addValue(value);
-			data = bit;
-			found = true;
-		}
-	}
-	if (! found) {
-		BaseIterativeT<int> newData(name);
-		newData.addValue(value);
-		impl->m_solBaseIterInts.push_back(newData);
-		data = newData;
-	}
-	// write the value.
-	cgsize_t dimVec = static_cast<cgsize_t> (data.values().size());
-	impl->gotoBaseIter();
-	return cg_array_write(data.name().c_str(), Integer, 1, &dimVec, data.values().data());
+	return impl->m_solutionWriter->Sol_Write_BaseIterative_Integer(name, value);
 }
 
 int CgnsFile::Sol_Write_BaseIterative_Real(const char *name, double value)
 {
-	bool found = false;
-	BaseIterativeT<double> data(name);
-	for (BaseIterativeT<double>& bit : impl->m_solBaseIterReals) {
-		if (bit.name() == name) {
-			bit.addValue(value);
-			data = bit;
-			found = true;
-		}
-	}
-	if (! found) {
-		BaseIterativeT<double> newData(name);
-		newData.addValue(value);
-		impl->m_solBaseIterReals.push_back(newData);
-		data = newData;
-	}
-	// write the value.
-	cgsize_t dimVec = static_cast<cgsize_t> (data.values().size());
-	impl->gotoBaseIter();
-	return cg_array_write(data.name().c_str(), RealDouble, 1, &dimVec, data.values().data());
+	return impl->m_solutionWriter->Sol_Write_BaseIterative_Real(name, value);
 }
 
 int CgnsFile::Sol_Write_GridCoord2d(double *x, double *y)

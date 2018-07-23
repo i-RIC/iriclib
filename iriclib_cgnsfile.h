@@ -27,11 +27,17 @@ public:
 
 	int Flush();
 
+	int LinkSolutions(int* progress, int* invaliddata_id);
+	int CombineSolutions(int* progress, int* invaliddata_id, int maxid);
+
 	int GotoBase(int* B);
 	int GotoCC();
 	int GotoRawDataTop();
 
 	int Set_ZoneId(int zoneid);
+
+	int baseId() const;
+	int zoneId() const;
 
 	// ------------------------------
 	// Calculation Condition Reading

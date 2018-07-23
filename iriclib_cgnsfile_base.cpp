@@ -30,19 +30,24 @@ const std::string CgnsFile::Impl::RDNODE = "GeographicData";
 const std::string CgnsFile::Impl::BINAME = "BaseIterativeData";
 
 
-CgnsFile::Impl::Impl()
+CgnsFile::Impl::Impl() :
+	m_solutionWriter {nullptr}
 {
-	m_solutionWriter = new SolutionWriterStandard(this);
+	optionStandardSolutions();
+
 	m_fileName = "Case1.cgn";
-	m_solLinkFileId = 0;
 }
 
 CgnsFile::Impl::~Impl()
 {
-	delete m_solutionWriter;
-	if (m_solLinkFileId != 0) {
-		cg_close(m_solLinkFileId);
+	for (auto& pair : m_solBaseIterInts) {
+		delete pair.second;
 	}
+	for (auto& pair : m_solBaseIterReals) {
+		delete pair.second;
+	}
+
+	delete m_solutionWriter;
 }
 
 int CgnsFile::Impl::initBaseId(bool clearResults, const char* bname, bool skipInitZone)
@@ -105,6 +110,11 @@ int CgnsFile::Impl::initZoneId(bool clearResults)
 	return 1;
 }
 
+void CgnsFile::Impl::optionStandardSolutions()
+{
+	delete m_solutionWriter;
+	m_solutionWriter = new SolutionWriterStandard(this);
+}
 
 void CgnsFile::Impl::optionDivideSolutions()
 {
@@ -245,21 +255,21 @@ int CgnsFile::Impl::loadResultData()
 			m_solIndices.assign(dimvec, 0);
 			ier = cg_array_read(i, m_solIndices.data());
 		} else if (datatype == RealDouble || datatype == RealSingle) {
-			BaseIterativeT<double> biData = std::string(name);
+			BaseIterativeT<double>* biData = new BaseIterativeT<double>(std::string(name));
 			std::vector<double> vals;
 			vals.assign(dimvec, 0);
 			ier = cg_array_read_as(i, RealDouble, vals.data());
 			RETURN_IF_ERR;
-			biData.setValues(vals);
-			m_solBaseIterReals.push_back(biData);
+			biData->setValues(vals);
+			m_solBaseIterReals.insert({biData->name(), biData});
 		} else if (datatype == Integer) {
-			BaseIterativeT<int> biData = std::string(name);
+			BaseIterativeT<int>* biData = new BaseIterativeT<int>(std::string(name));
 			std::vector<int> vals;
 			vals.assign(dimvec, 0);
 			ier = cg_array_read_as(i, Integer, vals.data());
 			RETURN_IF_ERR;
-			biData.setValues(vals);
-			m_solBaseIterInts.push_back(biData);
+			biData->setValues(vals);
+			m_solBaseIterInts.insert({biData->name(), biData});
 		}
 	}
 	return 0;
@@ -867,6 +877,22 @@ int CgnsFile::Flush()
 	return impl->Flush();
 }
 
+int CgnsFile::LinkSolutions(int* progress, int* invaliddata_id)
+{
+	OptionDivideSolutions();
+	SolutionWriterDivideSolutions* writer = dynamic_cast<SolutionWriterDivideSolutions*> (impl->m_solutionWriter);
+
+	return writer->LinkSolutions(progress, invaliddata_id);
+}
+
+int CgnsFile::CombineSolutions(int* progress, int* invaliddata_id, int maxid)
+{
+	OptionDivideSolutions();
+	SolutionWriterDivideSolutions* writer = dynamic_cast<SolutionWriterDivideSolutions*> (impl->m_solutionWriter);
+
+	return writer->CombineSolutions(progress, invaliddata_id, maxid);
+}
+
 int CgnsFile::GotoBase(int* B)
 {
 	int ier = impl->initBaseId(false, 0, true);
@@ -914,6 +940,16 @@ int CgnsFile::Set_ZoneId(int zoneid)
 {
 	impl->m_zoneId = zoneid;
 	return 0;
+}
+
+int CgnsFile::baseId() const
+{
+	return impl->m_baseId;
+}
+
+int CgnsFile::zoneId() const
+{
+	return impl->m_zoneId;
 }
 
 int CgnsFile::Complex_CC_Clear_Complex()

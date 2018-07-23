@@ -33,6 +33,8 @@ public:
 	int Sol_PolyData_Write_Polyline(int num, double* x, double* y);
 	int Sol_PolyData_Write_Integer(const char* name, int value);
 	int Sol_PolyData_Write_Real(const char* name, double value);
+	virtual int Sol_Write_BaseIterative_Integer(const char *name, int value) = 0;
+	virtual int Sol_Write_BaseIterative_Real(const char *name, double value) = 0;
 
 	virtual int Flush() = 0;
 

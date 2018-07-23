@@ -4,6 +4,7 @@
 #include "../iriclib_cgnsfile.h"
 #include "iriclib_cgnsfile_baseiterativet.h"
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -23,6 +24,7 @@ public:
 	int initBaseId(bool clearResults, const char* baseName = NULL, bool skipInitZone = false);
 	int initZoneId(bool clearResults);
 
+	void optionStandardSolutions();
 	void optionDivideSolutions();
 
 	int Flush();
@@ -126,13 +128,10 @@ public:
 	std::vector<std::string> m_cellSolPointers;
 	std::vector<std::string> m_solParticlePointers;
 
-	std::vector<BaseIterativeT<int> > m_solBaseIterInts;
-	std::vector<BaseIterativeT<double> > m_solBaseIterReals;
+	std::map<std::string, BaseIterativeT<int>* > m_solBaseIterInts;
+	std::map<std::string, BaseIterativeT<double>* > m_solBaseIterReals;
 
 	SolutionWriter* m_solutionWriter;
-
-	std::string m_solLinkedFileName;
-	int m_solLinkFileId;
 };
 
 } // iRICLib
