@@ -257,19 +257,24 @@ int cg_iRIC_Set_ZoneId_Mul(int fid, int zid)
 
 int iRIC_Write_Sol_Start(const char* filename)
 {
+	/*
 	FileLocker& locker = getFileLocker(filename);
 
 	bool result = locker.lock();
 	if (! result) {return 1;}
+	*/
 
 	return 0;
 }
 
 int iRIC_Write_Sol_End(const char* filename)
 {
+	/*
 	FileLocker& locker = getFileLocker(filename);
 
 	locker.unlock();
+	*/
+
 	return 0;
 }
 
