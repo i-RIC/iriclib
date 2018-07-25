@@ -17,6 +17,7 @@
 
 #if !defined(_MSC_VER)
 #define _stat stat
+#include <unistd.h>  // unlink
 #endif
 
 #define GET_F(id) if (id >= m_files.size()){return 98;};iRICLib::CgnsFile* f = m_files.at(id);if (f == nullptr){return 99;}
