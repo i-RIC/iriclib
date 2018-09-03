@@ -1,10 +1,22 @@
 cmake_minimum_required (VERSION 2.8)
 
 project (iriclib CXX C)
-enable_language(Fortran)
 
 # set standard directory locations
 include(GNUInstallDirs)
+
+# Fortran (Not currently used)
+if (NOT IRICLIB_FORTRAN_TESTING)
+  if (NOT CMAKE_Fortran_COMPILER OR CMAKE_Fortran_COMPILER STREQUAL "CMAKE_Fortran_COMPILER-NOTFOUND")
+    option (IRICLIB_FORTRAN_TESTING "Build Fortran test" OFF)
+  else()
+    option (IRICLIB_FORTRAN_TESTING "Build Fortran test" ON)
+  endif()
+else()
+  if (IRICLIB_FORTRAN_TESTING)
+    enable_language(Fortran)
+  endif()  
+endif()
 
 if(NOT DEFINED FORTRAN_NAMING)
   # set(FORTRAN_NAMING "UNKNOWN")
