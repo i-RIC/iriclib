@@ -1,1 +1,1 @@
-# iriclib [![Build status](https://ci.appveyor.com/api/projects/status/j8nduc2preo5psyg?svg=true)](https://ci.appveyor.com/project/scharlton2/iriclib)
+# iriclib [![Build status](https://ci.appveyor.com/api/projects/status/vdw6tm8bnrx5x4p0?svg=true)](https://ci.appveyor.com/project/i-RIC/iriclib)
