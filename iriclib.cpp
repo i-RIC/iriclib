@@ -190,11 +190,45 @@ int iRIC_InitOption(int option)
 	return 0;
 }
 
-int cg_iRIC_Flush(const char* /*filename*/, int* fid){
+int cg_iRIC_Flush(const char* filename, int* fid){
 	GET_F(*fid);
 	int ier = f->Flush();
 	RETURN_IF_ERR;
 
+	int flushIndex = check_flush_request();
+	if (flushIndex == 0) {
+		// flushing is not requested
+		return 0;
+	}
+
+	update_flushfile();
+
+	// close the CGNS file first.
+	ier = cg_close(*fid);
+	RETURN_IF_ERR;
+
+	m_files[*fid] = nullptr;
+
+	// copy the CGNS file
+	std::ostringstream oss;
+	oss << "result/output.copy" << flushIndex << ".cgn";
+	std::string copyedFile = oss.str();
+	bool ok = copy(filename, copyedFile.c_str());
+	if (! ok) {
+		std::cout << "Copy operation in flushing failed" << std::endl;
+	}
+
+	// open the file again
+	ier = cg_open(filename, CG_MODE_MODIFY, fid);
+	RETURN_IF_ERR;
+
+	lastfileid = *fid;
+
+	initFilesFor(*fid);
+	f->setFileId(*fid);
+	m_files[*fid] = f;
+
+	unlink_flushfile();
 	return 0;
 }
 
