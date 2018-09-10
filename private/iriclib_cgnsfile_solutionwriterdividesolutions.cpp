@@ -523,6 +523,9 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_BaseIterative_Integer(con
 	ier = cg_array_write(name, Integer, 1, &dimVec, &value);
 	RETURN_IF_ERR;
 
+	ier = SolutionWriterStandard::stdSolWriteBaseIterativeInteger(name, value, impl());
+	RETURN_IF_ERR;
+
 	return 0;
 }
 
@@ -535,6 +538,9 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_BaseIterative_Real(const 
 
 	cgsize_t dimVec = 1;
 	ier = cg_array_write(name, RealDouble, 1, &dimVec, &value);
+	RETURN_IF_ERR;
+
+	ier = SolutionWriterStandard::stdSolWriteBaseIterativeReal(name, value, impl());
 	RETURN_IF_ERR;
 
 	return 0;
