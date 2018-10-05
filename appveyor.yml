@@ -17,7 +17,6 @@ init:
   - set BUILD_TOOLS=OFF
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
-  - dir C:\Qt\5.5
 
 # doesn't seem to be able to use environmental vars
 clone_folder: C:\iricdev\lib\src\iriclib
@@ -31,16 +30,17 @@ matrix:
 
 # Note mkdir is from Git (C:\Program Files\Git\usr\bin\mkdir.exe)
 # It might give unexpected results (use md instead)
+#
+# Qt 5.5 only supports VS2013
 before_build:
   - REM call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd C:\iricdev
-  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/versions.cmd
-  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/iricdev.proj
-  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/appveyor_programs.prop
-  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/build-hdf5.cmake
-  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/build-cgnslib.cmake
-  - unix2dos versions.cmd iricdev.proj appveyor_programs.prop build-hdf5.cmake build-cgnslib.cmake
+  - curl -L -O https://github.com/i-RIC/iricdev/archive/master.zip
+  - 7z e master.zip
+  - rd iricdev-master
+  - del master.zip
+  - unix2dos *
   - copy appveyor_programs.prop programs.prop
   - call versions.cmd
   - msbuild /nologo /target:cgnslib-build-%config% iricdev.proj
