@@ -1,6 +1,8 @@
 version: '{build}'
 
-image: Visual Studio 2013
+image:
+  - Visual Studio 2013
+  - Visual Studio 2015
 
 # called before clone
 init:
@@ -15,9 +17,10 @@ init:
   - set BUILD_TOOLS=OFF
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
+  - dir C:\Qt\5.5
 
 # doesn't seem to be able to use environmental vars
-clone_folder: C:\iricdev_2013\lib\src\iriclib
+clone_folder: C:\iricdev\lib\src\iriclib
 
 configuration:
   - Debug
@@ -29,14 +32,14 @@ matrix:
 # Note mkdir is from Git (C:\Program Files\Git\usr\bin\mkdir.exe)
 # It might give unexpected results (use md instead)
 before_build:
-  - call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
+  - REM call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
-  - cd C:\iricdev_2013
-  - curl -L -O https://github.com/scharlton2/iricdev/raw/appveyor/versions.cmd
-  - curl -L -O https://github.com/scharlton2/iricdev/raw/appveyor/iricdev.proj
-  - curl -L -O https://github.com/scharlton2/iricdev/raw/appveyor/appveyor_programs.prop
-  - curl -L -O https://github.com/scharlton2/iricdev/raw/appveyor/build-hdf5.cmake
-  - curl -L -O https://github.com/scharlton2/iricdev/raw/appveyor/build-cgnslib.cmake
+  - cd C:\iricdev
+  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/versions.cmd
+  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/iricdev.proj
+  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/appveyor_programs.prop
+  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/build-hdf5.cmake
+  - curl -L -O https://github.com/i-RIC/iricdev/raw/master/build-cgnslib.cmake
   - unix2dos versions.cmd iricdev.proj appveyor_programs.prop build-hdf5.cmake build-cgnslib.cmake
   - copy appveyor_programs.prop programs.prop
   - call versions.cmd
@@ -48,13 +51,13 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir _build
   - cd _build
-  - set CMAKE_PREFIX_PATH=c:\iricdev_2013\lib\install\hdf5-%HDF5_VER%\%config%\cmake\hdf5;c:\iricdev_2013\lib\install\cgnslib-%CGNSLIB_VER%\%config%
+  - set CMAKE_PREFIX_PATH=c:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%\cmake\hdf5;c:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%
   - cmake -G %GENERATOR% -DCMAKE_INSTALL_PREFIX:PATH=%CD%/INSTALL ..
   - msbuild iriclib.sln /p:Configuration=%Configuration%
 
 test_script:
   - cd %APPVEYOR_BUILD_FOLDER%\_build
-  - set path=c:\iricdev_2013\lib\install\hdf5-%HDF5_VER%\%config%\bin;c:\iricdev_2013\lib\install\cgnslib-%CGNSLIB_VER%\%config%\bin;%PATH%
+  - set path=c:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%\bin;c:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%\bin;%PATH%
   - ctest -C %Configuration%
 
 after_test:
@@ -68,4 +71,4 @@ artifacts:
 # ??? doesn't seem to be able to use environmental vars ???
 #  - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
 cache:
-  - C:\iricdev_2013\lib\install
+  - C:\iricdev\lib\install
