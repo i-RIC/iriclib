@@ -5,6 +5,7 @@
 #define IRIC_GEO_POLYGON        1
 #define IRIC_GEO_RIVERSURVEY    2
 #define IRIC_GEO_POINTMAP       3
+#define IRIC_GEO_POLYLINE       4
 
 #define IRIC_OPTION_UNKNOWN         0
 #define IRIC_OPTION_CANCEL          1
