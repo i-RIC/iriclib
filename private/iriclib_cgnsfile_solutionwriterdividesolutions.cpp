@@ -338,9 +338,8 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Time(double time)
 
 	Impl* i = impl();
 	// now time is not written to original CGNS file
-	// ier = CgnsFile::SolutionWriterStandard::stdSolWriteTime(time, i);
-	// RETURN_IF_ERR;
-	++ i->m_solId;
+	ier = CgnsFile::SolutionWriterStandard::stdSolWriteTime(time, i);
+	RETURN_IF_ERR;
 
 	m_fileName = solutionFileName(i->m_solId);
 
