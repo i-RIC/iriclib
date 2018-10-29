@@ -23,6 +23,8 @@ public:
 	int InitRead_Base(const char* basename);
 	int InitRead();
 
+	int WriteBase();
+
 	void OptionDivideSolutions();
 
 	int Flush();

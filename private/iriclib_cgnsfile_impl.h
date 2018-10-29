@@ -23,7 +23,7 @@ public:
 
 	int initBaseId(bool clearResults, const char* baseName = NULL, bool skipInitZone = false);
 	int initZoneId(bool clearResults);
-
+	int writeBase();
 	void optionStandardSolutions();
 	void optionDivideSolutions();
 

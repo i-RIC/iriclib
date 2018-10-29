@@ -29,6 +29,8 @@ extern "C" {
 
 int IRICLIBDLL cg_iRIC_Init(int fid);
 
+int IRICLIBDLL cg_iRIC_WriteBase(int fid);
+
 int IRICLIBDLL cg_iRIC_InitRead_Base(int fid, const char* basename);
 
 int IRICLIBDLL cg_iRIC_InitRead(int fid);

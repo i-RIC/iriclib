@@ -147,9 +147,16 @@ bool copy(const char* src, const char* dst)
 
 extern "C" {
 
-int cg_iRIC_Init(int fid){
+int cg_iRIC_Init(int fid)
+{
 	iRICLib::CgnsFile* f = initCgnsFile(fid);
 	return f->Init();
+}
+
+int cg_iRIC_WriteBase(int fid)
+{
+	iRICLib::CgnsFile* f = initCgnsFile(fid);
+	return f->WriteBase();
 }
 
 int cg_iRIC_InitRead_Base(int fid, const char* bname)

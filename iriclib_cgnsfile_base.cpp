@@ -110,6 +110,24 @@ int CgnsFile::Impl::initZoneId(bool clearResults)
 	return 1;
 }
 
+int CgnsFile::Impl::writeBase()
+{
+	m_baseCellDim = 2;
+	m_basePhysDim = 2;
+	cg_base_write(m_fileId, IRICBASE.c_str(), m_baseCellDim, m_basePhysDim, &m_baseId);
+	m_ccBaseId = m_baseId;
+
+	int ret;
+
+	ret = cg_gopath(m_fileId, "/iRIC");
+	if (ret != 0) {return ret;}
+
+	ret = cg_user_data_write(CCNODE.c_str());
+	if (ret != 0) {return ret;}
+
+	return 0;
+}
+
 void CgnsFile::Impl::optionStandardSolutions()
 {
 	delete m_solutionWriter;
@@ -865,6 +883,11 @@ int CgnsFile::InitRead_Base(const char* bname)
 int CgnsFile::InitRead()
 {
 	return InitRead_Base(NULL);
+}
+
+int CgnsFile::WriteBase()
+{
+	return impl->writeBase();
 }
 
 void CgnsFile::OptionDivideSolutions()
