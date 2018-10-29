@@ -5,6 +5,7 @@
 TEMPLATE = app
 TARGET = test13
 CONFIG += debug_and_release
+CONFIG += console
 
 include( ../../../paths.pri )
 
