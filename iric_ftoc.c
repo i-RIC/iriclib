@@ -1157,6 +1157,45 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_integer_mul_f, CG_IRIC_WRITE_S
 	*ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(*fid, c_name, value);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_groupbegin_mul_f, CG_IRIC_WRITE_SOL_POLYDATA_GROUPBEGIN_MUL_F) (int *fid, STR_PSTR(name), int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_PolyData_GroupBegin_Mul(*fid, c_name);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_groupend_mul_f, CG_IRIC_WRITE_SOL_POLYDATA_GROUPEND_MUL_F) (int *fid, int *ier) {
+	*ier = cg_iRIC_Write_Sol_PolyData_GroupEnd_Mul(*fid);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_polygon_mul_f, CG_IRIC_WRITE_SOL_POLYDATA_POLYGON_MUL_F) (int *fid, int *numPoints, double *x, double *y, int *ier) {
+	*ier = cg_iRIC_Write_Sol_PolyData_Polygon_Mul(*fid, *numPoints, x, y);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_polyline_mul_f, CG_IRIC_WRITE_SOL_POLYDATA_POLYLINE_MUL_F) (int *fid, int *numPoints, double *x, double *y, int *ier) {
+	*ier = cg_iRIC_Write_Sol_PolyData_Polyline_Mul(*fid, *numPoints, x, y);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_integer_mul_f, CG_IRIC_WRITE_SOL_POLYDATA_INTEGER_MUL_F) (int *fid, STR_PSTR(name), int *value, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_PolyData_Integer_Mul(*fid, c_name, *value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_real_mul_f, CG_IRIC_WRITE_SOL_POLYDATA_REAL_MUL_F) (int *fid, STR_PSTR(name), double *value, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_PolyData_Real_Mul(*fid, c_name, *value);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_read_geo_count_mul_f, CG_IRIC_READ_GEO_COUNT_MUL_F) (int *fid, STR_PSTR(name), int *count, int *ier STR_PLEN(name)) {
 	char c_name[CGIO_MAX_NAME_LENGTH+1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name),
@@ -2304,6 +2343,45 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_integer_f, CG_IRIC_WRITE_SOL_P
 	if (*ier) return;
 
 	*ier = cg_iRIC_Write_Sol_Particle_Integer(c_name, value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_groupbegin_f, CG_IRIC_WRITE_SOL_POLYDATA_GROUPBEGIN_F) (STR_PSTR(name), int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_PolyData_GroupBegin(c_name);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_groupend_f, CG_IRIC_WRITE_SOL_POLYDATA_GROUPEND_F) (int *ier) {
+	*ier = cg_iRIC_Write_Sol_PolyData_GroupEnd();
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_polygon_f, CG_IRIC_WRITE_SOL_POLYDATA_POLYGON_F) (int *numPoints, double *x, double *y, int *ier) {
+	*ier = cg_iRIC_Write_Sol_PolyData_Polygon(*numPoints, x, y);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_polyline_f, CG_IRIC_WRITE_SOL_POLYDATA_POLYLINE_F) (int *numPoints, double *x, double *y, int *ier) {
+	*ier = cg_iRIC_Write_Sol_PolyData_Polyline(*numPoints, x, y);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_integer_f, CG_IRIC_WRITE_SOL_POLYDATA_INTEGER_F) (STR_PSTR(name), int *value, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_PolyData_Integer(c_name, *value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_real_f, CG_IRIC_WRITE_SOL_POLYDATA_REAL_F) (STR_PSTR(name), double *value, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_PolyData_Real(c_name, *value);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_read_geo_count_f, CG_IRIC_READ_GEO_COUNT_F) (STR_PSTR(name), int *count, int *ier STR_PLEN(name)) {

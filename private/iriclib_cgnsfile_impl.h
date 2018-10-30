@@ -90,10 +90,12 @@ public:
 
 	static void getSolGridCoordName(int num, char* name);
 	static void getParticleSolName(int num, char* name);
+	static void getPolydataSolName(int num, char* name);
 
 	static int addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols);
 	static int addSolutionGridCoordNode(int fid, int bid, int zid, int sid, std::vector<std::string>* coords);
 	static int addParticleSolutionNode(int fid, int bid, int zid, int sid);
+	static int addPolydataSolutionNode(int fid, int bid, int zid, int sid);
 
 	static int writePointers(int fid, int bid, int zid, const char* name, const std::vector<std::string>& strs);
 	static int writeFlowSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
@@ -123,7 +125,6 @@ public:
 	std::vector<std::string> m_solPointers;
 	std::vector<std::string> m_cellSolPointers;
 	std::vector<std::string> m_solParticlePointers;
-
 
 	std::vector<BaseIterativeT<int> > m_solBaseIterInts;
 	std::vector<BaseIterativeT<double> > m_solBaseIterReals;

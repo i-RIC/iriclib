@@ -17,3 +17,7 @@
 
       integer IRIC_CANCELED
       parameter(IRIC_CANCELED        = 1)
+      
+      integer IRIC_POLYDATA_POLYGON, IRIC_POLYDATA_POLYLINE
+      parameter(IRIC_POLYDATA_POLYGON  = 1)
+      parameter(IRIC_POLYDATA_POLYLINE = 2)

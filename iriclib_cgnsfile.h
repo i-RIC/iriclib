@@ -189,6 +189,17 @@ public:
 	int Sol_Particle_Write_Real(const char* name, double* value);
 	int Sol_Particle_Write_Integer(const char* name, int* value);
 
+	// ----------------------
+	// Solution Polydata I/O
+	// ----------------------
+
+	int Sol_PolyData_Write_GroupBegin(const char* name);
+	int Sol_PolyData_Write_GroupEnd();
+	int Sol_PolyData_Write_Polygon(int numPoints, double* x, double* y);
+	int Sol_PolyData_Write_Polyline(int numPoints, double* x, double* y);
+	int Sol_PolyData_Write_Integer(const char* name, int value);
+	int Sol_PolyData_Write_Real(const char* name, double value);
+
 	// --------------------
 	// Geographic data I/O
 	// --------------------

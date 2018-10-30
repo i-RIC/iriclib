@@ -696,6 +696,11 @@ void CgnsFile::Impl::getParticleSolName(int num, char* name)
 	sprintf(name, "ParticleSolution%d", num);
 }
 
+void CgnsFile::Impl::getPolydataSolName(int num, char* name)
+{
+	sprintf(name, "PolydataSolution%d", num);
+}
+
 int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols)
 {
 	char solname[NAME_MAXLENGTH];
@@ -717,7 +722,13 @@ int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vec
 	ier = writeFlowSolutionPointers(fid, bid, zid, *sols);
 	RETURN_IF_ERR;
 
-	return writeFlowCellSolutionPointers(fid, bid, zid, *cellsols);
+	ier = writeFlowCellSolutionPointers(fid, bid, zid, *cellsols);
+	RETURN_IF_ERR;
+
+	ier = addPolydataSolutionNode(fid, bid, zid, sid);
+	RETURN_IF_ERR;
+
+	return 0;
 }
 
 int CgnsFile::Impl::addSolutionGridCoordNode(int fid, int bid, int zid, int sid, std::vector<std::string>* coords)
@@ -739,6 +750,16 @@ int CgnsFile::Impl::addParticleSolutionNode(int fid, int bid, int zid, int sid)
 {
 	char solname[NAME_MAXLENGTH];
 	getParticleSolName(sid, solname);
+
+	int ier = cg_goto(fid, bid, "Zone_t", zid, NULL);
+	RETURN_IF_ERR;
+	return cg_user_data_write(solname);
+}
+
+int CgnsFile::Impl::addPolydataSolutionNode(int fid, int bid, int zid, int sid)
+{
+	char solname[NAME_MAXLENGTH];
+	getPolydataSolName(sid, solname);
 
 	int ier = cg_goto(fid, bid, "Zone_t", zid, NULL);
 	RETURN_IF_ERR;

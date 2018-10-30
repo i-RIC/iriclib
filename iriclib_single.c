@@ -597,6 +597,36 @@ int cg_iRIC_Write_Sol_Particle_Integer(const char* name, int* value)
 	return cg_iRIC_Write_Sol_Particle_Integer_Mul(lastfileid, name, value);
 }
 
+int cg_iRIC_Write_Sol_PolyData_GroupBegin(const char* name)
+{
+	return cg_iRIC_Write_Sol_PolyData_GroupBegin_Mul(lastfileid, name);
+}
+
+int cg_iRIC_Write_Sol_PolyData_GroupEnd()
+{
+	return cg_iRIC_Write_Sol_PolyData_GroupEnd_Mul(lastfileid);
+}
+
+int cg_iRIC_Write_Sol_PolyData_Polygon(int numPoints, double* x, double* y)
+{
+	return cg_iRIC_Write_Sol_PolyData_Polygon_Mul(lastfileid, numPoints, x, y);
+}
+
+int cg_iRIC_Write_Sol_PolyData_Polyline(int numPoints, double* x, double* y)
+{
+	return cg_iRIC_Write_Sol_PolyData_Polyline_Mul(lastfileid, numPoints, x, y);
+}
+
+int cg_iRIC_Write_Sol_PolyData_Integer(const char* name, int value)
+{
+	return cg_iRIC_Write_Sol_PolyData_Integer_Mul(lastfileid, name, value);
+}
+
+int cg_iRIC_Write_Sol_PolyData_Real(const char* name, double value)
+{
+	return cg_iRIC_Write_Sol_PolyData_Real_Mul(lastfileid, name, value);
+}
+
 int cg_iRIC_Read_Geo_Count(const char* name, int* count)
 {
 	return cg_iRIC_Read_Geo_Count_Mul(lastfileid, name, count);

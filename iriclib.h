@@ -16,6 +16,9 @@
 
 #define IRIC_CANCELED 1
 
+#define IRIC_POLYDATA_POLYGON  1
+#define IRIC_POLYDATA_POLYLINE 2
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -332,6 +335,17 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Real_Mul(int fid, const char* name, do
 int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Integer_Mul(int fid, const char* name, int* value);
 
 /**********************************************/
+/* Writing Polydata                           */
+/**********************************************/
+
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_GroupBegin_Mul(int fid, const char* name);
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_GroupEnd_Mul(int fid);
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_Polygon_Mul(int fid, int numPoints, double* x, double* y);
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_Polyline_Mul(int fid, int numPoints, double* x, double* y);
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_Integer_Mul(int fid, const char* name, int value);
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_Real_Mul(int fid, const char* name, double value);
+
+/**********************************************/
 /* Reading Geographic Data                    */
 /**********************************************/
 
@@ -633,6 +647,18 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Pos3d(cgsize_t count, double* x, doubl
 int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Real(const char* name, double* value);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Integer(const char* name, int* value);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_GroupBegin(const char* name);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_GroupEnd();
+
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_Polygon(int numPoints, double* x, double* y);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_Polyline(int numPoints, double* x, double* y);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_Integer(const char* name, int value);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_Real(const char* name, double value);
 
 int IRICLIBDLL cg_iRIC_Read_Geo_Count(const char* name, int* count);
 
