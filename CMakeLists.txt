@@ -66,6 +66,8 @@ iriclib_pointmap.cpp
 iriclib_pointmap.h
 iriclib_polygon.cpp
 iriclib_polygon.h
+iriclib_polyline.cpp
+iriclib_polyline.h
 iriclib_riversurvey.cpp
 iriclib_riversurvey.h
 iriclib_single.c
@@ -140,6 +142,7 @@ ${PROJECT_SOURCE_DIR}/iriclib_f.h
 ${PROJECT_SOURCE_DIR}/iriclib_global.h
 ${PROJECT_SOURCE_DIR}/iriclib_pointmap.h
 ${PROJECT_SOURCE_DIR}/iriclib_polygon.h
+${PROJECT_SOURCE_DIR}/iriclib_polyline.h
 ${PROJECT_SOURCE_DIR}/iriclib_riversurvey.h
 )
 
