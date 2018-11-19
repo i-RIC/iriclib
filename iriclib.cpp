@@ -202,6 +202,8 @@ int cg_iRIC_Flush(const char* filename, int* fid){
 	int ier = f->Flush();
 	RETURN_IF_ERR;
 
+	return 0;
+/*
 	int flushIndex = check_flush_request();
 	if (flushIndex == 0) {
 		// flushing is not requested
@@ -237,6 +239,7 @@ int cg_iRIC_Flush(const char* filename, int* fid){
 
 	unlink_flushfile();
 	return 0;
+*/
 }
 
 int cg_iRIC_GotoBase(int fid, int* B){
