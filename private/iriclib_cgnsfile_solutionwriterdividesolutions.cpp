@@ -338,8 +338,8 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Time(double time)
 
 	Impl* i = impl();
 	// now time is not written to original CGNS file
-	ier = CgnsFile::SolutionWriterStandard::stdSolWriteTime(time, i);
-	RETURN_IF_ERR;
+	// ier = CgnsFile::SolutionWriterStandard::stdSolWriteTime(time, i);
+	// RETURN_IF_ERR;
 
 	m_fileName = solutionFileName(i->m_solId);
 
@@ -392,7 +392,10 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Iteration(int index)
 	RETURN_IF_ERR;
 
 	Impl* i = impl();
-	CgnsFile::SolutionWriterStandard::stdSolWriteIteration(index, i);
+	// now iteration is not written to original CGNS file
+	// ier = CgnsFile::SolutionWriterStandard::stdSolWriteIteration(index, i);
+	// RETURN_IF_ERR;
+
 	m_fileName = solutionFileName(i->m_solId);
 
 	ier = setupSolutionFile(m_fileName, i, &m_fileId, &m_baseId, &m_zoneId);
@@ -522,8 +525,8 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_BaseIterative_Integer(con
 	ier = cg_array_write(name, Integer, 1, &dimVec, &value);
 	RETURN_IF_ERR;
 
-	ier = SolutionWriterStandard::stdSolWriteBaseIterativeInteger(name, value, impl());
-	RETURN_IF_ERR;
+	// ier = SolutionWriterStandard::stdSolWriteBaseIterativeInteger(name, value, impl());
+	// RETURN_IF_ERR;
 
 	return 0;
 }
@@ -539,8 +542,8 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_BaseIterative_Real(const 
 	ier = cg_array_write(name, RealDouble, 1, &dimVec, &value);
 	RETURN_IF_ERR;
 
-	ier = SolutionWriterStandard::stdSolWriteBaseIterativeReal(name, value, impl());
-	RETURN_IF_ERR;
+	// ier = SolutionWriterStandard::stdSolWriteBaseIterativeReal(name, value, impl());
+	// RETURN_IF_ERR;
 
 	return 0;
 }
