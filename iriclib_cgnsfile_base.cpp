@@ -98,7 +98,9 @@ int CgnsFile::Impl::initZoneId(bool clearResults)
 			m_zoneId = Z;
 
 			if (clearResults) {
-				ier = clearResultData();
+				// now result not included in the CGNS file.
+				// ier = clearResultData();
+				ier = 0;
 			} else {
 				ier = loadResultData();
 			}
