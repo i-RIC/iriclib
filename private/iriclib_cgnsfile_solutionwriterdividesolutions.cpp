@@ -310,6 +310,11 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Particle_Write_Integer(const ch
 	return SolutionWriterStandard::stdSolParticleWriteInteger(name, value, m_fileId, m_baseId, m_zoneId, 1);
 }
 
+int CgnsFile::SolutionWriterDivideSolutions::Sol_PolyData_Write_GroupEnd()
+{
+	return stdSolPolyDataGroupEnd(m_fileId, m_baseId, m_zoneId, 1);
+}
+
 int CgnsFile::SolutionWriterDivideSolutions::Flush()
 {
 	return closeFileIfOpen();

@@ -1001,4 +1001,40 @@ int cg_iRIC_Write_Sol_Particle_Integer_Mul(int fid, const char* name, int* value
 	return f->Sol_Particle_Write_Integer(name, value);
 }
 
+int cg_iRIC_Write_Sol_PolyData_GroupBegin_Mul(int fid, const char* name)
+{
+	GET_F(fid);
+	return f->Sol_PolyData_Write_GroupBegin(name);
+}
+
+int cg_iRIC_Write_Sol_PolyData_GroupEnd_Mul(int fid)
+{
+	GET_F(fid);
+	return f->Sol_PolyData_Write_GroupEnd();
+}
+
+int cg_iRIC_Write_Sol_PolyData_Polygon_Mul(int fid, int numPoints, double* x, double* y)
+{
+	GET_F(fid);
+	return f->Sol_PolyData_Write_Polygon(numPoints, x, y);
+}
+
+int cg_iRIC_Write_Sol_PolyData_Polyline_Mul(int fid, int numPoints, double* x, double* y)
+{
+	GET_F(fid);
+	return f->Sol_PolyData_Write_Polyline(numPoints, x, y);
+}
+
+int cg_iRIC_Write_Sol_PolyData_Integer_Mul(int fid, const char* name, int value)
+{
+	GET_F(fid);
+	return f->Sol_PolyData_Write_Integer(name, value);
+}
+
+int cg_iRIC_Write_Sol_PolyData_Real_Mul(int fid, const char* name, double value)
+{
+	GET_F(fid);
+	return f->Sol_PolyData_Write_Real(name, value);
+}
+
 } // extern "C"
