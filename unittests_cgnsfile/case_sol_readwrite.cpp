@@ -31,6 +31,34 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 	std::vector<double> ccdepth;
 	std::vector<int> ccwet;
 
+	// fill iface
+	std::vector<int> iface_is_edge;
+	std::vector<double> iface_is_edge_reals;
+	iface_is_edge.assign(isize*(jsize - 1), 0);
+	iface_is_edge_reals.assign(isize*(jsize - 1), 0.);
+	for (int j = 0; j < jsize - 1; ++j) {
+		for (int i = 0; i < isize; ++i) {
+			if (j == 0 || j == (jsize - 2) || i == 0 || i == (isize - 1)) {
+				iface_is_edge[j * isize + i] = 1;
+				iface_is_edge_reals[j * isize + i] = .1;
+			}
+		}
+	}
+
+	// fill jface
+	std::vector<int> jface_is_edge;
+	std::vector<double> jface_is_edge_reals;
+	jface_is_edge.assign((isize - 1)*jsize, 0);
+	jface_is_edge_reals.assign((isize - 1)*jsize, 0.);
+	for (int j = 0; j < jsize; ++j) {
+		for (int i = 0; i < isize - 1; ++i) {
+			if (j == 0 || j == (jsize - 1) || i == 0 || i == (isize - 2)) {
+				jface_is_edge[j * (isize - 1) + i] = 2;
+				jface_is_edge_reals[j * (isize - 1) + i] = .2;
+			}
+		}
+	}
+
 	std::vector<double> particle_x, particle_y;
 	std::vector<double> particle_vx, particle_vy;
 	std::vector<int> particle_active;
@@ -66,22 +94,23 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 			VERIFY_LOG("cg_iRIC_Write_Sol_Time_Mul() ier == 0", ier == 0);
 		}
 
-		cg_iRIC_Write_Sol_GridCoord2d_Mul(*fid, x.data(), y.data());
+		ier = cg_iRIC_Write_Sol_GridCoord2d_Mul(*fid, x.data(), y.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_GridCoord2d_Mul() ier == 0", ier == 0);
 
 		// Vertex solutions
 
 		depth.assign(isize * jsize, (double)i);
-		cg_iRIC_Write_Sol_Real_Mul(*fid, "Depth", depth.data());
+		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "Depth", depth.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for Depth ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityX", vx.data());
+		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityX", vx.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityX ier == 0", ier == 0);
 
-		cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityY", vy.data());
+		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityY", vy.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
 
 		wet.assign(isize * jsize, i);
-		cg_iRIC_Write_Sol_Integer_Mul(*fid, "IBC", wet.data());
+		ier = cg_iRIC_Write_Sol_Integer_Mul(*fid, "IBC", wet.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
 
 		// CellCenter solutions
@@ -94,13 +123,29 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 		ier = cg_iRIC_Write_Sol_Cell_Integer("CCWet", ccwet.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Integer() ier == 0", ier == 0);
 
+		// IFaceCenter solutions
+
+		ier = cg_iRIC_Write_Sol_IFace_Integer_Mul(*fid, "IFaceIsEdge", iface_is_edge.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_IFace_Integer() ier == 0", ier == 0);
+
+		ier = cg_iRIC_Write_Sol_IFace_Real_Mul(*fid, "IFaceIsEdgeReals", iface_is_edge_reals.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_IFace_Real() ier == 0", ier == 0);
+
+		// JFaceCenter solutions
+
+		ier = cg_iRIC_Write_Sol_JFace_Integer_Mul(*fid, "JFaceIsEdge", jface_is_edge.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_JFace_Integer() ier == 0", ier == 0);
+
+		ier = cg_iRIC_Write_Sol_JFace_Real_Mul(*fid, "JFaceIsEdgeReals", jface_is_edge_reals.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_JFace_Real() ier == 0", ier == 0);
+
 		// BaseIterativeData
 
 		double Dist = i * - 0.2 + 20;
-		cg_iRIC_Write_Sol_BaseIterative_Real_Mul(*fid, "Discharge", Dist);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Real_Mul(*fid, "Discharge", Dist);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real_Mul() for Discharge ier == 0", ier == 0);
 		int DamOpen = i;
-		cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(*fid, "DamOpen", DamOpen);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(*fid, "DamOpen", DamOpen);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
 
 		// Particle solutions
@@ -226,6 +271,10 @@ void readSolution(int fid)
 	std::vector<int> int_sol;
 	std::vector<double> real_ccsol;
 	std::vector<int> int_ccsol;
+	std::vector<int> iface_is_edge;
+	std::vector<double> iface_is_edge_reals;
+	std::vector<int> jface_is_edge;
+	std::vector<double> jface_is_edge_reals;
 
 	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
 	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
@@ -236,6 +285,10 @@ void readSolution(int fid)
 	int_sol.assign(isize * jsize, 0);
 	real_ccsol.assign((isize - 1) * (jsize - 1), 0);
 	int_ccsol.assign((isize - 1) * (jsize - 1), 0);
+	iface_is_edge.assign(isize * (jsize - 1), 0);
+	iface_is_edge_reals.assign(isize * (jsize - 1), 0);
+	jface_is_edge.assign((isize - 1) * jsize, 0);
+	jface_is_edge_reals.assign((isize - 1) * jsize, 0);
 
 	for (int S = 1; S <= sol_count; ++S) {
 
@@ -276,6 +329,46 @@ void readSolution(int fid)
 		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer_Mul() int_ccsol[%lu] == %d", int_ccsol.size() - 1, S);
 		VERIFY_LOG(buffer, int_ccsol[int_ccsol.size() - 1] == S);
 
+		// IFaceCenter solutions
+
+		ier = cg_iRIC_Read_Sol_IFace_Integer_Mul(fid, S, "IFaceIsEdge", iface_is_edge.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_IFace_Integer() ier == 0", ier == 0);
+
+		ier = cg_iRIC_Read_Sol_IFace_Real_Mul(fid, S, "IFaceIsEdgeReals", iface_is_edge_reals.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_IFace_Real() ier == 0", ier == 0);
+
+		// verify iface
+		for (int j = 0; j < jsize - 1; ++j) {
+			for (int i = 0; i < isize; ++i) {
+				if (j == 0 || j == (jsize - 2) || i == 0 || i == (isize - 1)) {
+					sprintf(buffer, "cg_iRIC_Read_Sol_IFace_Integer_Mul() iface_is_edge[%d] == %d", j * isize + i, 1);
+					VERIFY_LOG(buffer, iface_is_edge[j * isize + i] == 1);
+					sprintf(buffer, "cg_iRIC_Read_Sol_IFace_Integer_Mul() iface_is_edge[%d] == %g", j * isize + i, .1);
+					VERIFY_LOG(buffer, iface_is_edge_reals[j * isize + i] == .1);
+				}
+			}
+		}
+
+		// JFaceCenter solutions
+
+		ier = cg_iRIC_Read_Sol_JFace_Integer_Mul(fid, S, "JFaceIsEdge", jface_is_edge.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_JFace_Integer() ier == 0", ier == 0);
+
+		ier = cg_iRIC_Read_Sol_JFace_Real_Mul(fid, S, "JFaceIsEdgeReals", jface_is_edge_reals.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_JFace_Real() ier == 0", ier == 0);
+
+		// verify jface
+		for (int j = 0; j < jsize; ++j) {
+			for (int i = 0; i < isize - 1; ++i) {
+				if (j == 0 || j == (jsize - 1) || i == 0 || i == (isize - 2)) {
+					sprintf(buffer, "cg_iRIC_Read_Sol_JFace_Integer_Mul() jface_is_edge[%d] == %d", j * (isize - 1) + i, 2);
+					VERIFY_LOG(buffer, jface_is_edge[j * (isize - 1) + i] == 2);
+					sprintf(buffer, "cg_iRIC_Read_Sol_IFace_Integer_Mul() jface_is_edge_reals[%d] == %g", j * (isize - 1) + i, .2);
+					VERIFY_LOG(buffer, jface_is_edge_reals[j * (isize - 1) + i] == .2);
+				}
+			}
+		}
+
 		// BaseIterativeData
 
 		double d;
@@ -310,6 +403,13 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);
 
 	bool hdf = is_hdf(origCgnsName);
+
+	remove("case_solstd.cgn");
+
+	//
+	// Test Writing Standard (IRIC_OPTION_STDSOLUTION) with times
+	//
+
 	fs::copy(origCgnsName, "case_solstd.cgn");
 
 	int fid;
@@ -327,7 +427,11 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	ier = cg_open("case_solstd.cgn", CG_MODE_MODIFY, &fid);
+	//
+	// Test Reading Standard (IRIC_OPTION_STDSOLUTION) with times
+	//
+
+	ier = cg_open("case_solstd.cgn", CG_MODE_READ, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_open() fid != 0", fid != 0);
 
@@ -343,7 +447,9 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	VERIFY_REMOVE("case_solstd.cgn", hdf);
 
-	// @todo add codes to test
+	//
+	// Test Writing 3D Standard (IRIC_OPTION_STDSOLUTION) with times
+	//
 
 	fs::copy(origCgnsName, "case_solstd3d.cgn");
 
@@ -365,6 +471,10 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	// @todo add codes to test
 
+	//
+	// Test Writing Standard (IRIC_OPTION_STDSOLUTION) with iterations
+	//
+
 	fs::copy(origCgnsName, "case_solstditer.cgn");
 
 	ier = cg_open("case_solstditer.cgn", CG_MODE_MODIFY, &fid);
@@ -381,6 +491,23 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
+	//
+	// Test Reading Standard (IRIC_OPTION_STDSOLUTION) with iterations
+	//
+
+	ier = cg_open("case_solstditer.cgn", CG_MODE_READ, &fid);
+	VERIFY_LOG("cg_open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+
+	ier = cg_iRIC_InitRead(fid);
+	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
+
+	cg_iRIC_SetFilename(fid, "case_solstditer.cgn");
+
+	readSolution(fid);
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+
 	VERIFY_REMOVE("case_solstditer.cgn", hdf);
 
 	// @todo add codes to test
@@ -390,6 +517,8 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 {
 	iRIC_InitOption(IRIC_OPTION_DIVIDESOLUTIONS);
 
+	bool hdf = is_hdf(origCgnsName);
+
 	remove("case_soldivide.cgn");
 	remove("case_soldivide_Solution1.cgn");
 	remove("case_soldivide_Solution2.cgn");
@@ -397,7 +526,10 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	remove("case_soldivide_Solution4.cgn");
 	remove("case_soldivide_Solution5.cgn");
 
-	bool hdf = is_hdf(origCgnsName);
+	//
+	// Test Writing Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with times
+	//
+
 	fs::copy(origCgnsName, "case_soldivide.cgn");
 
 	int fid;
@@ -415,7 +547,11 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	ier = cg_open("case_soldivide.cgn", CG_MODE_MODIFY, &fid);
+	//
+	// Test Reading Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with times
+	//
+
+	ier = cg_open("case_soldivide.cgn", CG_MODE_READ, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_open() fid != 0", fid != 0);
 
@@ -443,6 +579,10 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	VERIFY_REMOVE("case_soldivide_Solution3.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide_Solution4.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide_Solution5.cgn", hdf);
+
+	//
+	// Test Writing 3D Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with times
+	//
 
 	remove("case_soldivide3d.cgn");
 	remove("case_soldivide3d_Solution1.cgn");
@@ -485,6 +625,65 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	VERIFY_REMOVE("case_soldivide3d_Solution5.cgn", hdf);
 
 	// @todo add codes to test
+
+	//
+	// Test Writing Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with iterations
+	//
+
+	remove("case_soldivideiter.cgn");
+	remove("case_soldivideiter_Solution1.cgn");
+	remove("case_soldivideiter_Solution2.cgn");
+	remove("case_soldivideiter_Solution3.cgn");
+	remove("case_soldivideiter_Solution4.cgn");
+	remove("case_soldivideiter_Solution5.cgn");
+
+	fs::copy(origCgnsName, "case_soldivideiter.cgn");
+
+	ier = cg_open("case_soldivideiter.cgn", CG_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+
+	ier = cg_iRIC_Init(fid);
+	cg_iRIC_SetFilename(fid, "case_soldivideiter.cgn");
+
+	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+
+	writeSolution("case_soldivideiter.cgn", &fid, true);
+
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+
+	//
+	// Test Reading Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with iterations
+	//
+
+	ier = cg_open("case_soldivideiter.cgn", CG_MODE_READ, &fid);
+	VERIFY_LOG("cg_open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+
+	ier = cg_iRIC_InitRead(fid);
+	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
+
+	cg_iRIC_SetFilename(fid, "case_soldivideiter.cgn");
+
+	readSolution(fid);
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+
+#ifdef _MSC_VER
+	if (hdf) {
+		// this seems necessary when IRIC_OPTION_DIVIDESOLUTIONS is set on windows
+		herr_t err = H5close();
+		VERIFY_LOG("H5close() ier == 0", err >= 0);
+	}
+#endif
+
+	VERIFY_REMOVE("case_soldivideiter.cgn", hdf);
+	VERIFY_REMOVE("case_soldivideiter_Solution1.cgn", hdf);
+	VERIFY_REMOVE("case_soldivideiter_Solution2.cgn", hdf);
+	VERIFY_REMOVE("case_soldivideiter_Solution3.cgn", hdf);
+	VERIFY_REMOVE("case_soldivideiter_Solution4.cgn", hdf);
+	VERIFY_REMOVE("case_soldivideiter_Solution5.cgn", hdf);
 
 	// restore mode.
 	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);

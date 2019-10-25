@@ -237,11 +237,19 @@ int IRICLIBDLL cg_iRIC_Read_Sol_GridCoord3d_Mul(int fid, int step, double* x, do
 
 int IRICLIBDLL cg_iRIC_Read_Sol_Integer_Mul(int fid, int step, const char *name, int* data);
 
-int IRICLIBDLL cg_iRIC_Read_Sol_Real_Mul(int fid, int step, const char *name, double* data);
-
 int IRICLIBDLL cg_iRIC_Read_Sol_Cell_Integer_Mul(int fid, int step, const char *name, int* data);
 
+int IRICLIBDLL cg_iRIC_Read_Sol_IFace_Integer_Mul(int fid, int step, const char *name, int* data);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_JFace_Integer_Mul(int fid, int step, const char *name, int* data);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_Real_Mul(int fid, int step, const char *name, double* data);
+
 int IRICLIBDLL cg_iRIC_Read_Sol_Cell_Real_Mul(int fid, int step, const char *name, double* data);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_IFace_Real_Mul(int fid, int step, const char *name, double* data);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_JFace_Real_Mul(int fid, int step, const char *name, double* data);
 
 /**********************************************/
 /* Writing Solutions                          */
@@ -263,9 +271,17 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Integer_Mul(int fid, const char *name, int* dat
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Cell_Integer_Mul(int fid, const char *name, int* data);
 
+int IRICLIBDLL cg_iRIC_Write_Sol_IFace_Integer_Mul(int fid, const char *name, int* data);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_JFace_Integer_Mul(int fid, const char *name, int* data);
+
 int IRICLIBDLL cg_iRIC_Write_Sol_Real_Mul(int fid, const char *name, double* data);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Cell_Real_Mul(int fid, const char *name, double* data);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_IFace_Real_Mul(int fid, const char *name, double* data);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_JFace_Real_Mul(int fid, const char *name, double* data);
 
 int IRICLIBDLL cg_iRIC_Write_ErrorCode_Mul(int fid, int errorcode);
 
@@ -586,9 +602,17 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Integer(const char *name, int* data);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Cell_Integer(const char *name, int* data);
 
+int IRICLIBDLL cg_iRIC_Write_Sol_IFace_Integer(const char *name, int* data);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_JFace_Integer(const char *name, int* data);
+
 int IRICLIBDLL cg_iRIC_Write_Sol_Real(const char *name, double* data);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Cell_Real(const char *name, double* data);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_IFace_Real(const char *name, double* data);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_JFace_Real(const char *name, double* data);
 
 int IRICLIBDLL cg_iRIC_Write_ErrorCode(int errorcode);
 

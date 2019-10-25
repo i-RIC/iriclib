@@ -215,6 +215,9 @@ int CgnsFile::Impl::loadResultData()
 	int ier = cg_gopath(m_fileId, "/iRIC/iRICZone/ZoneIterativeData/FlowCellSolutionPointers");
 	m_hasCellSols = (ier == 0);
 
+	ier = cg_gopath(m_fileId, "/iRIC/iRICZone/ZoneIterativeData/FlowIFaceSolutionPointers");
+	m_hasFaceSols = (ier == 0);
+
 	ier = gotoBase();
 	RETURN_IF_ERR;
 
@@ -686,6 +689,16 @@ void CgnsFile::Impl::getCellSolName(int num, char* name)
 	sprintf(name, "FlowCellSolution%d", num);
 }
 
+void CgnsFile::Impl::getIFaceSolName(int num, char* name)
+{
+	sprintf(name, "FlowIFaceSolution%d", num);
+}
+
+void CgnsFile::Impl::getJFaceSolName(int num, char* name)
+{
+	sprintf(name, "FlowJFaceSolution%d", num);
+}
+
 void CgnsFile::Impl::getSolGridCoordName(int num, char* name)
 {
 	sprintf(name, "GridCoordinatesForSolution%d", num);
@@ -701,7 +714,7 @@ void CgnsFile::Impl::getPolydataSolName(int num, char* name)
 	sprintf(name, "PolydataSolution%d", num);
 }
 
-int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols)
+int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols, std::vector<std::string>* ifacesols, std::vector<std::string>* jfacesols)
 {
 	char solname[NAME_MAXLENGTH];
 	getSolName(sid, solname);
@@ -711,6 +724,14 @@ int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vec
 	getCellSolName(sid, cellsolname);
 	cellsols->push_back(cellsolname);
 
+	char ifacesolname[NAME_MAXLENGTH];
+	getIFaceSolName(sid, ifacesolname);
+	ifacesols->push_back(ifacesolname);
+
+	char jfacesolname[NAME_MAXLENGTH];
+	getJFaceSolName(sid, jfacesolname);
+	jfacesols->push_back(jfacesolname);
+
 	int S, ier;
 
 	ier = cg_sol_write(fid, bid, zid, solname, Vertex, &S);
@@ -719,10 +740,22 @@ int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vec
 	ier = cg_sol_write(fid, bid, zid, cellsolname, CellCenter, &S);
 	RETURN_IF_ERR;
 
+	ier = cg_sol_write(fid, bid, zid, ifacesolname, IFaceCenter, &S);
+	RETURN_IF_ERR;
+
+	ier = cg_sol_write(fid, bid, zid, jfacesolname, JFaceCenter, &S);
+	RETURN_IF_ERR;
+
 	ier = writeFlowSolutionPointers(fid, bid, zid, *sols);
 	RETURN_IF_ERR;
 
 	ier = writeFlowCellSolutionPointers(fid, bid, zid, *cellsols);
+	RETURN_IF_ERR;
+
+	ier = writeFlowIFaceSolutionPointers(fid, bid, zid, *ifacesols);
+	RETURN_IF_ERR;
+
+	ier = writeFlowJFaceSolutionPointers(fid, bid, zid, *jfacesols);
 	RETURN_IF_ERR;
 
 	ier = addPolydataSolutionNode(fid, bid, zid, sid);
@@ -770,15 +803,34 @@ int CgnsFile::Impl::solIndex(CGNS_ENUMT(GridLocation_t) location, int step)
 {
 	int index = step;
 	if (this->m_hasCellSols) {
-		switch (location) {
-		case CGNS_ENUMV(Vertex):
-			index = 2 * (step - 1) + 1;
-			break;
-		case CGNS_ENUMV(CellCenter):
-			index = 2 * (step - 1) + 2;
-			break;
-		default:
-			assert(false);
+		if (this->m_hasFaceSols) {
+			switch (location) {
+			case CGNS_ENUMV(Vertex):
+				index = 4 * (step - 1) + 1;
+				break;
+			case CGNS_ENUMV(CellCenter):
+				index = 4 * (step - 1) + 2;
+				break;
+			case CGNS_ENUMV(IFaceCenter):
+				index = 4 * (step - 1) + 3;
+				break;
+			case CGNS_ENUMV(JFaceCenter):
+				index = 4 * (step - 1) + 4;
+				break;
+			default:
+				assert(false);
+			}
+		} else {
+			switch (location) {
+			case CGNS_ENUMV(Vertex):
+				index = 2 * (step - 1) + 1;
+				break;
+			case CGNS_ENUMV(CellCenter):
+				index = 2 * (step - 1) + 2;
+				break;
+			default:
+				assert(false);
+			}
 		}
 	}
 	return index;
@@ -810,6 +862,16 @@ int CgnsFile::Impl::writeFlowSolutionPointers(int fid, int bid, int zid, const s
 int CgnsFile::Impl::writeFlowCellSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols)
 {
 	return writePointers(fid, bid, zid, "FlowCellSolutionPointers", sols);
+}
+
+int CgnsFile::Impl::writeFlowIFaceSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols)
+{
+	return writePointers(fid, bid, zid, "FlowIFaceSolutionPointers", sols);
+}
+
+int CgnsFile::Impl::writeFlowJFaceSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols)
+{
+	return writePointers(fid, bid, zid, "FlowJFaceSolutionPointers", sols);
 }
 
 int CgnsFile::Impl::writeGridCoordinatesPointers(int fid, int bid, int zid, const std::vector<std::string>& coords)
