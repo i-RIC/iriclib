@@ -387,19 +387,39 @@ int cg_iRIC_Read_Sol_Integer(int step, const char* name, int* data)
 	return cg_iRIC_Read_Sol_Integer_Mul(lastfileid, step, name, data);
 }
 
-int cg_iRIC_Read_Sol_Real(int step, const char* name, double* data)
-{
-	return cg_iRIC_Read_Sol_Real_Mul(lastfileid, step, name, data);
-}
-
 int cg_iRIC_Read_Sol_Cell_Integer(int step, const char* name, int* data)
 {
 	return cg_iRIC_Read_Sol_Cell_Integer_Mul(lastfileid, step, name, data);
 }
 
+int cg_iRIC_Read_Sol_IFace_Integer(int step, const char* name, int* data)
+{
+	return cg_iRIC_Read_Sol_IFace_Integer_Mul(lastfileid, step, name, data);
+}
+
+int cg_iRIC_Read_Sol_JFace_Integer(int step, const char* name, int* data)
+{
+	return cg_iRIC_Read_Sol_JFace_Integer_Mul(lastfileid, step, name, data);
+}
+
+int cg_iRIC_Read_Sol_Real(int step, const char* name, double* data)
+{
+	return cg_iRIC_Read_Sol_Real_Mul(lastfileid, step, name, data);
+}
+
 int cg_iRIC_Read_Sol_Cell_Real(int step, const char* name, double* data)
 {
 	return cg_iRIC_Read_Sol_Cell_Real_Mul(lastfileid, step, name, data);
+}
+
+int cg_iRIC_Read_Sol_IFace_Real(int step, const char* name, double* data)
+{
+	return cg_iRIC_Read_Sol_IFace_Real_Mul(lastfileid, step, name, data);
+}
+
+int cg_iRIC_Read_Sol_JFace_Real(int step, const char* name, double* data)
+{
+	return cg_iRIC_Read_Sol_JFace_Real_Mul(lastfileid, step, name, data);
 }
 
 int cg_iRIC_Write_Sol_Time(double time)

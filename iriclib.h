@@ -580,11 +580,19 @@ int IRICLIBDLL cg_iRIC_Read_Sol_GridCoord3d(int step, double* x, double* y, doub
 
 int IRICLIBDLL cg_iRIC_Read_Sol_Integer(int step, const char *name, int* data);
 
-int IRICLIBDLL cg_iRIC_Read_Sol_Real(int step, const char *name, double* data);
-
 int IRICLIBDLL cg_iRIC_Read_Sol_Cell_Integer(int step, const char *name, int* data);
 
+int IRICLIBDLL cg_iRIC_Read_Sol_IFace_Integer(int step, const char *name, int* data);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_JFace_Integer(int step, const char *name, int* data);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_Real(int step, const char *name, double* data);
+
 int IRICLIBDLL cg_iRIC_Read_Sol_Cell_Real(int step, const char *name, double* data);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_IFace_Real(int step, const char *name, double* data);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_JFace_Real(int step, const char *name, double* data);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Time(double time);
 
