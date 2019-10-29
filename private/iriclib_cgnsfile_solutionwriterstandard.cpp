@@ -3,6 +3,7 @@
 #include "../error_macros.h"
 
 #include <cgnslib.h>
+#include <assert.h>
 
 using namespace iRICLib;
 
@@ -16,12 +17,16 @@ int CgnsFile::SolutionWriterStandard::Sol_Write_Time(double time)
 	int ier = stdSolWriteTime(time, i);
 	RETURN_IF_ERR;
 
-	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers), &(i->m_cellSolPointers));
+	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers), &(i->m_cellSolPointers), &(i->m_ifaceSolPointers), &(i->m_jfaceSolPointers));
 }
 
 int CgnsFile::SolutionWriterStandard::Sol_Write_Iteration(int index)
 {
-	return stdSolWriteIteration(index, impl());
+	Impl* i = impl();
+	int ier = stdSolWriteIteration(index, i);
+	RETURN_IF_ERR;
+
+	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers), &(i->m_cellSolPointers), &(i->m_ifaceSolPointers), &(i->m_jfaceSolPointers));
 }
 
 int CgnsFile::SolutionWriterStandard::Sol_Write_GridCoord2d(double *x, double *y)
@@ -58,6 +63,22 @@ int CgnsFile::SolutionWriterStandard::Sol_Write_Cell_Integer(const char *name, i
 	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, Integer, name, data, &F);
 }
 
+int CgnsFile::SolutionWriterStandard::Sol_Write_IFace_Integer(const char *name, int* data)
+{
+	int F;
+	Impl* i = impl();
+	int solId = i->solIndex(IFaceCenter, i->m_solId);
+	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, Integer, name, data, &F);
+}
+
+int CgnsFile::SolutionWriterStandard::Sol_Write_JFace_Integer(const char *name, int* data)
+{
+	int F;
+	Impl* i = impl();
+	int solId = i->solIndex(JFaceCenter, i->m_solId);
+	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, Integer, name, data, &F);
+}
+
 int CgnsFile::SolutionWriterStandard::Sol_Write_Real(const char *name, double* data)
 {
 	int F;
@@ -71,6 +92,22 @@ int CgnsFile::SolutionWriterStandard::Sol_Write_Cell_Real(const char *name, doub
 	int F;
 	Impl* i = impl();
 	int solId = i->solIndex(CellCenter, i->m_solId);
+	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, RealDouble, name, data, &F);
+}
+
+int CgnsFile::SolutionWriterStandard::Sol_Write_IFace_Real(const char *name, double* data)
+{
+	int F;
+	Impl* i = impl();
+	int solId = i->solIndex(IFaceCenter, i->m_solId);
+	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, RealDouble, name, data, &F);
+}
+
+int CgnsFile::SolutionWriterStandard::Sol_Write_JFace_Real(const char *name, double* data)
+{
+	int F;
+	Impl* i = impl();
+	int solId = i->solIndex(JFaceCenter, i->m_solId);
 	return cg_field_write(i->m_fileId, i->m_baseId, i->m_zoneId, solId, RealDouble, name, data, &F);
 }
 
@@ -113,12 +150,13 @@ int CgnsFile::SolutionWriterStandard::stdSolWriteTime(double time, CgnsFile::Imp
 {
 	impl->m_solTimes.push_back(time);
 	++ impl->m_solId;
+	assert(impl->m_solTimes.size() == impl->m_solId);
 
 	// write to default base (with calculation condition)
 	int ier = cg_biter_write(impl->m_fileId, impl->m_ccBaseId, Impl::BINAME.c_str(), impl->m_solId);
 	RETURN_IF_ERR;
 	ier = impl->gotoCCBaseIter();
-	RETURN_IF_ERR
+	RETURN_IF_ERR;
 	cgsize_t dimVec = impl->m_solId;
 	ier = cg_array_write("TimeValues", RealDouble, 1, &dimVec, impl->m_solTimes.data());
 	RETURN_IF_ERR;
@@ -127,20 +165,24 @@ int CgnsFile::SolutionWriterStandard::stdSolWriteTime(double time, CgnsFile::Imp
 	ier = cg_biter_write(impl->m_fileId, impl->m_baseId, Impl::BINAME.c_str(), impl->m_solId);
 	RETURN_IF_ERR;
 	ier = impl->gotoBaseIter();
-	RETURN_IF_ERR
-	return cg_array_write("TimeValues", RealDouble, 1, &dimVec, impl->m_solTimes.data());
+	RETURN_IF_ERR;
+	ier = cg_array_write("TimeValues", RealDouble, 1, &dimVec, impl->m_solTimes.data());
+	RETURN_IF_ERR;
+
+	return 0;
 }
 
 int CgnsFile::SolutionWriterStandard::stdSolWriteIteration(int index, CgnsFile::Impl* impl)
 {
 	impl->m_solIndices.push_back(index);
 	++ impl->m_solId;
+	assert(impl->m_solIndices.size() == impl->m_solId);
 
 	// write to default base (with calculation condition)
 	int ier = cg_biter_write(impl->m_fileId, impl->m_ccBaseId, Impl::BINAME.c_str(), impl->m_solId);
 	RETURN_IF_ERR;
 	ier = impl->gotoCCBaseIter();
-	RETURN_IF_ERR
+	RETURN_IF_ERR;
 	cgsize_t dimVec = impl->m_solId;
 	ier = cg_array_write("IterationValues", Integer, 1, &dimVec, impl->m_solIndices.data());
 	RETURN_IF_ERR;
@@ -149,12 +191,11 @@ int CgnsFile::SolutionWriterStandard::stdSolWriteIteration(int index, CgnsFile::
 	ier = cg_biter_write(impl->m_fileId, impl->m_baseId, Impl::BINAME.c_str(), impl->m_solId);
 	RETURN_IF_ERR;
 	ier = impl->gotoBaseIter();
-	RETURN_IF_ERR
+	RETURN_IF_ERR;
 	ier = cg_array_write("IterationValues", Integer, 1, &dimVec, impl->m_solIndices.data());
 	RETURN_IF_ERR;
 
-	// add solution node
-	return Impl::addSolutionNode(impl->m_fileId, impl->m_baseId, impl->m_zoneId, impl->m_solId, &(impl->m_solPointers), &(impl->m_cellSolPointers));
+	return 0;
 }
 
 int CgnsFile::SolutionWriterStandard::stdSolWriteGridCoord2d(double* x, double* y, int fid, int bid, int zid, int gcid, CgnsFile::Impl* impl)

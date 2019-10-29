@@ -13,6 +13,12 @@ class CgnsFile::Impl
 {
 public:
 	static const int NAME_MAXLENGTH = 200;
+
+	static const int VERTEX_SOLUTION_ID   = 1;
+	static const int CELL_SOLUTION_ID     = 2;
+	static const int IFACE_2D_SOLUTION_ID = 3;
+	static const int JFACE_2D_SOLUTION_ID = 4;
+
 	static const std::string IRICZONE;
 	static const std::string BINAME;
 	static const std::string RDNODE;
@@ -87,12 +93,14 @@ public:
 	static void getBcName(const char* typeName, int num, char* name); // local_get_bc_name
 	static void getSolName(int num, char* name);
 	static void getCellSolName(int num, char* name);
+	static void getIFaceSolName(int num, char* name);
+	static void getJFaceSolName(int num, char* name);
 
 	static void getSolGridCoordName(int num, char* name);
 	static void getParticleSolName(int num, char* name);
 	static void getPolydataSolName(int num, char* name);
 
-	static int addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols);
+	static int addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols, std::vector<std::string>* ifacesols, std::vector<std::string>* jfacesols);
 	static int addSolutionGridCoordNode(int fid, int bid, int zid, int sid, std::vector<std::string>* coords);
 	static int addParticleSolutionNode(int fid, int bid, int zid, int sid);
 	static int addPolydataSolutionNode(int fid, int bid, int zid, int sid);
@@ -100,6 +108,9 @@ public:
 	static int writePointers(int fid, int bid, int zid, const char* name, const std::vector<std::string>& strs);
 	static int writeFlowSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
 	static int writeFlowCellSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
+	static int writeFlowIFaceSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
+	static int writeFlowJFaceSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
+
 	static int writeGridCoordinatesPointers(int fid, int bid, int zid, const std::vector<std::string>& coords);
 
 	int solIndex(CGNS_ENUMT(GridLocation_t) location, int step);
@@ -119,11 +130,14 @@ public:
 
 	int m_solId = 0;
 	bool m_hasCellSols = true;
+	bool m_hasFaceSols = true;
 	std::vector<double> m_solTimes;
 	std::vector<int> m_solIndices;
 	std::vector<std::string> m_solGridCoordPointers;
 	std::vector<std::string> m_solPointers;
 	std::vector<std::string> m_cellSolPointers;
+	std::vector<std::string> m_ifaceSolPointers;
+	std::vector<std::string> m_jfaceSolPointers;
 	std::vector<std::string> m_solParticlePointers;
 
 	std::vector<BaseIterativeT<int> > m_solBaseIterInts;
