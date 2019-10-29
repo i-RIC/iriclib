@@ -361,29 +361,50 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Time(double time)
 
 	std::vector<std::string> sols;
 	std::vector<std::string> cellsols;
-	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols);
+	std::vector<std::string> ifacesols;
+	std::vector<std::string> jfacesols;
+	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols, &ifacesols, &jfacesols);
+	RETURN_IF_ERR;
+
+	// Vertex
+
+	char solname[CgnsFile::Impl::NAME_MAXLENGTH];
+	CgnsFile::Impl::getSolName(i->m_solId, solname);
+
+	// CellCenter
+
+	char cellsolname[CgnsFile::Impl::NAME_MAXLENGTH];
+	CgnsFile::Impl::getCellSolName(i->m_solId, cellsolname);
+
+	i->m_cellSolPointers.push_back(cellsolname);
+	ier = CgnsFile::Impl::writeFlowCellSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_cellSolPointers);
+	RETURN_IF_ERR;
+
+	// IFaceCenter
+
+	char ifacesolname[CgnsFile::Impl::NAME_MAXLENGTH];
+	CgnsFile::Impl::getIFaceSolName(i->m_solId, ifacesolname);
+
+	ier = linkSolution(m_fileName.c_str(), m_fileId, m_baseId, m_zoneId, 3, i->m_fileId, i->m_baseId, i->m_zoneId, ifacesolname);
+	RETURN_IF_ERR;
+
+	i->m_ifaceSolPointers.push_back(ifacesolname);
+	ier = CgnsFile::Impl::writeFlowIFaceSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_ifaceSolPointers);
+	RETURN_IF_ERR;
+
+	// JFaceCenter
+
+	char jfacesolname[CgnsFile::Impl::NAME_MAXLENGTH];
+	CgnsFile::Impl::getJFaceSolName(i->m_solId, jfacesolname);
+
+	ier = linkSolution(m_fileName.c_str(), m_fileId, m_baseId, m_zoneId, 4, i->m_fileId, i->m_baseId, i->m_zoneId, jfacesolname);
+	RETURN_IF_ERR;
+
+	i->m_jfaceSolPointers.push_back(jfacesolname);
+	ier = CgnsFile::Impl::writeFlowJFaceSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_jfaceSolPointers);
 	RETURN_IF_ERR;
 
 	return 0;
-
-	// char solname[CgnsFile::Impl::NAME_MAXLENGTH];
-	// CgnsFile::Impl::getSolName(i->m_solId, solname);
-
-	// ier = linkSolution(m_fileName.c_str(), m_fileId, m_baseId, m_zoneId, 1, i->m_fileId, i->m_baseId, i->m_zoneId, solname);
-	// RETURN_IF_ERR;
-
-	// i->m_solPointers.push_back(solname);
-	// ier = CgnsFile::Impl::writeFlowSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solPointers);
-	// RETURN_IF_ERR;
-
-	// char cellsolname[CgnsFile::Impl::NAME_MAXLENGTH];
-	// CgnsFile::Impl::getCellSolName(i->m_solId, cellsolname);
-
-	// ier = linkSolution(m_fileName.c_str(), m_fileId, m_baseId, m_zoneId, 2, i->m_fileId, i->m_baseId, i->m_zoneId, cellsolname);
-	// RETURN_IF_ERR;
-
-	// i->m_cellSolPointers.push_back(cellsolname);
-	// return CgnsFile::Impl::writeFlowCellSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_cellSolPointers);
 }
 
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Iteration(int index)
@@ -407,10 +428,17 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Iteration(int index)
 	ier = cg_array_write("IterationValues", Integer, 1, &dimVec, &index);
 	RETURN_IF_ERR;
 
+	ier = cg_ziter_write(m_fileId, m_baseId, m_zoneId, ZINAME.c_str());
+	RETURN_IF_ERR;
+
 	std::vector<std::string> sols;
 	std::vector<std::string> cellsols;
-	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols);
+	std::vector<std::string> ifacesols;
+	std::vector<std::string> jfacesols;
+	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols, &ifacesols, &jfacesols);
 	RETURN_IF_ERR;
+
+	// Vertex
 
 	char solname[CgnsFile::Impl::NAME_MAXLENGTH];
 	CgnsFile::Impl::getSolName(i->m_solId, solname);
@@ -422,6 +450,8 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Iteration(int index)
 	ier = CgnsFile::Impl::writeFlowSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solPointers);
 	RETURN_IF_ERR;
 
+	// CellCenter
+
 	char cellsolname[CgnsFile::Impl::NAME_MAXLENGTH];
 	CgnsFile::Impl::getCellSolName(i->m_solId, cellsolname);
 
@@ -429,7 +459,35 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Iteration(int index)
 	RETURN_IF_ERR;
 
 	i->m_cellSolPointers.push_back(cellsolname);
-	return CgnsFile::Impl::writeFlowCellSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_cellSolPointers);
+	ier = CgnsFile::Impl::writeFlowCellSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_cellSolPointers);
+	RETURN_IF_ERR;
+
+	// IFaceCenter
+
+	char ifacesolname[CgnsFile::Impl::NAME_MAXLENGTH];
+	CgnsFile::Impl::getIFaceSolName(i->m_solId, ifacesolname);
+
+	ier = linkSolution(m_fileName.c_str(), m_fileId, m_baseId, m_zoneId, 3, i->m_fileId, i->m_baseId, i->m_zoneId, ifacesolname);
+	RETURN_IF_ERR;
+
+	i->m_ifaceSolPointers.push_back(ifacesolname);
+	ier = CgnsFile::Impl::writeFlowIFaceSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_ifaceSolPointers);
+	RETURN_IF_ERR;
+
+
+	// JFaceCenter
+
+	char jfacesolname[CgnsFile::Impl::NAME_MAXLENGTH];
+	CgnsFile::Impl::getJFaceSolName(i->m_solId, jfacesolname);
+
+	ier = linkSolution(m_fileName.c_str(), m_fileId, m_baseId, m_zoneId, 4, i->m_fileId, i->m_baseId, i->m_zoneId, jfacesolname);
+	RETURN_IF_ERR;
+
+	i->m_jfaceSolPointers.push_back(jfacesolname);
+	ier = CgnsFile::Impl::writeFlowJFaceSolutionPointers(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_jfaceSolPointers);
+	RETURN_IF_ERR;
+
+	return 0;
 }
 
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_GridCoord2d(double *x, double *y)
@@ -459,26 +517,49 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_GridCoord3d(double *x, do
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Integer(const char *name, int* data)
 {
 	int F;
-	return cg_field_write(m_fileId, m_baseId, m_zoneId, 1, Integer, name, data, &F);
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, CgnsFile::Impl::VERTEX_SOLUTION_ID, Integer, name, data, &F);
 }
 
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Cell_Integer(const char *name, int* data)
 {
 	int F;
-	return cg_field_write(m_fileId, m_baseId, m_zoneId, 2, Integer, name, data, &F);
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, CgnsFile::Impl::CELL_SOLUTION_ID, Integer, name, data, &F);
 }
 
+int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_IFace_Integer(const char *name, int* data)
+{
+	int F;
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, CgnsFile::Impl::IFACE_2D_SOLUTION_ID, Integer, name, data, &F);
+}
+
+int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_JFace_Integer(const char *name, int* data)
+{
+	int F;
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, CgnsFile::Impl::JFACE_2D_SOLUTION_ID, Integer, name, data, &F);
+}
 
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Real(const char *name, double* data)
 {
 	int F;
-	return cg_field_write(m_fileId, m_baseId, m_zoneId, 1, RealDouble, name, data, &F);
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, CgnsFile::Impl::VERTEX_SOLUTION_ID, RealDouble, name, data, &F);
 }
 
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Cell_Real(const char *name, double* data)
 {
 	int F;
-	return cg_field_write(m_fileId, m_baseId, m_zoneId, 2, RealDouble, name, data, &F);
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, CgnsFile::Impl::CELL_SOLUTION_ID, RealDouble, name, data, &F);
+}
+
+int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_IFace_Real(const char *name, double* data)
+{
+	int F;
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, CgnsFile::Impl::IFACE_2D_SOLUTION_ID, RealDouble, name, data, &F);
+}
+
+int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_JFace_Real(const char *name, double* data)
+{
+	int F;
+	return cg_field_write(m_fileId, m_baseId, m_zoneId, CgnsFile::Impl::JFACE_2D_SOLUTION_ID, RealDouble, name, data, &F);
 }
 
 int CgnsFile::SolutionWriterDivideSolutions::Sol_Particle_Write_Pos2d(cgsize_t count, double* x, double* y)

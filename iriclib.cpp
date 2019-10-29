@@ -16,7 +16,9 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#if !defined(_MSC_VER)
+#if defined(_MSC_VER)
+#define unlink _unlink   // warning C4996
+#else
 #define _stat stat
 #include <unistd.h>  // unlink
 #endif
@@ -773,6 +775,18 @@ int cg_iRIC_Read_Sol_Cell_Integer_Mul(int fid, int step, const char *name, int* 
 	return f->Sol_Read_Cell_Integer(step, name, data);
 }
 
+int cg_iRIC_Read_Sol_IFace_Integer_Mul(int fid, int step, const char *name, int* data)
+{
+	GET_F(fid);
+	return f->Sol_Read_IFace_Integer(step, name, data);
+}
+
+int cg_iRIC_Read_Sol_JFace_Integer_Mul(int fid, int step, const char *name, int* data)
+{
+	GET_F(fid);
+	return f->Sol_Read_JFace_Integer(step, name, data);
+}
+
 int cg_iRIC_Read_Sol_Real_Mul(int fid, int step, const char *name, double* data)
 {
 	GET_F(fid);
@@ -783,6 +797,18 @@ int cg_iRIC_Read_Sol_Cell_Real_Mul(int fid, int step, const char *name, double* 
 {
 	GET_F(fid);
 	return f->Sol_Read_Cell_Real(step, name, data);
+}
+
+int cg_iRIC_Read_Sol_IFace_Real_Mul(int fid, int step, const char *name, double* data)
+{
+	GET_F(fid);
+	return f->Sol_Read_IFace_Real(step, name, data);
+}
+
+int cg_iRIC_Read_Sol_JFace_Real_Mul(int fid, int step, const char *name, double* data)
+{
+	GET_F(fid);
+	return f->Sol_Read_JFace_Real(step, name, data);
 }
 
 int cg_iRIC_Write_Sol_Time_Mul(int fid, double time){
@@ -829,6 +855,18 @@ int cg_iRIC_Write_Sol_Cell_Integer_Mul(int fid, const char *name, int* data)
 	return f->Sol_Write_Cell_Integer(name, data);
 }
 
+int cg_iRIC_Write_Sol_IFace_Integer_Mul(int fid, const char *name, int* data)
+{
+	GET_F(fid);
+	return f->Sol_Write_IFace_Integer(name, data);
+}
+
+int cg_iRIC_Write_Sol_JFace_Integer_Mul(int fid, const char *name, int* data)
+{
+	GET_F(fid);
+	return f->Sol_Write_JFace_Integer(name, data);
+}
+
 int cg_iRIC_Write_Sol_Real_Mul(int fid, const char *name, double* data)
 {
 	GET_F(fid);
@@ -841,6 +879,17 @@ int cg_iRIC_Write_Sol_Cell_Real_Mul(int fid, const char *name, double* data)
 	return f->Sol_Write_Cell_Real(name, data);
 }
 
+int cg_iRIC_Write_Sol_IFace_Real_Mul(int fid, const char *name, double* data)
+{
+	GET_F(fid);
+	return f->Sol_Write_IFace_Real(name, data);
+}
+
+int cg_iRIC_Write_Sol_JFace_Real_Mul(int fid, const char *name, double* data)
+{
+	GET_F(fid);
+	return f->Sol_Write_JFace_Real(name, data);
+}
 
 int cg_iRIC_Write_ErrorCode_Mul(int fid, int errorcode)
 {

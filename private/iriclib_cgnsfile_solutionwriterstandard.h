@@ -19,7 +19,10 @@ public:
 	int Sol_Write_Real(const char* name, double* data) override;
 	int Sol_Write_Cell_Integer(const char *name, int* data) override;
 	int Sol_Write_Cell_Real(const char *name, double* data) override;
-
+	int Sol_Write_IFace_Integer(const char *name, int* data) override;
+	int Sol_Write_IFace_Real(const char *name, double* data) override;
+	int Sol_Write_JFace_Integer(const char *name, int* data) override;
+	int Sol_Write_JFace_Real(const char *name, double* data) override;
 	int Sol_Particle_Write_Pos2d(cgsize_t count, double* x, double* y) override;
 	int Sol_Particle_Write_Pos3d(cgsize_t count, double* x, double* y, double* z) override;
 	int Sol_Particle_Write_Real(const char* name, double* value) override;
