@@ -12,7 +12,7 @@ extern "C" {
 void case_InitSuccess()
 {
 	remove("case_initsuccess.cgn");
-	fs::copy("case_init.cgn", "case_initsuccess.cgn");
+	fs::copy("case_init_hdf5.cgn", "case_initsuccess.cgn");
 
 	int fid;
 	int ier = cg_open("case_initsuccess.cgn", CG_MODE_MODIFY, &fid);
@@ -44,7 +44,7 @@ void case_gotoRawDataTop()
 #if defined(HAVE_QT)
 	QFile::copy("case_nogrid.cgn", "case_rawdatatop.cgn");
 #else
-	fs::copy("case_nogrid.cgn", "case_rawdatatop.cgn");
+	fs::copy("case_nogrid_hdf.cgn", "case_rawdatatop.cgn");
 #endif
 
 	int fid;

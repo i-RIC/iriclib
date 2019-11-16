@@ -16,7 +16,7 @@ extern "C" {
 
 void case_Complex()
 {
-	fs::copy("case_init.cgn", "case_complex.cgn");
+	fs::copy("case_init_hdf5.cgn", "case_complex.cgn");
 
 	int fid;
 	int ier = cg_open("case_complex.cgn", CG_MODE_MODIFY, &fid);
@@ -47,7 +47,7 @@ void case_Complex()
 	ier = cg_iRIC_Write_Complex_Real_Mul(fid, "cellparam", 2, "realparam", realparam2_write);
 	VERIFY_LOG("cg_iRIC_Write_Complex_Real_Mul() ier == 0", ier == 0);
 
-	cgsize_t isize, jsize;
+	int isize, jsize;
 	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
 	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
 
@@ -150,7 +150,7 @@ void case_Complex()
 	VERIFY_LOG("cg_iRIC_Read_Complex_String_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Complex_String_Mul() string valid", std::string(strparam_read.data()) == strparam_write);
 
-	cgsize_t funclen;
+	int funclen;
 	ier = cg_iRIC_Read_Complex_FunctionalSize_Mul(fid, "nodeparam", 1, "funcparam", &funclen);
 
 	std::vector<double> params_read, vals_read;

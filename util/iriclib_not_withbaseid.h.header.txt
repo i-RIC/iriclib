@@ -1,0 +1,9 @@
+#ifndef IRICLIB_NOT_WITHBASEID_H
+#define IRICLIB_NOT_WITHBASEID_H
+
+#include "iriclib_global.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+

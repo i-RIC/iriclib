@@ -6,7 +6,7 @@ from . import util
 
 def case_InitReadSuccess():
     util.remove("data/case_initreadsuccess.cgn")
-    shutil.copy('data/case_init.cgn', 'data/case_initreadsuccess.cgn')
+    shutil.copy('data/case_init_hdf5.cgn', 'data/case_initreadsuccess.cgn')
 
     fid = iric.cg_open("data/case_initreadsuccess.cgn", iric.CG_MODE_MODIFY)
     util.verify_log('cg_open() fid != 0', fid != 0)

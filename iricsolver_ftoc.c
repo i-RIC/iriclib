@@ -1,12 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "iriclib_errorcodes.h"
 #include "iricsolverlib.h"
 #include "iricsolverlib_api.h"
 
 #include "fortran_macros.h"
-
-#include <cgnslib.h>
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - *\
  *      Convert between Fortran and C strings                            *
@@ -18,7 +17,7 @@ static void string_2_C_string(char *string, int string_length,
 
 		if (string == NULL || c_string == NULL) {
 //				cgi_error ("NULL string pointer");
-				*ierr = CG_ERROR;
+				*ierr = 1;
 				return;
 		}
 
@@ -34,17 +33,17 @@ static void string_2_C_string(char *string, int string_length,
 
 		/** NULL terminate the C string **/
 		c_string[i] = '\0';
-		*ierr = CG_OK;
+		*ierr = IRIC_NO_ERROR;
 }
 
 static void string_2_F_string(char *c_string, char *string,
 		int string_length, int *ierr) {
 		int i;
-		size_t len;
+		int len;
 
 		if (c_string == NULL || string == NULL) {
 //				cgi_error ("NULL string pointer");
-				*ierr = CG_ERROR;
+				*ierr = 1;
 				return;
 		}
 		len = strlen(c_string);
@@ -54,7 +53,7 @@ static void string_2_F_string(char *c_string, char *string,
 				string[i] = c_string[i];
 		while (i < string_length)
 				string[i++] = ' ';
-		*ierr = CG_OK;
+		*ierr = IRIC_NO_ERROR;
 }
 
 void IRICSOLVERLIB_API FMNAME(iric_solver_grid2d_open_f, IRIC_SOLVER_GRID2D_OPEN_F) (int *fin, int *baseId, int *zoneId, int *gridId, int* handle, int *ier)
@@ -89,14 +88,7 @@ void IRICSOLVERLIB_API FMNAME(iric_solver_grid2d_getregion_f, IRIC_SOLVER_GRID2D
 
 void IRICSOLVERLIB_API FMNAME(iric_solver_grid2d_interpolate_f, IRIC_SOLVER_GRID2D_INTERPOLATE_F) (int *gridHandle, double *x, double *y, int *ok, int *count, int* nodeids, double* weights, int *ier)
 {
-	int i;
-	size_t tmpNodeIds[4];
-
-	*ier = iRIC_Solver_Grid2D_Interpolate(*gridHandle, *x, *y, ok, count, &(tmpNodeIds[0]), weights);
-
-	for (i = 0; i < *count; ++i) {
-		*(nodeids + i) = (int) (tmpNodeIds[i]);
-	}
+	*ier = iRIC_Solver_Grid2D_Interpolate(*gridHandle, *x, *y, ok, count, &(nodeids[0]), weights);
 }
 
 void IRICSOLVERLIB_API FMNAME(iric_solver_grid2d_close_f, IRIC_SOLVER_GRID2D_CLOSE_F) (int *gridHandle, int *ier)

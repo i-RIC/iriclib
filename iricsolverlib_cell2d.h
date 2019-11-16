@@ -17,7 +17,7 @@ public:
 	Cell2D(Grid2D* const grid);
 	virtual ~Cell2D();
 
-	int nodeCount() const;
+	size_t nodeCount() const;
 	size_t nodeId(int id) const;
 	Point2D node(int id) const;
 

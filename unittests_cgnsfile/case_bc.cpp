@@ -18,7 +18,7 @@ extern "C" {
 void case_BcRead()
 {
 	remove("case_bc.cgn");
-	fs::copy("case_init.cgn", "case_bc.cgn");
+	fs::copy("case_init_hdf5.cgn", "case_bc.cgn");
 
 	int fid;
 	int ier = cg_open("case_bc.cgn", CG_MODE_MODIFY, &fid);
@@ -35,7 +35,7 @@ void case_BcRead()
 	cg_iRIC_Read_BC_Count_Mul(fid, "bctest", &bc_count);
 	VERIFY_LOG("cg_iRIC_Read_BC_Count_Mul() bc_count == 2", bc_count == 2);
 
-	cgsize_t bc_indicessize;
+	int bc_indicessize;
 
 	ier = cg_iRIC_Read_BC_IndicesSize_Mul(fid, "bctest", 1, &bc_indicessize);
 	VERIFY_LOG("cg_iRIC_Read_BC_IndicesSize_Mul() ier == 0", ier == 0);
@@ -51,7 +51,7 @@ void case_BcRead()
 	VERIFY_LOG("cg_iRIC_Read_BC_IndicesSize2_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_BC_IndicesSize2_Mul() bc_indicessize == 10", bc_indicessize == 10);
 
-	std::vector<cgsize_t> indices;
+	std::vector<int> indices;
 	indices.assign(10, 0);
 
 	ier = cg_iRIC_Read_BC_Indices_Mul(fid, "bctest", 1, indices.data());
@@ -115,7 +115,7 @@ void case_BcRead()
 	ier = cg_iRIC_Read_BC_String_Mul(fid, "bctest", 1, "stringval2", strbuffer.data());
 	VERIFY_LOG("cg_iRIC_Read_BC_String_Mul() ier != 0 for invalid value", ier != 0);
 
-	cgsize_t fsize;
+	int fsize;
 	ier = cg_iRIC_Read_BC_FunctionalSize_Mul(fid, "bctest", 1, "funcparam", &fsize);
 	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalSize_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalSize_Mul() val == 4", fsize == 3);
@@ -189,7 +189,7 @@ void case_BcRead()
 
 void case_BcWrite()
 {
-	fs::copy("case_init.cgn", "case_bcwrite.cgn");
+	fs::copy("case_init_hdf5.cgn", "case_bcwrite.cgn");
 
 	int fid;
 	int fid_wrong = 9999;
@@ -204,7 +204,7 @@ void case_BcWrite()
 	ier = cg_iRIC_Clear_BC_Mul(fid);
 	VERIFY_LOG("cg_iRIC_Clear_BC_Mul() ier == 0", ier == 0);
 
-	std::vector<cgsize_t> indices;
+	std::vector<int> indices;
 	indices.assign(10, 1);
 	for (int i = 0; i < 5; ++i) {
 		indices[i * 2 + 1] = i + 3;
@@ -271,7 +271,7 @@ void case_BcWrite()
 	cg_iRIC_Read_BC_Count_Mul(fid, "testbc", &read_num);
 	VERIFY_LOG("cg_iRIC_Read_BC_Count_Mul() read_num == 1", read_num == 1);
 
-	cgsize_t read_indicessize;
+	int read_indicessize;
 	ier = cg_iRIC_Read_BC_IndicesSize_Mul(fid, "testbc", 1, &read_indicessize);
 	VERIFY_LOG("cg_iRIC_Read_BC_IndicesSize_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_BC_IndicesSize_Mul() read_indicessize == 5", read_indicessize == 5);
@@ -294,7 +294,7 @@ void case_BcWrite()
 	VERIFY_LOG("cg_iRIC_Read_BC_String_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_BC_String_Mul() value match", std::string(read_str.data()) == write_str);
 
-	cgsize_t func_len;
+	int func_len;
 	std::vector<double> read_params, read_vals;
 	ier = cg_iRIC_Read_BC_FunctionalSize_Mul(fid, "testbc", 1, "write_func", &func_len);
 	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalSize_Mul() ier == 0", ier == 0);

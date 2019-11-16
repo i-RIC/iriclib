@@ -8,7 +8,7 @@ static std::vector<iRICLib::RiverSurvey*> riversurveys;
 
 extern "C"{
 
-int iRIC_Geo_Polygon_Open(const char* filename, int *id){
+int iRIC_Geo_Polygon_Open(const char* filename, int* id){
 	iRICLib::Polygon* polygon = new iRICLib::Polygon();
 	// currently, iriclib fortran functions supports only data with no dimension.
 	int ret = polygon->load(filename, true);
@@ -53,14 +53,14 @@ int iRIC_Geo_Polygon_Read_PointCount(int id, int* size)
 	return 0;
 }
 
-int iRIC_Geo_Polygon_Read_Points(int id, double* x, double* y)
+int iRIC_Geo_Polygon_Read_Points(int id, double* x_arr, double* y_arr)
 {
 	iRICLib::Polygon* pol = iRIC_local_Geo_Polygon_GetPolygon(id);
 	if (pol == 0) {return -1;}
 	iRICLib::InternalPolygon* ipol = pol->polygon;
 	for (int i = 0; i < ipol->pointCount; ++i){
-		*(x + i) = *(ipol->x + i);
-		*(y + i) = *(ipol->y + i);
+		*(x_arr + i) = *(ipol->x + i);
+		*(y_arr + i) = *(ipol->y + i);
 	}
 	return 0;
 }
@@ -83,15 +83,15 @@ int iRIC_Geo_Polygon_Read_HolePointCount(int id, int holeid, int* count)
 	return 0;
 }
 
-int iRIC_Geo_Polygon_Read_HolePoints(int id, int holeid, double* x, double* y)
+int iRIC_Geo_Polygon_Read_HolePoints(int id, int holeid, double* x_arr, double* y_arr)
 {
 	iRICLib::Polygon* pol = iRIC_local_Geo_Polygon_GetPolygon(id);
 	if (pol == 0) {return -1;}
 	if ((unsigned int)(holeid) > pol->holes.size()){return -1;}
 	iRICLib::InternalPolygon* ipol = pol->holes[holeid - 1];
 	for (int i = 0; i < ipol->pointCount; ++i){
-		*(x + i) = *(ipol->x + i);
-		*(y + i) = *(ipol->y + i);
+		*(x_arr + i) = *(ipol->x + i);
+		*(y_arr + i) = *(ipol->y + i);
 	}
 	return 0;
 }
@@ -159,11 +159,11 @@ int iRIC_Geo_RiverSurvey_Read_Direction(int id, int pointid, double* vx, double*
 	return 0;
 }
 
-int iRIC_Geo_RiverSurvey_Read_Name(int id, int pointid, const char** name)
+int iRIC_Geo_RiverSurvey_Read_Name(int id, int pointid, char* strvalue)
 {
 	iRICLib::RiverPathPoint* rpp = iRIC_local_Geo_RiverSurvey_GetRiverPathPoint(id, pointid);
 	if (rpp == 0){return -1;}
-	*name = rpp->name.c_str();
+	strncpy(strvalue, rpp->name.c_str(), rpp->name.length() + 1);
 	return 0;
 }
 
@@ -191,15 +191,15 @@ int iRIC_Geo_RiverSurvey_Read_AltitudeCount(int id, int pointid, int* count)
 	return 0;
 }
 
-int iRIC_Geo_RiverSurvey_Read_Altitudes(int id, int pointid, double* position, double* height, int* active)
+int iRIC_Geo_RiverSurvey_Read_Altitudes(int id, int pointid, double* position_arr, double* height_arr, int* active_arr)
 {
 	iRICLib::RiverPathPoint* rpp = iRIC_local_Geo_RiverSurvey_GetRiverPathPoint(id, pointid);
 	if (rpp == 0){return -1;}
 	for (unsigned int i = 0; i < rpp->altitudes.size(); ++i){
 			iRICLib::Altitude alt = rpp->altitudes[i];
-			*(position + i) = alt.position;
-			*(height + i) = alt.height;
-			*(active + i) = alt.active;
+			*(position_arr + i) = alt.position;
+			*(height_arr + i) = alt.height;
+			*(active_arr + i) = alt.active;
 	}
 	return 0;
 }
@@ -235,7 +235,7 @@ int iRIC_Geo_RiverSurvey_Read_GridSkip(int id, int pointid, int *gridSkip)
 }
 */
 
-int iRIC_Geo_RiverSurvey_Read_WaterSurfaceElevation(int id, int pointid, int *set, double* value)
+int iRIC_Geo_RiverSurvey_Read_WaterSurfaceElevation(int id, int pointid, int* set, double* value)
 {
 	iRICLib::RiverPathPoint* rpp = iRIC_local_Geo_RiverSurvey_GetRiverPathPoint(id, pointid);
 	if (rpp == 0){return -1;}

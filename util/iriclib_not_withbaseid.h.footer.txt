@@ -1,0 +1,5 @@
+#ifdef __cplusplus
+}
+#endif
+
+#endif // IRICLIB_NOT_WITHBASEID_H

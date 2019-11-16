@@ -1,0 +1,45 @@
+%module iric
+%include "cstring.i"
+%include "typemaps.i"
+
+%{
+#include "../iriclib.h"
+#include "../iriclib_wrapper.h"
+#include "../cgnslib_dummy/cgnslib.h"
+%}
+
+%cstring_bounded_output(char *strvalue, 2048);
+
+class IntArrayContainer
+{
+public:
+	IntArrayContainer(int size);
+	~IntArrayContainer();
+
+	int size() const;
+	int value(int index) const;
+	void setValue(int index, int v);
+	int* pointer();
+
+private:
+	std::vector<int>* m_value;
+};
+
+class RealArrayContainer
+{
+public:
+	RealArrayContainer(int size);
+	~RealArrayContainer();
+
+	int size() const;
+	double value(int index) const;
+	void setValue(int index, double v);
+	double* pointer();
+
+private:
+	std::vector<double>* m_value;
+};
+
+int cg_open(const char* name, int mode, int* OUTPUT);
+int cg_close(int fin);
+

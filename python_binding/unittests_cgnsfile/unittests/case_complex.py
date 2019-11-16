@@ -6,7 +6,7 @@ import iric
 from . import util
 
 def case_Complex():
-    shutil.copy('data/case_init.cgn', 'data/case_complex.cgn')
+    shutil.copy('data/case_init_hdf5.cgn', 'data/case_complex.cgn')
     fid = iric.cg_open("data/case_complex.cgn", iric.CG_MODE_MODIFY)
     util.verify_log("cg_open() fid != 0", fid != 0)
 

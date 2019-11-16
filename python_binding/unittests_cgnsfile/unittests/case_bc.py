@@ -7,7 +7,7 @@ from . import util
 
 def case_BcRead():
     util.remove('data/case_bc.cgn')
-    shutil.copy('data/case_init.cgn', 'data/case_bc.cgn')
+    shutil.copy('data/case_init_hdf5.cgn', 'data/case_bc.cgn')
 
     fid = iric.cg_open("data/case_bc.cgn", iric.CG_MODE_MODIFY)
     util.verify_log("cg_open() fid != 0", fid != 0)
@@ -134,7 +134,7 @@ def case_BcRead():
     util.remove('data/case_bc.cgn')
 
 def case_BcWrite():
-    shutil.copy("data/case_init.cgn", "data/case_bcwrite.cgn")
+    shutil.copy("data/case_init_hdf5.cgn", "data/case_bcwrite.cgn")
 
     fid_wrong = 9999
 
@@ -218,15 +218,15 @@ def case_BcWrite():
 
     indices = iric.cg_iRIC_Read_BC_Indices_Mul(fid, "testbc", 1)
     util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[0] == 1", indices[0] == 1)
-    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[1] == 1", indices[1] == 3)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[1] == 3", indices[1] == 3)
     util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[2] == 1", indices[2] == 1)
-    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[3] == 2", indices[3] == 4)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[3] == 4", indices[3] == 4)
     util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[4] == 1", indices[4] == 1)
-    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[5] == 3", indices[5] == 5)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[5] == 5", indices[5] == 5)
     util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[6] == 1", indices[6] == 1)
-    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[7] == 4", indices[7] == 6)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[7] == 6", indices[7] == 6)
     util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[8] == 1", indices[8] == 1)
-    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[9] == 5", indices[9] == 7)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[9] == 7", indices[9] == 7)
 
     read_int = iric.cg_iRIC_Read_BC_Integer_Mul(fid, "testbc", 1, "write_int")
     util.verify_log("cg_iRIC_Read_BC_Integer_Mul() value match", read_int == write_int)

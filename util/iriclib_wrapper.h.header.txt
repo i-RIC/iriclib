@@ -1,0 +1,8 @@
+// APIs used from Python wrapper is defined
+
+#ifndef IRICLIB_WRAPPER_H
+#define IRICLIB_WRAPPER_H
+
+#include "iriclib_global.h"
+#include "intarraycontainer.h"
+#include "realarraycontainer.h"

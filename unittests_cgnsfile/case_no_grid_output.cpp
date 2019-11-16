@@ -16,7 +16,7 @@ extern "C" {
 
 void case_noGridOutput()
 {
-	fs::copy("case_nogrid.cgn", "case_nogrid_output.cgn");
+	fs::copy("case_nogrid_hdf5.cgn", "case_nogrid_output.cgn");
 
 	int fid;
 	int ier = cg_open("case_nogrid_output.cgn", CG_MODE_MODIFY, &fid);
@@ -26,7 +26,7 @@ void case_noGridOutput()
 
 	ier = cg_iRIC_Init(fid);
 
-	VERIFY_LOG("cg_iRIC_Init() ier == 1", ier == 1);
+	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	double time = 0.0;
 	double discharge = 0.1;

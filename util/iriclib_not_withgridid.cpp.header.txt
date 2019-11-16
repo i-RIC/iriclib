@@ -1,0 +1,24 @@
+#include "error_macros.h"
+#include "h5cgnsfile.h"
+#include "iriclib.h"
+#include "iriclib_errorcodes.h"
+#include "internal/iric_h5cgnsfiles.h"
+
+using namespace iRICLib;
+
+namespace {
+
+int getlastGridId(int fid, int *gid)
+{
+	H5CgnsFile* file = nullptr;
+	int ier = _iric_h5cgnsfiles_get(fid, &file);
+	RETURN_IF_ERR;
+
+	ier = file->lastGridId(gid);
+	RETURN_IF_ERR;
+
+	return IRIC_NO_ERROR;
+}
+
+} // namespace
+

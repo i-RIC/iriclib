@@ -33,18 +33,18 @@ int main(int argc, char* argv[])
 
 	case_SolStartEnd();
 
-	case_SolWriteStd_adf();
-	case_SolWriteDivide_adf();
+	// case_SolWriteStd_adf();
+	// case_SolWriteDivide_adf();
 
 	case_SolWriteStd_hdf5();
 	case_SolWriteDivide_hdf5();
 
 	case_addGridAndResult();
 
-	case_read_adf();
+	// case_read_adf();
 	case_read_hdf5();
 
-	case_read_adf_no_results();
+	// case_read_adf_no_results();
 	case_read_hdf5_no_results();
 
 	case_noGridOutput();

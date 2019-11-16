@@ -16,7 +16,7 @@ extern "C" {
 
 void case_addGridAndResult()
 {
-	fs::copy("case_nogrid.cgn", "case_grid_result.cgn");
+	fs::copy("case_nogrid_hdf5.cgn", "case_grid_result.cgn");
 
 	int fid;
 	int ier = cg_open("case_grid_result.cgn", CG_MODE_MODIFY, &fid);
@@ -26,10 +26,10 @@ void case_addGridAndResult()
 
 	ier = cg_iRIC_Init(fid);
 
-	// This CGNS file contains no grid, so the returned value is 1.
-	VERIFY_LOG("cg_iRIC_Init() ier == 1", ier == 1);
+	// This CGNS file contains no grid, so the returned value is 0.
+	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
-	cgsize_t isize, jsize;
+	int isize, jsize;
 	std::vector<double> x, y;
 
 	isize = 10; jsize = 10;

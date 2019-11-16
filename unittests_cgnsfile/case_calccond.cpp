@@ -18,7 +18,7 @@ extern "C" {
 void case_CalcCondRead()
 {
 	remove("case_cc.cgn");
-	fs::copy("case_init.cgn", "case_cc.cgn");
+	fs::copy("case_init_hdf5.cgn", "case_cc.cgn");
 
 	int fid;
 	int ier = cg_open("case_cc.cgn", CG_MODE_MODIFY, &fid);
@@ -66,7 +66,7 @@ void case_CalcCondRead()
 	ier = cg_iRIC_Read_String_Mul(fid, "stringval2", strbuffer.data());
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() ier != 0 for invalid value", ier != 0);
 
-	cgsize_t fsize;
+	int fsize;
 	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, "func1", &fsize);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() val == 4", fsize == 4);
@@ -152,7 +152,7 @@ void case_CalcCondRead()
 
 void case_CalcCondWrite()
 {
-	fs::copy("case_init.cgn", "case_ccwrite.cgn");
+	fs::copy("case_init_hdf5.cgn", "case_ccwrite.cgn");
 
 	int fid;
 	int ier = cg_open("case_ccwrite.cgn", CG_MODE_MODIFY, &fid);
@@ -235,7 +235,7 @@ void case_CalcCondWrite()
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_String_Mul() value match", std::string(read_str.data()) == write_str);
 
-	cgsize_t func_len;
+	int func_len = 0;
 	std::vector<double> read_params, read_vals;
 	ier = cg_iRIC_Read_FunctionalSize_Mul(fid, "write_func", &func_len);
 	VERIFY_LOG("cg_iRIC_Read_FunctionalSize_Mul() ier == 0", ier == 0);

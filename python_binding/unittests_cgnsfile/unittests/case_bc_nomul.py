@@ -7,7 +7,7 @@ from . import util
 
 def case_BcRead():
     util.remove('data/case_bc.cgn')
-    shutil.copy('data/case_init.cgn', 'data/case_bc.cgn')
+    shutil.copy('data/case_init_hdf5.cgn', 'data/case_bc.cgn')
 
     fid = iric.cg_open("data/case_bc.cgn", iric.CG_MODE_MODIFY)
     util.verify_log("cg_open() fid != 0", fid != 0)
@@ -134,7 +134,7 @@ def case_BcRead():
     util.remove('data/case_bc.cgn')
 
 def case_BcWrite():
-    shutil.copy("data/case_init.cgn", "data/case_bcwrite.cgn")
+    shutil.copy("data/case_init_hdf5.cgn", "data/case_bcwrite.cgn")
 
     fid_wrong = 9999
 

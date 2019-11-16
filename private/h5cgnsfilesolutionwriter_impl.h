@@ -1,0 +1,36 @@
+#ifndef H5CGNSFILESOLUTIONWRITER_IMPL_H
+#define H5CGNSFILESOLUTIONWRITER_IMPL_H
+
+#include "../h5cgnsfilesolutionwriter.h"
+
+namespace iRICLib {
+
+class H5CgnsFileSolutionWriter::Impl
+{
+public:
+	Impl(H5CgnsFileSolutionWriter* writer);
+	~Impl();
+
+	int writeTime(double time);
+	int writeIteration(int iteration);
+
+	Mode m_mode;
+
+	H5CgnsFile* m_file;
+	H5CgnsFile* m_targetFile;
+
+	int m_solutionId;
+
+private:
+	int writeTimeStandard(double time);
+	int writeTimeSeparate(double time);
+
+	int writeIterationStandard(int iteration);
+	int writeIterationSeparate(int iteration);
+
+	H5CgnsFileSolutionWriter* m_writer;
+};
+
+} // namespace iRICLib
+
+#endif // H5CGNSFILESOLUTIONWRITER_IMPL_H

@@ -78,6 +78,7 @@ void case_read_adf_no_results()
 	int nsteps;
 	ier = cg_iRIC_GotoBase(fid, &B);
 	VERIFY_LOG("cg_iRIC_GotoBase() ier == 0", ier == 0);
+/*
 	ier = cg_biter_read(fid, B, name, &nsteps);
 	VERIFY_LOG("cg_biter_read() ier == CG_NODE_NOT_FOUND", ier == CG_NODE_NOT_FOUND);
 	
@@ -86,6 +87,7 @@ void case_read_adf_no_results()
 	char buffer[200];
 	sprintf(buffer, "cg_get_error() == '%s'", exp2);
 	VERIFY_LOG(buffer, strcmp(err2, exp2) == 0);
+*/
 
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
@@ -115,6 +117,8 @@ void case_read_hdf5_no_results()
 	int nsteps;
 	ier = cg_iRIC_GotoBase(fid, &B);
 	VERIFY_LOG("cg_iRIC_GotoBase() ier == 0", ier == 0);
+
+	/*
 	ier = cg_biter_read(fid, B, name, &nsteps);
 	VERIFY_LOG("cg_biter_read() ier == CG_NODE_NOT_FOUND", ier == CG_NODE_NOT_FOUND);
 	const char exp2[] = "BaseIterativeData_t node doesn't exist under CGNSBase 1";
@@ -122,6 +126,7 @@ void case_read_hdf5_no_results()
 	char buffer[200];
 	sprintf(buffer, "cg_get_error() == '%s'", exp2);
 	VERIFY_LOG(buffer, strcmp(err2, exp2) == 0);
+*/
 
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);

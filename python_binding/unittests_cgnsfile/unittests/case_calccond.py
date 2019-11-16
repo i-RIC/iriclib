@@ -7,7 +7,7 @@ from . import util
 
 def case_CalcCondRead():
     util.remove("data/case_cc.cgn")
-    shutil.copy("data/case_init.cgn", "data/case_cc.cgn")
+    shutil.copy("data/case_init_hdf5.cgn", "data/case_cc.cgn")
 
     fid = iric.cg_open("data/case_cc.cgn", iric.CG_MODE_MODIFY)
     util.verify_log("cg_open() fid != 0", fid != 0)
@@ -83,7 +83,7 @@ def case_CalcCondRead():
     util.remove("data/case_cc.cgn")
 
 def case_CalcCondWrite():
-    shutil.copy('data/case_init.cgn', 'data/case_ccwrite.cgn')
+    shutil.copy('data/case_init_hdf5.cgn', 'data/case_ccwrite.cgn')
 
     fid = iric.cg_open("data/case_ccwrite.cgn", iric.CG_MODE_MODIFY)
 

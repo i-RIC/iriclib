@@ -5,6 +5,11 @@
 
 #include <vector>
 
+namespace iRICLib
+{
+class H5CgnsGridCoordinates;
+}
+
 namespace iRICSolverLib {
 
 class Grid2D::Impl
@@ -12,6 +17,7 @@ class Grid2D::Impl
 public:
 	Impl(Grid2D* grid);
 	~Impl();
+
 	void loadStructuredGrid(int fn, int baseId, int zoneId, int gridId);
 	void loadUnstructuredGrid(int fn, int baseId, int zoneId, int gridId);
 	void setupBackGrid();
@@ -19,8 +25,7 @@ public:
 	size_t structuredIndex(size_t i, size_t j, int* size) const;
 
 private:
-	void insertTriangleCells(int fn, int baseId, int zoneId, int secId);
-	void insertQuadCells(int fn, int baseId, int zoneId, int secId);
+	void loadNodes(iRICLib::H5CgnsGridCoordinates* coords);
 
 public:
 	Grid2D* m_grid;

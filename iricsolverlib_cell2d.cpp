@@ -21,9 +21,9 @@ Cell2D::~Cell2D()
 	delete impl;
 }
 
-int Cell2D::nodeCount() const
+size_t Cell2D::nodeCount() const
 {
-	return static_cast<int> (impl->m_nodeIds.size());
+	return impl->m_nodeIds.size();
 }
 
 size_t Cell2D::nodeId(int id) const

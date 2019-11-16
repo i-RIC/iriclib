@@ -6,7 +6,7 @@ import iric
 from . import util
 
 def case_GridRead():
-    shutil.copy("data/case_init.cgn", "data/case_grid.cgn")
+    shutil.copy("data/case_init_hdf5.cgn", "data/case_grid.cgn")
 
     fid = iric.cg_open("data/case_grid.cgn", iric.CG_MODE_MODIFY)
     util.verify_log("cg_open() fid != 0", fid != 0)
@@ -83,16 +83,16 @@ def case_GridReadFunc():
     util.remove("data/case_gridreadfunc.cgn")
 
 def case_GridWrite():
-    shutil.copy("data/case_nogrid.cgn", "data/case_gridwrite1d.cgn")
+    shutil.copy("data/case_nogrid_hdf5.cgn", "data/case_gridwrite1d.cgn")
 
     fid = iric.cg_open("data/case_gridwrite1d.cgn", iric.CG_MODE_MODIFY)
     util.verify_log("cg_open() fid != 0", fid != 0)
 
     try:
         iric.cg_iRIC_Init(fid)
-        print('cg_iRIC_Init raise Exception for CGNS without grid [NG]')
+        print('cg_iRIC_Init do not raise Exception for CGNS without grid [OK]')
     except Exception:
-        print('cg_iRIC_Init raise Exception for CGNS without grid [OK]')
+        print('cg_iRIC_Init do not raise Exception for CGNS without grid [NG]')
 
     isize = 10
     x = np.zeros(isize, dtype=np.float64)
@@ -133,16 +133,16 @@ def case_GridWrite():
 
     util.remove("data/case_gridwrite1d.cgn")
 
-    shutil.copy("data/case_nogrid.cgn", "data/case_gridwrite2d.cgn")
+    shutil.copy("data/case_nogrid_hdf5.cgn", "data/case_gridwrite2d.cgn")
 
     fid = iric.cg_open("data/case_gridwrite2d.cgn", iric.CG_MODE_MODIFY)
     util.verify_log("cg_open() fid != 0", fid != 0)
 
     try:
         iric.cg_iRIC_Init(fid)
-        print('cg_iRIC_Init raise Exception for CGNS without grid [NG]')
+        print('cg_iRIC_Init does not raise Exception for CGNS without grid [OK]')
     except Exception:
-        print('cg_iRIC_Init raise Exception for CGNS without grid [OK]')
+        print('cg_iRIC_Init does not raise Exception for CGNS without grid [NG]')
 
     isize = 10
     jsize = 8
@@ -259,7 +259,7 @@ def case_GridWrite():
 
     util.remove("data/case_gridwrite2d.cgn")
 
-    shutil.copy("data/case_nogrid.cgn", "data/case_gridwrite3d.cgn")
+    shutil.copy("data/case_nogrid_hdf5.cgn", "data/case_gridwrite3d.cgn")
 
     fid = iric.cg_open("data/case_gridwrite3d.cgn", iric.CG_MODE_MODIFY)
 
@@ -268,9 +268,9 @@ def case_GridWrite():
     
     try:
         iric.cg_iRIC_Init(fid)
-        print('cg_iRIC_Init raise Exception for CGNS without grid [NG]')
+        print('cg_iRIC_Init does not raise Exception for CGNS without grid [OK]')
     except Exception:
-        print('cg_iRIC_Init raise Exception for CGNS without grid [OK]')
+        print('cg_iRIC_Init does not raise Exception for CGNS without grid [NG]')
 
     isize = 11
     jsize = 9
