@@ -162,6 +162,44 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(*fid, "Active", particle_active.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer_Mul() for Active ier == 0", ier == 0);
 
+		// ParticleGroup solutions
+
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(*fid, "group1");
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul() ier == 0", ier == 0);
+		for (int j = 0; j < particle_num; ++j) {
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul(*fid, particle_x.at(j), particle_y.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul() for VelX ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelX", particle_vx.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelX ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelY", particle_vy.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelY ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(*fid, "Active", particle_active.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul() for VelX ier == 0", ier == 0);
+		}
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
+
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(*fid, "group2");
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul() ier == 0", ier == 0);
+		for (int j = 0; j < particle_num; ++j) {
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul(*fid, particle_x.at(j), 2);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul() for VelX ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelX", particle_vx.at(j) + 2);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelX ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelY", particle_vy.at(j) + 1);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelY ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(*fid, "Active", particle_active.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul() for VelX ier == 0", ier == 0);
+		}
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
+
 		ier = cg_iRIC_Flush(filename, fid);
 		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
@@ -249,6 +287,42 @@ void writeSolution3d(const char* filename, int* fid)
 
 		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(*fid, "Active", particle_active.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer_Mul() for Active ier == 0", ier == 0);
+
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(*fid, "group1");
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul() ier == 0", ier == 0);
+		for (int j = 0; j < particle_num; ++j) {
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul(*fid, particle_x.at(j), particle_y.at(j), particle_z.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul() for VelX ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelX", particle_vx.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelX ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelY", particle_vy.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelY ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(*fid, "Active", particle_active.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul() for VelX ier == 0", ier == 0);
+		}
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
+
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(*fid, "group2");
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul() ier == 0", ier == 0);
+		for (int j = 0; j < particle_num; ++j) {
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul(*fid, particle_x.at(j), particle_y.at(j), 2);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul() for VelX ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelX", particle_vx.at(j) + 1);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelX ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelY", particle_vy.at(j) + 2);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelY ier == 0", ier == 0);
+
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(*fid, "Active", particle_active.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul() for VelX ier == 0", ier == 0);
+		}
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
 
 		ier = cg_iRIC_Flush(filename, fid);
 		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
@@ -445,7 +519,7 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	VERIFY_REMOVE("case_solstd.cgn", hdf);
+	// VERIFY_REMOVE("case_solstd.cgn", hdf);
 
 	//
 	// Test Writing 3D Standard (IRIC_OPTION_STDSOLUTION) with times
@@ -467,7 +541,7 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	VERIFY_REMOVE("case_solstd3d.cgn", hdf);
+	// VERIFY_REMOVE("case_solstd3d.cgn", hdf);
 
 	// @todo add codes to test
 
