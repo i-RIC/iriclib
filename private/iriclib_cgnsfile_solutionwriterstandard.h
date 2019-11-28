@@ -26,6 +26,7 @@ public:
 	int Sol_Particle_Write_Pos3d(cgsize_t count, double* x, double* y, double* z) override;
 	int Sol_Particle_Write_Real(const char* name, double* value) override;
 	int Sol_Particle_Write_Integer(const char* name, int* value) override;
+	int Sol_ParticleGroup_Write_GroupEnd() override;
 	int Sol_PolyData_Write_GroupEnd() override;
 
 	int Flush() override;

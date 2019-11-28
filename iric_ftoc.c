@@ -1229,6 +1229,45 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_integer_mul_f, CG_IRIC_WRITE_S
 	*ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(*fid, c_name, value);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_groupbegin_mul_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_GROUPBEGIN_MUL_F) (int *fid, STR_PSTR(name), int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(*fid, c_name);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_groupend_mul_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_GROUPEND_MUL_F) (int *fid, int *ier) {
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_pos2d_mul_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_POS2D_MUL_F) (int *fid, double *x, double *y, int *ier) {
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul(*fid, *x, *y);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_pos3d_mul_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_POS3D_MUL_F) (int *fid, double *x, double *y, double *z, int *ier) {
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul(*fid, *x, *y, *z);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_integer_mul_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_INTEGER_MUL_F) (int *fid, STR_PSTR(name), int *value, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(*fid, c_name, *value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_real_mul_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_REAL_MUL_F) (int *fid, STR_PSTR(name), double *value, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, c_name, *value);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_groupbegin_mul_f, CG_IRIC_WRITE_SOL_POLYDATA_GROUPBEGIN_MUL_F) (int *fid, STR_PSTR(name), int *ier STR_PLEN(name)) {
 	char c_name[CGIO_MAX_NAME_LENGTH+1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name),
@@ -2487,6 +2526,45 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_integer_f, CG_IRIC_WRITE_SOL_P
 	if (*ier) return;
 
 	*ier = cg_iRIC_Write_Sol_Particle_Integer(c_name, value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_groupbegin_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_GROUPBEGIN_F) (STR_PSTR(name), int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin(c_name);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_groupend_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_GROUPEND_F) (int *ier) {
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd();
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_pos2d_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_POS2D_F) (double *x, double *y, int *ier) {
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_Pos2d(*x, *y);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_pos3d_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_POS3D_F) (double *x, double *y, double *z, int *ier) {
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_Pos3d(*x, *y, *z);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_integer_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_INTEGER_F) (STR_PSTR(name), int *value, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_Integer(c_name, *value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_particlegroup_real_f, CG_IRIC_WRITE_SOL_PARTICLEGROUP_REAL_F) (STR_PSTR(name), double *value, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_ParticleGroup_Real(c_name, *value);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_polydata_groupbegin_f, CG_IRIC_WRITE_SOL_POLYDATA_GROUPBEGIN_F) (STR_PSTR(name), int *ier STR_PLEN(name)) {
