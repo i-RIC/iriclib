@@ -637,6 +637,36 @@ int cg_iRIC_Write_Sol_Particle_Integer(const char* name, int* value)
 	return cg_iRIC_Write_Sol_Particle_Integer_Mul(lastfileid, name, value);
 }
 
+int cg_iRIC_Write_Sol_ParticleGroup_GroupBegin(const char* name)
+{
+	return cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(lastfileid, name);
+}
+
+int cg_iRIC_Write_Sol_ParticleGroup_GroupEnd()
+{
+	return cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(lastfileid);
+}
+
+int cg_iRIC_Write_Sol_ParticleGroup_Pos2d(double x, double y)
+{
+	return cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul(lastfileid, x, y);
+}
+
+int cg_iRIC_Write_Sol_ParticleGroup_Pos3d(double x, double y, double z)
+{
+	return cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul(lastfileid, x, y, z);
+}
+
+int cg_iRIC_Write_Sol_ParticleGroup_Integer(const char* name, int value)
+{
+	return cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(lastfileid, name, value);
+}
+
+int cg_iRIC_Write_Sol_ParticleGroup_Real(const char* name, double value)
+{
+	return cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(lastfileid, name, value);
+}
+
 int cg_iRIC_Write_Sol_PolyData_GroupBegin(const char* name)
 {
 	return cg_iRIC_Write_Sol_PolyData_GroupBegin_Mul(lastfileid, name);

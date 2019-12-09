@@ -351,6 +351,17 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Real_Mul(int fid, const char* name, do
 int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Integer_Mul(int fid, const char* name, int* value);
 
 /**********************************************/
+/* Writing Particle Groups                    */
+/**********************************************/
+
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(int fid, const char* name);
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(int fid);
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul(int fid, double x, double y);
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul(int fid, double x, double y, double z);
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(int fid, const char* name, int value);
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(int fid, const char* name, double value);
+
+/**********************************************/
 /* Writing Polydata                           */
 /**********************************************/
 
@@ -679,6 +690,18 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Pos3d(cgsize_t count, double* x, doubl
 int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Real(const char* name, double* value);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Particle_Integer(const char* name, int* value);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_GroupBegin(const char* name);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_GroupEnd();
+
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_Pos2d(double x, double y);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_Pos3d(double x, double y, double z);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_Integer(const char* name, int value);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_ParticleGroup_Real(const char* name, double value);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_PolyData_GroupBegin(const char* name);
 

@@ -325,6 +325,36 @@ int CgnsFile::Sol_Particle_Write_Integer(const char* name, int* value)
 	return impl->m_solutionWriter->Sol_Particle_Write_Integer(name, value);
 }
 
+int CgnsFile::Sol_ParticleGroup_Write_GroupBegin(const char* name)
+{
+	return impl->m_solutionWriter->Sol_ParticleGroup_Write_GroupBegin(name);
+}
+
+int CgnsFile::Sol_ParticleGroup_Write_GroupEnd()
+{
+	return impl->m_solutionWriter->Sol_ParticleGroup_Write_GroupEnd();
+}
+
+int CgnsFile::Sol_ParticleGroup_Write_Pos2d(double x, double y)
+{
+	return impl->m_solutionWriter->Sol_ParticleGroup_Write_Pos2d(x, y);
+}
+
+int CgnsFile::Sol_ParticleGroup_Write_Pos3d(double x, double y, double z)
+{
+	return impl->m_solutionWriter->Sol_ParticleGroup_Write_Pos3d(x, y, z);
+}
+
+int CgnsFile::Sol_ParticleGroup_Write_Integer(const char* name, int value)
+{
+	return impl->m_solutionWriter->Sol_ParticleGroup_Write_Integer(name, value);
+}
+
+int CgnsFile::Sol_ParticleGroup_Write_Real(const char* name, double value)
+{
+	return impl->m_solutionWriter->Sol_ParticleGroup_Write_Real(name, value);
+}
+
 int CgnsFile::Sol_PolyData_Write_GroupBegin(const char* name)
 {
 	return impl->m_solutionWriter->Sol_PolyData_Write_GroupBegin(name);

@@ -31,6 +31,14 @@ public:
 	virtual int Sol_Particle_Write_Pos3d(cgsize_t count, double* x, double* y, double* z) = 0;
 	virtual int Sol_Particle_Write_Real(const char* name, double* value) = 0;
 	virtual int Sol_Particle_Write_Integer(const char* name, int* value) = 0;
+
+	int Sol_ParticleGroup_Write_GroupBegin(const char* name);
+	virtual int Sol_ParticleGroup_Write_GroupEnd() = 0;
+	int Sol_ParticleGroup_Write_Pos2d(double x, double y);
+	int Sol_ParticleGroup_Write_Pos3d(double x, double y, double z);
+	int Sol_ParticleGroup_Write_Integer(const char* name, int value);
+	int Sol_ParticleGroup_Write_Real(const char* name, double value);
+
 	int Sol_PolyData_Write_GroupBegin(const char* name);
 	virtual int Sol_PolyData_Write_GroupEnd() = 0;
 	int Sol_PolyData_Write_Polygon(int num, double* x, double* y);
@@ -42,8 +50,17 @@ public:
 
 protected:
 	CgnsFile::Impl* impl() const;
+	int stdSolParticleGroupGroupEnd(int fid, int bid, int zid, int sid);
 	int stdSolPolyDataGroupEnd(int fid, int bid, int zid, int sid);
+	void clearParticleGroupData();
 	void clearPolyData();
+
+	std::string m_particleGroupName;
+	std::vector<double> m_particleGroupX;
+	std::vector<double> m_particleGroupY;
+	std::vector<double> m_particleGroupZ;
+	std::map<std::string, std::vector<int> > m_particleGroupIntValues;
+	std::map<std::string, std::vector<double> > m_particleGroupRealValues;
 
 	std::string m_polydataName;
 	std::vector<int> m_polydataTypes;
