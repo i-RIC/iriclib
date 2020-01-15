@@ -774,6 +774,28 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_real_mul_f, CG_IRIC_READ_S
 	*ier = cg_iRIC_Read_Sol_BaseIterative_Real_Mul(*fid, *step, c_name, value);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_stringlen_mul_f, CG_IRIC_READ_SOL_BASEITERATIVE_STRINGLEN_MUL_F) (int *fid, int *step, STR_PSTR(name), int *length, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(*fid, *step, c_name, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_string_mul_f, CG_IRIC_READ_SOL_BASEITERATIVE_STRING_MUL_F) (int *fid, int *step, STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Sol_BaseIterative_String_Mul(*fid, *step, c_name, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_read_sol_gridcoord2d_mul_f, CG_IRIC_READ_SOL_GRIDCOORD2D_MUL_F) (int *fid, int *step, double *x, double *y, int *ier) {
 	*ier = cg_iRIC_Read_Sol_GridCoord2d_Mul(*fid, *step, x, y);
 }
@@ -878,6 +900,19 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_baseiterative_real_mul_f, CG_IRIC_WRITE
 	if (*ier) return;
 
 	*ier = cg_iRIC_Write_Sol_BaseIterative_Real_Mul(*fid, c_name, *value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_baseiterative_string_mul_f, CG_IRIC_WRITE_SOL_BASEITERATIVE_STRING_MUL_F) (int *fid, STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_BaseIterative_String_Mul(*fid, c_name, c_strvalue);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_gridcoord2d_mul_f, CG_IRIC_WRITE_SOL_GRIDCOORD2D_MUL_F) (int *fid, double *x, double *y, int *ier) {
@@ -2073,6 +2108,28 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_real_f, CG_IRIC_READ_SOL_B
 	*ier = cg_iRIC_Read_Sol_BaseIterative_Real(*step, c_name, value);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_stringlen_f, CG_IRIC_READ_SOL_BASEITERATIVE_STRINGLEN_F) (int *step, STR_PSTR(name), int *length, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Sol_BaseIterative_StringLen(*step, c_name, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_string_f, CG_IRIC_READ_SOL_BASEITERATIVE_STRING_F) (int *step, STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Sol_BaseIterative_String(*step, c_name, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_read_sol_gridcoord2d_f, CG_IRIC_READ_SOL_GRIDCOORD2D_F) (int *step, double *x, double *y, int *ier) {
 	*ier = cg_iRIC_Read_Sol_GridCoord2d(*step, x, y);
 }
@@ -2177,6 +2234,19 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_baseiterative_real_f, CG_IRIC_WRITE_SOL
 	if (*ier) return;
 
 	*ier = cg_iRIC_Write_Sol_BaseIterative_Real(c_name, *value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_baseiterative_string_f, CG_IRIC_WRITE_SOL_BASEITERATIVE_STRING_F) (STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_BaseIterative_String(c_name, c_strvalue);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_gridcoord2d_f, CG_IRIC_WRITE_SOL_GRIDCOORD2D_F) (double *x, double *y, int *ier) {
