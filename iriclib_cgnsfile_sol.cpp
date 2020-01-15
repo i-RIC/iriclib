@@ -55,7 +55,7 @@ int CgnsFile::Sol_Read_BaseIterative_Integer(int step, const char *name, int* va
 	if (step > impl->m_solId) {
 		return 1;
 	}
-	for (BaseIterativeT<int> bit : impl->m_solBaseIterInts) {
+	for (const BaseIterativeT<int>& bit : impl->m_solBaseIterInts) {
 		if (bit.name() == name) {
 			*value = bit.values().at(step - 1);
 			return 0;
@@ -69,7 +69,7 @@ int CgnsFile::Sol_Read_BaseIterative_Real(int step, const char *name, double* va
 	if (step > impl->m_solId) {
 		return 1;
 	}
-	for (BaseIterativeT<double> bit : impl->m_solBaseIterReals) {
+	for (const BaseIterativeT<double>& bit : impl->m_solBaseIterReals) {
 		if (bit.name() == name) {
 			*value = bit.values().at(step - 1);
 			return 0;
