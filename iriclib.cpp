@@ -741,6 +741,18 @@ int cg_iRIC_Read_Sol_BaseIterative_Real_Mul(int fid, int step, const char* name,
 	return f->Sol_Read_BaseIterative_Real(step, name, value);
 }
 
+int cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(int fid, int step, const char* name, int* length)
+{
+	GET_F(fid);
+	return f->Sol_Read_BaseIterative_StringLen(step, name, length);
+}
+
+int cg_iRIC_Read_Sol_BaseIterative_String_Mul(int fid, int step, const char* name, char* strvalue)
+{
+	GET_F(fid);
+	return f->Sol_Read_BaseIterative_String(step, name, strvalue);
+}
+
 int cg_iRIC_Read_Sol_GridCoord2d_Mul(int fid, int step, double* x, double* y)
 {
 	GET_F(fid);
@@ -819,6 +831,12 @@ int cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(int fid, const char *name, int v
 int cg_iRIC_Write_Sol_BaseIterative_Real_Mul(int fid, const char *name, double value){
 	GET_F(fid);
 	return f->Sol_Write_BaseIterative_Real(name, value);
+}
+
+int cg_iRIC_Write_Sol_BaseIterative_String_Mul(int fid, const char *name, const char* strvalue)
+{
+	GET_F(fid);
+	return f->Sol_Write_BaseIterative_String(name, strvalue);
 }
 
 int cg_iRIC_Write_Sol_GridCoord2d_Mul(int fid, double *x, double *y)

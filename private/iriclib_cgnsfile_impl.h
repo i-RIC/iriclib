@@ -145,6 +145,7 @@ public:
 
 	std::vector<BaseIterativeT<int> > m_solBaseIterInts;
 	std::vector<BaseIterativeT<double> > m_solBaseIterReals;
+	std::vector<BaseIterativeT<std::string> > m_solBaseIterStrings;
 
 	SolutionWriter* m_solutionWriter;
 

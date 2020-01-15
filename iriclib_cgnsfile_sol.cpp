@@ -6,11 +6,31 @@
 
 #include <assert.h>
 
+#include <cstring>
+
 using namespace iRICLib;
 
 namespace {
 
 static const std::string ECNODE = "ErrorCode";
+
+void setupStringBuffer(const std::vector<std::string>& vals, cgsize_t* dims, std::vector<char>* buffer)
+{
+	cgsize_t maxLen = 0;
+	for (int i = 0; i < vals.size(); ++i) {
+		const std::string& s = vals.at(i);
+		if (i == 0 || s.length() > maxLen) {
+			maxLen = s.length();
+		}
+	}
+	*(dims + 0) = maxLen;
+	*(dims + 1) = static_cast<cgsize_t> (vals.size());
+	buffer->assign(maxLen * vals.size(), ' ');
+	for (int i = 0; i < vals.size(); ++i) {
+		const std::string& s = vals.at(i);
+		memcpy(buffer->data() + maxLen * i, s.c_str(), s.length());
+	}
+}
 
 } // namespace
 
@@ -72,6 +92,36 @@ int CgnsFile::Sol_Read_BaseIterative_Real(int step, const char *name, double* va
 	for (const BaseIterativeT<double>& bit : impl->m_solBaseIterReals) {
 		if (bit.name() == name) {
 			*value = bit.values().at(step - 1);
+			return 0;
+		}
+	}
+	return 2;
+}
+
+int CgnsFile::Sol_Read_BaseIterative_StringLen(int step, const char* name, int* length)
+{
+	if (step > impl->m_solId) {
+		return 1;
+	}
+	for (const BaseIterativeT<std::string>& bit : impl->m_solBaseIterStrings) {
+		if (bit.name() == name) {
+			const std::string& v = bit.values().at(step - 1);
+			*length = v.length();
+			return 0;
+		}
+	}
+	return 2;
+}
+
+int CgnsFile::Sol_Read_BaseIterative_String(int step, const char* name, char* strvalue)
+{
+	if (step > impl->m_solId) {
+		return 1;
+	}
+	for (const BaseIterativeT<std::string>& bit : impl->m_solBaseIterStrings) {
+		if (bit.name() == name) {
+			const std::string& v = bit.values().at(step - 1);
+			std::strcpy(strvalue, v.c_str());
 			return 0;
 		}
 	}
@@ -240,6 +290,31 @@ int CgnsFile::Sol_Write_BaseIterative_Real(const char *name, double value)
 	cgsize_t dimVec = static_cast<cgsize_t> (data.values().size());
 	impl->gotoBaseIter();
 	return cg_array_write(data.name().c_str(), RealDouble, 1, &dimVec, data.values().data());
+}
+
+int CgnsFile::Sol_Write_BaseIterative_String(const char* name, const char* value)
+{
+	bool found = false;
+	BaseIterativeT<std::string> data(name);
+	for (BaseIterativeT<std::string>& bit : impl->m_solBaseIterStrings) {
+		if (bit.name() == name) {
+			bit.addValue(std::string(value));
+			data = bit;
+			found = true;
+		}
+	}
+	if (! found) {
+		BaseIterativeT<std::string> newData(name);
+		newData.addValue(std::string(value));
+		impl->m_solBaseIterStrings.push_back(newData);
+		data = newData;
+	}
+	// write the value.
+	cgsize_t dimVec[2];
+	std::vector<char> buffer;
+	setupStringBuffer(data.values(), dimVec, &buffer);
+	impl->gotoBaseIter();
+	return cg_array_write(data.name().c_str(), Character, 2, dimVec, buffer.data());
 }
 
 int CgnsFile::Sol_Write_GridCoord2d(double *x, double *y)
