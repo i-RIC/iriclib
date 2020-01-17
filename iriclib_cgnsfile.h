@@ -205,6 +205,17 @@ public:
 	int Sol_Particle_Write_Real(const char* name, double* value);
 	int Sol_Particle_Write_Integer(const char* name, int* value);
 
+	// ----------------------------
+	// Solution Particle Group I/O
+	// ----------------------------
+
+	int Sol_ParticleGroup_Write_GroupBegin(const char* name);
+	int Sol_ParticleGroup_Write_GroupEnd();
+	int Sol_ParticleGroup_Write_Pos2d(double x, double y);
+	int Sol_ParticleGroup_Write_Pos3d(double x, double y, double z);
+	int Sol_ParticleGroup_Write_Integer(const char* name, int value);
+	int Sol_ParticleGroup_Write_Real(const char* name, double value);
+
 	// ----------------------
 	// Solution Polydata I/O
 	// ----------------------

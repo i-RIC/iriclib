@@ -739,6 +739,11 @@ void CgnsFile::Impl::getParticleSolName(int num, char* name)
 	sprintf(name, "ParticleSolution%d", num);
 }
 
+void CgnsFile::Impl::getParticleGroupSolName(int num, char* name)
+{
+	sprintf(name, "ParticleGroupSolution%d", num);
+}
+
 void CgnsFile::Impl::getPolydataSolName(int num, char* name)
 {
 	sprintf(name, "PolydataSolution%d", num);
@@ -788,6 +793,9 @@ int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vec
 	ier = writeFlowJFaceSolutionPointers(fid, bid, zid, *jfacesols);
 	RETURN_IF_ERR;
 
+	ier = addParticleGroupSolutionNode(fid, bid, zid, sid);
+	RETURN_IF_ERR;
+
 	ier = addPolydataSolutionNode(fid, bid, zid, sid);
 	RETURN_IF_ERR;
 
@@ -813,6 +821,16 @@ int CgnsFile::Impl::addParticleSolutionNode(int fid, int bid, int zid, int sid)
 {
 	char solname[NAME_MAXLENGTH];
 	getParticleSolName(sid, solname);
+
+	int ier = cg_goto(fid, bid, "Zone_t", zid, NULL);
+	RETURN_IF_ERR;
+	return cg_user_data_write(solname);
+}
+
+int CgnsFile::Impl::addParticleGroupSolutionNode(int fid, int bid, int zid, int sid)
+{
+	char solname[NAME_MAXLENGTH];
+	getParticleGroupSolName(sid, solname);
 
 	int ier = cg_goto(fid, bid, "Zone_t", zid, NULL);
 	RETURN_IF_ERR;

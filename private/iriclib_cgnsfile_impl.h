@@ -100,11 +100,13 @@ public:
 
 	static void getSolGridCoordName(int num, char* name);
 	static void getParticleSolName(int num, char* name);
+	static void getParticleGroupSolName(int num, char* name);
 	static void getPolydataSolName(int num, char* name);
 
 	static int addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols, std::vector<std::string>* ifacesols, std::vector<std::string>* jfacesols);
 	static int addSolutionGridCoordNode(int fid, int bid, int zid, int sid, std::vector<std::string>* coords);
 	static int addParticleSolutionNode(int fid, int bid, int zid, int sid);
+	static int addParticleGroupSolutionNode(int fid, int bid, int zid, int sid);
 	static int addPolydataSolutionNode(int fid, int bid, int zid, int sid);
 
 	static int writePointers(int fid, int bid, int zid, const char* name, const std::vector<std::string>& strs);
@@ -112,7 +114,9 @@ public:
 	static int writeFlowCellSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
 	static int writeFlowIFaceSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
 	static int writeFlowJFaceSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
-
+	static int writeParticleSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
+	static int writeParticleGroupSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
+	static int writePolydataSolutionPointers(int fid, int bid, int zid, const std::vector<std::string>& sols);
 	static int writeGridCoordinatesPointers(int fid, int bid, int zid, const std::vector<std::string>& coords);
 
 	int solIndex(CGNS_ENUMT(GridLocation_t) location, int step);
@@ -140,7 +144,6 @@ public:
 	std::vector<std::string> m_cellSolPointers;
 	std::vector<std::string> m_ifaceSolPointers;
 	std::vector<std::string> m_jfaceSolPointers;
-	std::vector<std::string> m_solParticlePointers;
 
 	std::map<std::string, BaseIterativeT<int>* > m_solBaseIterInts;
 	std::map<std::string, BaseIterativeT<double>* > m_solBaseIterReals;

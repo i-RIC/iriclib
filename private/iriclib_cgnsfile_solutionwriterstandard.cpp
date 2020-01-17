@@ -135,6 +135,12 @@ int CgnsFile::SolutionWriterStandard::Sol_Particle_Write_Integer(const char* nam
 	return stdSolParticleWriteInteger(name, value, i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId);
 }
 
+int CgnsFile::SolutionWriterStandard::Sol_ParticleGroup_Write_GroupEnd()
+{
+	Impl* i = impl();
+	return stdSolParticleGroupGroupEnd(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId);
+}
+
 int CgnsFile::SolutionWriterStandard::Sol_PolyData_Write_GroupEnd()
 {
 	Impl* i = impl();
