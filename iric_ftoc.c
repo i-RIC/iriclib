@@ -681,23 +681,23 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_functional_real_cell_mul_f, CG_IRIC_REA
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord1d_mul_f, CG_IRIC_WRITEGRIDCOORD1D_MUL_F) (int *fid, int *isize, double *x, int *ier) {
-	int c_isize;
+	cgsize_t c_isize;
 	c_isize = (cgsize_t)(*isize);
 	*ier = cg_iRIC_WriteGridCoord1d_Mul(*fid, c_isize, x);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord2d_mul_f, CG_IRIC_WRITEGRIDCOORD2D_MUL_F) (int *fid, int *isize, int *jsize, double *x, double *y, int *ier) {
-	int c_isize;
-	int c_jsize;
+	cgsize_t c_isize;
+	cgsize_t c_jsize;
 	c_isize = (cgsize_t)(*isize);
 	c_jsize = (cgsize_t)(*jsize);
 	*ier = cg_iRIC_WriteGridCoord2d_Mul(*fid, c_isize, c_jsize, x, y);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord3d_mul_f, CG_IRIC_WRITEGRIDCOORD3D_MUL_F) (int *fid, int *isize, int *jsize, int *ksize, double *x, double *y, double *z, int *ier) {
-	int c_isize;
-	int c_jsize;
-	int c_ksize;
+	cgsize_t c_isize;
+	cgsize_t c_jsize;
+	cgsize_t c_ksize;
 	c_isize = (cgsize_t)(*isize);
 	c_jsize = (cgsize_t)(*jsize);
 	c_ksize = (cgsize_t)(*ksize);
@@ -1235,13 +1235,13 @@ void IRICLIBDLL FMNAME(cg_iric_write_bc_functionalwithname_string_mul_f, CG_IRIC
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos2d_mul_f, CG_IRIC_WRITE_SOL_PARTICLE_POS2D_MUL_F) (int *fid, int *count, double *x, double *y, int *ier) {
-	int c_count;
+	cgsize_t c_count;
 	c_count = (cgsize_t)(*count);
 	*ier = cg_iRIC_Write_Sol_Particle_Pos2d_Mul(*fid, c_count, x, y);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos3d_mul_f, CG_IRIC_WRITE_SOL_PARTICLE_POS3D_MUL_F) (int *fid, int *count, double *x, double *y, double *z, int *ier) {
-	int c_count;
+	cgsize_t c_count;
 	c_count = (cgsize_t)(*count);
 	*ier = cg_iRIC_Write_Sol_Particle_Pos3d_Mul(*fid, c_count, x, y, z);
 }
@@ -2015,23 +2015,23 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_functional_real_cell_f, CG_IRIC_READ_GR
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord1d_f, CG_IRIC_WRITEGRIDCOORD1D_F) (int *isize, double *x, int *ier) {
-	int c_isize;
+	cgsize_t c_isize;
 	c_isize = (cgsize_t)(*isize);
 	*ier = cg_iRIC_WriteGridCoord1d(c_isize, x);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord2d_f, CG_IRIC_WRITEGRIDCOORD2D_F) (int *isize, int *jsize, double *x, double *y, int *ier) {
-	int c_isize;
-	int c_jsize;
+	cgsize_t c_isize;
+	cgsize_t c_jsize;
 	c_isize = (cgsize_t)(*isize);
 	c_jsize = (cgsize_t)(*jsize);
 	*ier = cg_iRIC_WriteGridCoord2d(c_isize, c_jsize, x, y);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord3d_f, CG_IRIC_WRITEGRIDCOORD3D_F) (int *isize, int *jsize, int *ksize, double *x, double *y, double *z, int *ier) {
-	int c_isize;
-	int c_jsize;
-	int c_ksize;
+	cgsize_t c_isize;
+	cgsize_t c_jsize;
+	cgsize_t c_ksize;
 	c_isize = (cgsize_t)(*isize);
 	c_jsize = (cgsize_t)(*jsize);
 	c_ksize = (cgsize_t)(*ksize);
@@ -2569,13 +2569,13 @@ void IRICLIBDLL FMNAME(cg_iric_write_bc_functionalwithname_string_f, CG_IRIC_WRI
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos2d_f, CG_IRIC_WRITE_SOL_PARTICLE_POS2D_F) (int *count, double *x, double *y, int *ier) {
-	int c_count;
+	cgsize_t c_count;
 	c_count = (cgsize_t)(*count);
 	*ier = cg_iRIC_Write_Sol_Particle_Pos2d(c_count, x, y);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos3d_f, CG_IRIC_WRITE_SOL_PARTICLE_POS3D_F) (int *count, double *x, double *y, double *z, int *ier) {
-	int c_count;
+	cgsize_t c_count;
 	c_count = (cgsize_t)(*count);
 	*ier = cg_iRIC_Write_Sol_Particle_Pos3d(c_count, x, y, z);
 }

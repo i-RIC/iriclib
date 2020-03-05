@@ -235,7 +235,7 @@ int CgnsFile::Impl::loadResultData()
 		char name[NAME_MAXLENGTH];
 		DataType_t datatype;
 		int dim;
-		cgsize_t dimvec[2];
+		cgsize_t dimvec[Impl::MAX_DIMS];
 
 		ier = cg_array_info(i, name, &datatype, &dim, dimvec);
 		RETURN_IF_ERR;
@@ -583,9 +583,9 @@ int CgnsFile::Impl::readArray(const char* name, DataType_t dataType, cgsize_t le
 	int index;
 	DataType_t dt;
 	int dim;
-	cgsize_t dimVec[3];
+	cgsize_t dimVec[Impl::MAX_DIMS];
 
-	int ier = findArray(name, &index, &dt, &dim, &(dimVec[0]));
+	int ier = findArray(name, &index, &dt, &dim, dimVec);
 	RETURN_IF_ERR;
 
 	// check datatype;
@@ -603,9 +603,9 @@ int CgnsFile::Impl::readArrayAs(const char* name, DataType_t dataType, size_t le
 	int index;
 	DataType_t dt;
 	int dim;
-	cgsize_t dimVec[3];
+	cgsize_t dimVec[Impl::MAX_DIMS];
 
-	int ier = findArray(name, &index, &dt, &dim, &(dimVec[0]));
+	int ier = findArray(name, &index, &dt, &dim, dimVec);
 	RETURN_IF_ERR;
 
 	// check datalength if needed
@@ -621,9 +621,9 @@ int CgnsFile::Impl::readStringLen(const char* name, int* length)
 	int index;
 	DataType_t datatype;
 	int dim;
-	cgsize_t dimVec[3];
+	cgsize_t dimVec[Impl::MAX_DIMS];
 
-	int ier = findArray(name, &index, &datatype, &dim, &(dimVec[0]));
+	int ier = findArray(name, &index, &datatype, &dim, dimVec);
 	RETURN_IF_ERR;
 
 	if (datatype != Character){return -1;}
@@ -638,9 +638,9 @@ int CgnsFile::Impl::readString(const char* name, size_t bufferLen, char* buffer)
 	int index;
 	DataType_t datatype;
 	int dim;
-	cgsize_t dimVec[3];
+	cgsize_t dimVec[Impl::MAX_DIMS];
 
-	int ier = findArray(name, &index, &datatype, &dim, &(dimVec[0]));
+	int ier = findArray(name, &index, &datatype, &dim, dimVec);
 
 	// check datatype
 	if (datatype != Character){return -1;}

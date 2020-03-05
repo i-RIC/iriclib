@@ -925,6 +925,9 @@ int cg_iRIC_Read_BC_IndicesSize_Mul(int fid, const char* type, int num, cgsize_t
 
 int cg_iRIC_Read_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t* indices)
 {
+#if (CG_SIZEOF_SIZE != 32)
+#error CG_IRIC_READ_BC_INDICES_F and CG_IRIC_READ_BC_INDICES_MUL_F need to be updated!
+#endif
 	GET_F(fid);
 	return f->BC_Read_Indices(type, num, indices);
 }
