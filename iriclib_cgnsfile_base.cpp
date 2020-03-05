@@ -235,22 +235,22 @@ int CgnsFile::Impl::loadResultData()
 		char name[NAME_MAXLENGTH];
 		DataType_t datatype;
 		int dim;
-		cgsize_t dimvec;
+		cgsize_t dimvec[Impl::MAX_DIMS];
 
-		ier = cg_array_info(i, name, &datatype, &dim, &dimvec);
+		ier = cg_array_info(i, name, &datatype, &dim, dimvec);
 		RETURN_IF_ERR;
 
 		if (strcmp(name, "TimeValues") == 0) {
-			m_solTimes.assign(dimvec, 0);
+			m_solTimes.assign(dimvec[0], 0);
 			ier = cg_array_read(i, m_solTimes.data());
 			RETURN_IF_ERR;
 		} else if (strcmp(name, "IterationValues") == 0) {
-			m_solIndices.assign(dimvec, 0);
+			m_solIndices.assign(dimvec[0], 0);
 			ier = cg_array_read(i, m_solIndices.data());
 		} else if (datatype == RealDouble || datatype == RealSingle) {
 			BaseIterativeT<double> biData = std::string(name);
 			std::vector<double> vals;
-			vals.assign(dimvec, 0);
+			vals.assign(dimvec[0], 0);
 			ier = cg_array_read_as(i, RealDouble, vals.data());
 			RETURN_IF_ERR;
 			biData.setValues(vals);
@@ -258,11 +258,31 @@ int CgnsFile::Impl::loadResultData()
 		} else if (datatype == Integer) {
 			BaseIterativeT<int> biData = std::string(name);
 			std::vector<int> vals;
-			vals.assign(dimvec, 0);
+			vals.assign(dimvec[0], 0);
 			ier = cg_array_read_as(i, Integer, vals.data());
 			RETURN_IF_ERR;
 			biData.setValues(vals);
 			m_solBaseIterInts.push_back(biData);
+		} else if (datatype == Character) {
+			BaseIterativeT<std::string> biData = std::string(name);
+			std::vector<std::string> vals;
+			std::vector<char> buffer;
+			buffer.assign(dimvec[0] * dimvec[1], '\0');
+			ier = cg_array_read(i, buffer.data());
+			RETURN_IF_ERR;
+			for (int i = 0; i < dimvec[1]; ++i) {
+				std::vector<char> b;
+				b.assign(dimvec[0] + 1, '\0');
+				memcpy(b.data(), buffer.data() + dimvec[0] * i, dimvec[0]);
+				int j = 0;
+				while (j <= dimvec[0] && *(b.data() + dimvec[0] - j) == ' ') {
+					*(b.data() + dimvec[0] - j) = '\0';
+					++j;
+				}
+				vals.push_back(std::string(b.data()));
+			}
+			biData.setValues(vals);
+			m_solBaseIterStrings.push_back(biData);
 		}
 	}
 	return 0;
@@ -563,9 +583,9 @@ int CgnsFile::Impl::readArray(const char* name, DataType_t dataType, cgsize_t le
 	int index;
 	DataType_t dt;
 	int dim;
-	cgsize_t dimVec[3];
+	cgsize_t dimVec[Impl::MAX_DIMS];
 
-	int ier = findArray(name, &index, &dt, &dim, &(dimVec[0]));
+	int ier = findArray(name, &index, &dt, &dim, dimVec);
 	RETURN_IF_ERR;
 
 	// check datatype;
@@ -583,9 +603,9 @@ int CgnsFile::Impl::readArrayAs(const char* name, DataType_t dataType, size_t le
 	int index;
 	DataType_t dt;
 	int dim;
-	cgsize_t dimVec[3];
+	cgsize_t dimVec[Impl::MAX_DIMS];
 
-	int ier = findArray(name, &index, &dt, &dim, &(dimVec[0]));
+	int ier = findArray(name, &index, &dt, &dim, dimVec);
 	RETURN_IF_ERR;
 
 	// check datalength if needed
@@ -601,9 +621,9 @@ int CgnsFile::Impl::readStringLen(const char* name, int* length)
 	int index;
 	DataType_t datatype;
 	int dim;
-	cgsize_t dimVec[3];
+	cgsize_t dimVec[Impl::MAX_DIMS];
 
-	int ier = findArray(name, &index, &datatype, &dim, &(dimVec[0]));
+	int ier = findArray(name, &index, &datatype, &dim, dimVec);
 	RETURN_IF_ERR;
 
 	if (datatype != Character){return -1;}
@@ -618,9 +638,9 @@ int CgnsFile::Impl::readString(const char* name, size_t bufferLen, char* buffer)
 	int index;
 	DataType_t datatype;
 	int dim;
-	cgsize_t dimVec[3];
+	cgsize_t dimVec[Impl::MAX_DIMS];
 
-	int ier = findArray(name, &index, &datatype, &dim, &(dimVec[0]));
+	int ier = findArray(name, &index, &datatype, &dim, dimVec);
 
 	// check datatype
 	if (datatype != Character){return -1;}

@@ -741,6 +741,18 @@ int cg_iRIC_Read_Sol_BaseIterative_Real_Mul(int fid, int step, const char* name,
 	return f->Sol_Read_BaseIterative_Real(step, name, value);
 }
 
+int cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(int fid, int step, const char* name, int* length)
+{
+	GET_F(fid);
+	return f->Sol_Read_BaseIterative_StringLen(step, name, length);
+}
+
+int cg_iRIC_Read_Sol_BaseIterative_String_Mul(int fid, int step, const char* name, char* strvalue)
+{
+	GET_F(fid);
+	return f->Sol_Read_BaseIterative_String(step, name, strvalue);
+}
+
 int cg_iRIC_Read_Sol_GridCoord2d_Mul(int fid, int step, double* x, double* y)
 {
 	GET_F(fid);
@@ -819,6 +831,12 @@ int cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(int fid, const char *name, int v
 int cg_iRIC_Write_Sol_BaseIterative_Real_Mul(int fid, const char *name, double value){
 	GET_F(fid);
 	return f->Sol_Write_BaseIterative_Real(name, value);
+}
+
+int cg_iRIC_Write_Sol_BaseIterative_String_Mul(int fid, const char *name, const char* strvalue)
+{
+	GET_F(fid);
+	return f->Sol_Write_BaseIterative_String(name, strvalue);
 }
 
 int cg_iRIC_Write_Sol_GridCoord2d_Mul(int fid, double *x, double *y)
@@ -907,6 +925,9 @@ int cg_iRIC_Read_BC_IndicesSize_Mul(int fid, const char* type, int num, cgsize_t
 
 int cg_iRIC_Read_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t* indices)
 {
+#if (CG_SIZEOF_SIZE != 32)
+#error CG_IRIC_READ_BC_INDICES_F and CG_IRIC_READ_BC_INDICES_MUL_F need to be updated!
+#endif
 	GET_F(fid);
 	return f->BC_Read_Indices(type, num, indices);
 }

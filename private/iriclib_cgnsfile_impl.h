@@ -13,6 +13,7 @@ class CgnsFile::Impl
 {
 public:
 	static const int NAME_MAXLENGTH = 200;
+	static const int MAX_DIMS = 12;
 
 	static const int VERTEX_SOLUTION_ID   = 1;
 	static const int CELL_SOLUTION_ID     = 2;
@@ -145,6 +146,7 @@ public:
 
 	std::vector<BaseIterativeT<int> > m_solBaseIterInts;
 	std::vector<BaseIterativeT<double> > m_solBaseIterReals;
+	std::vector<BaseIterativeT<std::string> > m_solBaseIterStrings;
 
 	SolutionWriter* m_solutionWriter;
 

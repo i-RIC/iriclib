@@ -681,23 +681,23 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_functional_real_cell_mul_f, CG_IRIC_REA
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord1d_mul_f, CG_IRIC_WRITEGRIDCOORD1D_MUL_F) (int *fid, int *isize, double *x, int *ier) {
-	int c_isize;
+	cgsize_t c_isize;
 	c_isize = (cgsize_t)(*isize);
 	*ier = cg_iRIC_WriteGridCoord1d_Mul(*fid, c_isize, x);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord2d_mul_f, CG_IRIC_WRITEGRIDCOORD2D_MUL_F) (int *fid, int *isize, int *jsize, double *x, double *y, int *ier) {
-	int c_isize;
-	int c_jsize;
+	cgsize_t c_isize;
+	cgsize_t c_jsize;
 	c_isize = (cgsize_t)(*isize);
 	c_jsize = (cgsize_t)(*jsize);
 	*ier = cg_iRIC_WriteGridCoord2d_Mul(*fid, c_isize, c_jsize, x, y);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord3d_mul_f, CG_IRIC_WRITEGRIDCOORD3D_MUL_F) (int *fid, int *isize, int *jsize, int *ksize, double *x, double *y, double *z, int *ier) {
-	int c_isize;
-	int c_jsize;
-	int c_ksize;
+	cgsize_t c_isize;
+	cgsize_t c_jsize;
+	cgsize_t c_ksize;
 	c_isize = (cgsize_t)(*isize);
 	c_jsize = (cgsize_t)(*jsize);
 	c_ksize = (cgsize_t)(*ksize);
@@ -772,6 +772,28 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_real_mul_f, CG_IRIC_READ_S
 	if (*ier) return;
 
 	*ier = cg_iRIC_Read_Sol_BaseIterative_Real_Mul(*fid, *step, c_name, value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_stringlen_mul_f, CG_IRIC_READ_SOL_BASEITERATIVE_STRINGLEN_MUL_F) (int *fid, int *step, STR_PSTR(name), int *length, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(*fid, *step, c_name, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_string_mul_f, CG_IRIC_READ_SOL_BASEITERATIVE_STRING_MUL_F) (int *fid, int *step, STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Sol_BaseIterative_String_Mul(*fid, *step, c_name, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_read_sol_gridcoord2d_mul_f, CG_IRIC_READ_SOL_GRIDCOORD2D_MUL_F) (int *fid, int *step, double *x, double *y, int *ier) {
@@ -878,6 +900,19 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_baseiterative_real_mul_f, CG_IRIC_WRITE
 	if (*ier) return;
 
 	*ier = cg_iRIC_Write_Sol_BaseIterative_Real_Mul(*fid, c_name, *value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_baseiterative_string_mul_f, CG_IRIC_WRITE_SOL_BASEITERATIVE_STRING_MUL_F) (int *fid, STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_BaseIterative_String_Mul(*fid, c_name, c_strvalue);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_gridcoord2d_mul_f, CG_IRIC_WRITE_SOL_GRIDCOORD2D_MUL_F) (int *fid, double *x, double *y, int *ier) {
@@ -1200,13 +1235,13 @@ void IRICLIBDLL FMNAME(cg_iric_write_bc_functionalwithname_string_mul_f, CG_IRIC
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos2d_mul_f, CG_IRIC_WRITE_SOL_PARTICLE_POS2D_MUL_F) (int *fid, int *count, double *x, double *y, int *ier) {
-	int c_count;
+	cgsize_t c_count;
 	c_count = (cgsize_t)(*count);
 	*ier = cg_iRIC_Write_Sol_Particle_Pos2d_Mul(*fid, c_count, x, y);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos3d_mul_f, CG_IRIC_WRITE_SOL_PARTICLE_POS3D_MUL_F) (int *fid, int *count, double *x, double *y, double *z, int *ier) {
-	int c_count;
+	cgsize_t c_count;
 	c_count = (cgsize_t)(*count);
 	*ier = cg_iRIC_Write_Sol_Particle_Pos3d_Mul(*fid, c_count, x, y, z);
 }
@@ -1980,23 +2015,23 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_functional_real_cell_f, CG_IRIC_READ_GR
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord1d_f, CG_IRIC_WRITEGRIDCOORD1D_F) (int *isize, double *x, int *ier) {
-	int c_isize;
+	cgsize_t c_isize;
 	c_isize = (cgsize_t)(*isize);
 	*ier = cg_iRIC_WriteGridCoord1d(c_isize, x);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord2d_f, CG_IRIC_WRITEGRIDCOORD2D_F) (int *isize, int *jsize, double *x, double *y, int *ier) {
-	int c_isize;
-	int c_jsize;
+	cgsize_t c_isize;
+	cgsize_t c_jsize;
 	c_isize = (cgsize_t)(*isize);
 	c_jsize = (cgsize_t)(*jsize);
 	*ier = cg_iRIC_WriteGridCoord2d(c_isize, c_jsize, x, y);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord3d_f, CG_IRIC_WRITEGRIDCOORD3D_F) (int *isize, int *jsize, int *ksize, double *x, double *y, double *z, int *ier) {
-	int c_isize;
-	int c_jsize;
-	int c_ksize;
+	cgsize_t c_isize;
+	cgsize_t c_jsize;
+	cgsize_t c_ksize;
 	c_isize = (cgsize_t)(*isize);
 	c_jsize = (cgsize_t)(*jsize);
 	c_ksize = (cgsize_t)(*ksize);
@@ -2071,6 +2106,28 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_real_f, CG_IRIC_READ_SOL_B
 	if (*ier) return;
 
 	*ier = cg_iRIC_Read_Sol_BaseIterative_Real(*step, c_name, value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_stringlen_f, CG_IRIC_READ_SOL_BASEITERATIVE_STRINGLEN_F) (int *step, STR_PSTR(name), int *length, int *ier STR_PLEN(name)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Sol_BaseIterative_StringLen(*step, c_name, length);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_sol_baseiterative_string_f, CG_IRIC_READ_SOL_BASEITERATIVE_STRING_F) (int *step, STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[STRINGMAXLEN+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Read_Sol_BaseIterative_String(*step, c_name, c_strvalue);
+
+	if (*ier) return;
+	string_2_F_string(c_strvalue, STR_PTR(strvalue), STR_LEN(strvalue), ier);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_read_sol_gridcoord2d_f, CG_IRIC_READ_SOL_GRIDCOORD2D_F) (int *step, double *x, double *y, int *ier) {
@@ -2177,6 +2234,19 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_baseiterative_real_f, CG_IRIC_WRITE_SOL
 	if (*ier) return;
 
 	*ier = cg_iRIC_Write_Sol_BaseIterative_Real(c_name, *value);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_write_sol_baseiterative_string_f, CG_IRIC_WRITE_SOL_BASEITERATIVE_STRING_F) (STR_PSTR(name), STR_PSTR(strvalue), int *ier STR_PLEN(name) STR_PLEN(strvalue)) {
+	char c_name[CGIO_MAX_NAME_LENGTH+1];
+	char c_strvalue[CGIO_MAX_NAME_LENGTH+1];
+	string_2_C_string(STR_PTR(name), STR_LEN(name),
+		c_name, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+	string_2_C_string(STR_PTR(strvalue), STR_LEN(strvalue),
+		c_strvalue, CGIO_MAX_NAME_LENGTH, ier);
+	if (*ier) return;
+
+	*ier = cg_iRIC_Write_Sol_BaseIterative_String(c_name, c_strvalue);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_gridcoord2d_f, CG_IRIC_WRITE_SOL_GRIDCOORD2D_F) (double *x, double *y, int *ier) {
@@ -2499,13 +2569,13 @@ void IRICLIBDLL FMNAME(cg_iric_write_bc_functionalwithname_string_f, CG_IRIC_WRI
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos2d_f, CG_IRIC_WRITE_SOL_PARTICLE_POS2D_F) (int *count, double *x, double *y, int *ier) {
-	int c_count;
+	cgsize_t c_count;
 	c_count = (cgsize_t)(*count);
 	*ier = cg_iRIC_Write_Sol_Particle_Pos2d(c_count, x, y);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_particle_pos3d_f, CG_IRIC_WRITE_SOL_PARTICLE_POS3D_F) (int *count, double *x, double *y, double *z, int *ier) {
-	int c_count;
+	cgsize_t c_count;
 	c_count = (cgsize_t)(*count);
 	*ier = cg_iRIC_Write_Sol_Particle_Pos3d(c_count, x, y, z);
 }

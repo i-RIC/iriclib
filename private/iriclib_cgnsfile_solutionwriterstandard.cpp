@@ -283,11 +283,11 @@ int CgnsFile::SolutionWriterStandard::stdSolParticleWriteReal(const char* name, 
 	char arrayname[32];
 	DataType_t datatype;
 	int dim;
-	cgsize_t dimVec;
-	ier = cg_array_info(1, arrayname, &datatype, &dim, &dimVec);
+	cgsize_t dimVec[Impl::MAX_DIMS];
+	ier = cg_array_info(1, arrayname, &datatype, &dim, dimVec);
 	RETURN_IF_ERR;
 
-	return Impl::writeArray(name, RealDouble, static_cast<size_t> (dimVec), value);
+	return Impl::writeArray(name, RealDouble, static_cast<size_t> (dimVec[0]), value);
 }
 
 int CgnsFile::SolutionWriterStandard::stdSolParticleWriteInteger(const char* name, int* value, int fid, int bid, int zid, int sid)
@@ -300,9 +300,9 @@ int CgnsFile::SolutionWriterStandard::stdSolParticleWriteInteger(const char* nam
 	char arrayname[32];
 	DataType_t datatype;
 	int dim;
-	cgsize_t dimVec;
-	ier = cg_array_info(1, arrayname, &datatype, &dim, &dimVec);
+	cgsize_t dimVec[Impl::MAX_DIMS];
+	ier = cg_array_info(1, arrayname, &datatype, &dim, dimVec);
 	RETURN_IF_ERR;
 
-	return Impl::writeArray(name, Integer, static_cast<size_t> (dimVec), value);
+	return Impl::writeArray(name, Integer, static_cast<size_t> (dimVec[0]), value);
 }

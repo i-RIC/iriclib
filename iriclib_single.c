@@ -372,6 +372,16 @@ int cg_iRIC_Read_Sol_BaseIterative_Real(int step, const char* name, double* valu
 	return cg_iRIC_Read_Sol_BaseIterative_Real_Mul(lastfileid, step, name, value);
 }
 
+int cg_iRIC_Read_Sol_BaseIterative_StringLen(int step, const char* name, int* length)
+{
+	return cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(lastfileid, step, name, length);
+}
+
+int cg_iRIC_Read_Sol_BaseIterative_String(int step, const char* name, char* strvalue)
+{
+	return cg_iRIC_Read_Sol_BaseIterative_String_Mul(lastfileid, step, name, strvalue);
+}
+
 int cg_iRIC_Read_Sol_GridCoord2d(int step, double* x, double* y)
 {
 	return cg_iRIC_Read_Sol_GridCoord2d_Mul(lastfileid, step, x, y);
@@ -440,6 +450,11 @@ int cg_iRIC_Write_Sol_BaseIterative_Integer(const char* name, int value)
 int cg_iRIC_Write_Sol_BaseIterative_Real(const char* name, double value)
 {
 	return cg_iRIC_Write_Sol_BaseIterative_Real_Mul(lastfileid, name, value);
+}
+
+int cg_iRIC_Write_Sol_BaseIterative_String(const char *name, const char* strvalue)
+{
+	return cg_iRIC_Write_Sol_BaseIterative_String_Mul(lastfileid, name, strvalue);
 }
 
 int cg_iRIC_Write_Sol_GridCoord2d(double* x, double* y)
