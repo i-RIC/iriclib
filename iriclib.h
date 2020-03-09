@@ -241,6 +241,10 @@ int IRICLIBDLL cg_iRIC_Read_Sol_BaseIterative_Integer_Mul(int fid, int step, con
 
 int IRICLIBDLL cg_iRIC_Read_Sol_BaseIterative_Real_Mul(int fid, int step, const char* name, double* value);
 
+int IRICLIBDLL cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(int fid, int step, const char* name, int* length);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_BaseIterative_String_Mul(int fid, int step, const char* name, char* strvalue);
+
 int IRICLIBDLL cg_iRIC_Read_Sol_GridCoord2d_Mul(int fid, int step, double* x, double* y);
 
 int IRICLIBDLL cg_iRIC_Read_Sol_GridCoord3d_Mul(int fid, int step, double* x, double* y, double* z);
@@ -272,6 +276,8 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Iteration_Mul(int fid, int index);
 int IRICLIBDLL cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(int fid, const char *name, int value);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_BaseIterative_Real_Mul(int fid, const char *name, double value);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_BaseIterative_String_Mul(int fid, const char *name, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_GridCoord2d_Mul(int fid, double *x, double *y);
 
@@ -595,6 +601,10 @@ int IRICLIBDLL cg_iRIC_Read_Sol_BaseIterative_Integer(int step, const char* name
 
 int IRICLIBDLL cg_iRIC_Read_Sol_BaseIterative_Real(int step, const char* name, double* value);
 
+int IRICLIBDLL cg_iRIC_Read_Sol_BaseIterative_StringLen(int step, const char* name, int* length);
+
+int IRICLIBDLL cg_iRIC_Read_Sol_BaseIterative_String(int step, const char* name, char* strvalue);
+
 int IRICLIBDLL cg_iRIC_Read_Sol_GridCoord2d(int step, double* x, double* y);
 
 int IRICLIBDLL cg_iRIC_Read_Sol_GridCoord3d(int step, double* x, double* y, double* z);
@@ -622,6 +632,8 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Iteration(int index);
 int IRICLIBDLL cg_iRIC_Write_Sol_BaseIterative_Integer(const char *name, int value);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_BaseIterative_Real(const char *name, double value);
+
+int IRICLIBDLL cg_iRIC_Write_Sol_BaseIterative_String(const char *name, const char* strvalue);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_GridCoord2d(double *x, double *y);
 

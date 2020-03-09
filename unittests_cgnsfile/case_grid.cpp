@@ -187,7 +187,7 @@ void case_GridWrite()
 	int dim;
 	char name[32];
 	DataType_t datatype;
-	cgsize_t dimVec[3];
+	cgsize_t dimVec[12];
 	ier = cg_array_info(1, name, &datatype, &dim, dimVec);
 	VERIFY_LOG("cg_array_info() ier == 0", ier == 0);
 	VERIFY_LOG("cg_array_info() name == CoordinateX", std::string("CoordinateX") == name);

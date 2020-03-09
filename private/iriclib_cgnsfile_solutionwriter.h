@@ -47,6 +47,7 @@ public:
 	int Sol_PolyData_Write_Real(const char* name, double value);
 	virtual int Sol_Write_BaseIterative_Integer(const char *name, int value) = 0;
 	virtual int Sol_Write_BaseIterative_Real(const char *name, double value) = 0;
+	virtual int Sol_Write_BaseIterative_String(const char* name, const char* value) = 0;
 
 	virtual int Flush() = 0;
 

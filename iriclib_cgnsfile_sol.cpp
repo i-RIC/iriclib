@@ -6,6 +6,8 @@
 
 #include <assert.h>
 
+#include <cstring>
+
 using namespace iRICLib;
 
 namespace {
@@ -77,6 +79,38 @@ int CgnsFile::Sol_Read_BaseIterative_Real(int step, const char *name, double* va
 	}
 	BaseIterativeT<double>* bit = it->second;
 	*value = bit->values().at(step - 1);
+	return 0;
+}
+
+int CgnsFile::Sol_Read_BaseIterative_StringLen(int step, const char* name, int* length)
+{
+	if (step > impl->m_solId) {
+		return 1;
+	}
+	auto& strs = impl->m_solBaseIterStrings;
+	auto it = strs.find(std::string(name));
+	if (it == strs.end()) {
+		return 2;
+	}
+	BaseIterativeT<std::string>* bit = it->second;
+	const std::string& v = bit->values().at(step - 1);
+	*length = v.length();
+	return 0;
+}
+
+int CgnsFile::Sol_Read_BaseIterative_String(int step, const char* name, char* strvalue)
+{
+	if (step > impl->m_solId) {
+		return 1;
+	}
+	auto& strs = impl->m_solBaseIterStrings;
+	auto it = strs.find(std::string(name));
+	if (it == strs.end()) {
+		return 2;
+	}
+	BaseIterativeT<std::string>* bit = it->second;
+	const std::string& v = bit->values().at(step - 1);
+	std::strcpy(strvalue, v.c_str());
 	return 0;
 }
 
@@ -206,6 +240,11 @@ int CgnsFile::Sol_Write_BaseIterative_Integer(const char *name, int value)
 int CgnsFile::Sol_Write_BaseIterative_Real(const char *name, double value)
 {
 	return impl->m_solutionWriter->Sol_Write_BaseIterative_Real(name, value);
+}
+
+int CgnsFile::Sol_Write_BaseIterative_String(const char* name, const char* value)
+{
+	return impl->m_solutionWriter->Sol_Write_BaseIterative_String(name, value);
 }
 
 int CgnsFile::Sol_Write_GridCoord2d(double *x, double *y)

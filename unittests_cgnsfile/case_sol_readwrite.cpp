@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
 
 extern "C" {
@@ -147,6 +148,10 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 		int DamOpen = i;
 		ier = cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(*fid, "DamOpen", DamOpen);
 		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
+		std::ostringstream ss;
+		ss << "Test" << i;
+		ier = cg_iRIC_Write_Sol_BaseIterative_String_Mul(*fid, "TestStr", ss.str().c_str());
+		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_String_Mul() for TestStr ier == 0", ier == 0);
 
 		// Particle solutions
 
@@ -458,6 +463,19 @@ void readSolution(int fid)
 		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
 		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_Integer_Mul() for DamOpen i == %d", DamOpen);
 		VERIFY_LOG(buffer, i == DamOpen);
+
+		std::ostringstream ss;
+		ss << "Test" << S - 1;
+		std::string validVal = ss.str();
+		std::vector<char> retval;
+		int len;
+		ier = cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(fid, S, "TestStr", &len);
+		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul() for TestStr ier == 0", ier == 0);
+		retval.assign(len + 1, '\0');
+		ier = cg_iRIC_Read_Sol_BaseIterative_String_Mul(fid, S, "TestStr", retval.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_String_Mul() for TestStr ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_String_Mul() for TestStr s == %s", validVal.c_str());
+		VERIFY_LOG(buffer, validVal == retval.data());
 	}
 }
 

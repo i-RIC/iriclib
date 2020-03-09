@@ -31,6 +31,7 @@ public:
 	int Sol_PolyData_Write_GroupEnd() override;
 	int Sol_Write_BaseIterative_Integer(const char *name, int value) override;
 	int Sol_Write_BaseIterative_Real(const char *name, double value) override;
+	int Sol_Write_BaseIterative_String(const char* name, const char* value) override;
 
 	int Flush() override;
 
@@ -41,15 +42,19 @@ public:
 
 	static int stdSolWriteBaseIterativeInteger(const char* name, int value, CgnsFile::Impl* impl);
 	static int stdSolWriteBaseIterativeReal(const char* name, double value, CgnsFile::Impl* impl);
+	static int stdSolWriteBaseIterativeString(const char* name, const char* value, CgnsFile::Impl* impl);
 
 	static BaseIterativeT<int>* stdSolAddBaseIterativeInteger(const char* name, int value, CgnsFile::Impl* impl);
 	static BaseIterativeT<double>* stdSolAddBaseIterativeReal(const char* name, double value, CgnsFile::Impl* impl);
+	static BaseIterativeT<std::string>* stdSolAddBaseIterativeString(const char* name, const char* value, CgnsFile::Impl* impl);
 	static int stdSolWriteBaseIterativeData(int num, CgnsFile::Impl* impl);
 
 	static int stdSolParticleWritePos2d(cgsize_t count, double* x, double* y, int fid, int bid, int zid, int sid);
 	static int stdSolParticleWritePos3d(cgsize_t count, double* x, double* y, double* z, int fid, int bid, int zid, int sid);
 	static int stdSolParticleWriteReal(const char* name, double* value, int fid, int bid, int zid, int sid);
 	static int stdSolParticleWriteInteger(const char* name, int* value, int fid, int bid, int zid, int sid);
+
+	static void setupStringBuffer(const std::vector<std::string>& vals, cgsize_t* dims, std::vector<char>* buffer);
 };
 
 } // namespace iRICLib

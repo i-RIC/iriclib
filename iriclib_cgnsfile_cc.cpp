@@ -52,9 +52,9 @@ int CgnsFile::CC_Read_FunctionalSize(const char *name, cgsize_t* size)
 		char arrayname[Impl::NAME_MAXLENGTH];
 		DataType_t datatype;
 		int dim;
-		cgsize_t dimvec;
-		ier = cg_array_info(i, arrayname, &datatype, &dim, &dimvec);
-		*size = dimvec;
+		cgsize_t dimvec[Impl::MAX_DIMS];
+		ier = cg_array_info(i, arrayname, &datatype, &dim, dimvec);
+		*size = dimvec[0];
 		return 0;
 	}
 	return 1;

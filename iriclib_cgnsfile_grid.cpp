@@ -127,8 +127,8 @@ int CgnsFile::Grid_Read_FunctionalDimensionSize(const char* name, const char* di
 	int index;
 	DataType_t datatype;
 	int dim;
-	cgsize_t dimvec[3];
-	ier = Impl::findArray(dimArrayName, &index, &datatype, &dim, &(dimvec[0]));
+	cgsize_t dimvec[Impl::MAX_DIMS];
+	ier = Impl::findArray(dimArrayName, &index, &datatype, &dim, dimvec);
 	RETURN_IF_ERR;
 
 	*count = dimvec[0];

@@ -7,6 +7,26 @@
 
 using namespace iRICLib;
 
+namespace {
+
+template <typename V>
+BaseIterativeT<V>* addBaseIterativeT(const char* name, V value, std::map<std::string, BaseIterativeT<V>*>* map)
+{
+	BaseIterativeT<V>* data = nullptr;
+	auto it = map->find(std::string(name));
+	if (it == map->end()) {
+		data = new BaseIterativeT<V>(name);
+		map->insert({name, data});
+	} else {
+		data = it->second;
+	}
+	data->addValue(value);
+
+	return data;
+}
+
+} // namespace
+
 CgnsFile::SolutionWriterStandard::SolutionWriterStandard(CgnsFile::Impl* impl) :
 	CgnsFile::SolutionWriter(impl)
 {}
@@ -159,6 +179,12 @@ int CgnsFile::SolutionWriterStandard::Sol_Write_BaseIterative_Real(const char *n
 	return stdSolWriteBaseIterativeReal(name, value, i);
 }
 
+int CgnsFile::SolutionWriterStandard::Sol_Write_BaseIterative_String(const char* name, const char* value)
+{
+	Impl* i = impl();
+	return stdSolWriteBaseIterativeString(name, value, i);
+}
+
 int CgnsFile::SolutionWriterStandard::Flush()
 {
 	return 0;
@@ -269,36 +295,32 @@ int CgnsFile::SolutionWriterStandard::stdSolWriteBaseIterativeReal(const char* n
 	return cg_array_write(data->name().c_str(), RealDouble, 1, &dimVec, data->values().data());
 }
 
+int CgnsFile::SolutionWriterStandard::stdSolWriteBaseIterativeString(const char* name, const char* value, CgnsFile::Impl* impl)
+{
+	BaseIterativeT<std::string>* data = stdSolAddBaseIterativeString(name, value, impl);
+
+	// write the value.
+	cgsize_t dimVec[2];
+	std::vector<char> buffer;
+	setupStringBuffer(data->values(), dimVec, &buffer);
+
+	impl->gotoBaseIter();
+	return cg_array_write(data->name().c_str(), Character, 2, dimVec, buffer.data());
+}
+
 BaseIterativeT<int>* CgnsFile::SolutionWriterStandard::stdSolAddBaseIterativeInteger(const char* name, int value, CgnsFile::Impl* impl)
 {
-	BaseIterativeT<int>* data = nullptr;
-	auto& ints = impl->m_solBaseIterInts;
-	auto it = ints.find(std::string(name));
-	if (it == ints.end()) {
-		data = new BaseIterativeT<int>(name);
-		ints.insert({name, data});
-	} else {
-		data = it->second;
-	}
-	data->addValue(value);
-
-	return data;
+	return addBaseIterativeT<int>(name, value, &(impl->m_solBaseIterInts));
 }
 
 BaseIterativeT<double>* CgnsFile::SolutionWriterStandard::stdSolAddBaseIterativeReal(const char* name, double value, CgnsFile::Impl* impl)
 {
-	BaseIterativeT<double>* data = nullptr;
-	auto& reals = impl->m_solBaseIterReals;
-	auto it = reals.find(std::string(name));
-	if (it == reals.end()) {
-		data = new BaseIterativeT<double>(name);
-		reals.insert({name, data});
-	} else {
-		data = it->second;
-	}
-	data->addValue(value);
+	return addBaseIterativeT<double>(name, value, &(impl->m_solBaseIterReals));
+}
 
-	return data;
+BaseIterativeT<std::string>* CgnsFile::SolutionWriterStandard::stdSolAddBaseIterativeString(const char* name, const char* value, CgnsFile::Impl* impl)
+{
+	return addBaseIterativeT<std::string>(name, std::string(value), &(impl->m_solBaseIterStrings));
 }
 
 int CgnsFile::SolutionWriterStandard::stdSolWriteBaseIterativeData(int num, CgnsFile::Impl* impl)
@@ -370,11 +392,11 @@ int CgnsFile::SolutionWriterStandard::stdSolParticleWriteReal(const char* name, 
 	char arrayname[32];
 	DataType_t datatype;
 	int dim;
-	cgsize_t dimVec;
-	ier = cg_array_info(1, arrayname, &datatype, &dim, &dimVec);
+	cgsize_t dimVec[Impl::MAX_DIMS];
+	ier = cg_array_info(1, arrayname, &datatype, &dim, dimVec);
 	RETURN_IF_ERR;
 
-	return Impl::writeArray(name, RealDouble, static_cast<size_t> (dimVec), value);
+	return Impl::writeArray(name, RealDouble, static_cast<size_t> (dimVec[0]), value);
 }
 
 int CgnsFile::SolutionWriterStandard::stdSolParticleWriteInteger(const char* name, int* value, int fid, int bid, int zid, int sid)
@@ -387,9 +409,27 @@ int CgnsFile::SolutionWriterStandard::stdSolParticleWriteInteger(const char* nam
 	char arrayname[32];
 	DataType_t datatype;
 	int dim;
-	cgsize_t dimVec;
-	ier = cg_array_info(1, arrayname, &datatype, &dim, &dimVec);
+	cgsize_t dimVec[Impl::MAX_DIMS];
+	ier = cg_array_info(1, arrayname, &datatype, &dim, dimVec);
 	RETURN_IF_ERR;
 
-	return Impl::writeArray(name, Integer, static_cast<size_t> (dimVec), value);
+	return Impl::writeArray(name, Integer, static_cast<size_t> (dimVec[0]), value);
+}
+
+void CgnsFile::SolutionWriterStandard::setupStringBuffer(const std::vector<std::string>& vals, cgsize_t* dims, std::vector<char>* buffer)
+{
+	cgsize_t maxLen = 0;
+	for (int i = 0; i < vals.size(); ++i) {
+		const std::string& s = vals.at(i);
+		if (i == 0 || s.length() > maxLen) {
+			maxLen = s.length();
+		}
+	}
+	*(dims + 0) = maxLen;
+	*(dims + 1) = static_cast<cgsize_t> (vals.size());
+	buffer->assign(maxLen * vals.size(), ' ');
+	for (int i = 0; i < vals.size(); ++i) {
+		const std::string& s = vals.at(i);
+		memcpy(buffer->data() + maxLen * i, s.c_str(), s.length());
+	}
 }
