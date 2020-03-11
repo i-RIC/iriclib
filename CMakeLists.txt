@@ -59,6 +59,8 @@ iriclib_cgnsfile_complex_cc.cpp
 iriclib_cgnsfile_geo.cpp
 iriclib_cgnsfile_grid.cpp
 iriclib_cgnsfile_sol.cpp
+iriclib_cgnsfiles.h
+iriclib_cgnsfiles.cpp
 iriclib_f.h
 iriclib_geo.cpp
 iriclib_global.h
