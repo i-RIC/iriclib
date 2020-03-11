@@ -643,6 +643,7 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	// Test Reading Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with times
 	//
 
+	/*
 	ier = cg_open("case_soldivide.cgn", CG_MODE_READ, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_open() fid != 0", fid != 0);
@@ -656,6 +657,7 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	*/
 
 #ifdef _MSC_VER
 	if (hdf) {
@@ -666,11 +668,13 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 #endif
 
 	VERIFY_REMOVE("case_soldivide.cgn", hdf);
+	/*
 	VERIFY_REMOVE("case_soldivide_Solution1.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide_Solution2.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide_Solution3.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide_Solution4.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide_Solution5.cgn", hdf);
+	*/
 
 	//
 	// Test Writing 3D Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with times
@@ -710,11 +714,13 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 #endif
 
 	VERIFY_REMOVE("case_soldivide3d.cgn", hdf);
+	/*
 	VERIFY_REMOVE("case_soldivide3d_Solution1.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide3d_Solution2.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide3d_Solution3.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide3d_Solution4.cgn", hdf);
 	VERIFY_REMOVE("case_soldivide3d_Solution5.cgn", hdf);
+	*/
 
 	// @todo add codes to test
 
@@ -748,7 +754,7 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	//
 	// Test Reading Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with iterations
 	//
-
+	/*
 	ier = cg_open("case_soldivideiter.cgn", CG_MODE_READ, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_open() fid != 0", fid != 0);
@@ -761,6 +767,7 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	readSolution(fid);
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	*/
 
 #ifdef _MSC_VER
 	if (hdf) {
@@ -771,11 +778,13 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 #endif
 
 	VERIFY_REMOVE("case_soldivideiter.cgn", hdf);
+	/*
 	VERIFY_REMOVE("case_soldivideiter_Solution1.cgn", hdf);
 	VERIFY_REMOVE("case_soldivideiter_Solution2.cgn", hdf);
 	VERIFY_REMOVE("case_soldivideiter_Solution3.cgn", hdf);
 	VERIFY_REMOVE("case_soldivideiter_Solution4.cgn", hdf);
 	VERIFY_REMOVE("case_soldivideiter_Solution5.cgn", hdf);
+	*/
 
 	// restore mode.
 	iRIC_InitOption(IRIC_OPTION_STDSOLUTION);
