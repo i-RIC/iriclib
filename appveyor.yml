@@ -8,6 +8,8 @@ environment:
     secure: dZo8X7uIxkv0RAieGg6J4zNyILq/3RxgzrI3rf4y3CY4rRHKHasO6FxpKI5USzs9
   iric_access_token:
     secure: jCnsDz8WNLsiCXa3BhIfDU8A5kRMruC9eUedcWKW7lOKhGGiHZYdRhaaN2cl5UNg
+  kskinoue0612_access_token:
+    secure: oVRLqEy3Z23kImxSlNOKZcRwO/R/ZJV202rigsj2IBXGrcm/u0cQHseHr6NS2JGV
 
 image:
   - Visual Studio 2013
@@ -78,6 +80,7 @@ on_success:
         #
         $releases_url_iric = "https://api.github.com/repos/i-RIC/iriclib/releases"
         $releases_url_scharlton2 = "https://api.github.com/repos/scharlton2/iriclib/releases"
+        $releases_url_kskinoue0612 = "https://api.github.com/repos/kskinoue0612/iriclib/releases"
 
         if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
           $releases_url = $releases_url_iric
@@ -86,6 +89,10 @@ on_success:
         if ($env:APPVEYOR_REPO_NAME -eq "scharlton2/iriclib") {
           $releases_url = $releases_url_scharlton2
           $access_token = $env:scharlton2_access_token
+        }
+        if ($env:APPVEYOR_REPO_NAME -eq "kskinoue0612/iriclib") {
+          $releases_url = $releases_url_kskinoue0612
+          $access_token = $env:kskinoue0612_access_token
         }
 
         # create headers dictionary
