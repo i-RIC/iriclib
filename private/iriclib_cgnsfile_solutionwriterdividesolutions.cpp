@@ -127,7 +127,7 @@ int copyGrid(int fid_src, int bid_src, int zid_src, int gid_src, int fid_tgt, in
 	int narray;
 	ier = cg_narrays(&narray);
 
-	// copying grid coordinates. this will be enough for structured grid.
+	// copying grid coordinates.
 	for (int aId = 1; aId <= narray; ++aId) {
 		char arrayname[32];
 		DataType_t datatype;
@@ -153,9 +153,50 @@ int copyGrid(int fid_src, int bid_src, int zid_src, int gid_src, int fid_tgt, in
 		RETURN_IF_ERR;
 	}
 
+	// copySections for unstructured grids
 	ier = copySections(fid_src, bid_src, zid_src, fid_tgt, bid_tgt, zid_tgt);
 	RETURN_IF_ERR;
 
+	return 0;
+}
+
+int copyBaseZoneGrid(int fid_in, int fid_out)
+{
+	int nbases;
+	int ier = cg_nbases(fid_in, &nbases);
+	RETURN_IF_ERR;
+
+	for (int B = 1; B <= nbases; ++B) {
+		char baseName[33];
+		int celldim, physdim;
+
+		int b_out;
+		ier = cg_base_read(fid_in, B, baseName, &celldim, &physdim);
+		RETURN_IF_ERR;
+		ier = cg_base_write(fid_out, baseName, celldim, physdim, &b_out);
+		RETURN_IF_ERR
+
+		int nzones;
+		ier = cg_nzones(fid_in, B, &nzones);
+		RETURN_IF_ERR
+		for (int Z = 1; Z <= nzones; ++Z) {
+			char zoneName[33];
+			cgsize_t zoneSize[9];
+			ZoneType_t zoneType;
+
+			int z_out;
+			ier = cg_zone_read(fid_in, B, Z, zoneName, zoneSize);
+			RETURN_IF_ERR;
+			ier = cg_zone_type(fid_in, B, Z, &zoneType);
+			RETURN_IF_ERR;
+
+			ier = cg_zone_write(fid_out, b_out, zoneName, zoneSize, zoneType, &z_out);
+			RETURN_IF_ERR;
+
+			ier = copyGrid(fid_in, B, Z, 1, fid_out, b_out, z_out, "GridCoordinates");
+			RETURN_IF_ERR;
+		}
+	}
 	return 0;
 }
 
@@ -874,18 +915,7 @@ int CgnsFile::SolutionWriterDivideSolutions::setupSolutionFile(const std::string
 	ier = cg_open(solFileName.c_str(), CG_MODE_WRITE, fileId);
 	RETURN_IF_ERR;
 
-	ier = copyBase(i->m_fileId, i->m_baseId, *fileId, baseId);
-	RETURN_IF_ERR;
-
-	ier = copyZone(i->m_fileId, i->m_baseId, i->m_zoneId, *fileId, *baseId, zoneId);
-	RETURN_IF_ERR;
-
-//	std::string srcFileName = "../";
-//	srcFileName.append(i->m_fileName);
-
-//	ier = linkGrid(srcFileName.c_str(), i->m_fileId, i->m_baseId, i->m_zoneId, 1, *fileId, *baseId, *zoneId, nullptr);
-	ier = copyGrid(i->m_fileId, i->m_baseId, i->m_zoneId, 1, *fileId, *baseId, *zoneId, "GridCoordinates");
-
+	ier = copyBaseZoneGrid(i->m_fileId, *fileId);
 	RETURN_IF_ERR;
 
 	cg_close(*fileId);
