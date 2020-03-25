@@ -34,6 +34,7 @@ int lastfileid = 0;
 
 namespace {
 
+const char* DIV_OPTION = "IRIC_DIVIDE_RESULT";
 const int FILES_LEN_UNIT = 10;
 iRICLib::CgnsFiles m_files;
 std::map<std::string, FileLocker*> m_fileLockers;
@@ -67,7 +68,7 @@ iRICLib::CgnsFile* initCgnsFile(int fid)
 	}
 	f = new iRICLib::CgnsFile();
 	f->setFileId(fid);
-	if (m_divideSolutions) {
+	if (m_divideSolutions || getenv(DIV_OPTION) != NULL) {
 		f->OptionDivideSolutions();
 	}
 	m_files[fid] = f;
