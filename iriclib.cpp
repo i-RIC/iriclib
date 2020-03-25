@@ -38,7 +38,7 @@ const char* DIV_OPTION = "IRIC_DIVIDE_RESULT";
 const int FILES_LEN_UNIT = 10;
 iRICLib::CgnsFiles m_files;
 std::map<std::string, FileLocker*> m_fileLockers;
-bool m_divideSolutions = true;
+bool m_divideSolutions = false;
 
 const char* flush_filename() {
 	return ".flush";
