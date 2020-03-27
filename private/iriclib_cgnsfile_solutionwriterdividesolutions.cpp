@@ -917,6 +917,8 @@ int CgnsFile::SolutionWriterDivideSolutions::setupSolutionFile(const std::string
 
 	ier = copyBaseZoneGrid(i->m_fileId, *fileId);
 	RETURN_IF_ERR;
+	*baseId = 1;
+	*zoneId = 1;
 
 	cg_close(*fileId);
 
