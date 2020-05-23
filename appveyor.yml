@@ -1,5 +1,16 @@
 version: '{branch}-{build}'
 
+skip_tags: true
+
+# To create: login to AppVeyor profile and select Account->Encrypt YAML
+environment:
+  scharlton2_access_token:
+    secure: dZo8X7uIxkv0RAieGg6J4zNyILq/3RxgzrI3rf4y3CY4rRHKHasO6FxpKI5USzs9
+  iric_access_token:
+    secure: jCnsDz8WNLsiCXa3BhIfDU8A5kRMruC9eUedcWKW7lOKhGGiHZYdRhaaN2cl5UNg
+  kskinoue0612_access_token:
+    secure: oVRLqEy3Z23kImxSlNOKZcRwO/R/ZJV202rigsj2IBXGrcm/u0cQHseHr6NS2JGV
+
 image:
   - Visual Studio 2013
   - Visual Studio 2015
@@ -17,9 +28,10 @@ init:
   - set BUILD_TOOLS=OFF
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
+  - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "master") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
 
 # doesn't seem to be able to use environmental vars
-clone_folder: C:\iricdev\lib\src\iriclib
+clone_folder: C:\iricdev\lib\src\iriclib-git
 
 configuration:
   - Debug
@@ -40,6 +52,7 @@ before_build:
   - 7z e master.zip
   - rd iricdev-master
   - del master.zip
+  - REM master.zip files have unix file endings
   - unix2dos *
   - copy appveyor_programs.prop programs.prop
   - call versions.cmd
@@ -48,27 +61,98 @@ before_build:
 
 # build using cmake tools
 build_script:
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - mkdir _build
-  - cd _build
-  - set CMAKE_PREFIX_PATH=c:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%\cmake\hdf5;c:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%
-  - cmake -G %GENERATOR% -DCMAKE_INSTALL_PREFIX:PATH=%CD%/INSTALL ..
-  - msbuild iriclib.sln /p:Configuration=%Configuration%
+  - cd C:\iricdev
+  - if "%Configuration%"=="Debug"   ( msbuild /nologo /target:iriclib-git-build-%config% iricdev.proj )
+  - if "%Configuration%"=="Release" ( msbuild /nologo /target:appveyor-iriclib-artifacts iricdev.proj )
 
-test_script:
-  - cd %APPVEYOR_BUILD_FOLDER%\_build
-  - set path=c:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%\bin;c:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%\bin;%PATH%
-  - ctest -C %Configuration%
-
-after_test:
-  - cd %APPVEYOR_BUILD_FOLDER%\_build
-  - msbuild INSTALL.vcxproj /p:Configuration=%Configuration%
-
-# must be relative to APPVEYOR_BUILD_FOLDER
-artifacts:
-  - path: _build\INSTALL
+after_build:
+  - if "%Configuration%"=="Release" ( appveyor PushArtifact C:\iricdev\lib\src\iriclib-git\_artifacts\libs.zip )
 
 # ??? doesn't seem to be able to use environmental vars ???
 #  - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
 cache:
   - C:\iricdev\lib\install
+
+on_success:
+  - ps: |
+      if ($UploadRelease) {
+        # /repos/:owner/:repo/releases
+        #
+        $releases_url_iric = "https://api.github.com/repos/i-RIC/iriclib/releases"
+        $releases_url_scharlton2 = "https://api.github.com/repos/scharlton2/iriclib/releases"
+        $releases_url_kskinoue0612 = "https://api.github.com/repos/kskinoue0612/iriclib/releases"
+
+        if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
+          $releases_url = $releases_url_iric
+          $access_token = $env:iric_access_token
+        }
+        if ($env:APPVEYOR_REPO_NAME -eq "scharlton2/iriclib") {
+          $releases_url = $releases_url_scharlton2
+          $access_token = $env:scharlton2_access_token
+        }
+        if ($env:APPVEYOR_REPO_NAME -eq "kskinoue0612/iriclib") {
+          $releases_url = $releases_url_kskinoue0612
+          $access_token = $env:kskinoue0612_access_token
+        }
+
+        # create headers dictionary
+        $h = @{"Authorization" = "token $access_token"}
+
+        # get latest release tag
+        # GET /repos/:owner/:repo/releases/latest
+        # see https://developer.github.com/v3/repos/releases/#get-the-latest-release
+        #
+        $latest = (Invoke-WebRequest -Uri "$releases_url/latest" -Headers $h -Method GET).Content | ConvertFrom-Json
+        if (! ($latest.tag_name -match "^v(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
+          # partially based on https://semver.org/
+          # must be v + major.minor.patch
+          throw "Bad tag"
+        }
+
+        # Note: draft is set to true so that no notifications are sent yet
+
+        # create release
+        # POST /repos/:owner/:repo/releases
+        # see https://developer.github.com/v3/repos/releases/#create-a-release
+        #
+        $patch = 1 + $matches["patch"]
+        $create = @{
+          "tag_name"         = "v" + $matches["major"] + "." + $matches["minor"] + "." + $patch;
+          "target_commitish" = "$env:APPVEYOR_REPO_COMMIT";
+          "name"             = "iriclib " + $matches["major"] + "." + $matches["minor"] + "." + $patch
+          "draft"            = $true
+        }
+        $create_json = $create | ConvertTo-Json
+        $release = Invoke-WebRequest -Uri "$releases_url" -Headers $h -Method POST -Body $create_json
+
+        # upload artifact (asset)
+        # POST :server/repos/:owner/:repo/releases/:release_id/assets{?name,label}
+        # see https://developer.github.com/v3/repos/releases/#upload-a-release-asset
+        #
+        $upload_uri = ($release.Content | ConvertFrom-Json).upload_url
+        if (! ($upload_uri -match  "(.*)\{\?name,label\}") ) {
+          # expecting URI{?name,label}
+          # ie https://uploads.github.com/repos/scharlton2/iriclib/releases/24058628/assets{?name,label}
+          throw "Bad upload_url"
+        }
+        $upload_uri = $matches[1] + "?name=libs.zip"
+        $h["Content-type"] = "application/zip"
+        $bytes = [System.IO.File]::ReadAllBytes("$env:APPVEYOR_BUILD_FOLDER\_artifacts\libs.zip")
+        $upload = Invoke-WebRequest -Uri $upload_uri -Headers $h -Method POST -Body $bytes
+
+        # Note: draft is now set to false so that notifications are sent with the correct list of assets
+
+        # update release
+        # PATCH /repos/:owner/:repo/releases/:release_id
+        # see https://developer.github.com/v3/repos/releases/#edit-a-release
+        #
+        $release_id = ($release.Content | ConvertFrom-Json).id
+        $h.Remove("Content-type")
+        $update = @{ "draft" = $false }
+        $update_json = $update | ConvertTo-Json
+        $release = Invoke-WebRequest -Uri "$releases_url/$release_id" -Headers $h -Method PATCH -Body $update_json
+
+        # display download url
+        Write-Output "$((($release.Content | ConvertFrom-Json).assets).browser_download_url)"
+        Get-FileHash "$env:APPVEYOR_BUILD_FOLDER\_artifacts\libs.zip"
+      }
