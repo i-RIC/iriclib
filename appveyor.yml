@@ -35,8 +35,9 @@ init:
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
   - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "master") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
+  - ps: Write-Output $UploadRelease
   # Only commit and push to master branch or debug-appveyor branch (for testing)
-  - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "debug-appveyor")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
+  - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "push_to_online_update")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
   - ps: Write-Output $CommitAndPush
 
 # doesn't seem to be able to use environmental vars
@@ -197,7 +198,8 @@ on_success:
 
         if ($branch) {
           # create branch when remote is not "i-RIC/prepost-gui"
-          git checkout -qb $env:APPVEYOR_JOB_ID
+          # branches starting with '__' aren't automatically built by appveyor
+          git checkout -qb __$env:APPVEYOR_JOB_ID
           if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
         }
 
@@ -224,7 +226,7 @@ on_success:
         }
 
         # distribute iriclib.dll
-        copy C:\iricdev\lib\src\iriclib-git\release\iriclib.dll \online_update\dev_src\packages\gui.prepost\data\iriclib.dll
+        Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\dev_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
 
         # run repogen to build packages and Updates.xml
         Set-Location \online_update\dev_src -ErrorAction Stop
@@ -261,7 +263,7 @@ on_success:
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         if ($branch) {
-          git push --set-upstream origin $env:APPVEYOR_JOB_ID 2>&1 | Out-Null
+          git push --set-upstream origin __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
         } else {
           git push --set-upstream origin master 2>&1 | Out-Null
         }
@@ -269,4 +271,7 @@ on_success:
 
         git status
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+
+        Write-Output "iriclib-github-sha1=`"$env:APPVEYOR_REPO_COMMIT`""
+        Get-FileHash C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll
       }
