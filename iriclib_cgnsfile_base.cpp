@@ -92,6 +92,12 @@ int CgnsFile::Impl::initZoneId(bool clearResults)
 			// zone found!
 			m_zoneId = Z;
 
+			ZoneType_t zt;
+			ier = cg_zone_type(m_fileId, m_baseId, Z, &zt);
+			RETURN_IF_ERR;
+
+			m_hasFaceSols = (zt == Structured);
+
 			if (clearResults) {
 				ier = clearResultData();
 			} else {
@@ -739,7 +745,7 @@ void CgnsFile::Impl::getPolydataSolName(int num, char* name)
 	sprintf(name, "PolydataSolution%d", num);
 }
 
-int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols, std::vector<std::string>* ifacesols, std::vector<std::string>* jfacesols)
+int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols, std::vector<std::string>* ifacesols, std::vector<std::string>* jfacesols, bool hasFaceSols)
 {
 	char solname[NAME_MAXLENGTH];
 	getSolName(sid, solname);
@@ -763,13 +769,16 @@ int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vec
 	RETURN_IF_ERR;
 
 	ier = cg_sol_write(fid, bid, zid, cellsolname, CellCenter, &S);
+
 	RETURN_IF_ERR;
 
-	ier = cg_sol_write(fid, bid, zid, ifacesolname, IFaceCenter, &S);
-	RETURN_IF_ERR;
+	if (hasFaceSols) {
+		ier = cg_sol_write(fid, bid, zid, ifacesolname, IFaceCenter, &S);
+		RETURN_IF_ERR;
 
-	ier = cg_sol_write(fid, bid, zid, jfacesolname, JFaceCenter, &S);
-	RETURN_IF_ERR;
+		ier = cg_sol_write(fid, bid, zid, jfacesolname, JFaceCenter, &S);
+		RETURN_IF_ERR;
+	}
 
 	ier = writeFlowSolutionPointers(fid, bid, zid, *sols);
 	RETURN_IF_ERR;
@@ -777,11 +786,13 @@ int CgnsFile::Impl::addSolutionNode(int fid, int bid, int zid, int sid, std::vec
 	ier = writeFlowCellSolutionPointers(fid, bid, zid, *cellsols);
 	RETURN_IF_ERR;
 
-	ier = writeFlowIFaceSolutionPointers(fid, bid, zid, *ifacesols);
-	RETURN_IF_ERR;
+	if (hasFaceSols) {
+		ier = writeFlowIFaceSolutionPointers(fid, bid, zid, *ifacesols);
+		RETURN_IF_ERR;
 
-	ier = writeFlowJFaceSolutionPointers(fid, bid, zid, *jfacesols);
-	RETURN_IF_ERR;
+		ier = writeFlowJFaceSolutionPointers(fid, bid, zid, *jfacesols);
+		RETURN_IF_ERR;
+	}
 
 	ier = addParticleGroupSolutionNode(fid, bid, zid, sid);
 	RETURN_IF_ERR;

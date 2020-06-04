@@ -17,7 +17,7 @@ int CgnsFile::SolutionWriterStandard::Sol_Write_Time(double time)
 	int ier = stdSolWriteTime(time, i);
 	RETURN_IF_ERR;
 
-	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers), &(i->m_cellSolPointers), &(i->m_ifaceSolPointers), &(i->m_jfaceSolPointers));
+	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers), &(i->m_cellSolPointers), &(i->m_ifaceSolPointers), &(i->m_jfaceSolPointers), i->m_hasFaceSols);
 }
 
 int CgnsFile::SolutionWriterStandard::Sol_Write_Iteration(int index)
@@ -26,7 +26,7 @@ int CgnsFile::SolutionWriterStandard::Sol_Write_Iteration(int index)
 	int ier = stdSolWriteIteration(index, i);
 	RETURN_IF_ERR;
 
-	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers), &(i->m_cellSolPointers), &(i->m_ifaceSolPointers), &(i->m_jfaceSolPointers));
+	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers), &(i->m_cellSolPointers), &(i->m_ifaceSolPointers), &(i->m_jfaceSolPointers), i->m_hasFaceSols);
 }
 
 int CgnsFile::SolutionWriterStandard::Sol_Write_GridCoord2d(double *x, double *y)
