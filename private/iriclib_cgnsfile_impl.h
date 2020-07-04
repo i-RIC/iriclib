@@ -128,7 +128,7 @@ public:
 	int m_baseCellDim = 0;
 	int m_basePhysDim = 0;
 
-	int m_zoneId;
+	int m_zoneId = 0;
 	cgsize_t m_zoneSize[9];
 
 	std::vector<std::string> m_bcNames;

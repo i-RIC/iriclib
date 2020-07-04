@@ -17,6 +17,10 @@ int CgnsFile::SolutionWriterStandard::Sol_Write_Time(double time)
 	int ier = stdSolWriteTime(time, i);
 	RETURN_IF_ERR;
 
+	if (i->m_zoneId == 0) {
+		// there is no grid
+		return 0;
+	}
 	return Impl::addSolutionNode(i->m_fileId, i->m_baseId, i->m_zoneId, i->m_solId, &(i->m_solPointers), &(i->m_cellSolPointers), &(i->m_ifaceSolPointers), &(i->m_jfaceSolPointers), i->m_hasFaceSols);
 }
 
