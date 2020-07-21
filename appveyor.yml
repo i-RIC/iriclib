@@ -13,7 +13,7 @@ environment:
   iric_online_update_access_token:
     secure: WDcJrM7sx9jagk006F3OtXqomb90MlJcRIs8LoAyvT0wVzvG+UxeaW+oG9GWb1t8
   kskinoue0612_access_token:
-    secure: oVRLqEy3Z23kImxSlNOKZcRwO/R/ZJV202rigsj2IBXGrcm/u0cQHseHr6NS2JGV
+    secure: n1Pd5On6t3P0OlAAHEoQpugccvsRvXcUmQjmgFI/hsSFkXqNKNxyC4kF1/KllT4Q
   kskinoue0612_online_update_access_token:
     secure: GzdhhFKWjeLDM22U4ZcrMkAGEEnZLMVbfBR9W8uRQ/LqOtvX2qjPXvC3nvxxWeUc
 
