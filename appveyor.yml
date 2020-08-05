@@ -13,7 +13,7 @@ environment:
   iric_online_update_access_token:
     secure: WDcJrM7sx9jagk006F3OtXqomb90MlJcRIs8LoAyvT0wVzvG+UxeaW+oG9GWb1t8
   kskinoue0612_access_token:
-    secure: oVRLqEy3Z23kImxSlNOKZcRwO/R/ZJV202rigsj2IBXGrcm/u0cQHseHr6NS2JGV
+    secure: n1Pd5On6t3P0OlAAHEoQpugccvsRvXcUmQjmgFI/hsSFkXqNKNxyC4kF1/KllT4Q
   kskinoue0612_online_update_access_token:
     secure: GzdhhFKWjeLDM22U4ZcrMkAGEEnZLMVbfBR9W8uRQ/LqOtvX2qjPXvC3nvxxWeUc
 
@@ -37,7 +37,7 @@ init:
   - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "master") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
   - ps: Write-Output $UploadRelease
   # Only commit and push to master branch or debug-appveyor branch (for testing)
-  - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "push_to_online_update")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
+  - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "develop") -OR ($env:APPVEYOR_REPO_BRANCH -eq "push_to_online_update")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
   - ps: Write-Output $CommitAndPush
 
 # doesn't seem to be able to use environmental vars
@@ -204,7 +204,17 @@ on_success:
         }
 
         # update data\definition.xml and meta\package.xml from dev_src\packages\gui.prepost
-        $v=(Select-String -Path dev_src\packages\gui.prepost\meta\package.xml -Pattern "(?<=<Version>)(.*)(?=</Version>)").Matches.Value -split "\."
+
+        if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
+          $v=(Select-String -Path prod_src\packages\gui.prepost\meta\package.xml -Pattern "(?<=<Version>)(.*)(?=</Version>)").Matches.Value -split "\."
+          $files=@('prod_src\packages\gui.prepost\data\definition.xml', `
+                  'prod_src\packages\gui.prepost\meta\package.xml')
+        }
+        if ($env:APPVEYOR_REPO_BRANCH -eq "develop") {
+          $v=(Select-String -Path dev_src\packages\gui.prepost\meta\package.xml -Pattern "(?<=<Version>)(.*)(?=</Version>)").Matches.Value -split "\."
+          $files=@('dev_src\packages\gui.prepost\data\definition.xml', `
+                  'dev_src\packages\gui.prepost\meta\package.xml')
+        }
         $v[3] = 1 + $v[3]
         $env:VERSION = $v -join "."
         $tokyo_tz = [System.TimeZoneInfo]::FindSystemTimeZoneById("Tokyo Standard Time")
@@ -212,8 +222,6 @@ on_success:
         $env:RELEASE_DATE = $(Get-Date $tokyo_date -Format s).Substring(0,10)
         $env:RELEASE = $env:RELEASE_DATE -replace '-', '.'
         $env:CAPTION = "iRIC GUI " + $v[0] + "." + $v[1] + "." + $v[2]
-        $files=@('dev_src\packages\gui.prepost\data\definition.xml', `
-                 'dev_src\packages\gui.prepost\meta\package.xml')
         foreach ($file in $files) {
           (Get-Content $file) | Foreach-Object {
             $_ -replace "(?<=<Version>)(.*)(?=</Version>)",           "$env:VERSION" `
@@ -225,16 +233,22 @@ on_success:
           } | Set-Content $file
         }
 
-        # distribute iriclib.dll
-        Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\dev_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
-
-        # run repogen to build packages and Updates.xml
-        Set-Location \online_update\dev_src -ErrorAction Stop
-        # create qt_ifw_path.py
-        Write-Output "QT_IFW_PATH = 'C:\\Qt\\Tools\\QtInstallerFramework\\2.0'" | Out-File -FilePath \online_update\dev_src\qt_ifw_path.py -Encoding ascii
-        # run repogen
-        py build_update_repository.py
-        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+        if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
+          # distribute iriclib.dll
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\prod_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
+          Set-Location \online_update\prod_src -ErrorAction Stop
+          # run repogen
+          C:\Qt\Tools\QtInstallerFramework\2.0\bin\repogen.exe -p packages --update --include gui.prepost ..\prod
+          if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+        }
+        if ($env:APPVEYOR_REPO_BRANCH -eq "develop") {
+          # distribute iriclib.dll
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\dev_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
+          Set-Location \online_update\dev_src -ErrorAction Stop
+          # run repogen
+          C:\Qt\Tools\QtInstallerFramework\2.0\bin\repogen.exe -p packages --update --include gui.prepost ..\dev
+          if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+        }
 
         # run normalize_updatexml.py to normalize Updates.xml.
         Set-Location \online_update -ErrorAction Stop
