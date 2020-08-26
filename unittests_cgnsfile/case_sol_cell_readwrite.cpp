@@ -62,12 +62,14 @@ void case_read_adf_no_results()
 
 
 	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == CG_NODE_NOT_FOUND", ier == CG_NODE_NOT_FOUND);
+	VERIFY_LOG("cg_iRIC_InitRead() ier == CG_OK", ier == CG_OK);
+	/*
 	const char exp1[] = "index 1, label 'BaseIterativeData_t' not a child of 'CGNSBase_t'";
 	const char *err1 = cg_get_error();
 	char buffer[200];
 	sprintf(buffer, "cg_get_error() == '%s'", exp1);
 	VERIFY_LOG(buffer, strcmp(err1, exp1) == 0);
+	*/
 
 
 	// emulate PostTimeSteps::loadFromCgnsFile
@@ -78,8 +80,10 @@ void case_read_adf_no_results()
 	VERIFY_LOG("cg_iRIC_GotoBase() ier == 0", ier == 0);
 	ier = cg_biter_read(fid, B, name, &nsteps);
 	VERIFY_LOG("cg_biter_read() ier == CG_NODE_NOT_FOUND", ier == CG_NODE_NOT_FOUND);
+	
 	const char exp2[] = "BaseIterativeData_t node doesn't exist under CGNSBase 1";
 	const char *err2 = cg_get_error();
+	char buffer[200];
 	sprintf(buffer, "cg_get_error() == '%s'", exp2);
 	VERIFY_LOG(buffer, strcmp(err2, exp2) == 0);
 
@@ -96,13 +100,14 @@ void case_read_hdf5_no_results()
 
 
 	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == CG_NODE_NOT_FOUND", ier == CG_NODE_NOT_FOUND);
+	VERIFY_LOG("cg_iRIC_InitRead() ier == CG_OK", ier == CG_OK);
+	/*
 	const char exp1[] = "index 1, label 'BaseIterativeData_t' not a child of 'CGNSBase_t'";
 	const char *err1 = cg_get_error();
 	char buffer[200];
 	sprintf(buffer, "cg_get_error() == '%s'", exp1);
 	VERIFY_LOG(buffer, strcmp(err1, exp1) == 0);
-
+	*/
 
 	// emulate PostTimeSteps::loadFromCgnsFile
 	int B;
@@ -114,6 +119,7 @@ void case_read_hdf5_no_results()
 	VERIFY_LOG("cg_biter_read() ier == CG_NODE_NOT_FOUND", ier == CG_NODE_NOT_FOUND);
 	const char exp2[] = "BaseIterativeData_t node doesn't exist under CGNSBase 1";
 	const char *err2 = cg_get_error();
+	char buffer[200];
 	sprintf(buffer, "cg_get_error() == '%s'", exp2);
 	VERIFY_LOG(buffer, strcmp(err2, exp2) == 0);
 

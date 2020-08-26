@@ -229,6 +229,7 @@ int CgnsFile::Impl::loadResultData()
 
 	ier = cg_nsols(m_fileId, m_baseId, m_zoneId, &m_solId);
 	RETURN_IF_ERR;
+	if (m_solId == 0) {return 0;}
 
 	ier = gotoBaseIter();
 	RETURN_IF_ERR;
