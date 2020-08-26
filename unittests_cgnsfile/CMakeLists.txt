@@ -32,6 +32,7 @@ case_init.cpp
 case_initcc.cpp
 case_initoption_check.cpp
 case_initread.cpp
+case_no_grid_output.cpp
 case_sol_cell_readwrite.cpp
 case_sol_readwrite.cpp
 case_sol_startend.cpp
