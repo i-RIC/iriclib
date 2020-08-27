@@ -26,7 +26,7 @@ void case_noGridOutput()
 
 	ier = cg_iRIC_Init(fid);
 
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Init() ier == 1", ier == 1);
 
 	double time = 0.0;
 	double discharge = 0.1;
