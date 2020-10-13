@@ -38,5 +38,6 @@ void case_read_adf_no_results();
 void case_read_hdf5();
 void case_read_hdf5_no_results();
 
+void case_noGridOutput();
 
 } // extern "C"

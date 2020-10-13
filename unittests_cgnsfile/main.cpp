@@ -47,5 +47,7 @@ int main(int argc, char* argv[])
 	case_read_adf_no_results();
 	case_read_hdf5_no_results();
 
+	case_noGridOutput();
+
 	return 0;
 }

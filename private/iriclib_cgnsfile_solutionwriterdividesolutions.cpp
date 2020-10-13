@@ -406,7 +406,7 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Time(double time)
 	std::vector<std::string> cellsols;
 	std::vector<std::string> ifacesols;
 	std::vector<std::string> jfacesols;
-	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols, &ifacesols, &jfacesols);
+	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols, &ifacesols, &jfacesols, i->m_hasFaceSols);
 	RETURN_IF_ERR;
 
 	// Vertex
@@ -480,7 +480,7 @@ int CgnsFile::SolutionWriterDivideSolutions::Sol_Write_Iteration(int index)
 	std::vector<std::string> cellsols;
 	std::vector<std::string> ifacesols;
 	std::vector<std::string> jfacesols;
-	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols, &ifacesols, &jfacesols);
+	ier = Impl::addSolutionNode(m_fileId, m_baseId, m_zoneId, 1, &sols, &cellsols, &ifacesols, &jfacesols, i->m_hasFaceSols);
 	RETURN_IF_ERR;
 
 	// Vertex

@@ -104,7 +104,7 @@ public:
 	static void getParticleGroupSolName(int num, char* name);
 	static void getPolydataSolName(int num, char* name);
 
-	static int addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols, std::vector<std::string>* ifacesols, std::vector<std::string>* jfacesols);
+	static int addSolutionNode(int fid, int bid, int zid, int sid, std::vector<std::string>* sols, std::vector<std::string>* cellsols, std::vector<std::string>* ifacesols, std::vector<std::string>* jfacesols, bool hasFaceSols);
 	static int addSolutionGridCoordNode(int fid, int bid, int zid, int sid, std::vector<std::string>* coords);
 	static int addParticleSolutionNode(int fid, int bid, int zid, int sid);
 	static int addParticleGroupSolutionNode(int fid, int bid, int zid, int sid);
@@ -130,7 +130,7 @@ public:
 	int m_baseCellDim = 0;
 	int m_basePhysDim = 0;
 
-	int m_zoneId;
+	int m_zoneId = 0;
 	cgsize_t m_zoneSize[9];
 
 	std::vector<std::string> m_bcNames;
