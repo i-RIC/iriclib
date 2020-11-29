@@ -71,6 +71,8 @@ iriclib_polyline.h
 iriclib_riversurvey.cpp
 iriclib_riversurvey.h
 iriclib_single.c
+iriclib_wrapper_api.h
+iriclib_wrapper_api.cpp
 private/filelocker_impl.h
 private/iriclib_cgnsfile_baseiterativet.h
 private/iriclib_cgnsfile_baseiterativet_detail.h
