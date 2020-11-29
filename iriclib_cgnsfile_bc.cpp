@@ -47,6 +47,24 @@ int CgnsFile::BC_Read_IndicesSize(const char *typeName, int num, cgsize_t* size)
 	return 0;
 }
 
+int CgnsFile::BC_Read_IndicesSize2(const char* typeName, int num, cgsize_t* size)
+{
+	// returns the number of values actually in index.
+
+	cgsize_t size2;
+	BC_Read_IndicesSize(typeName, num, &size2);
+
+	int ier;
+	ZoneType_t zt;
+	ier = cg_zone_type(impl->m_fileId, impl->m_baseId, impl->m_zoneId, &zt);
+	if (zt == Structured) {
+		*size = size2 * 2; // i, j are passed
+	} else {
+		*size = size2; // index are passed
+	}
+	return ier;
+}
+
 int CgnsFile::BC_Read_Indices(const char *typeName, int num, cgsize_t* indices)
 {
 	int BC;

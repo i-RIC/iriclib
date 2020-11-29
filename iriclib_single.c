@@ -242,6 +242,26 @@ int cg_iRIC_GetGridCoord3d(double* x, double* y, double* z)
 	return cg_iRIC_GetGridCoord3d_Mul(lastfileid, x, y, z);
 }
 
+int cg_iRIC_Read_Grid_NodeCount(int* count)
+{
+	return cg_iRIC_Read_Grid_NodeCount_Mul(lastfileid, count);
+}
+
+int cg_iRIC_Read_Grid_CellCount(int* count)
+{
+	return cg_iRIC_Read_Grid_CellCount_Mul(lastfileid, count);
+}
+
+int cg_iRIC_Read_Grid_IFaceCount(int* count)
+{
+	return cg_iRIC_Read_Grid_IFaceCount_Mul(lastfileid, count);
+}
+
+int cg_iRIC_Read_Grid_JFaceCount(int* count)
+{
+	return cg_iRIC_Read_Grid_JFaceCount_Mul(lastfileid, count);
+}
+
 int cg_iRIC_Read_Grid_Real_Node(const char* name, double* values)
 {
 	return cg_iRIC_Read_Grid_Real_Node_Mul(lastfileid, name, values);
@@ -525,6 +545,11 @@ void cg_iRIC_Read_BC_Count(const char* type, int* num)
 int cg_iRIC_Read_BC_IndicesSize(const char* type, int num, cgsize_t* size)
 {
 	return cg_iRIC_Read_BC_IndicesSize_Mul(lastfileid, type, num, size);
+}
+
+int cg_iRIC_Read_BC_IndicesSize2(const char* type, int num, cgsize_t* size)
+{
+	return cg_iRIC_Read_BC_IndicesSize2_Mul(lastfileid, type, num, size);
 }
 
 int cg_iRIC_Read_BC_Indices(const char* type, int num, cgsize_t* indices)
