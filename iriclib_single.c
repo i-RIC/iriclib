@@ -627,6 +627,11 @@ int cg_iRIC_Write_BC_Indices(const char* type, int num, cgsize_t size, cgsize_t*
 	return cg_iRIC_Write_BC_Indices_Mul(lastfileid, type, num, size, indices);
 }
 
+int cg_iRIC_Write_BC_Indices2(const char* type, int num, cgsize_t size, cgsize_t* indices)
+{
+	return cg_iRIC_Write_BC_Indices2_Mul(lastfileid, type, num, size, indices);
+}
+
 int cg_iRIC_Write_BC_Integer(const char* type, int num, const char* name, int intvalue)
 {
 	return cg_iRIC_Write_BC_Integer_Mul(lastfileid, type, num, name, intvalue);

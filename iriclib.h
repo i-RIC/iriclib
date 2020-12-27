@@ -345,6 +345,8 @@ int IRICLIBDLL cg_iRIC_Clear_BC_Mul(int fid);
 
 int IRICLIBDLL cg_iRIC_Write_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t size, cgsize_t* indices);
 
+int IRICLIBDLL cg_iRIC_Write_BC_Indices2_Mul(int fid, const char* type, int num, cgsize_t size, cgsize_t* indices);
+
 int IRICLIBDLL cg_iRIC_Write_BC_Integer_Mul(int fid, const char* type, int num, const char* name, int intvalue);
 
 int IRICLIBDLL cg_iRIC_Write_BC_Real_Mul(int fid, const char* type, int num, const char* name, double realvalue);
@@ -702,6 +704,8 @@ int IRICLIBDLL cg_iRIC_Read_BC_FunctionalWithName_String(const char* type, int n
 int IRICLIBDLL cg_iRIC_Clear_BC();
 
 int IRICLIBDLL cg_iRIC_Write_BC_Indices(const char* type, int num, cgsize_t size, cgsize_t* indices);
+
+int IRICLIBDLL cg_iRIC_Write_BC_Indices2(const char* type, int num, cgsize_t size, cgsize_t* indices);
 
 int IRICLIBDLL cg_iRIC_Write_BC_Integer(const char* type, int num, const char* name, int intvalue);
 

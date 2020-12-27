@@ -202,6 +202,21 @@ int CgnsFile::BC_Write_Indices(const char *typeName, int num, cgsize_t size, cgs
 	return 0;
 }
 
+int CgnsFile::BC_Write_Indices2(const char *typeName, int num, cgsize_t size, cgsize_t* indices)
+{
+	ZoneType_t zt;
+	cgsize_t size2;
+
+	int ier = cg_zone_type(impl->m_fileId, impl->m_baseId, impl->m_zoneId, &zt);
+	if (zt == Structured) {
+		size2 = size / 2;
+	} else {
+		size2 = size;
+	}
+
+	return BC_Write_Indices(typeName, num, size2, indices);
+}
+
 int CgnsFile::BC_Write_Integer(const char *typeName, int num, const char *name, int intvalue)
 {
 	int ier = impl->gotoBcChildCreateIfNotExist(typeName, num, name);

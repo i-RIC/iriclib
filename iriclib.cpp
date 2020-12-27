@@ -1033,6 +1033,11 @@ int cg_iRIC_Write_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t si
 	return f->BC_Write_Indices(type, num, size, indices);
 }
 
+int cg_iRIC_Write_BC_Indices2_Mul(int fid, const char* type, int num, cgsize_t size, cgsize_t* indices){
+	GET_F(fid);
+	return f->BC_Write_Indices2(type, num, size, indices);
+}
+
 int cg_iRIC_Write_BC_Integer_Mul(int fid, const char* type, int num, const char* name, int intvalue){
 	GET_F(fid);
 	return f->BC_Write_Integer(type, num, name, intvalue);
