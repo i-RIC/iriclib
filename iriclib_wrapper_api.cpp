@@ -381,7 +381,7 @@ int cg_iRIC_Write_BC_Indices_Mul(int fid, const char* type, int num, IntArrayCon
 	for (int i = 0; i < indices.size(); ++i) {
 		tmp_indices[i] = indices.value(i);
 	}
-	return cg_iRIC_Write_BC_Indices_Mul(fid, type, num, tmp_indices.size(), tmp_indices.data());
+	return cg_iRIC_Write_BC_Indices2_Mul(fid, type, num, tmp_indices.size(), tmp_indices.data());
 }
 
 int cg_iRIC_Write_BC_Functional_Mul(int fid, const char* type, int num, const char* name, RealArrayContainer& realarray_x, RealArrayContainer& realarray_y)
@@ -722,7 +722,7 @@ int cg_iRIC_Write_BC_Indices(const char* type, int num, IntArrayContainer& indic
 	for (int i = 0; i < indices.size(); ++i) {
 		tmp_indices[i] = indices.value(i);
 	}
-	return cg_iRIC_Write_BC_Indices(type, num, tmp_indices.size(), tmp_indices.data());
+	return cg_iRIC_Write_BC_Indices2(type, num, tmp_indices.size(), tmp_indices.data());
 }
 
 int cg_iRIC_Write_BC_Functional(const char* type, int num, const char* name, RealArrayContainer& realarray_x, RealArrayContainer& realarray_y)
