@@ -214,7 +214,19 @@ def case_BcWrite():
     util.verify_log("cg_iRIC_Read_BC_Count_Mul() read_num == 1", read_num == 1)
 
     size = iric.cg_iRIC_Read_BC_IndicesSize2_Mul(fid, "testbc", 1)
-    util.verify_log("cg_iRIC_Read_BC_IndicesSize2_Mul() size == 5", size == 5)
+    util.verify_log("cg_iRIC_Read_BC_IndicesSize2_Mul() size == 10", size == 10)
+
+    indices = iric.cg_iRIC_Read_BC_Indices_Mul(fid, "testbc", 1)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[0] == 1", indices[0] == 1)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[1] == 1", indices[1] == 3)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[2] == 1", indices[2] == 1)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[3] == 2", indices[3] == 4)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[4] == 1", indices[4] == 1)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[5] == 3", indices[5] == 5)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[6] == 1", indices[6] == 1)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[7] == 4", indices[7] == 6)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[8] == 1", indices[8] == 1)
+    util.verify_log("cg_iRIC_Read_BC_Indices_Mul() indices[9] == 5", indices[9] == 7)
 
     read_int = iric.cg_iRIC_Read_BC_Integer_Mul(fid, "testbc", 1, "write_int")
     util.verify_log("cg_iRIC_Read_BC_Integer_Mul() value match", read_int == write_int)
