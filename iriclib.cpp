@@ -587,6 +587,30 @@ int cg_iRIC_GetGridCoord3d_Mul(int fid, double *x, double *y, double *z)
 	return f->Grid_GetCoord3d(x, y, z);
 }
 
+int cg_iRIC_Read_Grid_NodeCount_Mul(int fid, int* count)
+{
+	GET_F(fid);
+	return f->Grid_Read_NodeCount(count);
+}
+
+int cg_iRIC_Read_Grid_CellCount_Mul(int fid, int* count)
+{
+	GET_F(fid);
+	return f->Grid_Read_CellCount(count);
+}
+
+int cg_iRIC_Read_Grid_IFaceCount_Mul(int fid, int* count)
+{
+	GET_F(fid);
+	return f->Grid_Read_IFaceCount(count);
+}
+
+int cg_iRIC_Read_Grid_JFaceCount_Mul(int fid, int* count)
+{
+	GET_F(fid);
+	return f->Grid_Read_JFaceCount(count);
+}
+
 int cg_iRIC_Read_Grid_Real_Node_Mul(int fid, const char* name, double* values)
 {
 	GET_F(fid);
@@ -923,6 +947,12 @@ int cg_iRIC_Read_BC_IndicesSize_Mul(int fid, const char* type, int num, cgsize_t
 	return f->BC_Read_IndicesSize(type, num, size);
 }
 
+int cg_iRIC_Read_BC_IndicesSize2_Mul(int fid, const char* type, int num, cgsize_t* size)
+{
+	GET_F(fid);
+	return f->BC_Read_IndicesSize2(type, num, size);
+}
+
 int cg_iRIC_Read_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t* indices)
 {
 #if (CG_SIZEOF_SIZE != 32)
@@ -1001,6 +1031,11 @@ int cg_iRIC_Clear_BC_Mul(int fid){
 int cg_iRIC_Write_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t size, cgsize_t* indices){
 	GET_F(fid);
 	return f->BC_Write_Indices(type, num, size, indices);
+}
+
+int cg_iRIC_Write_BC_Indices2_Mul(int fid, const char* type, int num, cgsize_t size, cgsize_t* indices){
+	GET_F(fid);
+	return f->BC_Write_Indices2(type, num, size, indices);
 }
 
 int cg_iRIC_Write_BC_Integer_Mul(int fid, const char* type, int num, const char* name, int intvalue){

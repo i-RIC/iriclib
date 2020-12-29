@@ -1,0 +1,3 @@
+import unittests
+
+unittests.main()

@@ -30,12 +30,29 @@ void case_GridRead()
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	cgsize_t isize, jsize;
+	int count;
 	std::vector<double> x, y;
 
 	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
 	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() isize == 11", isize == 11);
 	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() jsize == 11", jsize == 11);
+
+	ier = cg_iRIC_Read_Grid_NodeCount_Mul(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() count == 121", count == 121);
+
+	ier = cg_iRIC_Read_Grid_CellCount_Mul(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_CellCount_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_CellCount_Mul() count == 100", count == 100);
+
+	ier = cg_iRIC_Read_Grid_IFaceCount_Mul(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_IFaceCount_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_IFaceCount_Mul() count == 110", count == 110);
+
+	ier = cg_iRIC_Read_Grid_JFaceCount_Mul(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_JFaceCount_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_JFaceCount_Mul() count == 110", count == 110);
 
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);

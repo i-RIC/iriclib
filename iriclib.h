@@ -171,6 +171,14 @@ int IRICLIBDLL cg_iRIC_GotoGridCoord3d_Mul(int fid, cgsize_t* isize, cgsize_t* j
 
 int IRICLIBDLL cg_iRIC_GetGridCoord3d_Mul(int fid, double *x, double *y, double *z);
 
+int IRICLIBDLL cg_iRIC_Read_Grid_NodeCount_Mul(int fid, int* count);
+
+int IRICLIBDLL cg_iRIC_Read_Grid_CellCount_Mul(int fid, int* count);
+
+int IRICLIBDLL cg_iRIC_Read_Grid_IFaceCount_Mul(int fid, int* count);
+
+int IRICLIBDLL cg_iRIC_Read_Grid_JFaceCount_Mul(int fid, int* count);
+
 int IRICLIBDLL cg_iRIC_Read_Grid_Real_Node_Mul(int fid, const char* name, double* values);
 
 int IRICLIBDLL cg_iRIC_Read_Grid_Integer_Node_Mul(int fid, const char* name, int* values);
@@ -301,6 +309,8 @@ void IRICLIBDLL cg_iRIC_Read_BC_Count_Mul(int fid, const char* type, int* num);
 
 int IRICLIBDLL cg_iRIC_Read_BC_IndicesSize_Mul(int fid, const char* type, int num, cgsize_t* size);
 
+int IRICLIBDLL cg_iRIC_Read_BC_IndicesSize2_Mul(int fid, const char* type, int num, cgsize_t* size);
+
 int IRICLIBDLL cg_iRIC_Read_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t* indices);
 
 int IRICLIBDLL cg_iRIC_Read_BC_Integer_Mul(int fid, const char* type, int num, const char* name, int* intvalue);
@@ -334,6 +344,8 @@ int IRICLIBDLL cg_iRIC_Read_BC_FunctionalWithName_String_Mul(int fid, const char
 int IRICLIBDLL cg_iRIC_Clear_BC_Mul(int fid);
 
 int IRICLIBDLL cg_iRIC_Write_BC_Indices_Mul(int fid, const char* type, int num, cgsize_t size, cgsize_t* indices);
+
+int IRICLIBDLL cg_iRIC_Write_BC_Indices2_Mul(int fid, const char* type, int num, cgsize_t size, cgsize_t* indices);
 
 int IRICLIBDLL cg_iRIC_Write_BC_Integer_Mul(int fid, const char* type, int num, const char* name, int intvalue);
 
@@ -539,6 +551,14 @@ int IRICLIBDLL cg_iRIC_GotoGridCoord3d(cgsize_t* isize, cgsize_t* jsize, cgsize_
 
 int IRICLIBDLL cg_iRIC_GetGridCoord3d(double *x, double *y, double *z);
 
+int IRICLIBDLL cg_iRIC_Read_Grid_NodeCount(int* count);
+
+int IRICLIBDLL cg_iRIC_Read_Grid_CellCount(int* count);
+
+int IRICLIBDLL cg_iRIC_Read_Grid_IFaceCount(int* count);
+
+int IRICLIBDLL cg_iRIC_Read_Grid_JFaceCount(int* count);
+
 int IRICLIBDLL cg_iRIC_Read_Grid_Real_Node(const char* name, double* values);
 
 int IRICLIBDLL cg_iRIC_Read_Grid_Integer_Node(const char* name, int* values);
@@ -653,6 +673,8 @@ void IRICLIBDLL cg_iRIC_Read_BC_Count(const char* type, int* num);
 
 int IRICLIBDLL cg_iRIC_Read_BC_IndicesSize(const char* type, int num, cgsize_t* size);
 
+int IRICLIBDLL cg_iRIC_Read_BC_IndicesSize2(const char* type, int num, cgsize_t* size);
+
 int IRICLIBDLL cg_iRIC_Read_BC_Indices(const char* type, int num, cgsize_t* indices);
 
 int IRICLIBDLL cg_iRIC_Read_BC_Integer(const char* type, int num, const char* name, int* intvalue);
@@ -682,6 +704,8 @@ int IRICLIBDLL cg_iRIC_Read_BC_FunctionalWithName_String(const char* type, int n
 int IRICLIBDLL cg_iRIC_Clear_BC();
 
 int IRICLIBDLL cg_iRIC_Write_BC_Indices(const char* type, int num, cgsize_t size, cgsize_t* indices);
+
+int IRICLIBDLL cg_iRIC_Write_BC_Indices2(const char* type, int num, cgsize_t size, cgsize_t* indices);
 
 int IRICLIBDLL cg_iRIC_Write_BC_Integer(const char* type, int num, const char* name, int intvalue);
 

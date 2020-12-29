@@ -94,6 +94,10 @@ public:
 	int Grid_GetCoord2d(double *x, double *y);
 	int Grid_GotoCoord3d(cgsize_t* isize, cgsize_t* jsize, cgsize_t* ksize);
 	int Grid_GetCoord3d(double *x, double *y, double *z);
+	int Grid_Read_NodeCount(int* count);
+	int Grid_Read_CellCount(int* count);
+	int Grid_Read_IFaceCount(int* count);
+	int Grid_Read_JFaceCount(int* count);
 	int Grid_Read_Real_Node(const char* name, double* values);
 	int Grid_Read_Integer_Node(const char* name, int* values);
 	int Grid_Read_Real_Cell(const char *name, double* values);
@@ -123,7 +127,8 @@ public:
 
 	void BC_Init_Names();
 	void BC_Read_Count(const char* typeName, int* num);
-	int BC_Read_IndicesSize(const char* typeName, int num, cgsize_t* size);
+	int BC_Read_IndicesSize(const char* typeName, int num, cgsize_t* size); // size is the number of nodes/cells/edges.
+	int BC_Read_IndicesSize2(const char* typeName, int num, cgsize_t* size); // size is the number of values. For structured grids, it returns twice value of BC_Read_IndicesSize(), because it is a list of (i, j).
 	int BC_Read_Indices(const char* typeName, int num, cgsize_t* indices);
 	int BC_Read_Integer(const char* typeName, int num, const char* name, int* intvalue);
 	int BC_Read_Real(const char* typeName, int num, const char* name, double* realvalue);
@@ -139,7 +144,8 @@ public:
 	int BC_Read_FunctionalWithName_String(const char *typeName, int num, const char* name, const char* paramname, char* strvalue);
 
 	int BC_Clear();
-	int BC_Write_Indices(const char* typeName, int num, cgsize_t size, cgsize_t* indices);
+	int BC_Write_Indices(const char* typeName, int num, cgsize_t size, cgsize_t* indices); // size is the number of nodes/cells/edges.
+	int BC_Write_Indices2(const char* typeName, int num, cgsize_t size, cgsize_t* indices); // size is the number of values. For structured grid it should be twice value passed to BC_Write_Indices().
 	int BC_Write_Integer(const char* typeName, int num, const char* name, int intvalue);
 	int BC_Write_Real(const char* typeName, int num, const char* name, double realvalue);
 	int BC_Write_String(const char* typeName, int num, const char* name, const char* strvalue);
