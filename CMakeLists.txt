@@ -40,6 +40,7 @@ if(MSVC_VERSION EQUAL 1400 OR MSVC_VERSION GREATER 1400)
 endif() 
 
 add_definitions(-DIRICLIBDLL_LIBRARY)
+add_definitions(-DIRICSOLVERLIBDLL_LIBRARY)
 
 SET(iriclib_SOURCES
 error_macros.h
@@ -71,6 +72,21 @@ iriclib_polyline.h
 iriclib_riversurvey.cpp
 iriclib_riversurvey.h
 iriclib_single.c
+iricsolverlib.cpp
+iricsolverlib.h
+iricsolverlib_api.h
+iricsolverlib_cell2d.cpp
+iricsolverlib_cell2d.h
+iricsolverlib_grid2d.cpp
+iricsolverlib_grid2d.h
+iricsolverlib_point2d.h
+iricsolverlib_quadcell.cpp
+iricsolverlib_quadcell.h
+iricsolverlib_rect2d.cpp
+iricsolverlib_rect2d.h
+iricsolverlib_tricell.cpp
+iricsolverlib_tricell.h
+iricsolver_ftoc.c
 private/filelocker_impl.h
 private/iriclib_cgnsfile_baseiterativet.h
 private/iriclib_cgnsfile_baseiterativet_detail.h
@@ -81,6 +97,9 @@ private/iriclib_cgnsfile_solutionwriterdividesolutions.cpp
 private/iriclib_cgnsfile_solutionwriterdividesolutions.h
 private/iriclib_cgnsfile_solutionwriterstandard.cpp
 private/iriclib_cgnsfile_solutionwriterstandard.h
+private/iricsolverlib_cell2d_impl.h
+private/iricsolverlib_grid2d_impl.h
+private/iricsolverlib_point2d_detail.h
 )
 
 # cgns include (set CMAKE_PREFIX_PATH)
@@ -144,6 +163,8 @@ ${PROJECT_SOURCE_DIR}/iriclib_pointmap.h
 ${PROJECT_SOURCE_DIR}/iriclib_polygon.h
 ${PROJECT_SOURCE_DIR}/iriclib_polyline.h
 ${PROJECT_SOURCE_DIR}/iriclib_riversurvey.h
+${PROJECT_SOURCE_DIR}/iricsolverlib.h
+${PROJECT_SOURCE_DIR}/iricsolverlib_api.h
 )
 
 SET(iriclib_private_Headers
