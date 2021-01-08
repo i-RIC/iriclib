@@ -236,6 +236,16 @@ on_success:
         if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
           # distribute iriclib.dll
           Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\prod_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
+          # distribute SDK
+          # For C
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.lib \online_update\prod_src\packages\gui.prepost\data\sdk\c\iriclib_x64.lib -ErrorAction Stop
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\include\iriclib.h \online_update\prod_src\packages\gui.prepost\data\sdk\c\iriclib.h -ErrorAction Stop
+          # For FORTRAN
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.lib \online_update\prod_src\packages\gui.prepost\data\sdk\c\iriclib_x64_ifort.lib -ErrorAction Stop
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\include\iriclib_f.h \online_update\prod_src\packages\gui.prepost\data\sdk\c\iriclib_f.h -ErrorAction Stop
+          # For Python
+          # @todo implement this
+
           Set-Location \online_update\prod_src -ErrorAction Stop
           # run repogen
           C:\Qt\Tools\QtInstallerFramework\2.0\bin\repogen.exe -p packages --update --include gui.prepost ..\prod
@@ -244,6 +254,16 @@ on_success:
         if ($env:APPVEYOR_REPO_BRANCH -eq "develop") {
           # distribute iriclib.dll
           Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\dev_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
+          # distribute SDK
+          # For C
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.lib \online_update\dev_src\packages\gui.prepost\data\sdk\c\iriclib_x64.lib -ErrorAction Stop
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\include\iriclib.h \online_update\dev_src\packages\gui.prepost\data\sdk\c\iriclib.h -ErrorAction Stop
+          # For FORTRAN
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.lib \online_update\dev_src\packages\gui.prepost\data\sdk\c\iriclib_x64_ifort.lib -ErrorAction Stop
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\include\iriclib_f.h \online_update\dev_src\packages\gui.prepost\data\sdk\c\iriclib_f.h -ErrorAction Stop
+          # For Python
+          # @todo implement this
+          
           Set-Location \online_update\dev_src -ErrorAction Stop
           # run repogen
           C:\Qt\Tools\QtInstallerFramework\2.0\bin\repogen.exe -p packages --update --include gui.prepost ..\dev
@@ -266,7 +286,7 @@ on_success:
         git config --global core.safecrlf false
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
-        git add -A *.7z *.sha1 *.xml *.dll *.exe *.qm
+        git add -A *.7z *.sha1 *.xml *.dll *.exe *.qm *.h *.lib
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # Qt dictionaries are now included in gui.runtime package.
