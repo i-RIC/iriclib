@@ -10,6 +10,7 @@ unix {
 CONFIG += dll
 
 DEFINES += IRICLIBDLL_LIBRARY
+DEFINES += IRICSOLVERLIBDLL_LIBRARY
 
 QT =
 DEFINES += UPPERCASE
@@ -48,13 +49,24 @@ HEADERS += error_macros.h \
            iriclib_polyline.h \
            iriclib_riversurvey.h \
            iriclib_wrapper_api.h \
+           iricsolverlib.h \
+           iricsolverlib_api.h \
+           iricsolverlib_cell2d.h \
+           iricsolverlib_grid2d.h \
+           iricsolverlib_point2d.h \
+           iricsolverlib_quadcell.h \
+           iricsolverlib_rect2d.h \
+           iricsolverlib_tricell.h \
            private/filelocker_impl.h \
            private/iriclib_cgnsfile_baseiterativet.h \
            private/iriclib_cgnsfile_baseiterativet_detail.h \
            private/iriclib_cgnsfile_impl.h \
            private/iriclib_cgnsfile_solutionwriter.h \
            private/iriclib_cgnsfile_solutionwriterdividesolutions.h \
-           private/iriclib_cgnsfile_solutionwriterstandard.h
+           private/iriclib_cgnsfile_solutionwriterstandard.h \
+           private/iricsolverlib_cell2d_impl.h \
+           private/iricsolverlib_grid2d_impl.h \
+           private/iricsolverlib_point2d_detail.h
 SOURCES += filelocker.cpp \
            iric_ftoc.c \
            iriclib.cpp \
@@ -73,6 +85,13 @@ SOURCES += filelocker.cpp \
            iriclib_riversurvey.cpp \
            iriclib_single.c \
            iriclib_wrapper_api.cpp \
+           iricsolver_ftoc.c \
+           iricsolverlib.cpp \
+           iricsolverlib_cell2d.cpp \
+           iricsolverlib_grid2d.cpp \
+           iricsolverlib_quadcell.cpp \
+           iricsolverlib_rect2d.cpp \
+           iricsolverlib_tricell.cpp \
            private/iriclib_cgnsfile_solutionwriter.cpp \
            private/iriclib_cgnsfile_solutionwriterdividesolutions.cpp \
            private/iriclib_cgnsfile_solutionwriterstandard.cpp
