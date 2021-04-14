@@ -1,4 +1,5 @@
 #include <vector>
+#include "iriclib.h"
 #include "iriclib_polygon.h"
 #include "iriclib_riversurvey.h"
 
@@ -7,7 +8,7 @@ static std::vector<iRICLib::RiverSurvey*> riversurveys;
 
 extern "C"{
 
-int iRIC_Geo_Polygon_Open(char* filename, int *id){
+int iRIC_Geo_Polygon_Open(const char* filename, int *id){
 	iRICLib::Polygon* polygon = new iRICLib::Polygon();
 	// currently, iriclib fortran functions supports only data with no dimension.
 	int ret = polygon->load(filename, true);
@@ -103,7 +104,7 @@ int iRIC_Geo_Polygon_Close(int id)
 	return 0;
 }
 
-int iRIC_Geo_RiverSurvey_Open(char* filename, int* id)
+int iRIC_Geo_RiverSurvey_Open(const char* filename, int* id)
 {
 	iRICLib::RiverSurvey* rs = new iRICLib::RiverSurvey();
 	int ret = rs->load(filename);

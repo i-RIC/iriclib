@@ -545,6 +545,22 @@ void IRICLIBDLL FMNAME(cg_iric_getgridcoord3d_mul_f, CG_IRIC_GETGRIDCOORD3D_MUL_
 	*ier = cg_iRIC_GetGridCoord3d_Mul(*fid, x, y, z);
 }
 
+void IRICLIBDLL FMNAME(cg_iric_read_grid_nodecount_mul_f, CG_IRIC_READ_GRID_NODECOUNT_MUL_F) (int *fid, int *count, int *ier) {
+	*ier = cg_iRIC_Read_Grid_NodeCount_Mul(*fid, count);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid_cellcount_mul_f, CG_IRIC_READ_GRID_CELLCOUNT_MUL_F) (int *fid, int *count, int *ier) {
+	*ier = cg_iRIC_Read_Grid_CellCount_Mul(*fid, count);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid_ifacecount_mul_f, CG_IRIC_READ_GRID_IFACECOUNT_MUL_F) (int *fid, int *count, int *ier) {
+	*ier = cg_iRIC_Read_Grid_IFaceCount_Mul(*fid, count);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid_jfacecount_mul_f, CG_IRIC_READ_GRID_JFACECOUNT_MUL_F) (int *fid, int *count, int *ier) {
+	*ier = cg_iRIC_Read_Grid_JFaceCount_Mul(*fid, count);
+}
+
 void IRICLIBDLL FMNAME(cg_iric_read_grid_real_node_mul_f, CG_IRIC_READ_GRID_REAL_NODE_MUL_F) (int *fid, STR_PSTR(name), double *values, int *ier STR_PLEN(name)) {
 	char c_name[CGIO_MAX_NAME_LENGTH+1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name),
@@ -1877,6 +1893,22 @@ void IRICLIBDLL FMNAME(cg_iric_gotogridcoord3d_f, CG_IRIC_GOTOGRIDCOORD3D_F) (in
 
 void IRICLIBDLL FMNAME(cg_iric_getgridcoord3d_f, CG_IRIC_GETGRIDCOORD3D_F) (double *x, double *y, double *z, int *ier) {
 	*ier = cg_iRIC_GetGridCoord3d(x, y, z);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid_nodecount_f, CG_IRIC_READ_GRID_NODECOUNT_F) (int *count, int *ier) {
+	*ier = cg_iRIC_Read_Grid_NodeCount(count);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid_cellcount_f, CG_IRIC_READ_GRID_CELLCOUNT_F) (int *count, int *ier) {
+	*ier = cg_iRIC_Read_Grid_CellCount(count);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid_ifacecount_f, CG_IRIC_READ_GRID_IFACECOUNT_F) (int *count, int *ier) {
+	*ier = cg_iRIC_Read_Grid_IFaceCount(count);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid_jfacecount_f, CG_IRIC_READ_GRID_JFACECOUNT_F) (int *count, int *ier) {
+	*ier = cg_iRIC_Read_Grid_JFaceCount(count);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_read_grid_real_node_f, CG_IRIC_READ_GRID_REAL_NODE_F) (STR_PSTR(name), double *values, int *ier STR_PLEN(name)) {

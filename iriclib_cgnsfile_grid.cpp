@@ -92,6 +92,74 @@ int CgnsFile::Grid_GetCoord3d(double *x, double *y, double *z)
 	return 0;
 }
 
+int CgnsFile::Grid_Read_NodeCount(int* count)
+{
+	char zoneName[Impl::NAME_MAXLENGTH];
+	ZoneType_t zonetype;
+
+	int ier = cg_zone_read(impl->m_fileId, impl->m_baseId, impl->m_zoneId, zoneName, impl->m_zoneSize);
+	RETURN_IF_ERR;
+	cg_zone_type(impl->m_fileId, impl->m_baseId, impl->m_zoneId, &zonetype);
+
+	if (zonetype == Structured) {
+		*count = impl->m_zoneSize[0] * impl->m_zoneSize[1];
+	} else {
+		*count = impl->m_zoneSize[0];
+	}
+	return 0;
+}
+
+int CgnsFile::Grid_Read_CellCount(int* count)
+{
+	char zoneName[Impl::NAME_MAXLENGTH];
+	ZoneType_t zonetype;
+
+	int ier = cg_zone_read(impl->m_fileId, impl->m_baseId, impl->m_zoneId, zoneName, impl->m_zoneSize);
+	RETURN_IF_ERR;
+	cg_zone_type(impl->m_fileId, impl->m_baseId, impl->m_zoneId, &zonetype);
+
+	if (zonetype == Structured) {
+		*count = impl->m_zoneSize[2] * impl->m_zoneSize[3];
+	} else {
+		*count = impl->m_zoneSize[1];
+	}
+	return 0;
+}
+
+int CgnsFile::Grid_Read_IFaceCount(int* count)
+{
+	char zoneName[Impl::NAME_MAXLENGTH];
+	ZoneType_t zonetype;
+
+	int ier = cg_zone_read(impl->m_fileId, impl->m_baseId, impl->m_zoneId, zoneName, impl->m_zoneSize);
+	RETURN_IF_ERR;
+	cg_zone_type(impl->m_fileId, impl->m_baseId, impl->m_zoneId, &zonetype);
+
+	if (zonetype == Structured) {
+		*count = impl->m_zoneSize[0] * impl->m_zoneSize[3];
+	} else {
+		*count = 0;
+	}
+	return 0;
+}
+
+int CgnsFile::Grid_Read_JFaceCount(int* count)
+{
+	char zoneName[Impl::NAME_MAXLENGTH];
+	ZoneType_t zonetype;
+
+	int ier = cg_zone_read(impl->m_fileId, impl->m_baseId, impl->m_zoneId, zoneName, impl->m_zoneSize);
+	RETURN_IF_ERR;
+	cg_zone_type(impl->m_fileId, impl->m_baseId, impl->m_zoneId, &zonetype);
+
+	if (zonetype == Structured) {
+		*count = impl->m_zoneSize[2] * impl->m_zoneSize[1];
+	} else {
+		*count = 0;
+	}
+	return 0;
+}
+
 int CgnsFile::Grid_Read_Real_Node(const char* name, double* values)
 {
 	int ier = impl->gotoGridConditionChild(name);

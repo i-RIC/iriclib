@@ -47,6 +47,10 @@ void case_BcRead()
 	ier = cg_iRIC_Read_BC_IndicesSize_Mul(fid, "bctest", 3, &bc_indicessize);
 	VERIFY_LOG("cg_iRIC_Read_BC_IndicesSize_Mul() ier != 0 if num is invalid", ier != 0);
 
+	ier = cg_iRIC_Read_BC_IndicesSize2_Mul(fid, "bctest", 1, &bc_indicessize);
+	VERIFY_LOG("cg_iRIC_Read_BC_IndicesSize2_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_BC_IndicesSize2_Mul() bc_indicessize == 10", bc_indicessize == 10);
+
 	std::vector<cgsize_t> indices;
 	indices.assign(10, 0);
 
