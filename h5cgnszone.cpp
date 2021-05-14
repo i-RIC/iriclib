@@ -45,7 +45,6 @@ H5CgnsZone::H5CgnsZone(const std::string& name, hid_t groupId, H5CgnsBase* base)
 	impl->m_zoneBc = impl->openOrCreateZoneBc();
 	impl->createZoneIterativeDataIfNotExists();
 	impl->loadFlowSolutionPointerNames();
-	impl->clearNames();
 }
 
 H5CgnsZone::H5CgnsZone(const std::string& name, Type type, const std::vector<int>& size, hid_t groupId, H5CgnsBase* base) :
@@ -419,7 +418,10 @@ H5CgnsFlowSolution* H5CgnsZone::solution(SolutionPosition pos)
 
 bool H5CgnsZone::nodeSolutionExists() const
 {
-	return (impl->m_flowSolutionPointerNames.find("FlowSolutionPointers") != impl->m_flowSolutionPointerNames.end());
+	if (impl->m_flowSolutionPointerNames.find("FlowSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
+	if (impl->m_names.find("FlowSolution1") != impl->m_names.end()) {return true;}
+
+	return false;
 }
 
 H5CgnsFlowSolution* H5CgnsZone::nodeSolution()
@@ -436,7 +438,10 @@ H5CgnsFlowSolution* H5CgnsZone::nodeSolution()
 
 bool H5CgnsZone::cellSolutionExists() const
 {
-	return (impl->m_flowSolutionPointerNames.find("FlowCellSolutionPointers") != impl->m_flowSolutionPointerNames.end());
+	if (impl->m_flowSolutionPointerNames.find("FlowCellSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
+	if (impl->m_names.find("FlowCellSolution1") != impl->m_names.end()) {return true;}
+
+	return false;
 }
 
 H5CgnsFlowSolution* H5CgnsZone::cellSolution()
@@ -453,7 +458,10 @@ H5CgnsFlowSolution* H5CgnsZone::cellSolution()
 
 bool H5CgnsZone::iFaceSolutionExists() const
 {
-	return (impl->m_flowSolutionPointerNames.find("FlowIFaceSolutionPointers") != impl->m_flowSolutionPointerNames.end());
+	if (impl->m_flowSolutionPointerNames.find("FlowIFaceSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
+	if (impl->m_names.find("FlowIFaceSolution1") != impl->m_names.end()) {return true;}
+
+	return false;
 }
 
 H5CgnsFlowSolution* H5CgnsZone::iFaceSolution()
@@ -470,7 +478,10 @@ H5CgnsFlowSolution* H5CgnsZone::iFaceSolution()
 
 bool H5CgnsZone::jFaceSolutionExists() const
 {
-	return (impl->m_flowSolutionPointerNames.find("FlowJFaceSolutionPointers") != impl->m_flowSolutionPointerNames.end());
+	if (impl->m_flowSolutionPointerNames.find("FlowJFaceSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
+	if (impl->m_names.find("FlowJFaceSolution1") != impl->m_names.end()) {return true;}
+
+	return false;
 }
 
 H5CgnsFlowSolution* H5CgnsZone::jFaceSolution()
@@ -487,7 +498,10 @@ H5CgnsFlowSolution* H5CgnsZone::jFaceSolution()
 
 bool H5CgnsZone::kFaceSolutionExists() const
 {
-	return (impl->m_flowSolutionPointerNames.find("FlowKFaceSolutionPointers") != impl->m_flowSolutionPointerNames.end());
+	if (impl->m_flowSolutionPointerNames.find("FlowKFaceSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
+	if (impl->m_names.find("FlowKFaceSolution1") != impl->m_names.end()) {return true;}
+
+	return false;
 }
 
 H5CgnsFlowSolution* H5CgnsZone::kFaceSolution()
@@ -504,7 +518,10 @@ H5CgnsFlowSolution* H5CgnsZone::kFaceSolution()
 
 bool H5CgnsZone::particleGroupSolutionExists() const
 {
-	return (impl->m_flowSolutionPointerNames.find("ParticleGroupSolutionPointers") != impl->m_flowSolutionPointerNames.end());
+	if (impl->m_flowSolutionPointerNames.find("ParticleGroupSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
+	if (impl->m_names.find("ParticleGroupSolution1") != impl->m_names.end()) {return true;}
+
+	return false;
 }
 
 H5CgnsParticleGroupSolution* H5CgnsZone::particleGroupSolution()
@@ -521,7 +538,10 @@ H5CgnsParticleGroupSolution* H5CgnsZone::particleGroupSolution()
 
 bool H5CgnsZone::particleSolutionExists() const
 {
-	return (impl->m_flowSolutionPointerNames.find("ParticleSolutionPointers") != impl->m_flowSolutionPointerNames.end());
+	if (impl->m_flowSolutionPointerNames.find("ParticleSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
+	if (impl->m_names.find("ParticleSolution1") != impl->m_names.end()) {return true;}
+
+	return false;
 }
 
 H5CgnsParticleSolution* H5CgnsZone::particleSolution()
@@ -538,7 +558,10 @@ H5CgnsParticleSolution* H5CgnsZone::particleSolution()
 
 bool H5CgnsZone::polyDataSolutionExists() const
 {
-	return (impl->m_flowSolutionPointerNames.find("PolyDataSolutionPointers") != impl->m_flowSolutionPointerNames.end());
+	if (impl->m_flowSolutionPointerNames.find("PolyDataSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
+	if (impl->m_names.find("PolyDataSolution1") != impl->m_names.end()) {return true;}
+
+	return false;
 }
 
 H5CgnsPolyDataSolution* H5CgnsZone::polyDataSolution()

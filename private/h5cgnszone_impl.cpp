@@ -282,11 +282,6 @@ void H5CgnsZone::Impl::createZoneIterativeData()
 	H5GroupCloser closer(gId);
 }
 
-void H5CgnsZone::Impl::clearNames()
-{
-	m_names.clear();
-}
-
 H5CgnsGridCoordinates* H5CgnsZone::Impl::openGridCoordinatesForSolution()
 {
 	if (m_solutionId == 0) {return nullptr;}

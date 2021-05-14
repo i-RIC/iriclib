@@ -33,8 +33,6 @@ public:
 	void createZoneIterativeDataIfNotExists();
 	void createZoneIterativeData();
 
-	void clearNames();
-
 	H5CgnsGridCoordinates* openGridCoordinatesForSolution();
 	H5CgnsGridCoordinates* createGridCoordinatesForSolution();
 
@@ -85,6 +83,7 @@ public:
 	H5CgnsParticleSolution* m_particleSolution;
 	H5CgnsPolyDataSolution* m_polyDataSolution;
 
+	std::set<std::string> m_names;
 	std::set<std::string> m_flowSolutionPointerNames;
 
 	H5CgnsBase* m_base;
@@ -94,7 +93,6 @@ private:
 	int createSolutionGroup(const std::string& name, const std::string& gridLocation, hid_t* gId);
 
 	H5CgnsZone* m_zone;
-	std::set<std::string> m_names;
 };
 
 } // namespace iRICLib
