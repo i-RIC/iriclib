@@ -28,6 +28,7 @@ public:
 
 	static int getGroupNames(hid_t groupId, std::vector<std::string>* names);
 	static int getGroupNames(hid_t groupId, std::set<std::string>* names);
+	static int createGroup(hid_t groupId, const std::string& name, hid_t* newGroup);
 	static int createGroup(hid_t groupId, const std::string& name, const std::string& label, const std::string& type, hid_t* newGroup);
 	static int createUserDefinedDataGroup(hid_t groupId, const std::string& name, hid_t* newGroup);
 	static int openGroup(hid_t groupId, const std::string& name, const std::string& label, hid_t* childGroup, bool noErrorLog = false);

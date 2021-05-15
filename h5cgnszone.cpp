@@ -595,10 +595,10 @@ int H5CgnsZone::copyGridTo(H5CgnsZone* target)
 
 	H5GroupCloser srcElemCloser(srcElem);
 
-	_IRIC_LOGGER_TRACE_CALL_START("H5Gcreate2");
-	tgtElem = H5Gcreate2(target->impl->m_groupId, ELEMENT, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
-	_IRIC_LOGGER_TRACE_CALL_END("H5Gcreate2");
-	if (tgtElem < 0) {return IRIC_H5_CALL_ERROR;}
+	_IRIC_LOGGER_TRACE_CALL_START("H5Util::createGroup");
+	ier = H5Util::createGroup(target->impl->m_groupId, ELEMENT, &tgtElem);
+	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::createGroup", ier);
+	RETURN_IF_ERR;
 
 	H5GroupCloser tgtElemCloser(tgtElem);
 

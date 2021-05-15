@@ -78,6 +78,7 @@ HEADERS += error_macros.h \
            h5datatypecloser.h \
            h5groupcloser.h \
            h5objectcloser.h \
+           h5propertylistcloser.h \
            h5util.h \
            intarraycontainer.h \
            iriclib.h \
@@ -184,6 +185,7 @@ SOURCES += h5attributecloser.cpp \
            h5datatypecloser.cpp \
            h5groupcloser.cpp \
            h5objectcloser.cpp \
+           h5propertylistcloser.cpp \
            h5util.cpp \
            intarraycontainer.cpp \
            iriclib_bc.cpp \

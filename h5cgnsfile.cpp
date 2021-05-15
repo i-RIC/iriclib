@@ -4,6 +4,7 @@
 #include "h5cgnsfile.h"
 #include "h5cgnsfilesolutionreader.h"
 #include "h5cgnsfilesolutionwriter.h"
+#include "h5propertylistcloser.h"
 #include "h5util.h"
 #include "iriclib_errorcodes.h"
 
@@ -38,7 +39,21 @@ H5CgnsFile::H5CgnsFile(const std::string &fileName, Mode mode) :
 	impl->m_fileName = fileName;
 
 	if (mode == Mode::Create) {
-		impl->m_fileId = H5Fcreate(fileName.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
+		_IRIC_LOGGER_TRACE_CALL_START("H5Pcreate");
+		hid_t fileCreationProperty = H5Pcreate(H5P_FILE_CREATE);
+		_IRIC_LOGGER_TRACE_CALL_END("H5Pcreate");
+
+		if (fileCreationProperty < 0) {
+			_iric_logger_error("H5CgnsFile::H5CgnsFile", "H5Pcreate", fileCreationProperty);
+		}
+
+		H5PropertyListCloser groupCreationPropertyCloser(fileCreationProperty);
+
+		_IRIC_LOGGER_TRACE_CALL_START("H5Pset_link_creation_order");
+		H5Pset_link_creation_order(fileCreationProperty, H5P_CRT_ORDER_TRACKED | H5P_CRT_ORDER_INDEXED);
+		_IRIC_LOGGER_TRACE_CALL_END("H5Pset_link_creation_order");
+
+		impl->m_fileId = H5Fcreate(fileName.c_str(), H5F_ACC_TRUNC, fileCreationProperty, H5P_DEFAULT);
 		if (impl->m_fileId >= 0) {
 			_initCgnsFile(impl->m_fileId);
 			auto iricBase = impl->createBase(2);

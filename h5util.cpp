@@ -5,6 +5,7 @@
 #include "h5datatypecloser.h"
 #include "h5groupcloser.h"
 #include "h5objectcloser.h"
+#include "h5propertylistcloser.h"
 #include "h5util.h"
 #include "iriclib_errorcodes.h"
 
@@ -134,6 +135,13 @@ int createGroupWithValuesT(hid_t groupId, const std::string& name, const std::st
 	_IRIC_LOGGER_TRACE_CALL_START("H5Pcreate");
 	hid_t groupCreationProperty = H5Pcreate(H5P_GROUP_CREATE);
 	_IRIC_LOGGER_TRACE_CALL_END("H5Pcreate");
+
+	if (groupCreationProperty < 0) {
+		_iric_logger_error("createGroupWithValuesT", "H5Pcreate", groupCreationProperty);
+		return IRIC_H5_CALL_ERROR;
+	}
+
+	H5PropertyListCloser groupCreationPropertyCloser(groupCreationProperty);
 
 	_IRIC_LOGGER_TRACE_CALL_START("H5Pset_link_creation_order");
 	H5Pset_link_creation_order(groupCreationProperty, H5P_CRT_ORDER_TRACKED | H5P_CRT_ORDER_INDEXED);
@@ -704,6 +712,21 @@ int copyChildren(hid_t srcGroupId, hid_t tgtGroupId)
 
 			H5GroupCloser srcChildGroupCloser(srcChildGroupId);
 
+			_IRIC_LOGGER_TRACE_CALL_START("H5Pcreate");
+			hid_t groupCreationProperty = H5Pcreate(H5P_GROUP_CREATE);
+			_IRIC_LOGGER_TRACE_CALL_END("H5Pcreate");
+
+			if (groupCreationProperty < 0) {
+				_iric_logger_error("copyChildren", "H5Pcreate", groupCreationProperty);
+				return IRIC_H5_CALL_ERROR;
+			}
+
+			H5PropertyListCloser groupCreationPropertyCloser(groupCreationProperty);
+
+			_IRIC_LOGGER_TRACE_CALL_START("H5Pset_link_creation_order");
+			H5Pset_link_creation_order(groupCreationProperty, H5P_CRT_ORDER_TRACKED | H5P_CRT_ORDER_INDEXED);
+			_IRIC_LOGGER_TRACE_CALL_END("H5Pset_link_creation_order");
+
 			_IRIC_LOGGER_TRACE_CALL_START("H5Gcreate2");
 			hid_t tgtChildGroupId = H5Gcreate2(tgtGroupId, name.c_str(), H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
 			_IRIC_LOGGER_TRACE_CALL_END("H5Gcreate2");
@@ -825,11 +848,18 @@ int H5Util::getGroupNames(hid_t groupId, std::set<std::string>* names)
 	return IRIC_NO_ERROR;
 }
 
-int H5Util::createGroup(hid_t groupId, const std::string& name, const std::string& label, const std::string& type, hid_t* newGroup)
+int H5Util::createGroup(hid_t groupId, const std::string& name, hid_t* newGroup)
 {
 	_IRIC_LOGGER_TRACE_CALL_START("H5Pcreate");
 	hid_t groupCreationProperty = H5Pcreate(H5P_GROUP_CREATE);
 	_IRIC_LOGGER_TRACE_CALL_END("H5Pcreate");
+
+	if (groupCreationProperty < 0) {
+		_iric_logger_error("H5Util::createGroup", "H5Pcreate", groupCreationProperty);
+		return IRIC_H5_CALL_ERROR;
+	}
+
+	H5PropertyListCloser groupCreationPropertyCloser(groupCreationProperty);
 
 	_IRIC_LOGGER_TRACE_CALL_START("H5Pset_link_creation_order");
 	H5Pset_link_creation_order(groupCreationProperty, H5P_CRT_ORDER_TRACKED | H5P_CRT_ORDER_INDEXED);
@@ -844,25 +874,34 @@ int H5Util::createGroup(hid_t groupId, const std::string& name, const std::strin
 		return IRIC_H5_CALL_ERROR;
 	}
 
-	int ier;
+	*newGroup = newGroupId;
+
+	return IRIC_NO_ERROR;
+}
+
+int H5Util::createGroup(hid_t groupId, const std::string& name, const std::string& label, const std::string& type, hid_t* newGroup)
+{
+	_IRIC_LOGGER_TRACE_CALL_START("H5Util::createGroup");
+	int ier = createGroup(groupId, name, newGroup);
+	_IRIC_LOGGER_TRACE_CALL_END("H5Util::createGroup");
+	RETURN_IF_ERR;
+
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::writeAttribute");
-	ier = H5Util::writeAttribute(newGroupId, "name", name);
+	ier = H5Util::writeAttribute(*newGroup, "name", name);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::writeAttribute", ier);
 
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::writeAttribute");
-	ier = H5Util::writeAttribute(newGroupId, "label", label);
+	ier = H5Util::writeAttribute(*newGroup, "label", label);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::writeAttribute", ier);
 
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::writeAttribute");
-	ier = H5Util::writeAttribute(newGroupId, "type", type);
+	ier = H5Util::writeAttribute(*newGroup, "type", type);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::writeAttribute", ier);
 
 	int flags = 1;
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::writeAttribute");
-	ier = H5Util::writeAttribute(newGroupId, "flags", flags);
+	ier = H5Util::writeAttribute(*newGroup, "flags", flags);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::writeAttribute", ier);
-
-	*newGroup = newGroupId;
 
 	return IRIC_NO_ERROR;
 }
