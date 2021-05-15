@@ -622,7 +622,6 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	// Test Reading Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with times
 	//
 
-	/*
 	ier = cg_open("case_soldivide.cgn", CG_MODE_READ, &fid);
 	VERIFY_LOG("cg_open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_open() fid != 0", fid != 0);
@@ -630,13 +629,10 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	ier = cg_iRIC_InitRead(fid);
 	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
 
-	cg_iRIC_SetFilename(fid, "case_soldivide.cgn");
-
 	readSolution(fid);
 
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
-	*/
 
 	VERIFY_REMOVE("case_soldivide.cgn", hdf);
 	VERIFY_REMOVE("result/Solution1.cgn", hdf);
