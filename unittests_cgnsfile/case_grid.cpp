@@ -113,6 +113,48 @@ void case_GridRead()
 	remove("case_grid.cgn");
 }
 
+void case_GridReadUnstructured()
+{
+	fs::copy("case_unst_hdf5.cgn", "case_grid_unstructured.cgn");
+
+	int fid;
+	int ier = cg_open("case_grid_unstructured.cgn", CG_MODE_MODIFY, &fid);
+
+	VERIFY_LOG("cg_open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+
+	ier = cg_iRIC_Init(fid);
+
+	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+
+	int elem_size;
+	int count;
+	std::vector<double> x, y;
+	std::vector<int> elems;
+
+	ier = cg_iRIC_GetTriangleElementsSize_Mul(fid, &elem_size);
+	VERIFY_LOG("cg_iRIC_GetTriangleElementsSize_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_GetTriangleElementsSize_Mul() elem_size == 3", elem_size == 3);
+
+	ier = cg_iRIC_Read_Grid_NodeCount_Mul(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() count == 5", count == 5);
+
+	x.assign(count, 0);
+	y.assign(count, 0);
+	elems.assign(elem_size * 3, 0);
+
+	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
+	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+
+	ier = cg_iRIC_GetTriangleElements_Mul(fid, elems.data());
+	VERIFY_LOG("cg_iRIC_GetTriangleElements_Mul() ier == 0", ier == 0);
+
+	cg_close(fid);
+
+	remove("case_grid_unstructured.cgn");
+}
+
 void case_GridReadFunc()
 {
 	fs::copy("case_gridfunc.cgn", "case_gridreadfunc.cgn");

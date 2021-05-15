@@ -17,7 +17,7 @@ def case_GridRead():
     util.verify_log("cg_iRIC_GotoGridCoord2d() isize == 11", isize == 11)
     util.verify_log("cg_iRIC_GotoGridCoord2d() jsize == 11", jsize == 11)
 
-    x, y = iric.cg_iRIC_GetGridCoord2d_Mul(fid)
+    x, y = iric.cg_iRIC_GetGridCoord2d()
 
     doubleArr = iric.cg_iRIC_Read_Grid_Real_Node("node_real")
     util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[0] == 2", doubleArr[0] == 2)
@@ -57,6 +57,37 @@ def case_GridRead():
     iric.cg_close(fid)
 
     util.remove("data/case_grid.cgn")
+
+def case_GridReadUnstructured():
+    shutil.copy("data/case_unst_hdf5.cgn", "data/case_grid_unstructured.cgn")
+
+    fid = iric.cg_open("data/case_grid_unstructured.cgn", iric.CG_MODE_MODIFY)
+    util.verify_log("cg_open() fid != 0", fid != 0)
+
+    iric.cg_iRIC_Init(fid)
+
+    elem_size = iric.cg_iRIC_GetTriangleElementsSize()
+    util.verify_log("cg_iRIC_GetTriangleElementsSize() elem_size == 3", elem_size == 3)
+
+    node_count = iric.cg_iRIC_Read_Grid_NodeCount()
+    util.verify_log("cg_iRIC_Read_Grid_NodeCount() node_count == 5", node_count == 5)
+
+    x, y = iric.cg_iRIC_GetGridCoord2d()
+    elems = iric.cg_iRIC_GetTriangleElements()
+
+    util.verify_log("cg_iRIC_GetTriangleElements() elems[0] == 1", elems[0] == 1)
+    util.verify_log("cg_iRIC_GetTriangleElements() elems[1] == 2", elems[1] == 2)
+    util.verify_log("cg_iRIC_GetTriangleElements() elems[2] == 5", elems[2] == 5)
+    util.verify_log("cg_iRIC_GetTriangleElements() elems[3] == 4", elems[3] == 4)
+    util.verify_log("cg_iRIC_GetTriangleElements() elems[4] == 5", elems[4] == 5)
+    util.verify_log("cg_iRIC_GetTriangleElements() elems[5] == 2", elems[5] == 2)
+    util.verify_log("cg_iRIC_GetTriangleElements() elems[6] == 4", elems[6] == 4)
+    util.verify_log("cg_iRIC_GetTriangleElements() elems[7] == 2", elems[7] == 2)
+    util.verify_log("cg_iRIC_GetTriangleElements() elems[8] == 3", elems[8] == 3)
+
+    iric.cg_close(fid)
+
+    util.remove("data/case_grid_unstructured.cgn")
 
 def case_GridReadFunc():
     shutil.copy("data/case_gridfunc.cgn", "data/case_gridreadfunc.cgn")
