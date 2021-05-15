@@ -275,7 +275,7 @@ int H5CgnsZone::readTriangleElementsSize(int* size) const
 	}
 
 	_IRIC_LOGGER_TRACE_CALL_START("H5CgnsZone::readTriangleElementsCount");
-	int ier = readTriangleElementsCount(size);
+	int ier = readTriangleElementsValueCount(size);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5CgnsZone::readTriangleElementsCount", ier);
 	RETURN_IF_ERR;
 
@@ -284,7 +284,7 @@ int H5CgnsZone::readTriangleElementsSize(int* size) const
 	return IRIC_NO_ERROR;
 }
 
-int H5CgnsZone::readTriangleElementsCount(int* size) const
+int H5CgnsZone::readTriangleElementsValueCount(int* size) const
 {
 	if (impl->m_type != Type::Unstructured) {
 		_iric_logger_error("In H5CgnsZone::readTriangleElementsCount(), the grid type is not unstructured");

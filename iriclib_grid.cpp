@@ -119,6 +119,45 @@ int cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, double* x_arr, doubl
 	return IRIC_NO_ERROR;
 }
 
+int cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(int fid, int gid, int* size)
+{
+	H5CgnsZone* zone;
+	int ier = _iric_get_zone(fid, gid, &zone, __func__);
+	RETURN_IF_ERR;
+
+	ier = zone->readTriangleElementsSize(size);
+	RETURN_IF_ERR;
+
+	return IRIC_NO_ERROR;
+}
+
+int cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(int fid, int gid, int* size)
+{
+	H5CgnsZone* zone;
+	int ier = _iric_get_zone(fid, gid, &zone, __func__);
+	RETURN_IF_ERR;
+
+	ier = zone->readTriangleElementsValueCount(size);
+	RETURN_IF_ERR;
+
+	return IRIC_NO_ERROR;
+}
+
+int cg_iRIC_GetTriangleElements_WithGridId_Mul(int fid, int gid, int* id_arr)
+{
+	H5CgnsZone* zone;
+	int ier = _iric_get_zone(fid, gid, &zone, __func__);
+	RETURN_IF_ERR;
+
+	std::vector<int> indices;
+	ier = zone->readTriangleElements(&indices);
+	RETURN_IF_ERR;
+
+	_vectorToPointerT(indices, id_arr);
+
+	return IRIC_NO_ERROR;
+}
+
 int cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(int fid, int gid, int* count)
 {
 	H5CgnsZone* zone;

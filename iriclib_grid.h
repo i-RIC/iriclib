@@ -11,6 +11,9 @@ int IRICLIBDLL cg_iRIC_GotoGridCoord2d_WithGridId_Mul(int fid, int gid, int* isi
 int IRICLIBDLL cg_iRIC_GetGridCoord2d_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr);
 int IRICLIBDLL cg_iRIC_GotoGridCoord3d_WithGridId_Mul(int fid, int gid, int* isize, int* jsize, int* ksize);
 int IRICLIBDLL cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr, double* z_arr);
+int IRICLIBDLL cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(int fid, int gid, int* size);
+int IRICLIBDLL cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(int fid, int gid, int* size);
+int IRICLIBDLL cg_iRIC_GetTriangleElements_WithGridId_Mul(int fid, int gid, int* id_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(int fid, int gid, int* count);
 int IRICLIBDLL cg_iRIC_Read_Grid_CellCount_WithGridId_Mul(int fid, int gid, int* count);
 int IRICLIBDLL cg_iRIC_Read_Grid_IFaceCount_WithGridId_Mul(int fid, int gid, int* count);

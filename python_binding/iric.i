@@ -110,6 +110,8 @@ int cg_iRIC_Read_Geo_Filename_Mul(int fid, const char* name, int geoid, char* st
 // from iriclib_grid.h
 int cg_iRIC_GotoGridCoord2d_WithGridId_Mul(int fid, int gid, int* OUTPUT, int* OUTPUT);
 int cg_iRIC_GotoGridCoord3d_WithGridId_Mul(int fid, int gid, int* OUTPUT, int* OUTPUT, int* OUTPUT);
+int cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(int fid, int gid, int* OUTPUT);
+int cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(int fid, int gid, int* OUTPUT);
 int cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(int fid, int gid, int* OUTPUT);
 int cg_iRIC_Read_Grid_CellCount_WithGridId_Mul(int fid, int gid, int* OUTPUT);
 int cg_iRIC_Read_Grid_IFaceCount_WithGridId_Mul(int fid, int gid, int* OUTPUT);
@@ -173,6 +175,8 @@ int cg_iRIC_Read_Geo_Count(const char* name, int* OUTPUT);
 int cg_iRIC_Read_Geo_Filename(const char* name, int geoid, char* strvalue, int* OUTPUT);
 int cg_iRIC_GotoGridCoord2d_WithGridId(int gid, int* OUTPUT, int* OUTPUT);
 int cg_iRIC_GotoGridCoord3d_WithGridId(int gid, int* OUTPUT, int* OUTPUT, int* OUTPUT);
+int cg_iRIC_GetTriangleElementsSize_WithGridId(int gid, int* OUTPUT);
+int cg_iRIC_GetTriangleElementsSize2_WithGridId(int gid, int* OUTPUT);
 int cg_iRIC_Read_Grid_NodeCount_WithGridId(int gid, int* OUTPUT);
 int cg_iRIC_Read_Grid_CellCount_WithGridId(int gid, int* OUTPUT);
 int cg_iRIC_Read_Grid_IFaceCount_WithGridId(int gid, int* OUTPUT);
@@ -206,6 +210,8 @@ int cg_iRIC_Write_BC_String(const char* type, int num, const char* name, const c
 int cg_iRIC_Write_BC_FunctionalWithName_String(const char* type, int num, const char* name, const char* paramname, const char* value);
 int cg_iRIC_GotoGridCoord2d(int* OUTPUT, int* OUTPUT);
 int cg_iRIC_GotoGridCoord3d(int* OUTPUT, int* OUTPUT, int* OUTPUT);
+int cg_iRIC_GetTriangleElementsSize(int* OUTPUT);
+int cg_iRIC_GetTriangleElementsSize2(int* OUTPUT);
 int cg_iRIC_Read_Grid_NodeCount(int* OUTPUT);
 int cg_iRIC_Read_Grid_CellCount(int* OUTPUT);
 int cg_iRIC_Read_Grid_IFaceCount(int* OUTPUT);
@@ -283,6 +289,8 @@ int cg_iRIC_Write_BC_String_Mul(int fid, const char* type, int num, const char* 
 int cg_iRIC_Write_BC_FunctionalWithName_String_Mul(int fid, const char* type, int num, const char* name, const char* paramname, const char* value);
 int cg_iRIC_GotoGridCoord2d_Mul(int fid, int* OUTPUT, int* OUTPUT);
 int cg_iRIC_GotoGridCoord3d_Mul(int fid, int* OUTPUT, int* OUTPUT, int* OUTPUT);
+int cg_iRIC_GetTriangleElementsSize_Mul(int fid, int* OUTPUT);
+int cg_iRIC_GetTriangleElementsSize2_Mul(int fid, int* OUTPUT);
 int cg_iRIC_Read_Grid_NodeCount_Mul(int fid, int* OUTPUT);
 int cg_iRIC_Read_Grid_CellCount_Mul(int fid, int* OUTPUT);
 int cg_iRIC_Read_Grid_IFaceCount_Mul(int fid, int* OUTPUT);
@@ -364,6 +372,7 @@ int iRIC_Geo_Polygon_Read_HolePoints(int id, int holeid, RealArrayContainer& x_a
 int iRIC_Geo_RiverSurvey_Read_Altitudes(int id, int pointid, RealArrayContainer& position_arr, RealArrayContainer& height_arr, IntArrayContainer& active_arr);
 int cg_iRIC_GetGridCoord2d_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_GetTriangleElements_WithGridId_Mul(int fid, int gid, IntArrayContainer& id_arr);
 int cg_iRIC_Read_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, RealArrayContainer& v_arr);
@@ -403,6 +412,7 @@ int cg_iRIC_Write_Grid_Complex_Node_WithGridId(int gid, const char* groupname, I
 int cg_iRIC_Write_Grid_Complex_Cell_WithGridId(int gid, const char* groupname, IntArrayContainer& v_arr);
 int cg_iRIC_GetGridCoord2d_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_GetGridCoord3d_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_GetTriangleElements_WithGridId(int gid, IntArrayContainer& id_arr);
 int cg_iRIC_Read_Grid_Real_Node_WithGridId(int gid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Grid_Integer_Node_WithGridId(int gid, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Grid_Real_Cell_WithGridId(int gid, const char* name, RealArrayContainer& v_arr);
@@ -438,6 +448,7 @@ int cg_iRIC_Write_Grid_Complex_Node(const char* groupname, IntArrayContainer& v_
 int cg_iRIC_Write_Grid_Complex_Cell(const char* groupname, IntArrayContainer& v_arr);
 int cg_iRIC_GetGridCoord2d(RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_GetGridCoord3d(RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_GetTriangleElements(IntArrayContainer& id_arr);
 int cg_iRIC_Read_Grid_Real_Node(const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Grid_Integer_Node(const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Grid_Real_Cell(const char* name, RealArrayContainer& v_arr);
@@ -557,6 +568,7 @@ int cg_iRIC_Write_Grid_Complex_Node_Mul(int fid, const char* groupname, IntArray
 int cg_iRIC_Write_Grid_Complex_Cell_Mul(int fid, const char* groupname, IntArrayContainer& v_arr);
 int cg_iRIC_GetGridCoord2d_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_GetGridCoord3d_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_GetTriangleElements_Mul(int fid, IntArrayContainer& id_arr);
 int cg_iRIC_Read_Grid_Real_Node_Mul(int fid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Grid_Integer_Node_Mul(int fid, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Grid_Real_Cell_Mul(int fid, const char* name, RealArrayContainer& v_arr);

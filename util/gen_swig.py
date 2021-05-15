@@ -237,6 +237,12 @@ def gen_size_func(fname, args):
 
     return 'cg_iRIC_Read_Sol_PolyData_CoordinateCount' + suffix, args
 
+  m = re.search('(cg_iRIC_GetTriangleElements)(.*)', fname)
+  if m:
+    m, suffix = m.groups()
+
+    return 'cg_iRIC_GetTriangleElementsSize2' + suffix, args
+
   if fname == 'iRIC_Geo_Polygon_Read_Points':
     return 'iRIC_Geo_Polygon_Read_PointCount', args
 
@@ -286,7 +292,7 @@ def gen_iric_py_content(fdef):
       rets.append(aname)
 
     elif atype == "IntArrayContainer&" or atype == "RealArrayContainer&":
-      if "_Read" in fname or "GetGridCoord" in fname:
+      if "_Read" in fname or "GetGridCoord" in fname or "GetTriangleElements" in fname:
         arrays_out[aname] = atype.replace('&', '')
         w_args.append(aname.replace('_arr', ''))
         rets.append(aname.replace('_arr', '') + ".get()")

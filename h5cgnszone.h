@@ -70,7 +70,7 @@ public:
 	H5CgnsZoneBc* zoneBc() const;
 
 	int readTriangleElementsSize(int* size) const;
-	int readTriangleElementsCount(int* size) const;
+	int readTriangleElementsValueCount(int* size) const;
 	int readTriangleElements(std::vector<int>* indices) const;
 	int writeTriangleElements(const std::vector<int>& indices) const;
 

@@ -37,6 +37,8 @@ def gen_ftoc_source_content(fdef):
 
   arglist = args.split(',')
 
+  if ("Size2" in fname): return ""
+
   content = "void IRICLIBDLL FMNAME(" + fname.lower() + "_f, " + fname.upper() + "_F)"
   args = list()
   iargs = list()

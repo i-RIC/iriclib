@@ -323,6 +323,33 @@ int cg_iRIC_GetGridCoord3d_Mul(int fid, double* x_arr, double* y_arr, double* z_
   return cg_iRIC_GetGridCoord3d_WithGridId_Mul(fid, gid, x_arr, y_arr, z_arr);
 }
 
+int cg_iRIC_GetTriangleElementsSize_Mul(int fid, int* size)
+{
+  int gid;
+  int ier = getlastGridId(fid, &gid);
+  RETURN_IF_ERR;
+
+  return cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(fid, gid, size);
+}
+
+int cg_iRIC_GetTriangleElementsSize2_Mul(int fid, int* size)
+{
+  int gid;
+  int ier = getlastGridId(fid, &gid);
+  RETURN_IF_ERR;
+
+  return cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(fid, gid, size);
+}
+
+int cg_iRIC_GetTriangleElements_Mul(int fid, int* id_arr)
+{
+  int gid;
+  int ier = getlastGridId(fid, &gid);
+  RETURN_IF_ERR;
+
+  return cg_iRIC_GetTriangleElements_WithGridId_Mul(fid, gid, id_arr);
+}
+
 int cg_iRIC_Read_Grid_NodeCount_Mul(int fid, int* count)
 {
   int gid;

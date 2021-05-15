@@ -427,6 +427,16 @@ def cg_iRIC_GotoGridCoord3d_WithGridId_Mul(fid, gid):
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 
+def cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(fid, gid):
+	ier, size = _iric.cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(fid, gid)
+	_checkErrorCode(ier)
+	return size
+
+def cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(fid, gid):
+	ier, size = _iric.cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(fid, gid)
+	_checkErrorCode(ier)
+	return size
+
 def cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(fid, gid):
 	ier, count = _iric.cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(fid, gid)
 	_checkErrorCode(ier)
@@ -692,6 +702,16 @@ def cg_iRIC_GotoGridCoord3d_WithGridId(gid):
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 
+def cg_iRIC_GetTriangleElementsSize_WithGridId(gid):
+	ier, size = _iric.cg_iRIC_GetTriangleElementsSize_WithGridId(gid)
+	_checkErrorCode(ier)
+	return size
+
+def cg_iRIC_GetTriangleElementsSize2_WithGridId(gid):
+	ier, size = _iric.cg_iRIC_GetTriangleElementsSize2_WithGridId(gid)
+	_checkErrorCode(ier)
+	return size
+
 def cg_iRIC_Read_Grid_NodeCount_WithGridId(gid):
 	ier, count = _iric.cg_iRIC_Read_Grid_NodeCount_WithGridId(gid)
 	_checkErrorCode(ier)
@@ -845,6 +865,16 @@ def cg_iRIC_GotoGridCoord3d():
 	ier, isize, jsize, ksize = _iric.cg_iRIC_GotoGridCoord3d()
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
+
+def cg_iRIC_GetTriangleElementsSize():
+	ier, size = _iric.cg_iRIC_GetTriangleElementsSize()
+	_checkErrorCode(ier)
+	return size
+
+def cg_iRIC_GetTriangleElementsSize2():
+	ier, size = _iric.cg_iRIC_GetTriangleElementsSize2()
+	_checkErrorCode(ier)
+	return size
 
 def cg_iRIC_Read_Grid_NodeCount():
 	ier, count = _iric.cg_iRIC_Read_Grid_NodeCount()
@@ -1177,6 +1207,16 @@ def cg_iRIC_GotoGridCoord3d_Mul(fid):
 	ier, isize, jsize, ksize = _iric.cg_iRIC_GotoGridCoord3d_Mul(fid)
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
+
+def cg_iRIC_GetTriangleElementsSize_Mul(fid):
+	ier, size = _iric.cg_iRIC_GetTriangleElementsSize_Mul(fid)
+	_checkErrorCode(ier)
+	return size
+
+def cg_iRIC_GetTriangleElementsSize2_Mul(fid):
+	ier, size = _iric.cg_iRIC_GetTriangleElementsSize2_Mul(fid)
+	_checkErrorCode(ier)
+	return size
 
 def cg_iRIC_Read_Grid_NodeCount_Mul(fid):
 	ier, count = _iric.cg_iRIC_Read_Grid_NodeCount_Mul(fid)
@@ -1571,6 +1611,13 @@ def cg_iRIC_GetGridCoord3d_WithGridId_Mul(fid, gid):
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 
+def cg_iRIC_GetTriangleElements_WithGridId_Mul(fid, gid):
+	size = cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(fid, gid)
+	id = IntArrayContainer(size)
+	ier = _iric.cg_iRIC_GetTriangleElements_WithGridId_Mul(fid, gid, id)
+	_checkErrorCode(ier)
+	return id.get()
+
 def cg_iRIC_Read_Grid_Real_Node_WithGridId_Mul(fid, gid, name):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(fid, gid)
 	v = RealArrayContainer(size)
@@ -1848,6 +1895,13 @@ def cg_iRIC_GetGridCoord3d_WithGridId(gid):
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 
+def cg_iRIC_GetTriangleElements_WithGridId(gid):
+	size = cg_iRIC_GetTriangleElementsSize2_WithGridId(gid)
+	id = IntArrayContainer(size)
+	ier = _iric.cg_iRIC_GetTriangleElements_WithGridId(gid, id)
+	_checkErrorCode(ier)
+	return id.get()
+
 def cg_iRIC_Read_Grid_Real_Node_WithGridId(gid, name):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId(gid)
 	v = RealArrayContainer(size)
@@ -2095,6 +2149,13 @@ def cg_iRIC_GetGridCoord3d():
 	ier = _iric.cg_iRIC_GetGridCoord3d(x, y, z)
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
+
+def cg_iRIC_GetTriangleElements():
+	size = cg_iRIC_GetTriangleElementsSize2()
+	id = IntArrayContainer(size)
+	ier = _iric.cg_iRIC_GetTriangleElements(id)
+	_checkErrorCode(ier)
+	return id.get()
 
 def cg_iRIC_Read_Grid_Real_Node(name):
 	size = cg_iRIC_Read_Grid_NodeCount()
@@ -2944,6 +3005,13 @@ def cg_iRIC_GetGridCoord3d_Mul(fid):
 	ier = _iric.cg_iRIC_GetGridCoord3d_Mul(fid, x, y, z)
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
+
+def cg_iRIC_GetTriangleElements_Mul(fid):
+	size = cg_iRIC_GetTriangleElementsSize2_Mul(fid)
+	id = IntArrayContainer(size)
+	ier = _iric.cg_iRIC_GetTriangleElements_Mul(fid, id)
+	_checkErrorCode(ier)
+	return id.get()
 
 def cg_iRIC_Read_Grid_Real_Node_Mul(fid, name):
 	size = cg_iRIC_Read_Grid_NodeCount_Mul(fid)
