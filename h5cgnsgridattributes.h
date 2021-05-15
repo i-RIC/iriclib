@@ -25,19 +25,19 @@ public:
 	int readValue(const std::string& name, std::vector<int>* values) const;
 	int readValue(const std::string& name, std::vector<double>* values) const;
 
-	int readFunctionalDimensionSize(const std::string& name, const std::string& dimname, int* size);
-	int readFunctionalDimension(const std::string& name, const std::string& dimname, std::vector<int>* values);
-	int readFunctionalDimension(const std::string& name, const std::string& dimname, std::vector<double>* values);
-	int readFunctional(const std::string& name, int dimid, std::vector<int>* values);
-	int readFunctional(const std::string& name, int dimid, std::vector<double>* values);
+	int readFunctionalDimensionSize(const std::string& name, const std::string& dimname, int* size) const;
+	int readFunctionalDimension(const std::string& name, const std::string& dimname, std::vector<int>* values) const;
+	int readFunctionalDimension(const std::string& name, const std::string& dimname, std::vector<double>* values) const;
+	int readFunctional(const std::string& name, int dimid, std::vector<int>* values) const;
+	int readFunctional(const std::string& name, int dimid, std::vector<double>* values) const;
 
 	int writeValue(const std::string& name, const std::vector<int>& values) const;
 	int writeValue(const std::string& name, const std::vector<double>& values) const;
 
-	int writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<int>& values);
-	int writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<double>& values);
-	int writeFunctional(const std::string& name, int dimid, const std::vector<int>& values);
-	int writeFunctional(const std::string& name, int dimid, const std::vector<double>& values);
+	int writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<int>& values) const;
+	int writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<double>& values) const;
+	int writeFunctional(const std::string& name, int dimid, const std::vector<int>& values) const;
+	int writeFunctional(const std::string& name, int dimid, const std::vector<double>& values) const;
 
 	H5CgnsZone* zone() const;
 

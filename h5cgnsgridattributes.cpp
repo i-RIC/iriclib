@@ -168,7 +168,7 @@ int H5CgnsGridAttributes::readValue(const std::string& name, std::vector<double>
 	return readDataArray(impl->m_groupId, name, "Value", values);
 }
 
-int H5CgnsGridAttributes::readFunctionalDimensionSize(const std::string& name, const std::string& dimname, int* size)
+int H5CgnsGridAttributes::readFunctionalDimensionSize(const std::string& name, const std::string& dimname, int* size) const
 {
 	hid_t gId;
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::openGroup");
@@ -186,22 +186,22 @@ int H5CgnsGridAttributes::readFunctionalDimensionSize(const std::string& name, c
 	return IRIC_NO_ERROR;
 }
 
-int H5CgnsGridAttributes::readFunctionalDimension(const std::string& name, const std::string& dimname, std::vector<int>* values)
+int H5CgnsGridAttributes::readFunctionalDimension(const std::string& name, const std::string& dimname, std::vector<int>* values) const
 {
 	return readDataArray(impl->m_groupId, name, dimensionDataName(dimname), values);
 }
 
-int H5CgnsGridAttributes::readFunctionalDimension(const std::string& name, const std::string& dimname, std::vector<double>* values)
+int H5CgnsGridAttributes::readFunctionalDimension(const std::string& name, const std::string& dimname, std::vector<double>* values) const
 {
 	return readDataArray(impl->m_groupId, name, dimensionDataName(dimname), values);
 }
 
-int H5CgnsGridAttributes::readFunctional(const std::string& name, int dimid, std::vector<int>* values)
+int H5CgnsGridAttributes::readFunctional(const std::string& name, int dimid, std::vector<int>* values) const
 {
 	return readDataArray(impl->m_groupId, name, dimensionValueName(dimid), values);
 }
 
-int H5CgnsGridAttributes::readFunctional(const std::string& name, int dimid, std::vector<double>* values)
+int H5CgnsGridAttributes::readFunctional(const std::string& name, int dimid, std::vector<double>* values) const
 {
 	return readDataArray(impl->m_groupId, name, dimensionValueName(dimid), values);
 }
@@ -222,7 +222,7 @@ int H5CgnsGridAttributes::writeValue(const std::string& name, const std::vector<
 	return IRIC_NO_ERROR;
 }
 
-int H5CgnsGridAttributes::writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<int>& values)
+int H5CgnsGridAttributes::writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<int>& values) const
 {
 	int ier = updateOrCreateDataArray(impl->m_groupId, name, dimensionDataName(dimname), values, &(impl->m_names));
 	RETURN_IF_ERR;
@@ -230,7 +230,7 @@ int H5CgnsGridAttributes::writeFunctionalDimension(const std::string& name, cons
 	return IRIC_NO_ERROR;
 }
 
-int H5CgnsGridAttributes::writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<double>& values)
+int H5CgnsGridAttributes::writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<double>& values) const
 {
 	int ier = updateOrCreateDataArray(impl->m_groupId, name, dimensionDataName(dimname), values, &(impl->m_names));
 	RETURN_IF_ERR;
@@ -238,7 +238,7 @@ int H5CgnsGridAttributes::writeFunctionalDimension(const std::string& name, cons
 	return IRIC_NO_ERROR;
 }
 
-int H5CgnsGridAttributes::writeFunctional(const std::string& name, int dimid, const std::vector<int>& values)
+int H5CgnsGridAttributes::writeFunctional(const std::string& name, int dimid, const std::vector<int>& values) const
 {
 	int ier = updateOrCreateDataArray(impl->m_groupId, name, dimensionValueName(dimid), values, &(impl->m_names));
 	RETURN_IF_ERR;
@@ -246,7 +246,7 @@ int H5CgnsGridAttributes::writeFunctional(const std::string& name, int dimid, co
 	return IRIC_NO_ERROR;
 }
 
-int H5CgnsGridAttributes::writeFunctional(const std::string& name, int dimid, const std::vector<double>& values)
+int H5CgnsGridAttributes::writeFunctional(const std::string& name, int dimid, const std::vector<double>& values) const
 {
 	int ier = updateOrCreateDataArray(impl->m_groupId, name, dimensionValueName(dimid), values, &(impl->m_names));
 	RETURN_IF_ERR;
