@@ -38,12 +38,11 @@ int H5CgnsBaseIterativeData::Impl::valueCount()
 
 int H5CgnsBaseIterativeData::Impl::readAllValues()
 {
-	int ier;
 	std::vector<std::string> names;
 
-	_IRIC_LOGGER_TRACE_CALL_START("H5CgnsBaseIterativeData::getResultNames");
-	ier = m_data->getResultNames(&names);
-	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5CgnsBaseIterativeData::getResultNames", ier);
+	_IRIC_LOGGER_TRACE_CALL_START("H5Util:getGroupNames");
+	int ier = H5Util::getGroupNames(m_groupId, &names);
+	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util:getGroupNames", ier);
 	RETURN_IF_ERR;
 
 	for (const auto& name : names) {
