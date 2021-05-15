@@ -229,20 +229,36 @@ int H5CgnsBaseIterativeData::flush()
 
 int H5CgnsBaseIterativeData::getResultNames(std::vector<std::string>* names)
 {
+	std::vector<std::string> tmpNames;
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::getGroupNames");
-	int ier = H5Util::getGroupNames(impl->m_groupId, names);
+	int ier = H5Util::getGroupNames(impl->m_groupId, &tmpNames);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::getGroupNames", ier);
 	RETURN_IF_ERR;
+
+	for (const auto& name : tmpNames) {
+		if (name == TIMEVALUES) {continue;}
+		if (name == ITERATIONVALUES) {continue;}
+
+		names->push_back(name);
+	}
 
 	return IRIC_NO_ERROR;
 }
 
 int H5CgnsBaseIterativeData::getResultNames(std::set<std::string>* names)
 {
+	std::set<std::string> tmpNames;
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::getGroupNames");
 	int ier = H5Util::getGroupNames(impl->m_groupId, names);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::getGroupNames", ier);
 	RETURN_IF_ERR;
+
+	for (const auto& name : tmpNames) {
+		if (name == TIMEVALUES) {continue;}
+		if (name == ITERATIONVALUES) {continue;}
+
+		names->insert(name);
+	}
 
 	return IRIC_NO_ERROR;
 }

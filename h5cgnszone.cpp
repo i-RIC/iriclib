@@ -558,8 +558,8 @@ H5CgnsParticleSolution* H5CgnsZone::particleSolution()
 
 bool H5CgnsZone::polyDataSolutionExists() const
 {
-	if (impl->m_flowSolutionPointerNames.find("PolyDataSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
-	if (impl->m_names.find("PolyDataSolution1") != impl->m_names.end()) {return true;}
+	if (impl->m_flowSolutionPointerNames.find("PolydataSolutionPointers") != impl->m_flowSolutionPointerNames.end()) {return true;}
+	if (impl->m_names.find("PolydataSolution1") != impl->m_names.end()) {return true;}
 
 	return false;
 }

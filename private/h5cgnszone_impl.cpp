@@ -520,7 +520,7 @@ H5CgnsParticleGroupSolution* H5CgnsZone::Impl::openParticleGroupSolution()
 	if (m_solutionId == 0) {return nullptr;}
 
 	std::ostringstream ss;
-	ss << "ParticleSolution" << m_solutionId;
+	ss << "ParticleGroupSolution" << m_solutionId;
 
 	hid_t gId;
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::openGroup");
@@ -539,7 +539,7 @@ H5CgnsParticleGroupSolution* H5CgnsZone::Impl::createParticleGroupSolution()
 	if (m_solutionId == 0) {return nullptr;}
 
 	std::ostringstream ss;
-	ss << "ParticleSolution" << m_solutionId;
+	ss << "ParticleGroupSolution" << m_solutionId;
 
 	hid_t gId;
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::createUserDefinedDataGroup");
@@ -558,7 +558,7 @@ H5CgnsParticleSolution* H5CgnsZone::Impl::openParticleSolution()
 	if (m_solutionId == 0) {return nullptr;}
 
 	std::ostringstream ss;
-	ss << "ParticleGroupSolution" << m_solutionId;
+	ss << "ParticleSolution" << m_solutionId;
 
 	hid_t gId;
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::openGroup");
@@ -577,7 +577,7 @@ H5CgnsParticleSolution* H5CgnsZone::Impl::createParticleSolution()
 	if (m_solutionId == 0) {return nullptr;}
 
 	std::ostringstream ss;
-	ss << "ParticleGroupSolution" << m_solutionId;
+	ss << "ParticleSolution" << m_solutionId;
 
 	hid_t gId;
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::createUserDefinedDataGroup");
@@ -703,7 +703,7 @@ int H5CgnsZone::Impl::writeZoneIterativeData()
 
 	if (m_polyDataSolution != nullptr) {
 		_IRIC_LOGGER_TRACE_CALL_START("writeSolutionPointers");
-		ier = writeSolutionPointers(gId, m_solutionId, "PolyDataSolutionPointers", "PolyDataSolution", &names);
+		ier = writeSolutionPointers(gId, m_solutionId, "PolydataSolutionPointers", "PolydataSolution", &names);
 		_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("writeSolutionPointers", ier);
 		RETURN_IF_ERR
 	}
