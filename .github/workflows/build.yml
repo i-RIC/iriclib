@@ -1,0 +1,77 @@
+name: cmake-build
+
+on:
+  push:
+  pull_request:
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: RelWithDebInfo
+  GENERATOR: 'Visual Studio 16 2019'
+  SGEN: vs2019-x64
+  HDF5_VER: 1.8.21
+  POCO_VER: 1.9.4
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout iricdev
+      uses: actions/checkout@v2
+      with:
+        repository: i-RIC/iricdev-2019
+        ref: 2019
+                
+    - name: Checkout iriclib
+      uses: actions/checkout@v2
+      with:
+        path: lib/src/iriclib-git
+
+    - name: Setup path for msbuild
+      uses: microsoft/setup-msbuild@v1.0.2
+      with:
+        vs-version: '[16.9,16.10)'
+
+    - name: Test set env var
+      run: |
+        echo "YYY=XXX" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+    - name: Setup programs
+      run: Copy-Item .\programs_std.prop .\programs.prop
+
+    - name: debug
+      run: |
+        Get-Command curl
+        Write-Output ${{ env.HDF5_VER }}
+        Get-Command cmake
+        Write-Output ${{ env.POCO_VER }}
+        Get-Command ctest
+        Write-Output ${{ env.GENERATOR }}
+        Get-Command 7z
+        Write-Output ${{ env.YYY }}
+        Get-Command msbuild
+
+    - name: Build poco
+      run: |
+        msbuild /noLogo /maxCpuCount /target:poco-build-release iricdev.proj
+
+    # - name: Configure CMake
+    #   # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+    #   # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+    #   run: echo cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    # - name: Build
+    #   # Build your program with the given configuration
+    #   run: echo cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    # - name: Test
+    #   working-directory: ${{github.workspace}}/build
+    #   # Execute tests defined by the CMake configuration.  
+    #   # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+    #   run: echo ctest -C ${{env.BUILD_TYPE}}
+      
