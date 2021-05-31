@@ -55,10 +55,16 @@ jobs:
         Get-Command 7z
         Write-Output ${{ env.YYY }}
         Get-Command msbuild
+        Write-Output "key = ${{runner.os}}-build-poco-${{hashFiles('./poco.*')}}"
+
+    - name: Cache poco
+      uses: actions/cache@v2
+      with:
+        path: ${{github.workspace}}/lib/install/poco-${{POCO_VER}}
+        key: ${{runner.os}}-build-poco-${{hashFiles('./poco.*')}}
 
     - name: Build poco
-      run: |
-        msbuild /noLogo /maxCpuCount /target:poco-build-release iricdev.proj
+      run: msbuild /noLogo /maxCpuCount /target:poco-build-release iricdev.proj
 
     # - name: Configure CMake
     #   # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
