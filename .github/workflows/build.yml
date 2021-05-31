@@ -60,7 +60,7 @@ jobs:
     - name: Cache poco
       uses: actions/cache@v2
       with:
-        path: ${{github.workspace}}/lib/install/poco-${{POCO_VER}}
+        path: ${{github.workspace}}/lib/install/poco-${{env.POCO_VER}}
         key: ${{runner.os}}-build-poco-${{hashFiles('./poco.*')}}
 
     - name: Build poco
