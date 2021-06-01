@@ -65,12 +65,14 @@ jobs:
         Get-Command python
 
     - name: Cache poco
+      id: cache-poco
       uses: actions/cache@v2
       with:
         path: ${{github.workspace}}/lib/install/poco-${{env.POCO_VER}}
         key: ${{runner.os}}-build-poco-${{hashFiles('./poco.*')}}
 
     - name: Build poco
+      if: steps.cache-poco.outputs.cache-hit != 'true'
       run: msbuild /noLogo /maxCpuCount /target:poco-build-release iricdev.proj
 
     # - name: Configure CMake
