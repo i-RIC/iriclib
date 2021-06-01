@@ -93,6 +93,7 @@ HEADERS += error_macros.h \
            iriclib_global.h \
            iriclib_grid.h \
            iriclib_gui_coorp.h \
+           iriclib_h5.h \
            iriclib_init.h \
            iriclib_not_mul.h \
            iriclib_not_withbaseid.h \
