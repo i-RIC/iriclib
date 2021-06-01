@@ -62,6 +62,7 @@ jobs:
         Write-Output ${{ env.YYY }}
         Get-Command msbuild
         Write-Output "key = ${{runner.os}}-build-poco-${{hashFiles('./poco.*')}}"
+        Get-Command python
 
     - name: Cache poco
       uses: actions/cache@v2
