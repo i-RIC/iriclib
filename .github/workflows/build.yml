@@ -32,7 +32,6 @@ jobs:
       with:
         path: lib/src/iriclib-git
 
-
     - name: Set file mtimes for msbuild
       run: |
         curl -L -O https://raw.githubusercontent.com/MestreLion/git-tools/cd87904e0b85d74b1d05f6acbd10553a0ceaceb0/git-restore-mtime
@@ -74,6 +73,17 @@ jobs:
     - name: Build poco
       if: steps.cache-poco.outputs.cache-hit != 'true'
       run: msbuild /noLogo /maxCpuCount /target:poco-build-release iricdev.proj
+
+    - name: Cache hdf5
+      id: cache-hdf5
+      uses: actions/cache@v2
+      with:
+        path: ${{github.workspace}}/lib/install/hdf5-${{env.HDF5_VER}}
+        key: ${{runner.os}}-build-hdf5-${{hashFiles('./hdf5.*')}}
+
+    - name: Build hdf5
+      if: steps.cache-hdf5.outputs.cache-hit != 'true'
+      run: msbuild /noLogo /maxCpuCount /target:hdf5-build-release iricdev.proj
 
     # - name: Configure CMake
     #   # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
