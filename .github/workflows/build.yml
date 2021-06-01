@@ -32,6 +32,12 @@ jobs:
       with:
         path: lib/src/iriclib-git
 
+
+    - name: Set file mtimes for msbuild
+      run: |
+        curl -L -O https://raw.githubusercontent.com/MestreLion/git-tools/cd87904e0b85d74b1d05f6acbd10553a0ceaceb0/git-restore-mtime
+        python git-restore-mtime
+
     - name: Setup path for msbuild
       uses: microsoft/setup-msbuild@v1.0.2
       with:
