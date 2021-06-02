@@ -22,7 +22,7 @@ void test_create()
 
 		int ier, fid;
 		ier = cg_open("test.cgn", CG_MODE_READ, &fid);
-		VERIFY_LOG("Created cgns file is a valid", ier == 0);
+		VERIFY_LOG("Created cgns file is valid", ier == 0);
 		ier = cg_close(fid);
 	} catch (...) {
 		VERIFY_LOG("Creating Cgnsfile succeeds", false);
