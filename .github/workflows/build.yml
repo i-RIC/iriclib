@@ -6,7 +6,7 @@ on:
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: RelWithDebInfo
+  BUILD_TYPE: Release
   GENERATOR: 'Visual Studio 16 2019'
   SGEN: vs2019-x64
   HDF5_VER: 1.8.21
@@ -85,18 +85,5 @@ jobs:
       if: steps.cache-hdf5.outputs.cache-hit != 'true'
       run: msbuild /noLogo /maxCpuCount /target:hdf5-build-release iricdev.proj
 
-    # - name: Configure CMake
-    #   # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-    #   # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-    #   run: echo cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-
-    # - name: Build
-    #   # Build your program with the given configuration
-    #   run: echo cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-
-    # - name: Test
-    #   working-directory: ${{github.workspace}}/build
-    #   # Execute tests defined by the CMake configuration.  
-    #   # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-    #   run: echo ctest -C ${{env.BUILD_TYPE}}
-      
+    - name: Build iriclib
+      run: msbuild /noLogo /maxCpuCount /target:iriclib-build-2019 iricdev.proj
