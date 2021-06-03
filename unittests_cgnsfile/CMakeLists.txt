@@ -1,15 +1,18 @@
 project(unittests_cgnsfile CXX)
 
-# prepare test files
-configure_file(case_gridfunc.cgn case_gridfunc.cgn COPYONLY)
-configure_file(case_init.cgn case_init.cgn COPYONLY)
-configure_file(case_init_hdf5.cgn case_init_hdf5.cgn COPYONLY)
-configure_file(case_initread.cgn case_initread.cgn COPYONLY)
-configure_file(case_nogrid.cgn case_nogrid.cgn COPYONLY)
-configure_file(case_read_adf.cgn case_read_adf.cgn COPYONLY)
-configure_file(case_read_hdf5.cgn case_read_hdf5.cgn COPYONLY)
-configure_file(case_read_adf_no_sols.cgn case_read_adf_no_sols.cgn COPYONLY)
+# prepare test files TODO process as list, add check for existing file
+configure_file(case_gridfunc.cgn          case_gridfunc.cgn          COPYONLY)
+configure_file(case_init.cgn              case_init.cgn              COPYONLY)
+configure_file(case_init_hdf5.cgn         case_init_hdf5.cgn         COPYONLY)
+configure_file(case_initread.cgn          case_initread.cgn          COPYONLY)
+configure_file(case_initread_hdf.cgn      case_initread_hdf.cgn      COPYONLY)
+configure_file(case_nogrid.cgn            case_nogrid.cgn            COPYONLY)
+configure_file(case_nogrid_hdf5.cgn       case_nogrid_hdf5.cgn       COPYONLY)
+configure_file(case_read_adf.cgn          case_read_adf.cgn          COPYONLY)
+configure_file(case_read_adf_no_sols.cgn  case_read_adf_no_sols.cgn  COPYONLY)
+configure_file(case_read_hdf5.cgn         case_read_hdf5.cgn         COPYONLY)
 configure_file(case_read_hdf5_no_sols.cgn case_read_hdf5_no_sols.cgn COPYONLY)
+configure_file(case_unst_hdf5.cgn         case_unst_hdf5.cgn         COPYONLY)
 
 # extra dependencies
 find_package(HDF5 1.8 REQUIRED)
@@ -46,11 +49,18 @@ target_compile_definitions(unittests_cgnsfile
     _SCL_SECURE_NO_WARNINGS
 )
 
+# unittests_cgnsfile include directories
+target_include_directories(unittests_cgnsfile
+  PRIVATE
+  "${cgnslib_dummy_SOURCE_DIR}"
+)
+
 # unittests_cgnsfile link libraries
 target_link_libraries(unittests_cgnsfile
   PRIVATE
     iriclib
-    ${CGNS_LIBRARY}
+    # ${CGNS_LIBRARY}
+    cgnslib_dummy
     ${HDF5_LIBRARIES}
 )
 
@@ -59,7 +69,12 @@ if (WIN32)
   # copy iriclib.dll to unittests_cgnsfile directory
   add_custom_command(TARGET unittests_cgnsfile POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${CMAKE_BINARY_DIR}/$(Configuration)/iriclib.dll"
+    "$<TARGET_FILE:iriclib>"
+    "$<TARGET_FILE_DIR:unittests_cgnsfile>"
+    )
+  add_custom_command(TARGET unittests_cgnsfile POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "$<TARGET_FILE:cgnslib_dummy>"
     "$<TARGET_FILE_DIR:unittests_cgnsfile>"
     )
 endif()

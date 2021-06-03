@@ -24,11 +24,11 @@ else()
   endif()  
 endif()
 
-# cgns (set CMAKE_PREFIX_PATH)
-find_path(CGNS_INC cgns_io.h)
-find_library(CGNS_LIBRARY cgnsdll)
-message(STATUS "CGNS_INC=${CGNS_INC}")
-message(STATUS "CGNS_LIBRARY=${CGNS_LIBRARY}")
+# # cgns (set CMAKE_PREFIX_PATH)
+# find_path(CGNS_INC cgns_io.h)
+# find_library(CGNS_LIBRARY cgnsdll)
+# message(STATUS "CGNS_INC=${CGNS_INC}")
+# message(STATUS "CGNS_LIBRARY=${CGNS_LIBRARY}")
 
 find_package(HDF5 1.8 REQUIRED)
 
@@ -284,7 +284,6 @@ target_include_directories(iriclib
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/private>"
     "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
     # "${CGNS_INC}"
-  PRIVATE
     "${HDF5_INCLUDE_DIRS}"
 )
 
@@ -352,12 +351,20 @@ if(MSVC)
     CONFIGURATIONS Debug)
 endif()
 
+add_subdirectory(cgnslib_dummy)
+
 include(CTest)
 
 if (BUILD_TESTING)
-  # add_subdirectory(unittests_cgnsfile)
+  add_subdirectory(unittests_cgnsfile)
   # add_subdirectory(unittest_lock)
   # add_subdirectory(unittest_cg_open_modify)
   # add_subdirectory(unittest_cg_open_read)
-  add_subdirectory(unittests_h5)
+  # add_subdirectory(unittests_h5)
 endif()
+
+get_cmake_property(_variableNames VARIABLES)
+list (SORT _variableNames)
+foreach (_variableName ${_variableNames})
+  message(STATUS "${_variableName}=${${_variableName}}")
+endforeach()
