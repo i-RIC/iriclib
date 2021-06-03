@@ -1,0 +1,14 @@
+*.sln
+*.suo
+*.pyd
+*.dll
+debug
+release
+Makefile
+Makefile.*
+*.vcxproj
+*.vcxproj.filters
+*.user
+*.sdf
+*.user.*
+*.pyc
