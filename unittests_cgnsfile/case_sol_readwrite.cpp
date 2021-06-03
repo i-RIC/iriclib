@@ -521,7 +521,7 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	// VERIFY_REMOVE("case_solstd.cgn", hdf);
+	VERIFY_REMOVE("case_solstd.cgn", hdf);
 
 	//
 	// Test Writing 3D Standard (IRIC_OPTION_STDSOLUTION) with times
@@ -542,7 +542,7 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	ier = cg_close(fid);
 	VERIFY_LOG("cg_close() ier == 0", ier == 0);
 
-	// VERIFY_REMOVE("case_solstd3d.cgn", hdf);
+	VERIFY_REMOVE("case_solstd3d.cgn", hdf);
 
 	// @todo add codes to test
 
