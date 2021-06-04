@@ -34,7 +34,7 @@ init:
   - set BUILD_TOOLS=OFF
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
-  - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "master") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
+  - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "develop") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
   - ps: Write-Output $UploadRelease
   # Only commit and push to master branch or debug-appveyor branch (for testing)
   - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "develop") -OR ($env:APPVEYOR_REPO_BRANCH -eq "push_to_online_update")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
