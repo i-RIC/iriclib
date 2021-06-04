@@ -86,10 +86,12 @@ cache:
 on_success:
   - ps: |
       if ($UploadRelease) {
-        # /repos/:owner/:repo/releases
+        # GET /repos/{owner}/{repo}/releases
+        # see https://docs.github.com/en/rest/reference/repos#releases
+        # see https://docs.github.com/ja/rest/reference/repos#releases
         #
-        $releases_url_iric = "https://api.github.com/repos/i-RIC/iriclib/releases"
-        $releases_url_scharlton2 = "https://api.github.com/repos/scharlton2/iriclib/releases"
+        $releases_url_iric         = "https://api.github.com/repos/i-RIC/iriclib/releases"
+        $releases_url_scharlton2   = "https://api.github.com/repos/scharlton2/iriclib/releases"
         $releases_url_kskinoue0612 = "https://api.github.com/repos/kskinoue0612/iriclib/releases"
 
         if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
@@ -109,8 +111,9 @@ on_success:
         $h = @{"Authorization" = "token $access_token"}
 
         # get latest release tag
-        # GET /repos/:owner/:repo/releases/latest
-        # see https://developer.github.com/v3/repos/releases/#get-the-latest-release
+        # GET /repos/{owner}/{repo}/releases/latest
+        # see https://docs.github.com/en/rest/reference/repos#get-the-latest-release
+        # see https://docs.github.com/ja/rest/reference/repos#get-the-latest-release
         #
         $latest = (Invoke-WebRequest -Uri "$releases_url/latest" -Headers $h -Method GET).Content | ConvertFrom-Json
         if (! ($latest.tag_name -match "^v(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
@@ -122,8 +125,9 @@ on_success:
         # Note: draft is set to true so that no notifications are sent yet
 
         # create release
-        # POST /repos/:owner/:repo/releases
-        # see https://developer.github.com/v3/repos/releases/#create-a-release
+        # POST /repos/{owner}/{repo}/releases
+        # see https://docs.github.com/en/rest/reference/repos#create-a-release
+        # see https://docs.github.com/ja/rest/reference/repos#create-a-release
         #
         $patch = 1 + $matches["patch"]
         $create = @{
@@ -135,6 +139,7 @@ on_success:
         $create_json = $create | ConvertTo-Json
         $release = Invoke-WebRequest -Uri "$releases_url" -Headers $h -Method POST -Body $create_json
 
+        # TODO update to new method
         # upload artifact (asset)
         # POST :server/repos/:owner/:repo/releases/:release_id/assets{?name,label}
         # see https://developer.github.com/v3/repos/releases/#upload-a-release-asset
@@ -153,8 +158,9 @@ on_success:
         # Note: draft is now set to false so that notifications are sent with the correct list of assets
 
         # update release
-        # PATCH /repos/:owner/:repo/releases/:release_id
-        # see https://developer.github.com/v3/repos/releases/#edit-a-release
+        # PATCH /repos/{owner}/{repo}/releases/{release_id}
+        # see https://docs.github.com/en/rest/reference/repos#update-a-release
+        # see https://docs.github.com/ja/rest/reference/repos#update-a-release
         #
         $release_id = ($release.Content | ConvertFrom-Json).id
         $h.Remove("Content-type")
