@@ -19,7 +19,6 @@ environment:
 
 image:
   - Visual Studio 2013
-  - Visual Studio 2015
 
 # called before clone
 init:
@@ -55,19 +54,23 @@ matrix:
 #
 # Qt 5.5 only supports VS2013
 before_build:
-  - REM call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd C:\iricdev
   - curl -L -O https://github.com/i-RIC/iricdev/archive/master.zip
   - 7z e master.zip
   - rd iricdev-master
   - del master.zip
-  - REM master.zip files have unix file endings
+  # master.zip files have unix file endings
   - unix2dos *
   - copy appveyor_programs.prop programs.prop
   - call versions.cmd
+  - tree lib\install 
+  # build C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%
+  - msbuild /nologo /target:hdf5-build-%config% iricdev.proj
+  # build C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%
   - msbuild /nologo /target:cgnslib-build-%config% iricdev.proj
   - if "%CGNSLIB_VER%"=="3.2.1" (set CGNSLIB_VER=%CGNSLIB_VER%-patch1)
+  - tree lib\install 
 
 # build using cmake tools
 build_script:
@@ -81,7 +84,8 @@ after_build:
 # ??? doesn't seem to be able to use environmental vars ???
 #  - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
 cache:
-  - C:\iricdev\lib\install
+  - C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config% -> C:\iricdev\build-hdf5.cmake
+  - C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config% -> C:\iricdev\build-cgnslib.cmake
 
 on_success:
   - ps: |
@@ -139,10 +143,10 @@ on_success:
         $create_json = $create | ConvertTo-Json
         $release = Invoke-WebRequest -Uri "$releases_url" -Headers $h -Method POST -Body $create_json
 
-        # TODO update to new method
         # upload artifact (asset)
-        # POST :server/repos/:owner/:repo/releases/:release_id/assets{?name,label}
-        # see https://developer.github.com/v3/repos/releases/#upload-a-release-asset
+        # POST /repos/{owner}/{repo}/releases/{release_id}/assets
+        # see https://docs.github.com/en/rest/reference/repos#upload-a-release-asset
+        # see https://docs.github.com/ja/rest/reference/repos#upload-a-release-asset
         #
         $upload_uri = ($release.Content | ConvertFrom-Json).upload_url
         if (! ($upload_uri -match  "(.*)\{\?name,label\}") ) {
