@@ -139,8 +139,8 @@ void H5CgnsZone::Impl::writeSizeAndType()
 		indexDim = m_base->dimension();
 	}
 	std::vector<hsize_t> dims(2);
-	dims[0] = indexDim;
-	dims[1] = 3;
+	dims[0] = 3;
+	dims[1] = indexDim;
 
 	auto size = dims[0] * dims[1];
 

@@ -224,6 +224,8 @@ int H5CgnsGridAttributes::writeValue(const std::string& name, const std::vector<
 
 int H5CgnsGridAttributes::writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<int>& values) const
 {
+	if (values.size() == 0) {return IRIC_NO_ERROR;}
+
 	int ier = updateOrCreateDataArray(impl->m_groupId, name, dimensionDataName(dimname), values, &(impl->m_names));
 	RETURN_IF_ERR;
 
@@ -232,6 +234,8 @@ int H5CgnsGridAttributes::writeFunctionalDimension(const std::string& name, cons
 
 int H5CgnsGridAttributes::writeFunctionalDimension(const std::string& name, const std::string& dimname, const std::vector<double>& values) const
 {
+	if (values.size() == 0) {return IRIC_NO_ERROR;}
+
 	int ier = updateOrCreateDataArray(impl->m_groupId, name, dimensionDataName(dimname), values, &(impl->m_names));
 	RETURN_IF_ERR;
 

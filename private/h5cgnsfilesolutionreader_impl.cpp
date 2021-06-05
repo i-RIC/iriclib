@@ -45,8 +45,12 @@ void H5CgnsFileSolutionReader::Impl::detectMode()
 
 	std::vector<double> timeVals;
 	std::vector<int> iterVals;
-	m_file->ccBase()->biterData()->readTime(&timeVals);
-	m_file->ccBase()->biterData()->readIteration(&iterVals);
+	auto biterData = m_file->ccBase()->biterData();
+
+	if (biterData == nullptr) {return;}
+
+	biterData->readTime(&timeVals);
+	biterData->readIteration(&iterVals);
 
 	auto maxSolId = static_cast<int> (max(timeVals.size(), iterVals.size()));
 	if (maxSolId == 0) {return;}

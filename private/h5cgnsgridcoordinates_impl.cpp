@@ -35,7 +35,7 @@ std::vector<hsize_t> H5CgnsGridCoordinates::Impl::dimensions() const
 		auto base = m_zone->base();
 		auto dim = base->dimension();
 		for (int i = 0; i < dim; ++i) {
-			ret.push_back(size.at(i));
+			ret.push_back(size.at(dim - 1 - i)); // reverse order
 		}
 		return ret;
 	}

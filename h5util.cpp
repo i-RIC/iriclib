@@ -753,34 +753,7 @@ int copyChildren(hid_t srcGroupId, hid_t tgtGroupId)
 	return IRIC_NO_ERROR;
 }
 
-} // namespace
-
-std::string H5Util::indexArrayLabel()
-{
-	return INDEXARRAY_LABEL;
-}
-
-std::string H5Util::indexArrayType()
-{
-	return INDEXARRAY_TYPE;
-}
-
-std::string H5Util::dataArrayLabel()
-{
-	return DATAARRAY_LABEL;
-}
-
-std::string H5Util::userDefinedDataLabel()
-{
-	return USERDEFINEDDATA_LABEL;
-}
-
-std::string H5Util::userDefinedDataType()
-{
-	return USERDEFINEDDATA_TYPE;
-}
-
-int H5Util::getGroupNames(hid_t groupId, std::vector<std::string>* names)
+int getObjectNames(hid_t groupId, H5O_type_t objectType, std::vector<std::string>* names)
 {
 	H5G_info_t info;
 	_IRIC_LOGGER_TRACE_CALL_START("H5Gget_info");
@@ -827,7 +800,7 @@ int H5Util::getGroupNames(hid_t groupId, std::vector<std::string>* names)
 			return IRIC_H5_CALL_ERROR;
 		}
 
-		if (info.type == H5O_TYPE_GROUP) {
+		if (info.type == objectType) {
 			names->push_back(name);
 		}
 	}
@@ -835,11 +808,61 @@ int H5Util::getGroupNames(hid_t groupId, std::vector<std::string>* names)
 	return IRIC_NO_ERROR;
 }
 
+} // namespace
+
+std::string H5Util::indexArrayLabel()
+{
+	return INDEXARRAY_LABEL;
+}
+
+std::string H5Util::indexArrayType()
+{
+	return INDEXARRAY_TYPE;
+}
+
+std::string H5Util::dataArrayLabel()
+{
+	return DATAARRAY_LABEL;
+}
+
+std::string H5Util::userDefinedDataLabel()
+{
+	return USERDEFINEDDATA_LABEL;
+}
+
+std::string H5Util::userDefinedDataType()
+{
+	return USERDEFINEDDATA_TYPE;
+}
+
+int H5Util::getGroupNames(hid_t groupId, std::vector<std::string>* names)
+{
+	return getObjectNames(groupId, H5O_TYPE_GROUP, names);
+}
+
 int H5Util::getGroupNames(hid_t groupId, std::set<std::string>* names)
 {
 	std::vector<std::string> namesVec;
 
 	int ier = getGroupNames(groupId, &namesVec);
+	RETURN_IF_ERR;
+
+	for (const auto& name : namesVec) {
+		names->insert(name);
+	}
+	return IRIC_NO_ERROR;
+}
+
+int H5Util::getDatasetNames(hid_t groupId, std::vector<std::string>* names)
+{
+	return getObjectNames(groupId, H5O_TYPE_DATASET, names);
+}
+
+int H5Util::getDatasetNames(hid_t groupId, std::set<std::string>* names)
+{
+	std::vector<std::string> namesVec;
+
+	int ier = getDatasetNames(groupId, &namesVec);
 	RETURN_IF_ERR;
 
 	for (const auto& name : namesVec) {
@@ -1919,9 +1942,9 @@ int H5Util::deleteData(hid_t groupId, const std::string& name)
 int H5Util::deleteDataIfExists(hid_t groupId, const std::string& name)
 {
 	std::set<std::string> names;
-	_IRIC_LOGGER_TRACE_CALL_START("H5Util::getGroupNames");
-	int ier = getGroupNames(groupId, &names);
-	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::getGroupNames", ier);
+	_IRIC_LOGGER_TRACE_CALL_START("H5Util::getDatasetNames");
+	int ier = getDatasetNames(groupId, &names);
+	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::getDatasetNames", ier);
 	RETURN_IF_ERR;
 
 	if (names.find(name) == names.end()) {
