@@ -33,6 +33,14 @@ init:
   - set BUILD_TOOLS=OFF
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
+  # Need to set version numbers for cache:
+  - pushd %TEMP%
+  - curl -L -O https://raw.githubusercontent.com/i-RIC/iricdev/master/versions.cmd
+  - call versions.cmd
+  - if "%CGNSLIB_VER%"=="3.2.1" (set CGNSLIB_VER=%CGNSLIB_VER%-patch1)
+  - popd
+  - echo %HDF5_VER%
+  - echo %CGNSLIB_VER%
   - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "develop") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
   - ps: Write-Output $UploadRelease
   # Only commit and push to master branch or debug-appveyor branch (for testing)
@@ -63,13 +71,11 @@ before_build:
   # master.zip files have unix file endings
   - unix2dos *
   - copy appveyor_programs.prop programs.prop
-  - call versions.cmd
   - tree lib\install 
   # build C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%
   - msbuild /nologo /target:hdf5-build-%config% iricdev.proj
   # build C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%
   - msbuild /nologo /target:cgnslib-build-%config% iricdev.proj
-  - if "%CGNSLIB_VER%"=="3.2.1" (set CGNSLIB_VER=%CGNSLIB_VER%-patch1)
   - tree lib\install 
 
 # build using cmake tools
@@ -81,10 +87,11 @@ build_script:
 after_build:
   - if "%Configuration%"=="Release" ( appveyor PushArtifact C:\iricdev\lib\src\iriclib-git\_artifacts\libs.zip )
 
-# ??? doesn't seem to be able to use environmental vars ???
-#  - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
+# see https://www.appveyor.com/docs/build-cache/
+# env vars used by cache: need to be set in environment: or by init:
+# see https://www.appveyor.com/docs/build-configuration/#build-pipeline
 cache:
-  - C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config% -> C:\iricdev\build-hdf5.cmake
+  - C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%       -> C:\iricdev\build-hdf5.cmake
   - C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config% -> C:\iricdev\build-cgnslib.cmake
 
 on_success:
