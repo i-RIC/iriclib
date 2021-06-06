@@ -21,9 +21,6 @@ void case_read_adf()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
-
 	int sol_count;
 	ier = cg_iRIC_Read_Sol_Count_Mul(fid, &sol_count);
 	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() ier == 0", ier == 0);

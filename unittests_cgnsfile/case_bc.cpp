@@ -25,10 +25,6 @@ void case_BcRead()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	int bc_count;
 
 	cg_iRIC_Read_BC_Count_Mul(fid, "bctest", &bc_count);
@@ -196,9 +192,6 @@ void case_BcWrite()
 	int ier = cg_iRIC_Open("case_bcwrite.cgn", IRIC_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	ier = cg_iRIC_Clear_BC_Mul(fid);
 	VERIFY_LOG("cg_iRIC_Clear_BC_Mul() ier == 0", ier == 0);

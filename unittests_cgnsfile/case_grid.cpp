@@ -24,10 +24,6 @@ void case_GridRead()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	int isize, jsize;
 	int count;
 	std::vector<double> x, y;
@@ -122,10 +118,6 @@ void case_GridReadUnstructured()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	int elem_size;
 	int count;
 	std::vector<double> x, y;
@@ -163,10 +155,6 @@ void case_GridReadFunc()
 
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	int isize, jsize;
 	std::vector<double> x, y;
@@ -218,10 +206,6 @@ void case_GridWrite()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	int isize, jsize, ksize;
 	std::vector<double> x, y, z;
 
@@ -271,10 +255,6 @@ void case_GridWrite()
 
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	isize = 10; jsize = 8;
 	x.assign(isize * jsize, 0);
@@ -408,10 +388,6 @@ void case_GridWrite()
 
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	isize = 11; jsize = 9; ksize = 5;
 	x.assign(isize * jsize * ksize, 0);

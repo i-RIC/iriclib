@@ -25,10 +25,6 @@ void case_CalcCondRead()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	int cond_int;
 
 	ier = cg_iRIC_Read_Integer_Mul(fid, "intval", &cond_int);
@@ -157,9 +153,6 @@ void case_CalcCondWrite()
 	int ier = cg_iRIC_Open("case_ccwrite.cgn", IRIC_MODE_MODIFY, &fid);
 
 	int fid_wrong = 9999;
-
-	ier = cg_iRIC_Init(fid);
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	int write_int = 121;
 	ier = cg_iRIC_Write_Integer_Mul(fid, "write_int", write_int);

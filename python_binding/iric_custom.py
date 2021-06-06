@@ -501,10 +501,6 @@ def cg_iRIC_Close(fid):
 	ier = _iric.cg_iRIC_Close(fid)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Init(fid):
-	ier = _iric.cg_iRIC_Init(fid)
-	_checkErrorCode(ier)
-
 def cg_iRIC_InitRead(fid):
 	ier = _iric.cg_iRIC_InitRead(fid)
 	_checkErrorCode(ier)

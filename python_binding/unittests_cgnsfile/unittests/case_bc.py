@@ -12,8 +12,6 @@ def case_BcRead():
     fid = iric.cg_iRIC_Open("data/case_bc.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    iric.cg_iRIC_Init(fid)
-
     bc_count = iric.cg_iRIC_Read_BC_Count_Mul(fid, "bctest")
     util.verify_log("cg_iRIC_Read_BC_Count_Mul() bc_count == 2", bc_count == 2)
 
@@ -140,8 +138,6 @@ def case_BcWrite():
 
     fid = iric.cg_iRIC_Open("data/case_bcwrite.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
-
-    iric.cg_iRIC_Init(fid)
 
     iric.cg_iRIC_Clear_BC_Mul(fid)
 

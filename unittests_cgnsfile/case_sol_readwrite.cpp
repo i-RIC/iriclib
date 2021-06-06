@@ -495,10 +495,6 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	writeSolution("case_solstd.cgn", &fid, false);
 
 	ier = cg_iRIC_Close(fid);
@@ -532,10 +528,6 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	writeSolution3d("case_solstd3d.cgn", &fid);
 
 	ier = cg_iRIC_Close(fid);
@@ -554,10 +546,6 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	ier = cg_iRIC_Open("case_solstditer.cgn", IRIC_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	writeSolution("case_solstditer.cgn", &fid, true);
 
@@ -608,10 +596,6 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	writeSolution("case_soldivide.cgn", &fid, false);
 
 	ier = cg_iRIC_Close(fid);
@@ -659,10 +643,6 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	writeSolution3d("case_soldivide3d.cgn", &fid);
 
 	ier = cg_iRIC_Close(fid);
@@ -693,10 +673,6 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	ier = cg_iRIC_Open("case_soldivideiter.cgn", IRIC_MODE_MODIFY, &fid);
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	writeSolution("case_soldivideiter.cgn", &fid, true);
 

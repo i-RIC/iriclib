@@ -23,10 +23,6 @@ void case_Complex()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	ier = cg_iRIC_Clear_Complex_Mul(fid);
 	VERIFY_LOG("cg_iRIC_Clear_Complex_Mul() ier == 0", ier == 0);
 
@@ -108,10 +104,6 @@ void case_Complex()
 
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
 
 	int cellnum;
 	ier = cg_iRIC_Read_Complex_Count_Mul(fid, "cellparam", &cellnum);

@@ -12,8 +12,6 @@ def case_CalcCondRead():
     fid = iric.cg_iRIC_Open("data/case_cc.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    iric.cg_iRIC_Init(fid)
-
     cond_int = iric.cg_iRIC_Read_Integer("intval")
     util.verify_log("cg_iRIC_Read_Integer() val == 1", cond_int == 1)
 
@@ -88,8 +86,6 @@ def case_CalcCondWrite():
     fid = iric.cg_iRIC_Open("data/case_ccwrite.cgn", iric.IRIC_MODE_MODIFY)
 
     fid_wrong = 9999
-
-    iric.cg_iRIC_Init(fid)
 
     write_int = 121
     iric.cg_iRIC_Write_Integer("write_int", write_int)

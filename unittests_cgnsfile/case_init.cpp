@@ -19,22 +19,9 @@ void case_InitSuccess()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	cg_iRIC_Close(fid);
 
 	remove("case_initsuccess.cgn");
-}
-
-void case_InitFail()
-{
-	int fid = 1;
-
-	int ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier != 0", ier != 0);
 }
 
 void case_gotoRawDataTop()

@@ -1,7 +1,6 @@
 extern "C" {
 
 void case_InitSuccess();
-void case_InitFail();
 void case_gotoRawDataTop();
 void case_InitReadSuccess();
 void case_InitReadFail();

@@ -16,8 +16,6 @@ from . import case_sol_readwrite_nomul
 def main():
     print('case_init.case_InitSuccess()')
     case_init.case_InitSuccess()
-    print('case_init.case_InitFail()')
-    case_init.case_InitFail()
 
     print('case_initread.case_InitReadSuccess()')
     case_initread.case_InitReadSuccess()

@@ -19,10 +19,6 @@ void case_InitReadSuccess()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_InitRead(fid);
-
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
-
 	cg_iRIC_Close(fid);
 
 	remove("case_initreadsuccess.cgn");

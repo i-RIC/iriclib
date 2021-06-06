@@ -19,10 +19,6 @@ void case_InitCC()
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
-
 	ier = cg_iRIC_GotoCC(fid);
 
 	VERIFY_LOG("cg_iRIC_GotoCC() ier == 0", ier == 0);

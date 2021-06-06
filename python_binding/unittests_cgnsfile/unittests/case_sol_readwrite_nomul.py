@@ -287,8 +287,6 @@ def case_SolWriteStd(cgnsName):
     fid = iric.cg_iRIC_Open("data/case_solstd.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    iric.cg_iRIC_Init(fid)
-
     fid = writeSolution("data/case_solstd.cgn", fid, False)
 
     iric.cg_iRIC_Close(fid)
@@ -313,8 +311,6 @@ def case_SolWriteStd(cgnsName):
     fid = iric.cg_iRIC_Open("data/case_solstd3d.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    iric.cg_iRIC_Init(fid)
-
     fid = writeSolution3d("data/case_solstd3d.cgn", fid)
 
     iric.cg_iRIC_Close(fid)
@@ -327,8 +323,6 @@ def case_SolWriteStd(cgnsName):
 
     fid = iric.cg_iRIC_Open("data/case_solstditer.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
-
-    iric.cg_iRIC_Init(fid)
 
     fid = writeSolution("data/case_solstditer.cgn", fid, True)
 

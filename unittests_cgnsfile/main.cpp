@@ -5,7 +5,6 @@
 int main(int argc, char* argv[])
 {
 	case_InitSuccess();
-	case_InitFail();
 
 	case_InitReadSuccess();
 	case_InitReadFail();

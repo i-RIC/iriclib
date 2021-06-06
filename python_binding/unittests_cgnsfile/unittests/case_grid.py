@@ -11,8 +11,6 @@ def case_GridRead():
     fid = iric.cg_iRIC_Open("data/case_grid.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    iric.cg_iRIC_Init(fid)
-
     isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size_Mul(fid)
     util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 11", isize == 11)
     util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 11", jsize == 11)
@@ -64,8 +62,6 @@ def case_GridReadUnstructured():
     fid = iric.cg_iRIC_Open("data/case_grid_unstructured.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    iric.cg_iRIC_Init(fid)
-
     elem_size = iric.cg_iRIC_Read_Grid_TriangleElementsSize_Mul(fid)
     util.verify_log("cg_iRIC_Read_Grid_TriangleElementsSize_Mul() elem_size == 3", elem_size == 3)
 
@@ -95,8 +91,6 @@ def case_GridReadFunc():
     fid = iric.cg_iRIC_Open("data/case_gridreadfunc.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    iric.cg_iRIC_Init(fid)
-
     isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size_Mul(fid)
     util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 15", isize == 15)
     util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 15", jsize == 15)
@@ -118,12 +112,6 @@ def case_GridWrite():
 
     fid = iric.cg_iRIC_Open("data/case_gridwrite1d.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
-
-    try:
-        iric.cg_iRIC_Init(fid)
-        print('cg_iRIC_Init do not raise Exception for CGNS without grid [OK]')
-    except Exception:
-        print('cg_iRIC_Init do not raise Exception for CGNS without grid [NG]')
 
     isize = 10
     x = np.zeros(isize, dtype=np.float64)
@@ -168,12 +156,6 @@ def case_GridWrite():
 
     fid = iric.cg_iRIC_Open("data/case_gridwrite2d.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
-
-    try:
-        iric.cg_iRIC_Init(fid)
-        print('cg_iRIC_Init does not raise Exception for CGNS without grid [OK]')
-    except Exception:
-        print('cg_iRIC_Init does not raise Exception for CGNS without grid [NG]')
 
     isize = 10
     jsize = 8
@@ -295,13 +277,6 @@ def case_GridWrite():
     fid = iric.cg_iRIC_Open("data/case_gridwrite3d.cgn", iric.IRIC_MODE_MODIFY)
 
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
-
-    
-    try:
-        iric.cg_iRIC_Init(fid)
-        print('cg_iRIC_Init does not raise Exception for CGNS without grid [OK]')
-    except Exception:
-        print('cg_iRIC_Init does not raise Exception for CGNS without grid [NG]')
 
     isize = 11
     jsize = 9

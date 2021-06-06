@@ -126,7 +126,6 @@ int iRIC_Check_Cancel();
 // from iriclib_init.h
 int cg_iRIC_Open(const char* filename, int mode, int* OUTPUT);
 int cg_iRIC_Close(int fid);
-int cg_iRIC_Init(int fid);
 int cg_iRIC_InitRead(int fid);
 int iRIC_InitOption(int option);
 int cg_iRIC_Flush(int fid);

@@ -10,8 +10,6 @@ def case_Complex():
     fid = iric.cg_iRIC_Open("data/case_complex.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    iric.cg_iRIC_Init(fid)
-
     iric.cg_iRIC_Clear_Complex_Mul(fid)
 
     intparam_write = 71
@@ -75,8 +73,6 @@ def case_Complex():
 
     fid = iric.cg_iRIC_Open("data/case_complex.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
-
-    iric.cg_iRIC_Init(fid)
 
     cellnum = iric.cg_iRIC_Read_Complex_Count_Mul(fid, "cellparam")
     util.verify_log("cg_iRIC_Read_Complex_Count_Mul() cellnum == 2", cellnum == 2)
