@@ -98,8 +98,3 @@ int cg_iRIC_Flush(int fid)
 
 	return file->flush();
 }
-
-int cg_iRIC_GotoRawDataTop(int fid)
-{
-	return _checkFileIsOpen(fid);
-}

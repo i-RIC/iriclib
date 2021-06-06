@@ -509,10 +509,6 @@ def cg_iRIC_Flush(fid):
 	ier = _iric.cg_iRIC_Flush(fid)
 	_checkErrorCode(ier)
 
-def cg_iRIC_GotoRawDataTop(fid):
-	ier = _iric.cg_iRIC_GotoRawDataTop(fid)
-	_checkErrorCode(ier)
-
 
 # from iriclib_not_mul.h
 def cg_iRIC_Read_BC_Count_WithGridId(gid, type):

@@ -1165,10 +1165,6 @@ void IRICLIBDLL FMNAME(cg_iric_flush_f, CG_IRIC_FLUSH_F) (int* fid, int *ier) {
 	*ier = cg_iRIC_Flush(*fid);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_gotorawdatatop_f, CG_IRIC_GOTORAWDATATOP_F) (int* fid, int *ier) {
-	*ier = cg_iRIC_GotoRawDataTop(*fid);
-}
-
 
 // from iriclib_not_mul.h
 void IRICLIBDLL FMNAME(cg_iric_read_bc_count_withgridid_f, CG_IRIC_READ_BC_COUNT_WITHGRIDID_F) (int* gid, STR_PSTR(type), int* num STR_PLEN(type)) {
