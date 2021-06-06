@@ -73,17 +73,17 @@ def case_GridReadUnstructured():
     util.verify_log("cg_iRIC_Read_Grid_NodeCount_Mul() node_count == 5", node_count == 5)
 
     x, y = iric.cg_iRIC_Read_Grid2d_Coords_Mul(fid)
-    elems = iric.cg_iRIC_GetTriangleElements_Mul(fid)
+    elems = iric.cg_iRIC_Read_Grid_TriangleElements_Mul(fid)
 
-    util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[0] == 1", elems[0] == 1)
-    util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[1] == 2", elems[1] == 2)
-    util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[2] == 5", elems[2] == 5)
-    util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[3] == 4", elems[3] == 4)
-    util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[4] == 5", elems[4] == 5)
-    util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[5] == 2", elems[5] == 2)
-    util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[6] == 4", elems[6] == 4)
-    util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[7] == 2", elems[7] == 2)
-    util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[8] == 3", elems[8] == 3)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[0] == 1", elems[0] == 1)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[1] == 2", elems[1] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[2] == 5", elems[2] == 5)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[3] == 4", elems[3] == 4)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[4] == 5", elems[4] == 5)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[5] == 2", elems[5] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[6] == 4", elems[6] == 4)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[7] == 2", elems[7] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[8] == 3", elems[8] == 3)
 
     iric.cg_iRIC_Close(fid)
 

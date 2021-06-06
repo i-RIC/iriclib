@@ -260,7 +260,7 @@ def gen_size_func(fname, args):
 
     return 'cg_iRIC_Read_Sol_PolyData_CoordinateCount' + suffix, args
 
-  m = re.search('(cg_iRIC_GetTriangleElements)(.*)', fname)
+  m = re.search('(cg_iRIC_Read_Grid_TriangleElements)(.*)', fname)
   if m:
     m, suffix = m.groups()
 

@@ -146,8 +146,8 @@ void case_GridReadUnstructured()
 	ier = cg_iRIC_Read_Grid2d_Coords_Mul(fid, x.data(), y.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
-	ier = cg_iRIC_GetTriangleElements_Mul(fid, elems.data());
-	VERIFY_LOG("cg_iRIC_GetTriangleElements_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid_TriangleElements_Mul(fid, elems.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid_TriangleElements_Mul() ier == 0", ier == 0);
 
 	cg_iRIC_Close(fid);
 

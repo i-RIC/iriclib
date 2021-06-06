@@ -135,9 +135,9 @@ int cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(int fid, int gid, RealArrayContain
 	return cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(fid, gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
-int cg_iRIC_GetTriangleElements_WithGridId_Mul(int fid, int gid, IntArrayContainer& id_arr)
+int cg_iRIC_Read_Grid_TriangleElements_WithGridId_Mul(int fid, int gid, IntArrayContainer& id_arr)
 {
-	return cg_iRIC_GetTriangleElements_WithGridId_Mul(fid, gid, id_arr.pointer());
+	return cg_iRIC_Read_Grid_TriangleElements_WithGridId_Mul(fid, gid, id_arr.pointer());
 }
 
 int cg_iRIC_Read_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, RealArrayContainer& v_arr)
@@ -337,9 +337,9 @@ int cg_iRIC_Read_Grid3d_Coords_WithGridId(int gid, RealArrayContainer& x_arr, Re
 	return cg_iRIC_Read_Grid3d_Coords_WithGridId(gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
-int cg_iRIC_GetTriangleElements_WithGridId(int gid, IntArrayContainer& id_arr)
+int cg_iRIC_Read_Grid_TriangleElements_WithGridId(int gid, IntArrayContainer& id_arr)
 {
-	return cg_iRIC_GetTriangleElements_WithGridId(gid, id_arr.pointer());
+	return cg_iRIC_Read_Grid_TriangleElements_WithGridId(gid, id_arr.pointer());
 }
 
 int cg_iRIC_Read_Grid_Real_Node_WithGridId(int gid, const char* name, RealArrayContainer& v_arr)
@@ -517,9 +517,9 @@ int cg_iRIC_Read_Grid3d_Coords(RealArrayContainer& x_arr, RealArrayContainer& y_
 	return cg_iRIC_Read_Grid3d_Coords(x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
-int cg_iRIC_GetTriangleElements(IntArrayContainer& id_arr)
+int cg_iRIC_Read_Grid_TriangleElements(IntArrayContainer& id_arr)
 {
-	return cg_iRIC_GetTriangleElements(id_arr.pointer());
+	return cg_iRIC_Read_Grid_TriangleElements(id_arr.pointer());
 }
 
 int cg_iRIC_Read_Grid_Real_Node(const char* name, RealArrayContainer& v_arr)
@@ -1121,9 +1121,9 @@ int cg_iRIC_Read_Grid3d_Coords_Mul(int fid, RealArrayContainer& x_arr, RealArray
 	return cg_iRIC_Read_Grid3d_Coords_Mul(fid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
-int cg_iRIC_GetTriangleElements_Mul(int fid, IntArrayContainer& id_arr)
+int cg_iRIC_Read_Grid_TriangleElements_Mul(int fid, IntArrayContainer& id_arr)
 {
-	return cg_iRIC_GetTriangleElements_Mul(fid, id_arr.pointer());
+	return cg_iRIC_Read_Grid_TriangleElements_Mul(fid, id_arr.pointer());
 }
 
 int cg_iRIC_Read_Grid_Real_Node_Mul(int fid, const char* name, RealArrayContainer& v_arr)

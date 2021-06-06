@@ -1611,10 +1611,10 @@ def cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(fid, gid):
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 
-def cg_iRIC_GetTriangleElements_WithGridId_Mul(fid, gid):
+def cg_iRIC_Read_Grid_TriangleElements_WithGridId_Mul(fid, gid):
 	size = cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(fid, gid)
 	id = IntArrayContainer(size)
-	ier = _iric.cg_iRIC_GetTriangleElements_WithGridId_Mul(fid, gid, id)
+	ier = _iric.cg_iRIC_Read_Grid_TriangleElements_WithGridId_Mul(fid, gid, id)
 	_checkErrorCode(ier)
 	return id.get()
 
@@ -1895,10 +1895,10 @@ def cg_iRIC_Read_Grid3d_Coords_WithGridId(gid):
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 
-def cg_iRIC_GetTriangleElements_WithGridId(gid):
+def cg_iRIC_Read_Grid_TriangleElements_WithGridId(gid):
 	size = cg_iRIC_GetTriangleElementsSize2_WithGridId(gid)
 	id = IntArrayContainer(size)
-	ier = _iric.cg_iRIC_GetTriangleElements_WithGridId(gid, id)
+	ier = _iric.cg_iRIC_Read_Grid_TriangleElements_WithGridId(gid, id)
 	_checkErrorCode(ier)
 	return id.get()
 
@@ -2150,10 +2150,10 @@ def cg_iRIC_Read_Grid3d_Coords():
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 
-def cg_iRIC_GetTriangleElements():
+def cg_iRIC_Read_Grid_TriangleElements():
 	size = cg_iRIC_GetTriangleElementsSize2()
 	id = IntArrayContainer(size)
-	ier = _iric.cg_iRIC_GetTriangleElements(id)
+	ier = _iric.cg_iRIC_Read_Grid_TriangleElements(id)
 	_checkErrorCode(ier)
 	return id.get()
 
@@ -3006,10 +3006,10 @@ def cg_iRIC_Read_Grid3d_Coords_Mul(fid):
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 
-def cg_iRIC_GetTriangleElements_Mul(fid):
+def cg_iRIC_Read_Grid_TriangleElements_Mul(fid):
 	size = cg_iRIC_GetTriangleElementsSize2_Mul(fid)
 	id = IntArrayContainer(size)
-	ier = _iric.cg_iRIC_GetTriangleElements_Mul(fid, id)
+	ier = _iric.cg_iRIC_Read_Grid_TriangleElements_Mul(fid, id)
 	_checkErrorCode(ier)
 	return id.get()
 
