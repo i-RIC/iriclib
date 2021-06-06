@@ -34,7 +34,6 @@ case_initread.cpp
 case_no_grid_output.cpp
 case_sol_cell_readwrite.cpp
 case_sol_readwrite.cpp
-case_sol_startend.cpp
 main.cpp
 )
 

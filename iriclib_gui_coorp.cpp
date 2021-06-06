@@ -6,11 +6,6 @@
 #include <iostream>
 #include <cstdlib>
 
-int iRIC_Write_Sol_Start(const char* /*fname*/)
-{
-	return IRIC_NO_ERROR;
-}
-
 int iRIC_Write_Sol_End(const char* /*fname*/)
 {
 	return IRIC_NO_ERROR;

@@ -118,7 +118,6 @@ int cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId_Mul(int fid, int gid, c
 int cg_iRIC_Read_Grid_FunctionalTimeSize_WithGridId_Mul(int fid, int gid, const char* name, int* OUTPUT);
 
 // from iriclib_gui_coorp.h
-int iRIC_Write_Sol_Start(const char* fname);
 int iRIC_Write_Sol_End(const char* fname);
 int iRIC_Check_Lock(const char* fname);
 int iRIC_Check_Cancel();

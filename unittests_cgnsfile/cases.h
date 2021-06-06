@@ -20,8 +20,6 @@ void case_GridReadUnstructured();
 void case_GridReadFunc();
 void case_GridWrite();
 
-void case_SolStartEnd();
-
 void case_SolWriteStd_adf();
 void case_SolWriteStd_hdf5();
 void case_SolWriteDivide_adf();

@@ -1115,14 +1115,6 @@ void IRICLIBDLL FMNAME(cg_iric_write_grid_integer_cell_withgridid_mul_f, CG_IRIC
 
 
 // from iriclib_gui_coorp.h
-void IRICLIBDLL FMNAME(iric_write_sol_start_f, IRIC_WRITE_SOL_START_F) (STR_PSTR(fname), int *ier STR_PLEN(fname)) {
-	char c_fname[STRINGMAXLEN + 1];
-	string_2_C_string(STR_PTR(fname), STR_LEN(fname), c_fname, STRINGMAXLEN, ier);
-	if (*ier != 0) return;
-
-	*ier = iRIC_Write_Sol_Start(c_fname);
-}
-
 void IRICLIBDLL FMNAME(iric_write_sol_end_f, IRIC_WRITE_SOL_END_F) (STR_PSTR(fname), int *ier STR_PLEN(fname)) {
 	char c_fname[STRINGMAXLEN + 1];
 	string_2_C_string(STR_PTR(fname), STR_LEN(fname), c_fname, STRINGMAXLEN, ier);
