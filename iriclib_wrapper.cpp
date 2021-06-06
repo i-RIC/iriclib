@@ -647,9 +647,9 @@ int cg_iRIC_Write_Sol_Grid2d_Coords(RealArrayContainer& x_arr, RealArrayContaine
 	return cg_iRIC_Write_Sol_Grid2d_Coords(x_arr.pointer(), y_arr.pointer());
 }
 
-int cg_iRIC_Write_Sol_GridCoord3d(RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
+int cg_iRIC_Write_Sol_Grid3d_Coords(RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
 {
-	return cg_iRIC_Write_Sol_GridCoord3d(x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
+	return cg_iRIC_Write_Sol_Grid3d_Coords(x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
 int cg_iRIC_Read_Sol_IFace_Integer(int step, const char* name, IntArrayContainer& v_arr)
@@ -857,9 +857,9 @@ int cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId(int gid, RealArrayContainer& x_ar
 	return cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId(gid, x_arr.pointer(), y_arr.pointer());
 }
 
-int cg_iRIC_Write_Sol_GridCoord3d_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
+int cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
 {
-	return cg_iRIC_Write_Sol_GridCoord3d_WithGridId(gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
+	return cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId(gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
 int cg_iRIC_Read_Sol_IFace_Integer_WithGridId(int gid, int step, const char* name, IntArrayContainer& v_arr)
@@ -1251,9 +1251,9 @@ int cg_iRIC_Write_Sol_Grid2d_Coords_Mul(int fid, RealArrayContainer& x_arr, Real
 	return cg_iRIC_Write_Sol_Grid2d_Coords_Mul(fid, x_arr.pointer(), y_arr.pointer());
 }
 
-int cg_iRIC_Write_Sol_GridCoord3d_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
+int cg_iRIC_Write_Sol_Grid3d_Coords_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
 {
-	return cg_iRIC_Write_Sol_GridCoord3d_Mul(fid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
+	return cg_iRIC_Write_Sol_Grid3d_Coords_Mul(fid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
 int cg_iRIC_Read_Sol_IFace_Integer_Mul(int fid, int step, const char* name, IntArrayContainer& v_arr)
@@ -1465,9 +1465,9 @@ int cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId_Mul(int fid, int gid, RealArrayCo
 	return cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId_Mul(fid, gid, x_arr.pointer(), y_arr.pointer());
 }
 
-int cg_iRIC_Write_Sol_GridCoord3d_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
+int cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
 {
-	return cg_iRIC_Write_Sol_GridCoord3d_WithGridId_Mul(fid, gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
+	return cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId_Mul(fid, gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
 

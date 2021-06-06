@@ -2333,14 +2333,14 @@ def cg_iRIC_Write_Sol_Grid2d_Coords(x_arr, y_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Grid2d_Coords(x, y)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Write_Sol_GridCoord3d(x_arr, y_arr, z_arr):
+def cg_iRIC_Write_Sol_Grid3d_Coords(x_arr, y_arr, z_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
 	y = RealArrayContainer(y_arr.size)
 	y.set(y_arr)
 	z = RealArrayContainer(z_arr.size)
 	z.set(z_arr)
-	ier = _iric.cg_iRIC_Write_Sol_GridCoord3d(x, y, z)
+	ier = _iric.cg_iRIC_Write_Sol_Grid3d_Coords(x, y, z)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Read_Sol_IFace_Integer(step, name):
@@ -2635,14 +2635,14 @@ def cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId(gid, x_arr, y_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId(gid, x, y)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Write_Sol_GridCoord3d_WithGridId(gid, x_arr, y_arr, z_arr):
+def cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId(gid, x_arr, y_arr, z_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
 	y = RealArrayContainer(y_arr.size)
 	y.set(y_arr)
 	z = RealArrayContainer(z_arr.size)
 	z.set(z_arr)
-	ier = _iric.cg_iRIC_Write_Sol_GridCoord3d_WithGridId(gid, x, y, z)
+	ier = _iric.cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId(gid, x, y, z)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Read_Sol_IFace_Integer_WithGridId(gid, step, name):
@@ -3189,14 +3189,14 @@ def cg_iRIC_Write_Sol_Grid2d_Coords_Mul(fid, x_arr, y_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Grid2d_Coords_Mul(fid, x, y)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Write_Sol_GridCoord3d_Mul(fid, x_arr, y_arr, z_arr):
+def cg_iRIC_Write_Sol_Grid3d_Coords_Mul(fid, x_arr, y_arr, z_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
 	y = RealArrayContainer(y_arr.size)
 	y.set(y_arr)
 	z = RealArrayContainer(z_arr.size)
 	z.set(z_arr)
-	ier = _iric.cg_iRIC_Write_Sol_GridCoord3d_Mul(fid, x, y, z)
+	ier = _iric.cg_iRIC_Write_Sol_Grid3d_Coords_Mul(fid, x, y, z)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Read_Sol_IFace_Integer_Mul(fid, step, name):
@@ -3491,14 +3491,14 @@ def cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId_Mul(fid, gid, x_arr, y_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId_Mul(fid, gid, x, y)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Write_Sol_GridCoord3d_WithGridId_Mul(fid, gid, x_arr, y_arr, z_arr):
+def cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId_Mul(fid, gid, x_arr, y_arr, z_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
 	y = RealArrayContainer(y_arr.size)
 	y.set(y_arr)
 	z = RealArrayContainer(z_arr.size)
 	z.set(z_arr)
-	ier = _iric.cg_iRIC_Write_Sol_GridCoord3d_WithGridId_Mul(fid, gid, x, y, z)
+	ier = _iric.cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId_Mul(fid, gid, x, y, z)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Read_Sol_IFace_Integer_WithGridId_Mul(fid, gid, step, name):

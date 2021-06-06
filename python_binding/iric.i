@@ -474,7 +474,7 @@ int cg_iRIC_Write_Sol_Cell_Real(const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Grid2d_Coords(int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_Read_Sol_Grid3d_Coords(int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Write_Sol_Grid2d_Coords(RealArrayContainer& x_arr, RealArrayContainer& y_arr);
-int cg_iRIC_Write_Sol_GridCoord3d(RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_Write_Sol_Grid3d_Coords(RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Read_Sol_IFace_Integer(int step, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_IFace_Real(int step, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Sol_IFace_Integer(const char* name, IntArrayContainer& v_arr);
@@ -516,7 +516,7 @@ int cg_iRIC_Write_Sol_Cell_Real_WithGridId(int gid, const char* name, RealArrayC
 int cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId(int gid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId(int gid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
-int cg_iRIC_Write_Sol_GridCoord3d_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Read_Sol_IFace_Integer_WithGridId(int gid, int step, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_IFace_Real_WithGridId(int gid, int step, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Sol_IFace_Integer_WithGridId(int gid, const char* name, IntArrayContainer& v_arr);
@@ -594,7 +594,7 @@ int cg_iRIC_Write_Sol_Cell_Real_Mul(int fid, const char* name, RealArrayContaine
 int cg_iRIC_Read_Sol_Grid2d_Coords_Mul(int fid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_Read_Sol_Grid3d_Coords_Mul(int fid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Write_Sol_Grid2d_Coords_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
-int cg_iRIC_Write_Sol_GridCoord3d_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_Write_Sol_Grid3d_Coords_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Read_Sol_IFace_Integer_Mul(int fid, int step, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_IFace_Real_Mul(int fid, int step, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Sol_IFace_Integer_Mul(int fid, const char* name, IntArrayContainer& v_arr);
@@ -636,7 +636,7 @@ int cg_iRIC_Write_Sol_Cell_Real_WithGridId_Mul(int fid, int gid, const char* nam
 int cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(int fid, int gid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId_Mul(int fid, int gid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
-int cg_iRIC_Write_Sol_GridCoord3d_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Read_Sol_IFace_Integer_WithGridId_Mul(int fid, int gid, int step, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_IFace_Real_WithGridId_Mul(int fid, int gid, int step, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Sol_IFace_Integer_WithGridId_Mul(int fid, int gid, const char* name, IntArrayContainer& v_arr);

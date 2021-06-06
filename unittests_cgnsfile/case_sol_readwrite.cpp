@@ -254,8 +254,8 @@ void writeSolution3d(const char* filename, int* fid)
 		ier = cg_iRIC_Write_Sol_Time_Mul(*fid, TimeVal);
 		VERIFY_LOG("cg_iRIC_Write_Sol_Time_Mul() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_GridCoord3d_Mul(*fid, x.data(), y.data(), z.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_GridCoord3d_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Grid3d_Coords_Mul(*fid, x.data(), y.data(), z.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Grid3d_Coords_Mul() ier == 0", ier == 0);
 
 		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "Depth", depth.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for Depth ier == 0", ier == 0);

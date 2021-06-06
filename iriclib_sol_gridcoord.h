@@ -11,7 +11,7 @@ int IRICLIBDLL cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(int fid, int gid, i
 int IRICLIBDLL cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId_Mul(int fid, int gid, int step, double* x_arr, double* y_arr, double* z_arr);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr);
-int IRICLIBDLL cg_iRIC_Write_Sol_GridCoord3d_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr, double* z_arr);
+int IRICLIBDLL cg_iRIC_Write_Sol_Grid3d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr, double* z_arr);
 
 #ifdef __cplusplus
 }

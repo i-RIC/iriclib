@@ -153,7 +153,7 @@ def writeSolution3d(filename, fid):
         TimeVal = i * 2.13
         iric.cg_iRIC_Write_Sol_Time(TimeVal)
 
-        iric.cg_iRIC_Write_Sol_GridCoord3d(x, y, z)
+        iric.cg_iRIC_Write_Sol_Grid3d_Coords(x, y, z)
         iric.cg_iRIC_Write_Sol_Real("Depth", depth)
         iric.cg_iRIC_Write_Sol_Real("VelocityX", vx)
         iric.cg_iRIC_Write_Sol_Real("VelocityY", vy)
