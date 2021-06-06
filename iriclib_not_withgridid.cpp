@@ -526,11 +526,11 @@ int cg_iRIC_Write_Grid2d_Coords_Mul(int fid, int isize, int jsize, double* x_arr
   return cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(fid, isize, jsize, x_arr, y_arr, &gid);
 }
 
-int cg_iRIC_WriteGridCoord3d_Mul(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Write_Grid3d_Coords_Mul(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr)
 {
   int gid;
 
-  return cg_iRIC_WriteGridCoord3d_WithGridId_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr, &gid);
+  return cg_iRIC_Write_Grid3d_Coords_WithGridId_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr, &gid);
 }
 
 int cg_iRIC_Write_Grid_Real_Node_Mul(int fid, const char* name, double* v_arr)

@@ -1711,14 +1711,14 @@ def cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(fid, isize, jsize, x_arr, y_arr):
 	_checkErrorCode(ier)
 	return gid
 
-def cg_iRIC_WriteGridCoord3d_WithGridId_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr):
+def cg_iRIC_Write_Grid3d_Coords_WithGridId_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
 	y = RealArrayContainer(y_arr.size)
 	y.set(y_arr)
 	z = RealArrayContainer(z_arr.size)
 	z.set(z_arr)
-	ier, gid = _iric.cg_iRIC_WriteGridCoord3d_WithGridId_Mul(fid, isize, jsize, ksize, x, y, z)
+	ier, gid = _iric.cg_iRIC_Write_Grid3d_Coords_WithGridId_Mul(fid, isize, jsize, ksize, x, y, z)
 	_checkErrorCode(ier)
 	return gid
 
@@ -1995,14 +1995,14 @@ def cg_iRIC_Write_Grid2d_Coords_WithGridId(isize, jsize, x_arr, y_arr):
 	_checkErrorCode(ier)
 	return gid
 
-def cg_iRIC_WriteGridCoord3d_WithGridId(isize, jsize, ksize, x_arr, y_arr, z_arr):
+def cg_iRIC_Write_Grid3d_Coords_WithGridId(isize, jsize, ksize, x_arr, y_arr, z_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
 	y = RealArrayContainer(y_arr.size)
 	y.set(y_arr)
 	z = RealArrayContainer(z_arr.size)
 	z.set(z_arr)
-	ier, gid = _iric.cg_iRIC_WriteGridCoord3d_WithGridId(isize, jsize, ksize, x, y, z)
+	ier, gid = _iric.cg_iRIC_Write_Grid3d_Coords_WithGridId(isize, jsize, ksize, x, y, z)
 	_checkErrorCode(ier)
 	return gid
 
@@ -2248,14 +2248,14 @@ def cg_iRIC_Write_Grid2d_Coords(isize, jsize, x_arr, y_arr):
 	ier = _iric.cg_iRIC_Write_Grid2d_Coords(isize, jsize, x, y)
 	_checkErrorCode(ier)
 
-def cg_iRIC_WriteGridCoord3d(isize, jsize, ksize, x_arr, y_arr, z_arr):
+def cg_iRIC_Write_Grid3d_Coords(isize, jsize, ksize, x_arr, y_arr, z_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
 	y = RealArrayContainer(y_arr.size)
 	y.set(y_arr)
 	z = RealArrayContainer(z_arr.size)
 	z.set(z_arr)
-	ier = _iric.cg_iRIC_WriteGridCoord3d(isize, jsize, ksize, x, y, z)
+	ier = _iric.cg_iRIC_Write_Grid3d_Coords(isize, jsize, ksize, x, y, z)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Write_Grid_Real_Node(name, v_arr):
@@ -3104,14 +3104,14 @@ def cg_iRIC_Write_Grid2d_Coords_Mul(fid, isize, jsize, x_arr, y_arr):
 	ier = _iric.cg_iRIC_Write_Grid2d_Coords_Mul(fid, isize, jsize, x, y)
 	_checkErrorCode(ier)
 
-def cg_iRIC_WriteGridCoord3d_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr):
+def cg_iRIC_Write_Grid3d_Coords_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
 	y = RealArrayContainer(y_arr.size)
 	y.set(y_arr)
 	z = RealArrayContainer(z_arr.size)
 	z.set(z_arr)
-	ier = _iric.cg_iRIC_WriteGridCoord3d_Mul(fid, isize, jsize, ksize, x, y, z)
+	ier = _iric.cg_iRIC_Write_Grid3d_Coords_Mul(fid, isize, jsize, ksize, x, y, z)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Write_Grid_Real_Node_Mul(fid, name, v_arr):

@@ -428,8 +428,8 @@ void case_GridWrite()
 			}
 		}
 	}
-	ier = cg_iRIC_WriteGridCoord3d_Mul(fid, isize, jsize, ksize, x.data(), y.data(), z.data());
-	VERIFY_LOG("cg_iRIC_WriteGridCoord3d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid3d_Coords_Mul(fid, isize, jsize, ksize, x.data(), y.data(), z.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid3d_Coords_Mul() ier == 0", ier == 0);
 
 	cg_close(fid);
 

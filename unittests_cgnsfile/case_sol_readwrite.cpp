@@ -228,8 +228,8 @@ void writeSolution3d(const char* filename, int* fid)
 	z.assign(isize * jsize, 0);
 	ier = cg_iRIC_Read_Grid2d_Coords_Mul(*fid, x.data(), y.data());
 
-	ier = cg_iRIC_WriteGridCoord3d_Mul(*fid, isize, jsize, 1, x.data(), y.data(), z.data());
-	VERIFY_LOG("cg_iRIC_WriteGridCoord3d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid3d_Coords_Mul(*fid, isize, jsize, 1, x.data(), y.data(), z.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid3d_Coords_Mul() ier == 0", ier == 0);
 
 	vx.assign(isize * jsize, 1);
 	vy.assign(isize * jsize, 0.3);

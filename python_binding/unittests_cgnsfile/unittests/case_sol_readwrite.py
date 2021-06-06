@@ -130,7 +130,7 @@ def writeSolution3d(filename, fid):
     x, y = iric.cg_iRIC_Read_Grid2d_Coords_Mul(fid)
     z = np.zeros(isize * jsize, dtype=np.float64)
 
-    iric.cg_iRIC_WriteGridCoord3d_Mul(fid, isize, jsize, 1, x, y, z)
+    iric.cg_iRIC_Write_Grid3d_Coords_Mul(fid, isize, jsize, 1, x, y, z)
 
     vx = np.full(isize * jsize, 1, dtype=np.float64)
     vy = np.full(isize * jsize, 0.3, dtype=np.float64)

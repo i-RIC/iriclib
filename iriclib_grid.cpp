@@ -436,7 +436,7 @@ int cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(int fid, int isize, int jsize, do
 	return file->getGridId(zone, gid);
 }
 
-int cg_iRIC_WriteGridCoord3d_WithGridId_Mul(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid)
+int cg_iRIC_Write_Grid3d_Coords_WithGridId_Mul(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid)
 {
 	H5CgnsFile* file = nullptr;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);

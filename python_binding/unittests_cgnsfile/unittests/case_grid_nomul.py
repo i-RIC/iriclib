@@ -318,7 +318,7 @@ def case_GridWrite():
                 y[idx] = j
                 z[idx] = k
 
-    iric.cg_iRIC_WriteGridCoord3d(isize, jsize, ksize, x, y, z)
+    iric.cg_iRIC_Write_Grid3d_Coords(isize, jsize, ksize, x, y, z)
 
     iric.cg_close(fid)
 

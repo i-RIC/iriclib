@@ -877,13 +877,13 @@ int cg_iRIC_Write_Grid2d_Coords_WithGridId(int isize, int jsize, double* x_arr, 
   return cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(fid, isize, jsize, x_arr, y_arr, gid);
 }
 
-int cg_iRIC_WriteGridCoord3d_WithGridId(int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid)
+int cg_iRIC_Write_Grid3d_Coords_WithGridId(int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_WriteGridCoord3d_WithGridId_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr, gid);
+  return cg_iRIC_Write_Grid3d_Coords_WithGridId_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr, gid);
 }
 
 int cg_iRIC_Write_Grid_Real_Node_WithGridId(int gid, const char* name, double* v_arr)
@@ -1609,13 +1609,13 @@ int cg_iRIC_Write_Grid2d_Coords(int isize, int jsize, double* x_arr, double* y_a
   return cg_iRIC_Write_Grid2d_Coords_Mul(fid, isize, jsize, x_arr, y_arr);
 }
 
-int cg_iRIC_WriteGridCoord3d(int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Write_Grid3d_Coords(int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_WriteGridCoord3d_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr);
+  return cg_iRIC_Write_Grid3d_Coords_Mul(fid, isize, jsize, ksize, x_arr, y_arr, z_arr);
 }
 
 int cg_iRIC_Write_Grid_Real_Node(const char* name, double* v_arr)

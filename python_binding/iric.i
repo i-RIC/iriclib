@@ -386,7 +386,7 @@ int cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId_Mul(int fid, int gid, c
 int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, int dimid, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(int fid, int isize, RealArrayContainer& x_arr, int* OUTPUT);
 int cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(int fid, int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, int* OUTPUT);
-int cg_iRIC_WriteGridCoord3d_WithGridId_Mul(int fid, int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr, int* OUTPUT);
+int cg_iRIC_Write_Grid3d_Coords_WithGridId_Mul(int fid, int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr, int* OUTPUT);
 int cg_iRIC_Write_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, RealArrayContainer& v_arr);
@@ -426,7 +426,7 @@ int cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId(int gid, const char* na
 int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId(int gid, const char* name, int dimid, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Grid1d_Coords_WithGridId(int isize, RealArrayContainer& x_arr, int* OUTPUT);
 int cg_iRIC_Write_Grid2d_Coords_WithGridId(int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, int* OUTPUT);
-int cg_iRIC_WriteGridCoord3d_WithGridId(int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr, int* OUTPUT);
+int cg_iRIC_Write_Grid3d_Coords_WithGridId(int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr, int* OUTPUT);
 int cg_iRIC_Write_Grid_Real_Node_WithGridId(int gid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Integer_Node_WithGridId(int gid, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Real_Cell_WithGridId(int gid, const char* name, RealArrayContainer& v_arr);
@@ -462,7 +462,7 @@ int cg_iRIC_Read_Grid_Functional_Integer_Cell(const char* name, int dimid, IntAr
 int cg_iRIC_Read_Grid_Functional_Real_Cell(const char* name, int dimid, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Grid1d_Coords(int isize, RealArrayContainer& x_arr);
 int cg_iRIC_Write_Grid2d_Coords(int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
-int cg_iRIC_WriteGridCoord3d(int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_Write_Grid3d_Coords(int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Write_Grid_Real_Node(const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Integer_Node(const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Real_Cell(const char* name, RealArrayContainer& v_arr);
@@ -582,7 +582,7 @@ int cg_iRIC_Read_Grid_Functional_Integer_Cell_Mul(int fid, const char* name, int
 int cg_iRIC_Read_Grid_Functional_Real_Cell_Mul(int fid, const char* name, int dimid, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Grid1d_Coords_Mul(int fid, int isize, RealArrayContainer& x_arr);
 int cg_iRIC_Write_Grid2d_Coords_Mul(int fid, int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
-int cg_iRIC_WriteGridCoord3d_Mul(int fid, int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
+int cg_iRIC_Write_Grid3d_Coords_Mul(int fid, int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Write_Grid_Real_Node_Mul(int fid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Integer_Node_Mul(int fid, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Real_Cell_Mul(int fid, const char* name, RealArrayContainer& v_arr);
