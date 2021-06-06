@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-int IRICLIBDLL cg_iRIC_GotoGridCoord2d_WithGridId_Mul(int fid, int gid, int* isize, int* jsize);
+int IRICLIBDLL cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, int* jsize);
 int IRICLIBDLL cg_iRIC_GetGridCoord2d_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr);
 int IRICLIBDLL cg_iRIC_GotoGridCoord3d_WithGridId_Mul(int fid, int gid, int* isize, int* jsize, int* ksize);
 int IRICLIBDLL cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr, double* z_arr);

@@ -13,9 +13,9 @@ def case_GridRead():
 
     iric.cg_iRIC_Init(fid)
 
-    isize, jsize = iric.cg_iRIC_GotoGridCoord2d_Mul(fid)
-    util.verify_log("cg_iRIC_GotoGridCoord2d_Mul() isize == 11", isize == 11)
-    util.verify_log("cg_iRIC_GotoGridCoord2d_Mul() jsize == 11", jsize == 11)
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size_Mul(fid)
+    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 11", isize == 11)
+    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 11", jsize == 11)
 
     x, y = iric.cg_iRIC_GetGridCoord2d_Mul(fid)
 
@@ -97,9 +97,9 @@ def case_GridReadFunc():
 
     iric.cg_iRIC_Init(fid)
 
-    isize, jsize = iric.cg_iRIC_GotoGridCoord2d_Mul(fid)
-    util.verify_log("cg_iRIC_GotoGridCoord2d_Mul() isize == 15", isize == 15)
-    util.verify_log("cg_iRIC_GotoGridCoord2d_Mul() jsize == 15", jsize == 15)
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size_Mul(fid)
+    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 15", isize == 15)
+    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 15", jsize == 15)
 
     x, y = iric.cg_iRIC_GetGridCoord2d_Mul(fid)
 

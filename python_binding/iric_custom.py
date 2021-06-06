@@ -417,8 +417,8 @@ def cg_iRIC_Read_Geo_Filename_Mul(fid, name, geoid):
 
 
 # from iriclib_grid.h
-def cg_iRIC_GotoGridCoord2d_WithGridId_Mul(fid, gid):
-	ier, isize, jsize = _iric.cg_iRIC_GotoGridCoord2d_WithGridId_Mul(fid, gid)
+def cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(fid, gid):
+	ier, isize, jsize = _iric.cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(fid, gid)
 	_checkErrorCode(ier)
 	return isize, jsize
 
@@ -692,8 +692,8 @@ def cg_iRIC_Read_Geo_Filename(name, geoid):
 	_checkErrorCode(ier)
 	return strvalue, type
 
-def cg_iRIC_GotoGridCoord2d_WithGridId(gid):
-	ier, isize, jsize = _iric.cg_iRIC_GotoGridCoord2d_WithGridId(gid)
+def cg_iRIC_Read_Grid2d_Str_Size_WithGridId(gid):
+	ier, isize, jsize = _iric.cg_iRIC_Read_Grid2d_Str_Size_WithGridId(gid)
 	_checkErrorCode(ier)
 	return isize, jsize
 
@@ -856,8 +856,8 @@ def cg_iRIC_Write_BC_FunctionalWithName_String(type, num, name, paramname, value
 	ier = _iric.cg_iRIC_Write_BC_FunctionalWithName_String(type, num, name, paramname, value)
 	_checkErrorCode(ier)
 
-def cg_iRIC_GotoGridCoord2d():
-	ier, isize, jsize = _iric.cg_iRIC_GotoGridCoord2d()
+def cg_iRIC_Read_Grid2d_Str_Size():
+	ier, isize, jsize = _iric.cg_iRIC_Read_Grid2d_Str_Size()
 	_checkErrorCode(ier)
 	return isize, jsize
 
@@ -1198,8 +1198,8 @@ def cg_iRIC_Write_BC_FunctionalWithName_String_Mul(fid, type, num, name, paramna
 	ier = _iric.cg_iRIC_Write_BC_FunctionalWithName_String_Mul(fid, type, num, name, paramname, value)
 	_checkErrorCode(ier)
 
-def cg_iRIC_GotoGridCoord2d_Mul(fid):
-	ier, isize, jsize = _iric.cg_iRIC_GotoGridCoord2d_Mul(fid)
+def cg_iRIC_Read_Grid2d_Str_Size_Mul(fid):
+	ier, isize, jsize = _iric.cg_iRIC_Read_Grid2d_Str_Size_Mul(fid)
 	_checkErrorCode(ier)
 	return isize, jsize
 

@@ -48,8 +48,8 @@ void case_Complex()
 	VERIFY_LOG("cg_iRIC_Write_Complex_Real_Mul() ier == 0", ier == 0);
 
 	int isize, jsize;
-	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid2d_Str_Size_Mul(fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	std::vector<int> complex_cell;
 	complex_cell.assign((isize - 1) * (jsize - 1), 1);

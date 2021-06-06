@@ -33,10 +33,10 @@ void case_GridRead()
 	int count;
 	std::vector<double> x, y;
 
-	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() isize == 11", isize == 11);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() jsize == 11", jsize == 11);
+	ier = cg_iRIC_Read_Grid2d_Str_Size_Mul(fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 11", isize == 11);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 11", jsize == 11);
 
 	ier = cg_iRIC_Read_Grid_NodeCount_Mul(fid, &count);
 	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() ier == 0", ier == 0);
@@ -58,7 +58,7 @@ void case_GridRead()
 	y.assign(isize * jsize, 0);
 
 	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	std::vector<double> doubleArr;
 	std::vector<int> intArr;
@@ -145,7 +145,7 @@ void case_GridReadUnstructured()
 	elems.assign(elem_size * 3, 0);
 
 	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	ier = cg_iRIC_GetTriangleElements_Mul(fid, elems.data());
 	VERIFY_LOG("cg_iRIC_GetTriangleElements_Mul() ier == 0", ier == 0);
@@ -172,16 +172,16 @@ void case_GridReadFunc()
 	int isize, jsize;
 	std::vector<double> x, y;
 
-	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() isize == 15", isize == 15);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() jsize == 15", jsize == 15);
+	ier = cg_iRIC_Read_Grid2d_Str_Size_Mul(fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 15", isize == 15);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 15", jsize == 15);
 
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
 
 	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	int time_count;
 	ier = cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul(fid, "Xrain", "Time", &time_count);

@@ -41,7 +41,7 @@ int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Node_Mul(int fid, const char* groupnam
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Cell_Mul(int fid, const char* groupname, int* v_arr);
 
 // from iriclib_grid.h
-int IRICLIBDLL cg_iRIC_GotoGridCoord2d_Mul(int fid, int* isize, int* jsize);
+int IRICLIBDLL cg_iRIC_Read_Grid2d_Str_Size_Mul(int fid, int* isize, int* jsize);
 int IRICLIBDLL cg_iRIC_GetGridCoord2d_Mul(int fid, double* x_arr, double* y_arr);
 int IRICLIBDLL cg_iRIC_GotoGridCoord3d_Mul(int fid, int* isize, int* jsize, int* ksize);
 int IRICLIBDLL cg_iRIC_GetGridCoord3d_Mul(int fid, double* x_arr, double* y_arr, double* z_arr);

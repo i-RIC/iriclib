@@ -17,7 +17,7 @@
 
 using namespace iRICLib;
 
-int cg_iRIC_GotoGridCoord2d_WithGridId_Mul(int fid, int gid, int* isize, int* jsize)
+int cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, int* jsize)
 {
 	H5CgnsZone* z;
 	int ier = _iric_get_zone(fid, gid, &z, __func__);
@@ -25,13 +25,13 @@ int cg_iRIC_GotoGridCoord2d_WithGridId_Mul(int fid, int gid, int* isize, int* js
 
 	if (z->type() == H5CgnsZone::Type::Unstructured) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GotoGridCoord2d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
+		ss << "In cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_GRIDTYPE;
 	}
 	if (z->base()->dimension() != 2) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GotoGridCoord2d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
+		ss << "In cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}

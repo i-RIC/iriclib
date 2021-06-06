@@ -26,7 +26,7 @@ def case_Complex():
     realparam2_write = 8.92
     iric.cg_iRIC_Write_Complex_Real_Mul(fid, "cellparam", 2, "realparam", realparam2_write)
 
-    isize, jsize = iric.cg_iRIC_GotoGridCoord2d_Mul(fid)
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size_Mul(fid)
 
     complex_cell = np.zeros((isize - 1) * (jsize - 1))
     complex_cell[:] = 1

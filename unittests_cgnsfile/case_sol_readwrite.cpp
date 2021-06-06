@@ -21,8 +21,8 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 {
 	int isize, jsize;
 
-	int ier = cg_iRIC_GotoGridCoord2d_Mul(*fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	int ier = cg_iRIC_Read_Grid2d_Str_Size_Mul(*fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	std::vector<double> x, y;
 	std::vector<double> vx, vy, depth;
@@ -212,8 +212,8 @@ void writeSolution3d(const char* filename, int* fid)
 {
 	int isize, jsize;
 
-	int ier = cg_iRIC_GotoGridCoord2d_Mul(*fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	int ier = cg_iRIC_Read_Grid2d_Str_Size_Mul(*fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	std::vector<double> x, y, z;
 	std::vector<double> vx, vy, depth;
@@ -353,8 +353,8 @@ void readSolution(int fid)
 	std::vector<int> jface_is_edge;
 	std::vector<double> jface_is_edge_reals;
 
-	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid2d_Str_Size_Mul(fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	grid_x.assign(isize * jsize, 0);
 	grid_y.assign(isize * jsize, 0);

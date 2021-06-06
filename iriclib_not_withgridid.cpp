@@ -287,13 +287,13 @@ int cg_iRIC_Write_Grid_Complex_Cell_Mul(int fid, const char* groupname, int* v_a
 
 
 // from iriclib_grid.h
-int cg_iRIC_GotoGridCoord2d_Mul(int fid, int* isize, int* jsize)
+int cg_iRIC_Read_Grid2d_Str_Size_Mul(int fid, int* isize, int* jsize)
 {
   int gid;
   int ier = getlastGridId(fid, &gid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_GotoGridCoord2d_WithGridId_Mul(fid, gid, isize, jsize);
+  return cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(fid, gid, isize, jsize);
 }
 
 int cg_iRIC_GetGridCoord2d_Mul(int fid, double* x_arr, double* y_arr)

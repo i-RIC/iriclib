@@ -6,7 +6,7 @@ import iric
 from . import util
 
 def writeSolution(filename, fid, iterMode):
-    isize, jsize = iric.cg_iRIC_GotoGridCoord2d()
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size()
 
     # fill iface
     iface_is_edge = np.zeros(isize * (jsize - 1), dtype=np.int32)
@@ -125,7 +125,7 @@ def writeSolution(filename, fid, iterMode):
     return fid
 
 def writeSolution3d(filename, fid):
-    isize, jsize = iric.cg_iRIC_GotoGridCoord2d()
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size()
 
     x, y = iric.cg_iRIC_GetGridCoord2d()
     z = np.zeros(isize * jsize, dtype=np.float64)
@@ -196,7 +196,7 @@ def readSolution(fid):
     sol_count = iric.cg_iRIC_Read_Sol_Count()
     util.verify_log("cg_iRIC_Read_Sol_Count() sol_count == 5", sol_count == 5)
 
-    isize, jsize = iric.cg_iRIC_GotoGridCoord2d()
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size()
 
     for S in range(1, sol_count + 1):
         # GridCoord

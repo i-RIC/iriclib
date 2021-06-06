@@ -634,13 +634,13 @@ int cg_iRIC_Read_Geo_Filename(const char* name, int geoid, char* strvalue, int* 
 
 
 // from iriclib_grid.h
-int cg_iRIC_GotoGridCoord2d_WithGridId(int gid, int* isize, int* jsize)
+int cg_iRIC_Read_Grid2d_Str_Size_WithGridId(int gid, int* isize, int* jsize)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_GotoGridCoord2d_WithGridId_Mul(fid, gid, isize, jsize);
+  return cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(fid, gid, isize, jsize);
 }
 
 int cg_iRIC_GetGridCoord2d_WithGridId(int gid, double* x_arr, double* y_arr)
@@ -1366,13 +1366,13 @@ int cg_iRIC_Write_Grid_Complex_Cell(const char* groupname, int* v_arr)
   return cg_iRIC_Write_Grid_Complex_Cell_Mul(fid, groupname, v_arr);
 }
 
-int cg_iRIC_GotoGridCoord2d(int* isize, int* jsize)
+int cg_iRIC_Read_Grid2d_Str_Size(int* isize, int* jsize)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_GotoGridCoord2d_Mul(fid, isize, jsize);
+  return cg_iRIC_Read_Grid2d_Str_Size_Mul(fid, isize, jsize);
 }
 
 int cg_iRIC_GetGridCoord2d(double* x_arr, double* y_arr)
