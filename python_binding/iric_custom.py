@@ -1602,12 +1602,12 @@ def cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(fid, gid):
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
-def cg_iRIC_GetGridCoord3d_WithGridId_Mul(fid, gid):
+def cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(fid, gid):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(fid, gid)
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
 	z = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_GetGridCoord3d_WithGridId_Mul(fid, gid, x, y, z)
+	ier = _iric.cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(fid, gid, x, y, z)
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 
@@ -1886,12 +1886,12 @@ def cg_iRIC_Read_Grid2d_Coords_WithGridId(gid):
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
-def cg_iRIC_GetGridCoord3d_WithGridId(gid):
+def cg_iRIC_Read_Grid3d_Coords_WithGridId(gid):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId(gid)
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
 	z = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_GetGridCoord3d_WithGridId(gid, x, y, z)
+	ier = _iric.cg_iRIC_Read_Grid3d_Coords_WithGridId(gid, x, y, z)
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 
@@ -2141,12 +2141,12 @@ def cg_iRIC_Read_Grid2d_Coords():
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
-def cg_iRIC_GetGridCoord3d():
+def cg_iRIC_Read_Grid3d_Coords():
 	size = cg_iRIC_Read_Grid_NodeCount()
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
 	z = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_GetGridCoord3d(x, y, z)
+	ier = _iric.cg_iRIC_Read_Grid3d_Coords(x, y, z)
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 
@@ -2997,12 +2997,12 @@ def cg_iRIC_Read_Grid2d_Coords_Mul(fid):
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
-def cg_iRIC_GetGridCoord3d_Mul(fid):
+def cg_iRIC_Read_Grid3d_Coords_Mul(fid):
 	size = cg_iRIC_Read_Grid_NodeCount_Mul(fid)
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
 	z = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_GetGridCoord3d_Mul(fid, x, y, z)
+	ier = _iric.cg_iRIC_Read_Grid3d_Coords_Mul(fid, x, y, z)
 	_checkErrorCode(ier)
 	return x.get(), y.get(), z.get()
 

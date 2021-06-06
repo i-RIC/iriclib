@@ -924,8 +924,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid3d_str_size_withgridid_mul_f, CG_IRIC_RE
 	*ier = cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(*fid, *gid, isize, jsize, ksize);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_getgridcoord3d_withgridid_mul_f, CG_IRIC_GETGRIDCOORD3D_WITHGRIDID_MUL_F) (int* fid, int* gid, double* x_arr, double* y_arr, double* z_arr, int *ier) {
-	*ier = cg_iRIC_GetGridCoord3d_WithGridId_Mul(*fid, *gid, x_arr, y_arr, z_arr);
+void IRICLIBDLL FMNAME(cg_iric_read_grid3d_coords_withgridid_mul_f, CG_IRIC_READ_GRID3D_COORDS_WITHGRIDID_MUL_F) (int* fid, int* gid, double* x_arr, double* y_arr, double* z_arr, int *ier) {
+	*ier = cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(*fid, *gid, x_arr, y_arr, z_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_gettriangleelementssize_withgridid_mul_f, CG_IRIC_GETTRIANGLEELEMENTSSIZE_WITHGRIDID_MUL_F) (int* fid, int* gid, int* size, int *ier) {
@@ -1949,8 +1949,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid3d_str_size_withgridid_f, CG_IRIC_READ_G
 	*ier = cg_iRIC_Read_Grid3d_Str_Size_WithGridId(*gid, isize, jsize, ksize);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_getgridcoord3d_withgridid_f, CG_IRIC_GETGRIDCOORD3D_WITHGRIDID_F) (int* gid, double* x_arr, double* y_arr, double* z_arr, int *ier) {
-	*ier = cg_iRIC_GetGridCoord3d_WithGridId(*gid, x_arr, y_arr, z_arr);
+void IRICLIBDLL FMNAME(cg_iric_read_grid3d_coords_withgridid_f, CG_IRIC_READ_GRID3D_COORDS_WITHGRIDID_F) (int* gid, double* x_arr, double* y_arr, double* z_arr, int *ier) {
+	*ier = cg_iRIC_Read_Grid3d_Coords_WithGridId(*gid, x_arr, y_arr, z_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_gettriangleelementssize_withgridid_f, CG_IRIC_GETTRIANGLEELEMENTSSIZE_WITHGRIDID_F) (int* gid, int* size, int *ier) {
@@ -2700,8 +2700,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid3d_str_size_f, CG_IRIC_READ_GRID3D_STR_S
 	*ier = cg_iRIC_Read_Grid3d_Str_Size(isize, jsize, ksize);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_getgridcoord3d_f, CG_IRIC_GETGRIDCOORD3D_F) (double* x_arr, double* y_arr, double* z_arr, int *ier) {
-	*ier = cg_iRIC_GetGridCoord3d(x_arr, y_arr, z_arr);
+void IRICLIBDLL FMNAME(cg_iric_read_grid3d_coords_f, CG_IRIC_READ_GRID3D_COORDS_F) (double* x_arr, double* y_arr, double* z_arr, int *ier) {
+	*ier = cg_iRIC_Read_Grid3d_Coords(x_arr, y_arr, z_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_gettriangleelementssize_f, CG_IRIC_GETTRIANGLEELEMENTSSIZE_F) (int* size, int *ier) {
@@ -4342,8 +4342,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid3d_str_size_mul_f, CG_IRIC_READ_GRID3D_S
 	*ier = cg_iRIC_Read_Grid3d_Str_Size_Mul(*fid, isize, jsize, ksize);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_getgridcoord3d_mul_f, CG_IRIC_GETGRIDCOORD3D_MUL_F) (int* fid, double* x_arr, double* y_arr, double* z_arr, int *ier) {
-	*ier = cg_iRIC_GetGridCoord3d_Mul(*fid, x_arr, y_arr, z_arr);
+void IRICLIBDLL FMNAME(cg_iric_read_grid3d_coords_mul_f, CG_IRIC_READ_GRID3D_COORDS_MUL_F) (int* fid, double* x_arr, double* y_arr, double* z_arr, int *ier) {
+	*ier = cg_iRIC_Read_Grid3d_Coords_Mul(*fid, x_arr, y_arr, z_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_gettriangleelementssize_mul_f, CG_IRIC_GETTRIANGLEELEMENTSSIZE_MUL_F) (int* fid, int* size, int *ier) {

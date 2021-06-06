@@ -73,13 +73,13 @@ int cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, in
 
 	if (z->type() == H5CgnsZone::Type::Unstructured) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GotoGridCoord3d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
+		ss << "In cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_GRIDTYPE;
 	}
 	if (z->base()->dimension() != 3) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GotoGridCoord3d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
+		ss << "In cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}
@@ -91,7 +91,7 @@ int cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, in
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr, double* z_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -99,7 +99,7 @@ int cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, double* x_arr, doubl
 
 	if (zone->base()->dimension() != 3) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GetGridCoord3d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << zone->base()->dimension();
+		ss << "In cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << zone->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}

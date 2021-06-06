@@ -130,9 +130,9 @@ int cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(int fid, int gid, RealArrayContain
 	return cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(fid, gid, x_arr.pointer(), y_arr.pointer());
 }
 
-int cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
+int cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
 {
-	return cg_iRIC_GetGridCoord3d_WithGridId_Mul(fid, gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
+	return cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(fid, gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
 int cg_iRIC_GetTriangleElements_WithGridId_Mul(int fid, int gid, IntArrayContainer& id_arr)
@@ -332,9 +332,9 @@ int cg_iRIC_Read_Grid2d_Coords_WithGridId(int gid, RealArrayContainer& x_arr, Re
 	return cg_iRIC_Read_Grid2d_Coords_WithGridId(gid, x_arr.pointer(), y_arr.pointer());
 }
 
-int cg_iRIC_GetGridCoord3d_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
+int cg_iRIC_Read_Grid3d_Coords_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
 {
-	return cg_iRIC_GetGridCoord3d_WithGridId(gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
+	return cg_iRIC_Read_Grid3d_Coords_WithGridId(gid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
 int cg_iRIC_GetTriangleElements_WithGridId(int gid, IntArrayContainer& id_arr)
@@ -512,9 +512,9 @@ int cg_iRIC_Read_Grid2d_Coords(RealArrayContainer& x_arr, RealArrayContainer& y_
 	return cg_iRIC_Read_Grid2d_Coords(x_arr.pointer(), y_arr.pointer());
 }
 
-int cg_iRIC_GetGridCoord3d(RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
+int cg_iRIC_Read_Grid3d_Coords(RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
 {
-	return cg_iRIC_GetGridCoord3d(x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
+	return cg_iRIC_Read_Grid3d_Coords(x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
 int cg_iRIC_GetTriangleElements(IntArrayContainer& id_arr)
@@ -1116,9 +1116,9 @@ int cg_iRIC_Read_Grid2d_Coords_Mul(int fid, RealArrayContainer& x_arr, RealArray
 	return cg_iRIC_Read_Grid2d_Coords_Mul(fid, x_arr.pointer(), y_arr.pointer());
 }
 
-int cg_iRIC_GetGridCoord3d_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
+int cg_iRIC_Read_Grid3d_Coords_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
 {
-	return cg_iRIC_GetGridCoord3d_Mul(fid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
+	return cg_iRIC_Read_Grid3d_Coords_Mul(fid, x_arr.pointer(), y_arr.pointer(), z_arr.pointer());
 }
 
 int cg_iRIC_GetTriangleElements_Mul(int fid, IntArrayContainer& id_arr)
