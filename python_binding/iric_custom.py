@@ -2435,10 +2435,10 @@ def cg_iRIC_Read_Sol_Node_Real(step, name):
 	_checkErrorCode(ier)
 	return v.get()
 
-def cg_iRIC_Write_Sol_Integer(name, v_arr):
+def cg_iRIC_Write_Sol_Node_Integer(name, v_arr):
 	v = IntArrayContainer(v_arr.size)
 	v.set(v_arr)
-	ier = _iric.cg_iRIC_Write_Sol_Integer(name, v)
+	ier = _iric.cg_iRIC_Write_Sol_Node_Integer(name, v)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Write_Sol_Real(name, v_arr):
@@ -2737,10 +2737,10 @@ def cg_iRIC_Read_Sol_Node_Real_WithGridId(gid, step, name):
 	_checkErrorCode(ier)
 	return v.get()
 
-def cg_iRIC_Write_Sol_Integer_WithGridId(gid, name, v_arr):
+def cg_iRIC_Write_Sol_Node_Integer_WithGridId(gid, name, v_arr):
 	v = IntArrayContainer(v_arr.size)
 	v.set(v_arr)
-	ier = _iric.cg_iRIC_Write_Sol_Integer_WithGridId(gid, name, v)
+	ier = _iric.cg_iRIC_Write_Sol_Node_Integer_WithGridId(gid, name, v)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Write_Sol_Real_WithGridId(gid, name, v_arr):
@@ -3291,10 +3291,10 @@ def cg_iRIC_Read_Sol_Node_Real_Mul(fid, step, name):
 	_checkErrorCode(ier)
 	return v.get()
 
-def cg_iRIC_Write_Sol_Integer_Mul(fid, name, v_arr):
+def cg_iRIC_Write_Sol_Node_Integer_Mul(fid, name, v_arr):
 	v = IntArrayContainer(v_arr.size)
 	v.set(v_arr)
-	ier = _iric.cg_iRIC_Write_Sol_Integer_Mul(fid, name, v)
+	ier = _iric.cg_iRIC_Write_Sol_Node_Integer_Mul(fid, name, v)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Write_Sol_Real_Mul(fid, name, v_arr):
@@ -3593,10 +3593,10 @@ def cg_iRIC_Read_Sol_Node_Real_WithGridId_Mul(fid, gid, step, name):
 	_checkErrorCode(ier)
 	return v.get()
 
-def cg_iRIC_Write_Sol_Integer_WithGridId_Mul(fid, gid, name, v_arr):
+def cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul(fid, gid, name, v_arr):
 	v = IntArrayContainer(v_arr.size)
 	v.set(v_arr)
-	ier = _iric.cg_iRIC_Write_Sol_Integer_WithGridId_Mul(fid, gid, name, v)
+	ier = _iric.cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul(fid, gid, name, v)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Write_Sol_Real_WithGridId_Mul(fid, gid, name, v_arr):

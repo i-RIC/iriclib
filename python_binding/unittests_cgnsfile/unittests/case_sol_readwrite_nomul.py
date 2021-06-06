@@ -63,7 +63,7 @@ def writeSolution(filename, fid, iterMode):
         iric.cg_iRIC_Write_Sol_Real("VelocityY", vy)
 
         wet[:] = i
-        iric.cg_iRIC_Write_Sol_Integer("IBC", wet)
+        iric.cg_iRIC_Write_Sol_Node_Integer("IBC", wet)
 
         # CellCenter solutions
 
@@ -158,7 +158,7 @@ def writeSolution3d(filename, fid):
         iric.cg_iRIC_Write_Sol_Real("VelocityX", vx)
         iric.cg_iRIC_Write_Sol_Real("VelocityY", vy)
 
-        iric.cg_iRIC_Write_Sol_Integer("IBC", wet)
+        iric.cg_iRIC_Write_Sol_Node_Integer("IBC", wet)
 
         Dist = i * - 0.2 + 20
         iric.cg_iRIC_Write_Sol_BaseIterative_Real("Discharge", Dist)

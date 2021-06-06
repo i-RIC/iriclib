@@ -64,8 +64,8 @@ void case_addGridAndResult()
 	ier = cg_iRIC_Write_Sol_Real("Depth", depth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Real() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Integer("Active", active.data());
-	VERIFY_LOG("cg_iRIC_Write_Sol_Integer() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Sol_Node_Integer("Active", active.data());
+	VERIFY_LOG("cg_iRIC_Write_Sol_Node_Integer() ier == 0", ier == 0);
 
 	ier = cg_iRIC_Write_Sol_Cell_Real("CCDepth", ccdepth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Real() ier == 0", ier == 0);
@@ -87,8 +87,8 @@ void case_addGridAndResult()
 	ier = cg_iRIC_Write_Sol_Real("Depth", depth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Real() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Integer("Active", active.data());
-	VERIFY_LOG("cg_iRIC_Write_Sol_Integer() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Sol_Node_Integer("Active", active.data());
+	VERIFY_LOG("cg_iRIC_Write_Sol_Node_Integer() ier == 0", ier == 0);
 
 	ier = cg_iRIC_Write_Sol_Cell_Real("CCDepth", ccdepth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Real() ier == 0", ier == 0);

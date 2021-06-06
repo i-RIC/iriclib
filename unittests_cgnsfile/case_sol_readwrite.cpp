@@ -109,8 +109,8 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
 
 		wet.assign(isize * jsize, i);
-		ier = cg_iRIC_Write_Sol_Integer_Mul(*fid, "IBC", wet.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Integer_Mul(*fid, "IBC", wet.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Integer_Mul() for IBC ier == 0", ier == 0);
 
 		// CellCenter solutions
 
@@ -266,8 +266,8 @@ void writeSolution3d(const char* filename, int* fid)
 		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityY", vy.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Integer_Mul(*fid, "IBC", wet.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Integer_Mul(*fid, "IBC", wet.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Integer_Mul() for IBC ier == 0", ier == 0);
 
 		double Dist = i * - 0.2 + 20;
 		ier = cg_iRIC_Write_Sol_BaseIterative_Real_Mul(*fid, "Discharge", Dist);
