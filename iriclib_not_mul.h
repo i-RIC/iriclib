@@ -208,7 +208,7 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Cell_Integer(const char* name, int* v_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_Cell_Real(const char* name, double* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Sol_Grid2d_Coords(int step, double* x_arr, double* y_arr);
 int IRICLIBDLL cg_iRIC_Read_Sol_Grid3d_Coords(int step, double* x_arr, double* y_arr, double* z_arr);
-int IRICLIBDLL cg_iRIC_Write_Sol_GridCoord2d(double* x_arr, double* y_arr);
+int IRICLIBDLL cg_iRIC_Write_Sol_Grid2d_Coords(double* x_arr, double* y_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_GridCoord3d(double* x_arr, double* y_arr, double* z_arr);
 int IRICLIBDLL cg_iRIC_Read_Sol_IFace_Integer(int step, const char* name, int* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Sol_IFace_Real(int step, const char* name, double* v_arr);
@@ -268,7 +268,7 @@ int IRICLIBDLL cg_iRIC_Write_Sol_Cell_Real_WithGridId(int gid, const char* name,
 // from iriclib_sol_gridcoord.h
 int IRICLIBDLL cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId(int gid, int step, double* x_arr, double* y_arr);
 int IRICLIBDLL cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId(int gid, int step, double* x_arr, double* y_arr, double* z_arr);
-int IRICLIBDLL cg_iRIC_Write_Sol_GridCoord2d_WithGridId(int gid, double* x_arr, double* y_arr);
+int IRICLIBDLL cg_iRIC_Write_Sol_Grid2d_Coords_WithGridId(int gid, double* x_arr, double* y_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_GridCoord3d_WithGridId(int gid, double* x_arr, double* y_arr, double* z_arr);
 
 // from iriclib_sol_iface.h

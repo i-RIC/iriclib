@@ -53,7 +53,7 @@ def writeSolution(filename, fid, iterMode):
             TimeVal = i * 2.13
             iric.cg_iRIC_Write_Sol_Time(TimeVal)
 
-        iric.cg_iRIC_Write_Sol_GridCoord2d(x, y)
+        iric.cg_iRIC_Write_Sol_Grid2d_Coords(x, y)
 
         # Vertex solutions
 

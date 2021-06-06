@@ -93,8 +93,8 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 			VERIFY_LOG("cg_iRIC_Write_Sol_Time_Mul() ier == 0", ier == 0);
 		}
 
-		ier = cg_iRIC_Write_Sol_GridCoord2d_Mul(*fid, x.data(), y.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_GridCoord2d_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Grid2d_Coords_Mul(*fid, x.data(), y.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Grid2d_Coords_Mul() ier == 0", ier == 0);
 
 		// Vertex solutions
 

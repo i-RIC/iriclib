@@ -58,8 +58,8 @@ void case_addGridAndResult()
 	ier = cg_iRIC_Write_Sol_Time(time);
 	VERIFY_LOG("cg_iRIC_Write_Sol_Time() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_GridCoord2d(x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_Write_Sol_GridCoord2d() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Sol_Grid2d_Coords(x.data(), y.data());
+	VERIFY_LOG("cg_iRIC_Write_Sol_Grid2d_Coords() ier == 0", ier == 0);
 
 	ier = cg_iRIC_Write_Sol_Real("Depth", depth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Real() ier == 0", ier == 0);
@@ -81,8 +81,8 @@ void case_addGridAndResult()
 	ier = cg_iRIC_Write_Sol_Time(time);
 	VERIFY_LOG("cg_iRIC_Write_Sol_Time() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_GridCoord2d(x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_Write_Sol_GridCoord2d() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Sol_Grid2d_Coords(x.data(), y.data());
+	VERIFY_LOG("cg_iRIC_Write_Sol_Grid2d_Coords() ier == 0", ier == 0);
 
 	ier = cg_iRIC_Write_Sol_Real("Depth", depth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Real() ier == 0", ier == 0);
