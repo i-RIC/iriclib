@@ -2925,8 +2925,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_grid2d_coords_f, CG_IRIC_READ_SOL_GRID2D
 	*ier = cg_iRIC_Read_Sol_Grid2d_Coords(*step, x_arr, y_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_read_sol_gridcoord3d_f, CG_IRIC_READ_SOL_GRIDCOORD3D_F) (int* step, double* x_arr, double* y_arr, double* z_arr, int *ier) {
-	*ier = cg_iRIC_Read_Sol_GridCoord3d(*step, x_arr, y_arr, z_arr);
+void IRICLIBDLL FMNAME(cg_iric_read_sol_grid3d_coords_f, CG_IRIC_READ_SOL_GRID3D_COORDS_F) (int* step, double* x_arr, double* y_arr, double* z_arr, int *ier) {
+	*ier = cg_iRIC_Read_Sol_Grid3d_Coords(*step, x_arr, y_arr, z_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_gridcoord2d_f, CG_IRIC_WRITE_SOL_GRIDCOORD2D_F) (double* x_arr, double* y_arr, int *ier) {
@@ -3325,8 +3325,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_grid2d_coords_withgridid_f, CG_IRIC_READ
 	*ier = cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId(*gid, *step, x_arr, y_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_read_sol_gridcoord3d_withgridid_f, CG_IRIC_READ_SOL_GRIDCOORD3D_WITHGRIDID_F) (int* gid, int* step, double* x_arr, double* y_arr, double* z_arr, int *ier) {
-	*ier = cg_iRIC_Read_Sol_GridCoord3d_WithGridId(*gid, *step, x_arr, y_arr, z_arr);
+void IRICLIBDLL FMNAME(cg_iric_read_sol_grid3d_coords_withgridid_f, CG_IRIC_READ_SOL_GRID3D_COORDS_WITHGRIDID_F) (int* gid, int* step, double* x_arr, double* y_arr, double* z_arr, int *ier) {
+	*ier = cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId(*gid, *step, x_arr, y_arr, z_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_gridcoord2d_withgridid_f, CG_IRIC_WRITE_SOL_GRIDCOORD2D_WITHGRIDID_F) (int* gid, double* x_arr, double* y_arr, int *ier) {
@@ -4567,8 +4567,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_grid2d_coords_mul_f, CG_IRIC_READ_SOL_GR
 	*ier = cg_iRIC_Read_Sol_Grid2d_Coords_Mul(*fid, *step, x_arr, y_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_read_sol_gridcoord3d_mul_f, CG_IRIC_READ_SOL_GRIDCOORD3D_MUL_F) (int* fid, int* step, double* x_arr, double* y_arr, double* z_arr, int *ier) {
-	*ier = cg_iRIC_Read_Sol_GridCoord3d_Mul(*fid, *step, x_arr, y_arr, z_arr);
+void IRICLIBDLL FMNAME(cg_iric_read_sol_grid3d_coords_mul_f, CG_IRIC_READ_SOL_GRID3D_COORDS_MUL_F) (int* fid, int* step, double* x_arr, double* y_arr, double* z_arr, int *ier) {
+	*ier = cg_iRIC_Read_Sol_Grid3d_Coords_Mul(*fid, *step, x_arr, y_arr, z_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_gridcoord2d_mul_f, CG_IRIC_WRITE_SOL_GRIDCOORD2D_MUL_F) (int* fid, double* x_arr, double* y_arr, int *ier) {
@@ -5060,8 +5060,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_grid2d_coords_withgridid_mul_f, CG_IRIC_
 	*ier = cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(*fid, *gid, *step, x_arr, y_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_read_sol_gridcoord3d_withgridid_mul_f, CG_IRIC_READ_SOL_GRIDCOORD3D_WITHGRIDID_MUL_F) (int* fid, int* gid, int* step, double* x_arr, double* y_arr, double* z_arr, int *ier) {
-	*ier = cg_iRIC_Read_Sol_GridCoord3d_WithGridId_Mul(*fid, *gid, *step, x_arr, y_arr, z_arr);
+void IRICLIBDLL FMNAME(cg_iric_read_sol_grid3d_coords_withgridid_mul_f, CG_IRIC_READ_SOL_GRID3D_COORDS_WITHGRIDID_MUL_F) (int* fid, int* gid, int* step, double* x_arr, double* y_arr, double* z_arr, int *ier) {
+	*ier = cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId_Mul(*fid, *gid, *step, x_arr, y_arr, z_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_gridcoord2d_withgridid_mul_f, CG_IRIC_WRITE_SOL_GRIDCOORD2D_WITHGRIDID_MUL_F) (int* fid, int* gid, double* x_arr, double* y_arr, int *ier) {

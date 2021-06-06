@@ -1699,13 +1699,13 @@ int cg_iRIC_Read_Sol_Grid2d_Coords(int step, double* x_arr, double* y_arr)
   return cg_iRIC_Read_Sol_Grid2d_Coords_Mul(fid, step, x_arr, y_arr);
 }
 
-int cg_iRIC_Read_Sol_GridCoord3d(int step, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Read_Sol_Grid3d_Coords(int step, double* x_arr, double* y_arr, double* z_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_Read_Sol_GridCoord3d_Mul(fid, step, x_arr, y_arr, z_arr);
+  return cg_iRIC_Read_Sol_Grid3d_Coords_Mul(fid, step, x_arr, y_arr, z_arr);
 }
 
 int cg_iRIC_Write_Sol_GridCoord2d(double* x_arr, double* y_arr)
@@ -2207,13 +2207,13 @@ int cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId(int gid, int step, double* x_arr, 
   return cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(fid, gid, step, x_arr, y_arr);
 }
 
-int cg_iRIC_Read_Sol_GridCoord3d_WithGridId(int gid, int step, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId(int gid, int step, double* x_arr, double* y_arr, double* z_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_Read_Sol_GridCoord3d_WithGridId_Mul(fid, gid, step, x_arr, y_arr, z_arr);
+  return cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId_Mul(fid, gid, step, x_arr, y_arr, z_arr);
 }
 
 int cg_iRIC_Write_Sol_GridCoord2d_WithGridId(int gid, double* x_arr, double* y_arr)

@@ -28,10 +28,10 @@ int cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(int fid, int gid, int step, do
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_GridCoord3d_WithGridId_Mul(int fid, int gid, int step, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId_Mul(int fid, int gid, int step, double* x_arr, double* y_arr, double* z_arr)
 {
 	H5CgnsZone* zone = nullptr;
-	int ier = _iric_get_zone_for_solread(fid, gid, step, &zone, "cg_iRIC_Read_Sol_GridCoord3d_WithGridId_Mul");
+	int ier = _iric_get_zone_for_solread(fid, gid, step, &zone, "cg_iRIC_Read_Sol_Grid3d_Coords_WithGridId_Mul");
 	RETURN_IF_ERR;
 
 	std::vector<double> xvec, yvec, zvec;
