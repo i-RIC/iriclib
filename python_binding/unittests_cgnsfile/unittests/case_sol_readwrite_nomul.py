@@ -211,10 +211,10 @@ def readSolution(fid):
         msg = "cg_iRIC_Read_Sol_Real() real_sol[{0}] == {1}".format(real_sol.size - 1, S - 1)
         util.verify_log(msg, real_sol[real_sol.size - 1] == S - 1)
 
-        int_sol = iric.cg_iRIC_Read_Sol_Integer(S, "IBC")
-        msg = "cg_iRIC_Read_Sol_Integer() int_sol[0] == {0}".format(S - 1)
+        int_sol = iric.cg_iRIC_Read_Sol_Node_Integer(S, "IBC")
+        msg = "cg_iRIC_Read_Sol_Node_Integer() int_sol[0] == {0}".format(S - 1)
         util.verify_log(msg, int_sol[0] == S - 1)
-        msg = "cg_iRIC_Read_Sol_Integer() int_sol[{0}] == {1}".format(int_sol.size - 1, S - 1)
+        msg = "cg_iRIC_Read_Sol_Node_Integer() int_sol[{0}] == {1}".format(int_sol.size - 1, S - 1)
         util.verify_log(msg, int_sol[int_sol.size - 1] == S - 1)
 
         # CellCenter solutions

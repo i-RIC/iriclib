@@ -1834,13 +1834,13 @@ int cg_iRIC_Write_Sol_KFace_Real(const char* name, double* v_arr)
   return cg_iRIC_Write_Sol_KFace_Real_Mul(fid, name, v_arr);
 }
 
-int cg_iRIC_Read_Sol_Integer(int step, const char* name, int* v_arr)
+int cg_iRIC_Read_Sol_Node_Integer(int step, const char* name, int* v_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_Read_Sol_Integer_Mul(fid, step, name, v_arr);
+  return cg_iRIC_Read_Sol_Node_Integer_Mul(fid, step, name, v_arr);
 }
 
 int cg_iRIC_Read_Sol_Real(int step, const char* name, double* v_arr)
@@ -2350,13 +2350,13 @@ int cg_iRIC_Write_Sol_KFace_Real_WithGridId(int gid, const char* name, double* v
 
 
 // from iriclib_sol_node.h
-int cg_iRIC_Read_Sol_Integer_WithGridId(int gid, int step, const char* name, int* v_arr)
+int cg_iRIC_Read_Sol_Node_Integer_WithGridId(int gid, int step, const char* name, int* v_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_Read_Sol_Integer_WithGridId_Mul(fid, gid, step, name, v_arr);
+  return cg_iRIC_Read_Sol_Node_Integer_WithGridId_Mul(fid, gid, step, name, v_arr);
 }
 
 int cg_iRIC_Read_Sol_Real_WithGridId(int gid, int step, const char* name, double* v_arr)

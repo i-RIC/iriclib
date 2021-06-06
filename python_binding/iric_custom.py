@@ -2421,10 +2421,10 @@ def cg_iRIC_Write_Sol_KFace_Real(name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_KFace_Real(name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Read_Sol_Integer(step, name):
+def cg_iRIC_Read_Sol_Node_Integer(step, name):
 	size = cg_iRIC_Read_Grid_NodeCount()
 	v = IntArrayContainer(size)
-	ier = _iric.cg_iRIC_Read_Sol_Integer(step, name, v)
+	ier = _iric.cg_iRIC_Read_Sol_Node_Integer(step, name, v)
 	_checkErrorCode(ier)
 	return v.get()
 
@@ -2723,10 +2723,10 @@ def cg_iRIC_Write_Sol_KFace_Real_WithGridId(gid, name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_KFace_Real_WithGridId(gid, name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Read_Sol_Integer_WithGridId(gid, step, name):
+def cg_iRIC_Read_Sol_Node_Integer_WithGridId(gid, step, name):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId(gid)
 	v = IntArrayContainer(size)
-	ier = _iric.cg_iRIC_Read_Sol_Integer_WithGridId(gid, step, name, v)
+	ier = _iric.cg_iRIC_Read_Sol_Node_Integer_WithGridId(gid, step, name, v)
 	_checkErrorCode(ier)
 	return v.get()
 
@@ -3277,10 +3277,10 @@ def cg_iRIC_Write_Sol_KFace_Real_Mul(fid, name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_KFace_Real_Mul(fid, name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Read_Sol_Integer_Mul(fid, step, name):
+def cg_iRIC_Read_Sol_Node_Integer_Mul(fid, step, name):
 	size = cg_iRIC_Read_Grid_NodeCount_Mul(fid)
 	v = IntArrayContainer(size)
-	ier = _iric.cg_iRIC_Read_Sol_Integer_Mul(fid, step, name, v)
+	ier = _iric.cg_iRIC_Read_Sol_Node_Integer_Mul(fid, step, name, v)
 	_checkErrorCode(ier)
 	return v.get()
 
@@ -3579,10 +3579,10 @@ def cg_iRIC_Write_Sol_KFace_Real_WithGridId_Mul(fid, gid, name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_KFace_Real_WithGridId_Mul(fid, gid, name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Read_Sol_Integer_WithGridId_Mul(fid, gid, step, name):
+def cg_iRIC_Read_Sol_Node_Integer_WithGridId_Mul(fid, gid, step, name):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(fid, gid)
 	v = IntArrayContainer(size)
-	ier = _iric.cg_iRIC_Read_Sol_Integer_WithGridId_Mul(fid, gid, step, name, v)
+	ier = _iric.cg_iRIC_Read_Sol_Node_Integer_WithGridId_Mul(fid, gid, step, name, v)
 	_checkErrorCode(ier)
 	return v.get()
 

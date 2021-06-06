@@ -383,11 +383,11 @@ void readSolution(int fid)
 		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[%lu] == %g", real_sol.size() - 1, (double)(S - 1));
 		VERIFY_LOG(buffer, real_sol[real_sol.size()-1] == (double)(S - 1));
 
-		ier = cg_iRIC_Read_Sol_Integer_Mul(fid, S, "IBC", int_sol.data());
-		VERIFY_LOG("cg_iRIC_Read_Sol_Integer_Mul() ier == 0", ier == 0);
-		sprintf(buffer, "cg_iRIC_Read_Sol_Integer_Mul() int_sol[0] == %d", (S - 1));
+		ier = cg_iRIC_Read_Sol_Node_Integer_Mul(fid, S, "IBC", int_sol.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Node_Integer_Mul() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Node_Integer_Mul() int_sol[0] == %d", (S - 1));
 		VERIFY_LOG(buffer, int_sol[0] == (S - 1));
-		sprintf(buffer, "cg_iRIC_Read_Sol_Integer_Mul() int_sol[%lu] == %d", int_sol.size() - 1, (S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Node_Integer_Mul() int_sol[%lu] == %d", int_sol.size() - 1, (S - 1));
 		VERIFY_LOG(buffer, int_sol[int_sol.size() - 1] == (S - 1));
 
 		// CellCenter solutions

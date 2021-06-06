@@ -142,6 +142,15 @@ def gen_size_func(fname, args):
 
     return 'cg_iRIC_Read_Grid_FunctionalTimeSize' + suffix, args
 
+  m = re.search('(cg_iRIC_Read_Sol_Node_(Integer|Real))(.*)', fname)
+  if m:
+    m, d1, suffix = m.groups()
+    args2 = copy.copy(args)
+    args2.pop()
+    args2.pop()
+
+    return 'cg_iRIC_Read_Grid_NodeCount' + suffix, args2
+
   m = re.search('(cg_iRIC_Read_Sol_Cell_(Integer|Real))(.*)', fname)
   if m:
     m, d1, suffix = m.groups()
