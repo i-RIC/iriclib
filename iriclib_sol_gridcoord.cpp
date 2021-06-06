@@ -9,10 +9,10 @@
 
 using namespace iRICLib;
 
-int cg_iRIC_Read_Sol_GridCoord2d_WithGridId_Mul(int fid, int gid, int step, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(int fid, int gid, int step, double* x_arr, double* y_arr)
 {
 	H5CgnsZone* zone = nullptr;
-	int ier = _iric_get_zone_for_solread(fid, gid, step, &zone, "cg_iRIC_Read_Sol_GridCoord2d_WithGridId_Mul");
+	int ier = _iric_get_zone_for_solread(fid, gid, step, &zone, "cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul");
 	RETURN_IF_ERR;
 
 	std::vector<double> xvec, yvec;

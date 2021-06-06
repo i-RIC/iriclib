@@ -609,13 +609,13 @@ int cg_iRIC_Write_Sol_Cell_Real_Mul(int fid, const char* name, double* v_arr)
 
 
 // from iriclib_sol_gridcoord.h
-int cg_iRIC_Read_Sol_GridCoord2d_Mul(int fid, int step, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Sol_Grid2d_Coords_Mul(int fid, int step, double* x_arr, double* y_arr)
 {
   int gid;
   int ier = getlastGridId(fid, &gid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_Read_Sol_GridCoord2d_WithGridId_Mul(fid, gid, step, x_arr, y_arr);
+  return cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(fid, gid, step, x_arr, y_arr);
 }
 
 int cg_iRIC_Read_Sol_GridCoord3d_Mul(int fid, int step, double* x_arr, double* y_arr, double* z_arr)

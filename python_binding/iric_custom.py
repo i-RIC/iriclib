@@ -2308,11 +2308,11 @@ def cg_iRIC_Write_Sol_Cell_Real(name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Cell_Real(name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Read_Sol_GridCoord2d(step):
+def cg_iRIC_Read_Sol_Grid2d_Coords(step):
 	size = cg_iRIC_Read_Grid_NodeCount()
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_Read_Sol_GridCoord2d(step, x, y)
+	ier = _iric.cg_iRIC_Read_Sol_Grid2d_Coords(step, x, y)
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
@@ -2610,11 +2610,11 @@ def cg_iRIC_Write_Sol_Cell_Real_WithGridId(gid, name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Cell_Real_WithGridId(gid, name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Read_Sol_GridCoord2d_WithGridId(gid, step):
+def cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId(gid, step):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId(gid)
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_Read_Sol_GridCoord2d_WithGridId(gid, step, x, y)
+	ier = _iric.cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId(gid, step, x, y)
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
@@ -3164,11 +3164,11 @@ def cg_iRIC_Write_Sol_Cell_Real_Mul(fid, name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Cell_Real_Mul(fid, name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Read_Sol_GridCoord2d_Mul(fid, step):
+def cg_iRIC_Read_Sol_Grid2d_Coords_Mul(fid, step):
 	size = cg_iRIC_Read_Grid_NodeCount_Mul(fid)
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_Read_Sol_GridCoord2d_Mul(fid, step, x, y)
+	ier = _iric.cg_iRIC_Read_Sol_Grid2d_Coords_Mul(fid, step, x, y)
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
@@ -3466,11 +3466,11 @@ def cg_iRIC_Write_Sol_Cell_Real_WithGridId_Mul(fid, gid, name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Cell_Real_WithGridId_Mul(fid, gid, name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Read_Sol_GridCoord2d_WithGridId_Mul(fid, gid, step):
+def cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(fid, gid, step):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(fid, gid)
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_Read_Sol_GridCoord2d_WithGridId_Mul(fid, gid, step, x, y)
+	ier = _iric.cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(fid, gid, step, x, y)
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 

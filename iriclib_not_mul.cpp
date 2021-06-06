@@ -1690,13 +1690,13 @@ int cg_iRIC_Write_Sol_Cell_Real(const char* name, double* v_arr)
   return cg_iRIC_Write_Sol_Cell_Real_Mul(fid, name, v_arr);
 }
 
-int cg_iRIC_Read_Sol_GridCoord2d(int step, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Sol_Grid2d_Coords(int step, double* x_arr, double* y_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_Read_Sol_GridCoord2d_Mul(fid, step, x_arr, y_arr);
+  return cg_iRIC_Read_Sol_Grid2d_Coords_Mul(fid, step, x_arr, y_arr);
 }
 
 int cg_iRIC_Read_Sol_GridCoord3d(int step, double* x_arr, double* y_arr, double* z_arr)
@@ -2198,13 +2198,13 @@ int cg_iRIC_Write_Sol_Cell_Real_WithGridId(int gid, const char* name, double* v_
 
 
 // from iriclib_sol_gridcoord.h
-int cg_iRIC_Read_Sol_GridCoord2d_WithGridId(int gid, int step, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId(int gid, int step, double* x_arr, double* y_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_Read_Sol_GridCoord2d_WithGridId_Mul(fid, gid, step, x_arr, y_arr);
+  return cg_iRIC_Read_Sol_Grid2d_Coords_WithGridId_Mul(fid, gid, step, x_arr, y_arr);
 }
 
 int cg_iRIC_Read_Sol_GridCoord3d_WithGridId(int gid, int step, double* x_arr, double* y_arr, double* z_arr)

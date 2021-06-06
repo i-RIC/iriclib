@@ -186,6 +186,14 @@ def gen_size_func(fname, args):
 
     return 'cg_iRIC_Read_Grid_NodeCount' + suffix, args2
 
+  m = re.search('(cg_iRIC_Read_Sol_Grid[1-3]d_Coords)(.*)', fname)
+  if m:
+    m, suffix = m.groups()
+    args2 = copy.copy(args)
+    args2.pop()
+
+    return 'cg_iRIC_Read_Grid_NodeCount' + suffix, args2
+
   m = re.search('(cg_iRIC_Read_Sol_(Integer|Real))(.*)', fname)
   if m:
     m, d1, suffix = m.groups()

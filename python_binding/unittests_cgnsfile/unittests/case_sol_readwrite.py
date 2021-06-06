@@ -201,7 +201,7 @@ def readSolution(fid):
     for S in range(1, sol_count + 1):
         # GridCoord
 
-        x, y = iric.cg_iRIC_Read_Sol_GridCoord2d_Mul(fid, S)
+        x, y = iric.cg_iRIC_Read_Sol_Grid2d_Coords_Mul(fid, S)
 
         # Vertex solutions
 

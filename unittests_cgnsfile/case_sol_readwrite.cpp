@@ -371,8 +371,8 @@ void readSolution(int fid)
 
 		// GridCoord
 
-		ier = cg_iRIC_Read_Sol_GridCoord2d_Mul(fid, S, grid_x.data(), grid_y.data());
-		VERIFY_LOG("cg_iRIC_Read_Sol_GridCoord2d_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Read_Sol_Grid2d_Coords_Mul(fid, S, grid_x.data(), grid_y.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Grid2d_Coords_Mul() ier == 0", ier == 0);
 
 		// Vertex solutions
 
