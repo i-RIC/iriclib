@@ -34,25 +34,12 @@ init:
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
   # Need to set version numbers for cache:
-  - echo %cd%
-  - echo %TEMP%
-  # - pushd %TEMP%
-  - set _cd = %cd%
-  - cd %TEMP%
-  - echo %cd%
   - curl -L -O https://raw.githubusercontent.com/i-RIC/iricdev/master/versions.cmd
-  - echo %HDF5_VER%
-  - echo %CGNSLIB_VER%
   - call versions.cmd
+  - del versions.cmd
   - echo %HDF5_VER%
   - echo %CGNSLIB_VER%
   - if "%CGNSLIB_VER%"=="3.2.1" (set CGNSLIB_VER=%CGNSLIB_VER%-patch1)
-  - echo %HDF5_VER%
-  - echo %CGNSLIB_VER%
-  - echo %cd%
-  # - popd
-  - cd %_cd%
-  - echo %cd%
   - echo %HDF5_VER%
   - echo %CGNSLIB_VER%
   - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "develop") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
