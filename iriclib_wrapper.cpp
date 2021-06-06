@@ -195,9 +195,9 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(int fid, int gid, cons
 	return cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(fid, gid, name, dimid, v_arr.pointer());
 }
 
-int cg_iRIC_WriteGridCoord1d_WithGridId_Mul(int fid, int isize, RealArrayContainer& x_arr, int* gid)
+int cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(int fid, int isize, RealArrayContainer& x_arr, int* gid)
 {
-	return cg_iRIC_WriteGridCoord1d_WithGridId_Mul(fid, isize, x_arr.pointer(), gid);
+	return cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(fid, isize, x_arr.pointer(), gid);
 }
 
 int cg_iRIC_WriteGridCoord2d_WithGridId_Mul(int fid, int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, int* gid)
@@ -397,9 +397,9 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId(int gid, const char* name,
 	return cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId(gid, name, dimid, v_arr.pointer());
 }
 
-int cg_iRIC_WriteGridCoord1d_WithGridId(int isize, RealArrayContainer& x_arr, int* gid)
+int cg_iRIC_Write_Grid1d_Coords_WithGridId(int isize, RealArrayContainer& x_arr, int* gid)
 {
-	return cg_iRIC_WriteGridCoord1d_WithGridId(isize, x_arr.pointer(), gid);
+	return cg_iRIC_Write_Grid1d_Coords_WithGridId(isize, x_arr.pointer(), gid);
 }
 
 int cg_iRIC_WriteGridCoord2d_WithGridId(int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, int* gid)
@@ -577,9 +577,9 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell(const char* name, int dimid, RealArra
 	return cg_iRIC_Read_Grid_Functional_Real_Cell(name, dimid, v_arr.pointer());
 }
 
-int cg_iRIC_WriteGridCoord1d(int isize, RealArrayContainer& x_arr)
+int cg_iRIC_Write_Grid1d_Coords(int isize, RealArrayContainer& x_arr)
 {
-	return cg_iRIC_WriteGridCoord1d(isize, x_arr.pointer());
+	return cg_iRIC_Write_Grid1d_Coords(isize, x_arr.pointer());
 }
 
 int cg_iRIC_WriteGridCoord2d(int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
@@ -1181,9 +1181,9 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell_Mul(int fid, const char* name, int di
 	return cg_iRIC_Read_Grid_Functional_Real_Cell_Mul(fid, name, dimid, v_arr.pointer());
 }
 
-int cg_iRIC_WriteGridCoord1d_Mul(int fid, int isize, RealArrayContainer& x_arr)
+int cg_iRIC_Write_Grid1d_Coords_Mul(int fid, int isize, RealArrayContainer& x_arr)
 {
-	return cg_iRIC_WriteGridCoord1d_Mul(fid, isize, x_arr.pointer());
+	return cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x_arr.pointer());
 }
 
 int cg_iRIC_WriteGridCoord2d_Mul(int fid, int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr)

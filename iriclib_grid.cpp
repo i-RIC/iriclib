@@ -383,7 +383,7 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(int fid, int gid, cons
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_WriteGridCoord1d_WithGridId_Mul(int fid, int isize, double* x_arr, int* gid)
+int cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(int fid, int isize, double* x_arr, int* gid)
 {
 	H5CgnsFile* file = nullptr;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);

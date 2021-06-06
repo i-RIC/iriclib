@@ -512,11 +512,11 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell_Mul(int fid, const char* name, int di
   return cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(fid, gid, name, dimid, v_arr);
 }
 
-int cg_iRIC_WriteGridCoord1d_Mul(int fid, int isize, double* x_arr)
+int cg_iRIC_Write_Grid1d_Coords_Mul(int fid, int isize, double* x_arr)
 {
   int gid;
 
-  return cg_iRIC_WriteGridCoord1d_WithGridId_Mul(fid, isize, x_arr, &gid);
+  return cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(fid, isize, x_arr, &gid);
 }
 
 int cg_iRIC_WriteGridCoord2d_Mul(int fid, int isize, int jsize, double* x_arr, double* y_arr)

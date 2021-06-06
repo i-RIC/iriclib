@@ -33,7 +33,7 @@ int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Real_Node_WithGridId_Mul(int fid, in
 int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId_Mul(int fid, int gid, const char* name, int dimid, int* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, int dimid, double* v_arr);
 
-int IRICLIBDLL cg_iRIC_WriteGridCoord1d_WithGridId_Mul(int fid, int isize, double* x_arr, int* gid);
+int IRICLIBDLL cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(int fid, int isize, double* x_arr, int* gid);
 int IRICLIBDLL cg_iRIC_WriteGridCoord2d_WithGridId_Mul(int fid, int isize, int jsize, double* x_arr, double* y_arr, int* gid);
 int IRICLIBDLL cg_iRIC_WriteGridCoord3d_WithGridId_Mul(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid);
 int IRICLIBDLL cg_iRIC_Write_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr);

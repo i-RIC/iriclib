@@ -1695,10 +1695,10 @@ def cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(fid, gid, name, dimid)
 	_checkErrorCode(ier)
 	return v.get()
 
-def cg_iRIC_WriteGridCoord1d_WithGridId_Mul(fid, isize, x_arr):
+def cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(fid, isize, x_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
-	ier, gid = _iric.cg_iRIC_WriteGridCoord1d_WithGridId_Mul(fid, isize, x)
+	ier, gid = _iric.cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(fid, isize, x)
 	_checkErrorCode(ier)
 	return gid
 
@@ -1979,10 +1979,10 @@ def cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId(gid, name, dimid):
 	_checkErrorCode(ier)
 	return v.get()
 
-def cg_iRIC_WriteGridCoord1d_WithGridId(isize, x_arr):
+def cg_iRIC_Write_Grid1d_Coords_WithGridId(isize, x_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
-	ier, gid = _iric.cg_iRIC_WriteGridCoord1d_WithGridId(isize, x)
+	ier, gid = _iric.cg_iRIC_Write_Grid1d_Coords_WithGridId(isize, x)
 	_checkErrorCode(ier)
 	return gid
 
@@ -2234,10 +2234,10 @@ def cg_iRIC_Read_Grid_Functional_Real_Cell(name, dimid):
 	_checkErrorCode(ier)
 	return v.get()
 
-def cg_iRIC_WriteGridCoord1d(isize, x_arr):
+def cg_iRIC_Write_Grid1d_Coords(isize, x_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
-	ier = _iric.cg_iRIC_WriteGridCoord1d(isize, x)
+	ier = _iric.cg_iRIC_Write_Grid1d_Coords(isize, x)
 	_checkErrorCode(ier)
 
 def cg_iRIC_WriteGridCoord2d(isize, jsize, x_arr, y_arr):
@@ -3090,10 +3090,10 @@ def cg_iRIC_Read_Grid_Functional_Real_Cell_Mul(fid, name, dimid):
 	_checkErrorCode(ier)
 	return v.get()
 
-def cg_iRIC_WriteGridCoord1d_Mul(fid, isize, x_arr):
+def cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x_arr):
 	x = RealArrayContainer(x_arr.size)
 	x.set(x_arr)
-	ier = _iric.cg_iRIC_WriteGridCoord1d_Mul(fid, isize, x)
+	ier = _iric.cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x)
 	_checkErrorCode(ier)
 
 def cg_iRIC_WriteGridCoord2d_Mul(fid, isize, jsize, x_arr, y_arr):

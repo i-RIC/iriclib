@@ -131,7 +131,7 @@ def case_GridWrite():
     for i in range(isize):
         x[i] = i * 2
 
-    iric.cg_iRIC_WriteGridCoord1d_Mul(fid, isize, x)
+    iric.cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x)
 
     iric.cg_close(fid)
 

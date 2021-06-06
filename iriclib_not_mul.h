@@ -110,7 +110,7 @@ int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Integer_Node_WithGridId(int gid, con
 int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Real_Node_WithGridId(int gid, const char* name, int dimid, double* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId(int gid, const char* name, int dimid, int* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId(int gid, const char* name, int dimid, double* v_arr);
-int IRICLIBDLL cg_iRIC_WriteGridCoord1d_WithGridId(int isize, double* x_arr, int* gid);
+int IRICLIBDLL cg_iRIC_Write_Grid1d_Coords_WithGridId(int isize, double* x_arr, int* gid);
 int IRICLIBDLL cg_iRIC_WriteGridCoord2d_WithGridId(int isize, int jsize, double* x_arr, double* y_arr, int* gid);
 int IRICLIBDLL cg_iRIC_WriteGridCoord3d_WithGridId(int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid);
 int IRICLIBDLL cg_iRIC_Write_Grid_Real_Node_WithGridId(int gid, const char* name, double* v_arr);
@@ -195,7 +195,7 @@ int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Integer_Node(const char* name, int d
 int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Real_Node(const char* name, int dimid, double* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Integer_Cell(const char* name, int dimid, int* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_Functional_Real_Cell(const char* name, int dimid, double* v_arr);
-int IRICLIBDLL cg_iRIC_WriteGridCoord1d(int isize, double* x_arr);
+int IRICLIBDLL cg_iRIC_Write_Grid1d_Coords(int isize, double* x_arr);
 int IRICLIBDLL cg_iRIC_WriteGridCoord2d(int isize, int jsize, double* x_arr, double* y_arr);
 int IRICLIBDLL cg_iRIC_WriteGridCoord3d(int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr);
 int IRICLIBDLL cg_iRIC_Write_Grid_Real_Node(const char* name, double* v_arr);

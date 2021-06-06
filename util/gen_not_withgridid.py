@@ -40,7 +40,7 @@ def gen_not_withgridid_header():
       with open(os.path.join('..', filename), 'r', encoding='utf-8') as f:
         for line in f:
           if 'IRICLIBDLL' in line and 'WithGridId' in line:
-            if 'WriteGridCoord' in line:
+            if 'WriteGridCoord' in line or ('Write_Grid' in line and 'd_Coords' in line):
               newline = gen_not_withgridid_header_line_writegrid(line)
             else:
               newline = gen_not_withgridid_header_line(line)
@@ -105,7 +105,7 @@ def gen_not_withgridid_source():
       with open(os.path.join('..', filename), 'r', encoding='utf-8') as f:
         for line in f:
           if 'IRICLIBDLL' in line and 'WithGridId' in line:
-            if 'WriteGridCoord' in line:
+            if 'WriteGridCoord' in line or ('Write_Grid' in line and 'd_Coords' in line):
               content = gen_not_withgridid_source_content_writegrid(line)
             else:
               content = gen_not_withgridid_source_content(line)

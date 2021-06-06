@@ -1069,8 +1069,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_functional_real_cell_withgridid_mul_f, 
 	*ier = cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(*fid, *gid, c_name, *dimid, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_writegridcoord1d_withgridid_mul_f, CG_IRIC_WRITEGRIDCOORD1D_WITHGRIDID_MUL_F) (int* fid, int* isize, double* x_arr, int* gid, int *ier) {
-	*ier = cg_iRIC_WriteGridCoord1d_WithGridId_Mul(*fid, *isize, x_arr, gid);
+void IRICLIBDLL FMNAME(cg_iric_write_grid1d_coords_withgridid_mul_f, CG_IRIC_WRITE_GRID1D_COORDS_WITHGRIDID_MUL_F) (int* fid, int* isize, double* x_arr, int* gid, int *ier) {
+	*ier = cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(*fid, *isize, x_arr, gid);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord2d_withgridid_mul_f, CG_IRIC_WRITEGRIDCOORD2D_WITHGRIDID_MUL_F) (int* fid, int* isize, int* jsize, double* x_arr, double* y_arr, int* gid, int *ier) {
@@ -2094,8 +2094,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_functional_real_cell_withgridid_f, CG_I
 	*ier = cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId(*gid, c_name, *dimid, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_writegridcoord1d_withgridid_f, CG_IRIC_WRITEGRIDCOORD1D_WITHGRIDID_F) (int* isize, double* x_arr, int* gid, int *ier) {
-	*ier = cg_iRIC_WriteGridCoord1d_WithGridId(*isize, x_arr, gid);
+void IRICLIBDLL FMNAME(cg_iric_write_grid1d_coords_withgridid_f, CG_IRIC_WRITE_GRID1D_COORDS_WITHGRIDID_F) (int* isize, double* x_arr, int* gid, int *ier) {
+	*ier = cg_iRIC_Write_Grid1d_Coords_WithGridId(*isize, x_arr, gid);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord2d_withgridid_f, CG_IRIC_WRITEGRIDCOORD2D_WITHGRIDID_F) (int* isize, int* jsize, double* x_arr, double* y_arr, int* gid, int *ier) {
@@ -2845,8 +2845,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_functional_real_cell_f, CG_IRIC_READ_GR
 	*ier = cg_iRIC_Read_Grid_Functional_Real_Cell(c_name, *dimid, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_writegridcoord1d_f, CG_IRIC_WRITEGRIDCOORD1D_F) (int* isize, double* x_arr, int *ier) {
-	*ier = cg_iRIC_WriteGridCoord1d(*isize, x_arr);
+void IRICLIBDLL FMNAME(cg_iric_write_grid1d_coords_f, CG_IRIC_WRITE_GRID1D_COORDS_F) (int* isize, double* x_arr, int *ier) {
+	*ier = cg_iRIC_Write_Grid1d_Coords(*isize, x_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord2d_f, CG_IRIC_WRITEGRIDCOORD2D_F) (int* isize, int* jsize, double* x_arr, double* y_arr, int *ier) {
@@ -4487,8 +4487,8 @@ void IRICLIBDLL FMNAME(cg_iric_read_grid_functional_real_cell_mul_f, CG_IRIC_REA
 	*ier = cg_iRIC_Read_Grid_Functional_Real_Cell_Mul(*fid, c_name, *dimid, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_writegridcoord1d_mul_f, CG_IRIC_WRITEGRIDCOORD1D_MUL_F) (int* fid, int* isize, double* x_arr, int *ier) {
-	*ier = cg_iRIC_WriteGridCoord1d_Mul(*fid, *isize, x_arr);
+void IRICLIBDLL FMNAME(cg_iric_write_grid1d_coords_mul_f, CG_IRIC_WRITE_GRID1D_COORDS_MUL_F) (int* fid, int* isize, double* x_arr, int *ier) {
+	*ier = cg_iRIC_Write_Grid1d_Coords_Mul(*fid, *isize, x_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_writegridcoord2d_mul_f, CG_IRIC_WRITEGRIDCOORD2D_MUL_F) (int* fid, int* isize, int* jsize, double* x_arr, double* y_arr, int *ier) {

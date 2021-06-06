@@ -859,13 +859,13 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId(int gid, const char* name,
   return cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(fid, gid, name, dimid, v_arr);
 }
 
-int cg_iRIC_WriteGridCoord1d_WithGridId(int isize, double* x_arr, int* gid)
+int cg_iRIC_Write_Grid1d_Coords_WithGridId(int isize, double* x_arr, int* gid)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_WriteGridCoord1d_WithGridId_Mul(fid, isize, x_arr, gid);
+  return cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(fid, isize, x_arr, gid);
 }
 
 int cg_iRIC_WriteGridCoord2d_WithGridId(int isize, int jsize, double* x_arr, double* y_arr, int* gid)
@@ -1591,13 +1591,13 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell(const char* name, int dimid, double* 
   return cg_iRIC_Read_Grid_Functional_Real_Cell_Mul(fid, name, dimid, v_arr);
 }
 
-int cg_iRIC_WriteGridCoord1d(int isize, double* x_arr)
+int cg_iRIC_Write_Grid1d_Coords(int isize, double* x_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_WriteGridCoord1d_Mul(fid, isize, x_arr);
+  return cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x_arr);
 }
 
 int cg_iRIC_WriteGridCoord2d(int isize, int jsize, double* x_arr, double* y_arr)

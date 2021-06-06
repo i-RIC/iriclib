@@ -232,8 +232,8 @@ void case_GridWrite()
 	for (int i = 0; i < isize; ++i) {
 		x[i] = i * 2;
 	}
-	ier = cg_iRIC_WriteGridCoord1d_Mul(fid, isize, x.data());
-	VERIFY_LOG("cg_iRIC_WriteGridCoord1d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid1d_Coords_Mul() ier == 0", ier == 0);
 
 	cg_close(fid);
 
