@@ -25,7 +25,6 @@ SOURCES += case_add_grid_and_result.cpp \
            case_complex.cpp \
            case_grid.cpp \
            case_init.cpp \
-           case_initcc.cpp \
            case_initoption_check.cpp \
            case_initread.cpp \
            case_no_grid_output.cpp \

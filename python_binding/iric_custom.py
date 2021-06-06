@@ -509,10 +509,6 @@ def cg_iRIC_Flush(fid):
 	ier = _iric.cg_iRIC_Flush(fid)
 	_checkErrorCode(ier)
 
-def cg_iRIC_GotoCC(fid):
-	ier = _iric.cg_iRIC_GotoCC(fid)
-	_checkErrorCode(ier)
-
 def cg_iRIC_GotoRawDataTop(fid):
 	ier = _iric.cg_iRIC_GotoRawDataTop(fid)
 	_checkErrorCode(ier)

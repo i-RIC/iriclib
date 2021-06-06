@@ -12,8 +12,6 @@ int main(int argc, char* argv[])
 
 	case_InitOptionCheck();
 
-	case_InitCC();
-
 	case_CheckLock();
 	case_CheckCancel();
 

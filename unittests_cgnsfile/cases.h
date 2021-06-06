@@ -4,7 +4,6 @@ void case_InitSuccess();
 void case_gotoRawDataTop();
 void case_InitReadSuccess();
 void case_InitOptionCheck();
-void case_InitCC();
 
 void case_CheckLock();
 void case_CheckCancel();
