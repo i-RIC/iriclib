@@ -474,10 +474,6 @@ def cg_iRIC_Read_Grid_FunctionalTimeSize_WithGridId_Mul(fid, gid, name):
 
 
 # from iriclib_gui_coorp.h
-def iRIC_Check_Lock(fname):
-	ier = _iric.iRIC_Check_Lock(fname)
-	_checkErrorCode(ier)
-
 def iRIC_Check_Cancel():
 	ier = _iric.iRIC_Check_Cancel()
 	return ier

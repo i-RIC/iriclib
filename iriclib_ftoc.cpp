@@ -1115,14 +1115,6 @@ void IRICLIBDLL FMNAME(cg_iric_write_grid_integer_cell_withgridid_mul_f, CG_IRIC
 
 
 // from iriclib_gui_coorp.h
-void IRICLIBDLL FMNAME(iric_check_lock_f, IRIC_CHECK_LOCK_F) (STR_PSTR(fname), int *ier STR_PLEN(fname)) {
-	char c_fname[STRINGMAXLEN + 1];
-	string_2_C_string(STR_PTR(fname), STR_LEN(fname), c_fname, STRINGMAXLEN, ier);
-	if (*ier != 0) return;
-
-	*ier = iRIC_Check_Lock(c_fname);
-}
-
 void IRICLIBDLL FMNAME(iric_check_cancel_f, IRIC_CHECK_CANCEL_F) (int *ier) {
 	*ier = iRIC_Check_Cancel();
 }

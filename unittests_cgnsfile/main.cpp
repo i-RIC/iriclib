@@ -5,12 +5,10 @@
 int main(int argc, char* argv[])
 {
 	case_InitSuccess();
-
 	case_InitReadSuccess();
 
 	case_InitOptionCheck();
 
-	case_CheckLock();
 	case_CheckCancel();
 
 	case_CalcCondRead();

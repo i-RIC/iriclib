@@ -7,12 +7,6 @@
 
 extern "C" {
 
-void case_CheckLock()
-{
-	// to test for Case1.cgn.lock creation this needs to be
-	// multi-threaded or multi-process
-}
-
 void case_CheckCancel()
 {
 	int canceled = iRIC_Check_Cancel();

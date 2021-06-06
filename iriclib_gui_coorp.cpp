@@ -6,11 +6,6 @@
 #include <iostream>
 #include <cstdlib>
 
-int iRIC_Check_Lock(const char* /*fname*/)
-{
-	return IRIC_NO_ERROR;
-}
-
 int iRIC_Check_Cancel()
 {
 	Poco::File f(".cancel");
