@@ -99,11 +99,6 @@ int cg_iRIC_Flush(int fid)
 	return file->flush();
 }
 
-int cg_iRIC_GotoBase(int fid, int* /*B*/)
-{
-	return _checkFileIsOpen(fid);
-}
-
 int cg_iRIC_GotoCC(int fid)
 {
 	return _checkFileIsOpen(fid);

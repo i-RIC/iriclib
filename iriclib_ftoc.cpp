@@ -1165,10 +1165,6 @@ void IRICLIBDLL FMNAME(cg_iric_flush_f, CG_IRIC_FLUSH_F) (int* fid, int *ier) {
 	*ier = cg_iRIC_Flush(*fid);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_gotobase_f, CG_IRIC_GOTOBASE_F) (int* fid, int* B, int *ier) {
-	*ier = cg_iRIC_GotoBase(*fid, B);
-}
-
 void IRICLIBDLL FMNAME(cg_iric_gotocc_f, CG_IRIC_GOTOCC_F) (int* fid, int *ier) {
 	*ier = cg_iRIC_GotoCC(*fid);
 }

@@ -63,12 +63,6 @@ void case_read_adf_no_results()
 	*/
 
 
-	// emulate PostTimeSteps::loadFromCgnsFile
-	int B;
-	char name[33];
-	int nsteps;
-	ier = cg_iRIC_GotoBase(fid, &B);
-	VERIFY_LOG("cg_iRIC_GotoBase() ier == 0", ier == 0);
 /*
 	ier = cg_biter_read(fid, B, name, &nsteps);
 	VERIFY_LOG("cg_biter_read() ier == CG_NODE_NOT_FOUND", ier == CG_NODE_NOT_FOUND);
@@ -98,13 +92,6 @@ void case_read_hdf5_no_results()
 	sprintf(buffer, "cg_get_error() == '%s'", exp1);
 	VERIFY_LOG(buffer, strcmp(err1, exp1) == 0);
 	*/
-
-	// emulate PostTimeSteps::loadFromCgnsFile
-	int B;
-	char name[33];
-	int nsteps;
-	ier = cg_iRIC_GotoBase(fid, &B);
-	VERIFY_LOG("cg_iRIC_GotoBase() ier == 0", ier == 0);
 
 	/*
 	ier = cg_biter_read(fid, B, name, &nsteps);
