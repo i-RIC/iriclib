@@ -131,7 +131,7 @@ int cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId_Mul(int fid, int gid, int*
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(int fid, int gid, int* size)
+int cg_iRIC_Read_Grid_TriangleElementsSize2_WithGridId_Mul(int fid, int gid, int* size)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);

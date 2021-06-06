@@ -332,13 +332,13 @@ int cg_iRIC_Read_Grid_TriangleElementsSize_Mul(int fid, int* size)
   return cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId_Mul(fid, gid, size);
 }
 
-int cg_iRIC_GetTriangleElementsSize2_Mul(int fid, int* size)
+int cg_iRIC_Read_Grid_TriangleElementsSize2_Mul(int fid, int* size)
 {
   int gid;
   int ier = getlastGridId(fid, &gid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(fid, gid, size);
+  return cg_iRIC_Read_Grid_TriangleElementsSize2_WithGridId_Mul(fid, gid, size);
 }
 
 int cg_iRIC_Read_Grid_TriangleElements_Mul(int fid, int* id_arr)

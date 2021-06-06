@@ -679,13 +679,13 @@ int cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId(int gid, int* size)
   return cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId_Mul(fid, gid, size);
 }
 
-int cg_iRIC_GetTriangleElementsSize2_WithGridId(int gid, int* size)
+int cg_iRIC_Read_Grid_TriangleElementsSize2_WithGridId(int gid, int* size)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(fid, gid, size);
+  return cg_iRIC_Read_Grid_TriangleElementsSize2_WithGridId_Mul(fid, gid, size);
 }
 
 int cg_iRIC_Read_Grid_TriangleElements_WithGridId(int gid, int* id_arr)
@@ -1411,13 +1411,13 @@ int cg_iRIC_Read_Grid_TriangleElementsSize(int* size)
   return cg_iRIC_Read_Grid_TriangleElementsSize_Mul(fid, size);
 }
 
-int cg_iRIC_GetTriangleElementsSize2(int* size)
+int cg_iRIC_Read_Grid_TriangleElementsSize2(int* size)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_GetTriangleElementsSize2_Mul(fid, size);
+  return cg_iRIC_Read_Grid_TriangleElementsSize2_Mul(fid, size);
 }
 
 int cg_iRIC_Read_Grid_TriangleElements(int* id_arr)
