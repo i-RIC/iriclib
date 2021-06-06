@@ -41,6 +41,7 @@ init:
   - rd iricdev-master
   - del master.zip
   - unix2dos *
+  - copy appveyor_programs.prop programs.prop
   - call versions.cmd
   - cd C:\iricdev\lib\src\iriclib-git
   - if "%CGNSLIB_VER%"=="3.2.1" (set CGNSLIB_VER=%CGNSLIB_VER%-patch1)
@@ -78,7 +79,7 @@ before_build:
   # - del master.zip
   # master.zip files have unix file endings
   # - unix2dos *
-  - copy appveyor_programs.prop programs.prop
+  # - copy appveyor_programs.prop programs.prop
   - tree lib\install 
   # build C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%
   - msbuild /nologo /target:hdf5-build-%config% iricdev.proj
