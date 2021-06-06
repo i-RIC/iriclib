@@ -22,7 +22,6 @@ image:
 
 # called before clone
 init:
-  - echo start init
   - echo %APPVEYOR_BUILD_WORKER_IMAGE%
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" (set GENERATOR="Visual Studio 15 2017 Win64" && set SGEN=vs2017-x64)
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" (set GENERATOR="Visual Studio 14 2015 Win64" && set SGEN=vs2015-x64)
@@ -40,6 +39,7 @@ init:
   - 7z e master.zip
   - rd iricdev-master
   - del master.zip
+  # master.zip files have unix file endings
   - unix2dos *
   - copy appveyor_programs.prop programs.prop
   - call versions.cmd
@@ -52,14 +52,13 @@ init:
   # Only commit and push to master branch or debug-appveyor branch (for testing)
   - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "develop") -OR ($env:APPVEYOR_REPO_BRANCH -eq "push_to_online_update")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
   - ps: Write-Output $CommitAndPush
-  - echo end init
 
 
 # doesn't seem to be able to use environmental vars
 clone_folder: C:\iricdev\lib\src\iriclib-git
 
 configuration:
-#  - Debug
+  - Debug
   - Release
 
 matrix:
@@ -70,32 +69,21 @@ matrix:
 #
 # Qt 5.5 only supports VS2013
 before_build:
-  - echo start before_build
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd C:\iricdev
-  # - curl -L -O https://github.com/i-RIC/iricdev/archive/master.zip
-  # - 7z e master.zip
-  # - rd iricdev-master
-  # - del master.zip
-  # master.zip files have unix file endings
-  # - unix2dos *
-  # - copy appveyor_programs.prop programs.prop
   - tree lib\install 
   # build C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%
   - msbuild /nologo /target:hdf5-build-%config% iricdev.proj
   # build C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%
   - msbuild /nologo /target:cgnslib-build-%config% iricdev.proj
   - tree lib\install 
-  - echo end before_build
 
 
 # build using cmake tools
 build_script:
-  - echo start build_script
   - cd C:\iricdev
   - if "%Configuration%"=="Debug"   ( msbuild /nologo /target:iriclib-git-build-%config% iricdev.proj )
   - if "%Configuration%"=="Release" ( msbuild /nologo /target:appveyor-iriclib-artifacts iricdev.proj )
-  - echo end build_script
 
 after_build:
   - if "%Configuration%"=="Release" ( appveyor PushArtifact C:\iricdev\lib\src\iriclib-git\_artifacts\libs.zip )
