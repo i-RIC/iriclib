@@ -37,8 +37,6 @@ init:
   - curl -L -O https://raw.githubusercontent.com/i-RIC/iricdev/master/versions.cmd
   - call versions.cmd
   - del versions.cmd
-  - echo %HDF5_VER%
-  - echo %CGNSLIB_VER%
   - if "%CGNSLIB_VER%"=="3.2.1" (set CGNSLIB_VER=%CGNSLIB_VER%-patch1)
   - echo %HDF5_VER%
   - echo %CGNSLIB_VER%
