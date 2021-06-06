@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 #ifdef _MSC_VER
 #endif
@@ -502,8 +501,8 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	writeSolution("case_solstd.cgn", &fid, false);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	//
 	// Test Reading Standard (IRIC_OPTION_STDSOLUTION) with times
@@ -518,8 +517,8 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	readSolution(fid);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_solstd.cgn", hdf);
 
@@ -539,8 +538,8 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	writeSolution3d("case_solstd3d.cgn", &fid);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_solstd3d.cgn", hdf);
 
@@ -562,8 +561,8 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	writeSolution("case_solstditer.cgn", &fid, true);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	//
 	// Test Reading Standard (IRIC_OPTION_STDSOLUTION) with iterations
@@ -577,8 +576,8 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
 
 	readSolution(fid);
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_solstditer.cgn", hdf);
 
@@ -615,8 +614,8 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	writeSolution("case_soldivide.cgn", &fid, false);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	//
 	// Test Reading Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with times
@@ -631,8 +630,8 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	readSolution(fid);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_soldivide.cgn", hdf);
 	VERIFY_REMOVE("result/Solution1.cgn", hdf);
@@ -666,8 +665,8 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	writeSolution3d("case_soldivide3d.cgn", &fid);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_soldivide3d.cgn", hdf);
 	VERIFY_REMOVE("result/Solution1.cgn", hdf);
@@ -701,8 +700,8 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	writeSolution("case_soldivideiter.cgn", &fid, true);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	//
 	// Test Reading Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with iterations
@@ -718,8 +717,8 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	// cg_iRIC_SetFilename(fid, "case_soldivideiter.cgn");
 
 	readSolution(fid);
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_soldivideiter.cgn", hdf);
 	VERIFY_REMOVE("result/Solution1.cgn", hdf);

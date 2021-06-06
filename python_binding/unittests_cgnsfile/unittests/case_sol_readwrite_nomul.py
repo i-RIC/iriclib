@@ -291,7 +291,7 @@ def case_SolWriteStd(cgnsName):
 
     fid = writeSolution("data/case_solstd.cgn", fid, False)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     # Test Reading with times
 
@@ -302,7 +302,7 @@ def case_SolWriteStd(cgnsName):
 
     readSolution(fid)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_solstd.cgn")
 
@@ -317,7 +317,7 @@ def case_SolWriteStd(cgnsName):
 
     fid = writeSolution3d("data/case_solstd3d.cgn", fid)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_solstd3d.cgn")
 
@@ -332,7 +332,7 @@ def case_SolWriteStd(cgnsName):
 
     fid = writeSolution("data/case_solstditer.cgn", fid, True)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     # Test Reading Standard (IRIC_OPTION_STDSOLUTION) with iterations
 
@@ -342,7 +342,7 @@ def case_SolWriteStd(cgnsName):
     iric.cg_iRIC_InitRead(fid)
 
     readSolution(fid)
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_solstditer.cgn")
 

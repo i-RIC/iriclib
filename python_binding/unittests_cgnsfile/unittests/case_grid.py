@@ -54,7 +54,7 @@ def case_GridRead():
     util.verify_log("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[15] == 1", intArr[15] == 1)
     util.verify_log("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[16] == 0", intArr[16] == 0)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_grid.cgn")
 
@@ -85,7 +85,7 @@ def case_GridReadUnstructured():
     util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[7] == 2", elems[7] == 2)
     util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[8] == 3", elems[8] == 3)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_grid_unstructured.cgn")
 
@@ -109,7 +109,7 @@ def case_GridReadFunc():
     for i in range(timeArr.size):
         rain = iric.cg_iRIC_Read_Grid_Functional_Real_Node_Mul(fid, "Xrain", i + 1)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_gridreadfunc.cgn")
 
@@ -133,7 +133,7 @@ def case_GridWrite():
 
     iric.cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     """
     ier, fid = iric.cg_iRIC_Open("case_gridwrite1d.cgn", iric.IRIC_MODE_READ)
@@ -159,7 +159,7 @@ def case_GridWrite():
     util.verify_log("cg_array_read() ier == 0", ier == 0)
     util.verify_log("cg_array_read() value valid", x == read_x)
 
-    cg_close(fid)
+    cg_iRIC_Close(fid)
     """
 
     util.remove("data/case_gridwrite1d.cgn")
@@ -213,7 +213,7 @@ def case_GridWrite():
 
     iric.cg_iRIC_Write_Grid_Integer_Cell_Mul(fid, "intcell_test", int_cell_write)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     """
     ier = cg_iRIC_Open("case_gridwrite2d.cgn", IRIC_MODE_READ, &fid)
@@ -285,7 +285,7 @@ def case_GridWrite():
     util.verify_log("cg_array_read() for intcell_test ier == 0", ier == 0)
     util.verify_log("intcell_test value check", int_cell_read == int_cell_write)
 
-    cg_close(fid)
+    cg_iRIC_Close(fid)
     """
 
     util.remove("data/case_gridwrite2d.cgn")
@@ -321,7 +321,7 @@ def case_GridWrite():
 
     iric.cg_iRIC_Write_Grid3d_Coords_Mul(fid, isize, jsize, ksize, x, y, z)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     """
     ier = cg_iRIC_Open("case_gridwrite3d.cgn", IRIC_MODE_READ, &fid)
@@ -364,7 +364,7 @@ def case_GridWrite():
     util.verify_log("cg_array_read() ier == 0", ier == 0)
     util.verify_log("cg_array_read() value valid", z == read_z)
 
-    cg_close(fid)
+    cg_iRIC_Close(fid)
     """
 
     util.remove("data/case_gridwrite3d.cgn")

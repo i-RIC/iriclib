@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>
@@ -108,7 +107,7 @@ void case_GridRead()
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[15] == 1", intArr[15] == 1);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[16] == 0", intArr[16] == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_grid.cgn");
 }
@@ -150,7 +149,7 @@ void case_GridReadUnstructured()
 	ier = cg_iRIC_GetTriangleElements_Mul(fid, elems.data());
 	VERIFY_LOG("cg_iRIC_GetTriangleElements_Mul() ier == 0", ier == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_grid_unstructured.cgn");
 }
@@ -204,7 +203,7 @@ void case_GridReadFunc()
 		VERIFY_LOG("cg_iRIC_Read_Grid_Functional_Real_Node_Mul() ier == 0", ier == 0);
 	}
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_gridreadfunc.cgn");
 }
@@ -235,7 +234,7 @@ void case_GridWrite()
 	ier = cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x.data());
 	VERIFY_LOG("cg_iRIC_Write_Grid1d_Coords_Mul() ier == 0", ier == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	ier = cg_iRIC_Open("case_gridwrite1d.cgn", IRIC_MODE_READ, &fid);
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
@@ -262,7 +261,7 @@ void case_GridWrite()
 	VERIFY_LOG("cg_array_read() value valid", x == read_x);
 	*/
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_gridwrite1d.cgn");
 
@@ -326,7 +325,7 @@ void case_GridWrite()
 	ier = cg_iRIC_Write_Grid_Integer_Cell_Mul(fid, "intcell_test", int_cell_write.data());
 	VERIFY_LOG("cg_iRIC_Write_Grid_Integer_Cell_Mul() ier == 0", ier == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	ier = cg_iRIC_Open("case_gridwrite2d.cgn", IRIC_MODE_READ, &fid);
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
@@ -399,7 +398,7 @@ void case_GridWrite()
 	VERIFY_LOG("intcell_test value check", int_cell_read == int_cell_write);
 	*/
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_gridwrite2d.cgn");
 
@@ -431,7 +430,7 @@ void case_GridWrite()
 	ier = cg_iRIC_Write_Grid3d_Coords_Mul(fid, isize, jsize, ksize, x.data(), y.data(), z.data());
 	VERIFY_LOG("cg_iRIC_Write_Grid3d_Coords_Mul() ier == 0", ier == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	ier = cg_iRIC_Open("case_gridwrite3d.cgn", IRIC_MODE_READ, &fid);
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
@@ -475,7 +474,7 @@ void case_GridWrite()
 	VERIFY_LOG("cg_array_read() value valid", z == read_z);
 	*/
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_gridwrite3d.cgn");
 }

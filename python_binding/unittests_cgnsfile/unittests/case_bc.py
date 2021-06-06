@@ -129,7 +129,7 @@ def case_BcRead():
     util.verify_log("cg_iRIC_Read_BC_FunctionalWithName_Mul() value value[1]", values[1] == 4)
     util.verify_log("cg_iRIC_Read_BC_FunctionalWithName_Mul() value value[2]", values[2] == 2)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove('data/case_bc.cgn')
 
@@ -250,6 +250,6 @@ def case_BcWrite():
     read_str = iric.cg_iRIC_Read_BC_FunctionalWithName_String_Mul(fid, "testbc", 1, "write_func_withname_string", "_endDate")
     util.verify_log("cg_iRIC_Read_BC_FunctionalWithName_String_Mul() value match", read_str == "2017-06-01T10:00")
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_bcwrite.cgn")

@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <iostream>
@@ -24,7 +23,7 @@ void case_InitReadSuccess()
 
 	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_initreadsuccess.cgn");
 }

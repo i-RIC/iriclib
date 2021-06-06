@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>
@@ -37,8 +36,8 @@ void case_noGridOutput()
 	ier = cg_iRIC_Write_Sol_BaseIterative_Real("Discharge", discharge);
 	VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real() ier == 0", ier == 0);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	remove("case_nogrid_output.cgn");
 }

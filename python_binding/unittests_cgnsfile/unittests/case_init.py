@@ -14,7 +14,7 @@ def case_InitSuccess():
 
 	iric.cg_iRIC_Init(fid)
 
-	iric.cg_close(fid)
+	iric.cg_iRIC_Close(fid)
 
 	util.remove("data/case_initsuccess.cgn")
 

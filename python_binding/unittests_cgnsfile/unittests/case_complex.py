@@ -71,7 +71,7 @@ def case_Complex():
 
     iric.cg_iRIC_Write_Grid_Complex_Node_Mul(fid, "nodeparam", complex_node)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     fid = iric.cg_iRIC_Open("data/case_complex.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
@@ -118,6 +118,6 @@ def case_Complex():
     read_str = iric.cg_iRIC_Read_Complex_FunctionalWithName_String_Mul(fid, "nodeparam", 3, "funcparam", "_endDate")
     util.verify_log("cg_iRIC_Read_Complex_FunctionalWithName_String_Mul() value match", read_str == "2017-06-01T10:00")
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove('data/case_complex.cgn')

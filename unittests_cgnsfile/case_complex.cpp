@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>
@@ -103,7 +102,7 @@ void case_Complex()
 	ier = cg_iRIC_Write_Grid_Complex_Node_Mul(fid, "nodeparam", complex_node.data());
 	VERIFY_LOG("cg_iRIC_Write_Grid_Complex_Node_Mul() ier == 0", ier == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	ier = cg_iRIC_Open("case_complex.cgn", IRIC_MODE_MODIFY, &fid);
 
@@ -199,7 +198,7 @@ void case_Complex()
 	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_String_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Complex_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "2017-06-01T10:00");
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_complex.cgn");
 }

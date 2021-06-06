@@ -26,6 +26,7 @@
 #include "iriclib_cc.h" // calculation condition
 #include "iriclib_combine.h" // combine
 #include "iriclib_complex.h" // complex grid attribute
+#include "iriclib_errorcodes.h" // error codes
 #include "iriclib_geo.h" // geographic data
 #include "iriclib_geoutil.h" // geographic data
 #include "iriclib_grid.h" // grid coordinates and attributes

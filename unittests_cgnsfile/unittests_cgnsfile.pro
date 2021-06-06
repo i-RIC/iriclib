@@ -4,24 +4,14 @@ CONFIG   += console
 CONFIG   += c++11
 
 CONFIG(debug, debug|release) {
-	# cgnslib
-        LIBS += -L"../cgnslib_dummy/debug"
-
 	# iriclib
 	LIBS += -L"../debug"
 }
 else {
-	# cgnslib
-        LIBS += -L"../cgnslib_dummy/release"
-
 	# iriclib
 	LIBS += -L"../release"
 }
-LIBS += -lcgnsdll
 LIBS += -liriclib
-
-# cgnslib
-INCLUDEPATH += "../cgnslib_dummy/"
 
 # iriclib
 INCLUDEPATH += ".."

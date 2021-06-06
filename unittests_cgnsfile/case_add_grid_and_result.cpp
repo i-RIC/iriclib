@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>
@@ -96,8 +95,8 @@ void case_addGridAndResult()
 	ier = cg_iRIC_Write_Sol_Cell_Integer("CCActive", ccactive.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Integer() ier == 0", ier == 0);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	remove("case_grid_result.cgn");
 }

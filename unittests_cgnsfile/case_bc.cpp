@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>
@@ -182,7 +181,7 @@ void case_BcRead()
 	VERIFY_LOG("cg_iRIC_Read_BC_Functional_RealSingle_Mul() value value[1]", floatvalues.at(1) == 4);
 	VERIFY_LOG("cg_iRIC_Read_BC_Functional_RealSingle_Mul() value value[2]", floatvalues.at(2) == 2);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_bc.cgn");
 }
@@ -331,7 +330,7 @@ void case_BcWrite()
 	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_String_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_BC_FunctionalWithName_String_Mul() value match", std::string(read_str.data()) == "2017-06-01T10:00");
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_bcwrite.cgn");
 }

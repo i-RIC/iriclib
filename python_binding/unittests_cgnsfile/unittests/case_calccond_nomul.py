@@ -78,7 +78,7 @@ def case_CalcCondRead():
     except Exception:
         print('cg_iRIC_Read_FunctionalWithName() raise Exception for invalid name [OK]')
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_cc.cgn")
 
@@ -170,6 +170,6 @@ def case_CalcCondWrite():
     read_str = iric.cg_iRIC_Read_FunctionalWithName_String("write_func_withname_string", "_endDate")
     util.verify_log("cg_iRIC_Read_FunctionalWithName_String() value match", read_str == "2017-06-01T10:00")
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_ccwrite.cgn")

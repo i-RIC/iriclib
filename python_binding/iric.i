@@ -5,7 +5,6 @@
 %{
 #include "../iriclib.h"
 #include "../iriclib_wrapper.h"
-#include "../cgnslib_dummy/cgnslib.h"
 %}
 
 %cstring_bounded_output(char *strvalue, 2048);
@@ -40,7 +39,6 @@ private:
 	std::vector<double>* m_value;
 };
 
-int cg_close(int fin);
 
 // from iriclib_bc.h
 void cg_iRIC_Read_BC_Count_WithGridId_Mul(int fid, int gid, const char* type, int* OUTPUT);

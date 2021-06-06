@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>
@@ -30,8 +29,8 @@ void case_read_adf()
 	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() sol_count == 3", sol_count == 3);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 }
 
 void case_read_hdf5()
@@ -49,20 +48,20 @@ void case_read_hdf5()
 	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() sol_count == 3", sol_count == 3);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 }
 
 void case_read_adf_no_results()
 {
 	int fid;
 	int ier = cg_iRIC_Open("case_read_adf_no_sols.cgn", IRIC_MODE_READ, &fid);
-	VERIFY_LOG("cg_iRIC_Open() ier == CG_OK", ier == CG_OK);
+	VERIFY_LOG("cg_iRIC_Open() ier == IRIC_NO_ERROR", ier == IRIC_NO_ERROR);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 
 	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == CG_OK", ier == CG_OK);
+	VERIFY_LOG("cg_iRIC_InitRead() ier == IRIC_NO_ERROR", ier == IRIC_NO_ERROR);
 	/*
 	const char exp1[] = "index 1, label 'BaseIterativeData_t' not a child of 'CGNSBase_t'";
 	const char *err1 = cg_get_error();
@@ -89,20 +88,20 @@ void case_read_adf_no_results()
 	VERIFY_LOG(buffer, strcmp(err2, exp2) == 0);
 */
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 }
 
 void case_read_hdf5_no_results()
 {
 	int fid;
 	int ier = cg_iRIC_Open("case_read_hdf5_no_sols.cgn", IRIC_MODE_READ, &fid);
-	VERIFY_LOG("cg_iRIC_Open() ier == CG_OK", ier == CG_OK);
+	VERIFY_LOG("cg_iRIC_Open() ier == IRIC_NO_ERROR", ier == IRIC_NO_ERROR);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 
 	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == CG_OK", ier == CG_OK);
+	VERIFY_LOG("cg_iRIC_InitRead() ier == IRIC_NO_ERROR", ier == IRIC_NO_ERROR);
 	/*
 	const char exp1[] = "index 1, label 'BaseIterativeData_t' not a child of 'CGNSBase_t'";
 	const char *err1 = cg_get_error();
@@ -128,8 +127,8 @@ void case_read_hdf5_no_results()
 	VERIFY_LOG(buffer, strcmp(err2, exp2) == 0);
 */
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 }
 
 

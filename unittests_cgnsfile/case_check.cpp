@@ -1,6 +1,5 @@
 #include "macros.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>

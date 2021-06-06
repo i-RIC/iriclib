@@ -13,7 +13,7 @@ def case_InitReadSuccess():
 
     iric.cg_iRIC_InitRead(fid)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_initreadsuccess.cgn")
 
