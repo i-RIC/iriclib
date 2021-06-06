@@ -58,9 +58,9 @@ def writeSolution(filename, fid, iterMode):
         # Vertex solutions
 
         depth[:] = i
-        iric.cg_iRIC_Write_Sol_Real_Mul(fid, "Depth", depth)
-        iric.cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityX", vx)
-        iric.cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityY", vy)
+        iric.cg_iRIC_Write_Sol_Node_Real_Mul(fid, "Depth", depth)
+        iric.cg_iRIC_Write_Sol_Node_Real_Mul(fid, "VelocityX", vx)
+        iric.cg_iRIC_Write_Sol_Node_Real_Mul(fid, "VelocityY", vy)
 
         wet[:] = i
         iric.cg_iRIC_Write_Sol_Node_Integer_Mul(fid, "IBC", wet)
@@ -154,9 +154,9 @@ def writeSolution3d(filename, fid):
         iric.cg_iRIC_Write_Sol_Time_Mul(fid, TimeVal)
 
         iric.cg_iRIC_Write_Sol_Grid3d_Coords_Mul(fid, x, y, z)
-        iric.cg_iRIC_Write_Sol_Real_Mul(fid, "Depth", depth)
-        iric.cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityX", vx)
-        iric.cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityY", vy)
+        iric.cg_iRIC_Write_Sol_Node_Real_Mul(fid, "Depth", depth)
+        iric.cg_iRIC_Write_Sol_Node_Real_Mul(fid, "VelocityX", vx)
+        iric.cg_iRIC_Write_Sol_Node_Real_Mul(fid, "VelocityY", vy)
 
         iric.cg_iRIC_Write_Sol_Node_Integer_Mul(fid, "IBC", wet)
 

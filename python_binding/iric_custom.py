@@ -1612,7 +1612,7 @@ def cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(fid, gid):
 	return x.get(), y.get(), z.get()
 
 def cg_iRIC_GetTriangleElements_WithGridId_Mul(fid, gid):
-	size = cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(fid, gid)
+	size = @TODO FIX THIS()
 	id = IntArrayContainer(size)
 	ier = _iric.cg_iRIC_GetTriangleElements_WithGridId_Mul(fid, gid, id)
 	_checkErrorCode(ier)
@@ -1896,7 +1896,7 @@ def cg_iRIC_Read_Grid3d_Coords_WithGridId(gid):
 	return x.get(), y.get(), z.get()
 
 def cg_iRIC_GetTriangleElements_WithGridId(gid):
-	size = cg_iRIC_GetTriangleElementsSize2_WithGridId(gid)
+	size = @TODO FIX THIS()
 	id = IntArrayContainer(size)
 	ier = _iric.cg_iRIC_GetTriangleElements_WithGridId(gid, id)
 	_checkErrorCode(ier)
@@ -2151,7 +2151,7 @@ def cg_iRIC_Read_Grid3d_Coords():
 	return x.get(), y.get(), z.get()
 
 def cg_iRIC_GetTriangleElements():
-	size = cg_iRIC_GetTriangleElementsSize2()
+	size = @TODO FIX THIS()
 	id = IntArrayContainer(size)
 	ier = _iric.cg_iRIC_GetTriangleElements(id)
 	_checkErrorCode(ier)
@@ -2441,10 +2441,10 @@ def cg_iRIC_Write_Sol_Node_Integer(name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Node_Integer(name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Write_Sol_Real(name, v_arr):
+def cg_iRIC_Write_Sol_Node_Real(name, v_arr):
 	v = RealArrayContainer(v_arr.size)
 	v.set(v_arr)
-	ier = _iric.cg_iRIC_Write_Sol_Real(name, v)
+	ier = _iric.cg_iRIC_Write_Sol_Node_Real(name, v)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Read_Sol_Particle_Pos2d(step):
@@ -2743,10 +2743,10 @@ def cg_iRIC_Write_Sol_Node_Integer_WithGridId(gid, name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Node_Integer_WithGridId(gid, name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Write_Sol_Real_WithGridId(gid, name, v_arr):
+def cg_iRIC_Write_Sol_Node_Real_WithGridId(gid, name, v_arr):
 	v = RealArrayContainer(v_arr.size)
 	v.set(v_arr)
-	ier = _iric.cg_iRIC_Write_Sol_Real_WithGridId(gid, name, v)
+	ier = _iric.cg_iRIC_Write_Sol_Node_Real_WithGridId(gid, name, v)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Read_Sol_Particle_Pos2d_WithGridId(gid, step):
@@ -3007,7 +3007,7 @@ def cg_iRIC_Read_Grid3d_Coords_Mul(fid):
 	return x.get(), y.get(), z.get()
 
 def cg_iRIC_GetTriangleElements_Mul(fid):
-	size = cg_iRIC_GetTriangleElementsSize2_Mul(fid)
+	size = @TODO FIX THIS()
 	id = IntArrayContainer(size)
 	ier = _iric.cg_iRIC_GetTriangleElements_Mul(fid, id)
 	_checkErrorCode(ier)
@@ -3297,10 +3297,10 @@ def cg_iRIC_Write_Sol_Node_Integer_Mul(fid, name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Node_Integer_Mul(fid, name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Write_Sol_Real_Mul(fid, name, v_arr):
+def cg_iRIC_Write_Sol_Node_Real_Mul(fid, name, v_arr):
 	v = RealArrayContainer(v_arr.size)
 	v.set(v_arr)
-	ier = _iric.cg_iRIC_Write_Sol_Real_Mul(fid, name, v)
+	ier = _iric.cg_iRIC_Write_Sol_Node_Real_Mul(fid, name, v)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Read_Sol_Particle_Pos2d_Mul(fid, step):
@@ -3599,10 +3599,10 @@ def cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul(fid, gid, name, v_arr):
 	ier = _iric.cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul(fid, gid, name, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Write_Sol_Real_WithGridId_Mul(fid, gid, name, v_arr):
+def cg_iRIC_Write_Sol_Node_Real_WithGridId_Mul(fid, gid, name, v_arr):
 	v = RealArrayContainer(v_arr.size)
 	v.set(v_arr)
-	ier = _iric.cg_iRIC_Write_Sol_Real_WithGridId_Mul(fid, gid, name, v)
+	ier = _iric.cg_iRIC_Write_Sol_Node_Real_WithGridId_Mul(fid, gid, name, v)
 	_checkErrorCode(ier)
 
 def cg_iRIC_Read_Sol_Particle_Pos2d_WithGridId_Mul(fid, gid, step):

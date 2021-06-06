@@ -3057,12 +3057,12 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_node_integer_f, CG_IRIC_WRITE_SOL_NODE_
 	*ier = cg_iRIC_Write_Sol_Node_Integer(c_name, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_write_sol_real_f, CG_IRIC_WRITE_SOL_REAL_F) (STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
+void IRICLIBDLL FMNAME(cg_iric_write_sol_node_real_f, CG_IRIC_WRITE_SOL_NODE_REAL_F) (STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
 	char c_name[STRINGMAXLEN + 1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name), c_name, STRINGMAXLEN, ier);
 	if (*ier != 0) return;
 
-	*ier = cg_iRIC_Write_Sol_Real(c_name, v_arr);
+	*ier = cg_iRIC_Write_Sol_Node_Real(c_name, v_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_read_sol_particle_count_f, CG_IRIC_READ_SOL_PARTICLE_COUNT_F) (int* step, int* count, int *ier) {
@@ -3457,12 +3457,12 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_node_integer_withgridid_f, CG_IRIC_WRIT
 	*ier = cg_iRIC_Write_Sol_Node_Integer_WithGridId(*gid, c_name, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_write_sol_real_withgridid_f, CG_IRIC_WRITE_SOL_REAL_WITHGRIDID_F) (int* gid, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
+void IRICLIBDLL FMNAME(cg_iric_write_sol_node_real_withgridid_f, CG_IRIC_WRITE_SOL_NODE_REAL_WITHGRIDID_F) (int* gid, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
 	char c_name[STRINGMAXLEN + 1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name), c_name, STRINGMAXLEN, ier);
 	if (*ier != 0) return;
 
-	*ier = cg_iRIC_Write_Sol_Real_WithGridId(*gid, c_name, v_arr);
+	*ier = cg_iRIC_Write_Sol_Node_Real_WithGridId(*gid, c_name, v_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_read_sol_particle_count_withgridid_f, CG_IRIC_READ_SOL_PARTICLE_COUNT_WITHGRIDID_F) (int* gid, int* step, int* count, int *ier) {
@@ -4699,12 +4699,12 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_node_integer_mul_f, CG_IRIC_WRITE_SOL_N
 	*ier = cg_iRIC_Write_Sol_Node_Integer_Mul(*fid, c_name, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_write_sol_real_mul_f, CG_IRIC_WRITE_SOL_REAL_MUL_F) (int* fid, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
+void IRICLIBDLL FMNAME(cg_iric_write_sol_node_real_mul_f, CG_IRIC_WRITE_SOL_NODE_REAL_MUL_F) (int* fid, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
 	char c_name[STRINGMAXLEN + 1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name), c_name, STRINGMAXLEN, ier);
 	if (*ier != 0) return;
 
-	*ier = cg_iRIC_Write_Sol_Real_Mul(*fid, c_name, v_arr);
+	*ier = cg_iRIC_Write_Sol_Node_Real_Mul(*fid, c_name, v_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_read_sol_particle_count_mul_f, CG_IRIC_READ_SOL_PARTICLE_COUNT_MUL_F) (int* fid, int* step, int* count, int *ier) {
@@ -5200,12 +5200,12 @@ void IRICLIBDLL FMNAME(cg_iric_write_sol_node_integer_withgridid_mul_f, CG_IRIC_
 	*ier = cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul(*fid, *gid, c_name, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_write_sol_real_withgridid_mul_f, CG_IRIC_WRITE_SOL_REAL_WITHGRIDID_MUL_F) (int* fid, int* gid, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
+void IRICLIBDLL FMNAME(cg_iric_write_sol_node_real_withgridid_mul_f, CG_IRIC_WRITE_SOL_NODE_REAL_WITHGRIDID_MUL_F) (int* fid, int* gid, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
 	char c_name[STRINGMAXLEN + 1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name), c_name, STRINGMAXLEN, ier);
 	if (*ier != 0) return;
 
-	*ier = cg_iRIC_Write_Sol_Real_WithGridId_Mul(*fid, *gid, c_name, v_arr);
+	*ier = cg_iRIC_Write_Sol_Node_Real_WithGridId_Mul(*fid, *gid, c_name, v_arr);
 }
 
 

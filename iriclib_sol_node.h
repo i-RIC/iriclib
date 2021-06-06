@@ -11,7 +11,7 @@ int IRICLIBDLL cg_iRIC_Read_Sol_Node_Integer_WithGridId_Mul(int fid, int gid, in
 int IRICLIBDLL cg_iRIC_Read_Sol_Node_Real_WithGridId_Mul(int fid, int gid, int step, const char* name, double* v_arr);
 
 int IRICLIBDLL cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr);
-int IRICLIBDLL cg_iRIC_Write_Sol_Real_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr);
+int IRICLIBDLL cg_iRIC_Write_Sol_Node_Real_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr);
 
 #ifdef __cplusplus
 }

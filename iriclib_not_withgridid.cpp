@@ -788,13 +788,13 @@ int cg_iRIC_Write_Sol_Node_Integer_Mul(int fid, const char* name, int* v_arr)
   return cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul(fid, gid, name, v_arr);
 }
 
-int cg_iRIC_Write_Sol_Real_Mul(int fid, const char* name, double* v_arr)
+int cg_iRIC_Write_Sol_Node_Real_Mul(int fid, const char* name, double* v_arr)
 {
   int gid;
   int ier = getlastGridId(fid, &gid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_Write_Sol_Real_WithGridId_Mul(fid, gid, name, v_arr);
+  return cg_iRIC_Write_Sol_Node_Real_WithGridId_Mul(fid, gid, name, v_arr);
 }
 
 

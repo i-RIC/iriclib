@@ -490,7 +490,7 @@ int cg_iRIC_Write_Sol_KFace_Real(const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Node_Integer(int step, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Node_Real(int step, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Sol_Node_Integer(const char* name, IntArrayContainer& v_arr);
-int cg_iRIC_Write_Sol_Real(const char* name, RealArrayContainer& v_arr);
+int cg_iRIC_Write_Sol_Node_Real(const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Particle_Pos2d(int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_Read_Sol_Particle_Pos3d(int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Read_Sol_Particle_Real(int step, const char* name, RealArrayContainer& v_arr);
@@ -532,7 +532,7 @@ int cg_iRIC_Write_Sol_KFace_Real_WithGridId(int gid, const char* name, RealArray
 int cg_iRIC_Read_Sol_Node_Integer_WithGridId(int gid, int step, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Node_Real_WithGridId(int gid, int step, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Sol_Node_Integer_WithGridId(int gid, const char* name, IntArrayContainer& v_arr);
-int cg_iRIC_Write_Sol_Real_WithGridId(int gid, const char* name, RealArrayContainer& v_arr);
+int cg_iRIC_Write_Sol_Node_Real_WithGridId(int gid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Particle_Pos2d_WithGridId(int gid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_Read_Sol_Particle_Pos3d_WithGridId(int gid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Read_Sol_Particle_Real_WithGridId(int gid, int step, const char* name, RealArrayContainer& v_arr);
@@ -610,7 +610,7 @@ int cg_iRIC_Write_Sol_KFace_Real_Mul(int fid, const char* name, RealArrayContain
 int cg_iRIC_Read_Sol_Node_Integer_Mul(int fid, int step, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Node_Real_Mul(int fid, int step, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Sol_Node_Integer_Mul(int fid, const char* name, IntArrayContainer& v_arr);
-int cg_iRIC_Write_Sol_Real_Mul(int fid, const char* name, RealArrayContainer& v_arr);
+int cg_iRIC_Write_Sol_Node_Real_Mul(int fid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Particle_Pos2d_Mul(int fid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_Read_Sol_Particle_Pos3d_Mul(int fid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Read_Sol_Particle_Real_Mul(int fid, int step, const char* name, RealArrayContainer& v_arr);
@@ -652,7 +652,7 @@ int cg_iRIC_Write_Sol_KFace_Real_WithGridId_Mul(int fid, int gid, const char* na
 int cg_iRIC_Read_Sol_Node_Integer_WithGridId_Mul(int fid, int gid, int step, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Node_Real_WithGridId_Mul(int fid, int gid, int step, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul(int fid, int gid, const char* name, IntArrayContainer& v_arr);
-int cg_iRIC_Write_Sol_Real_WithGridId_Mul(int fid, int gid, const char* name, RealArrayContainer& v_arr);
+int cg_iRIC_Write_Sol_Node_Real_WithGridId_Mul(int fid, int gid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Read_Sol_Particle_Pos2d_WithGridId_Mul(int fid, int gid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_Read_Sol_Particle_Pos3d_WithGridId_Mul(int fid, int gid, int step, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int cg_iRIC_Read_Sol_Particle_Real_WithGridId_Mul(int fid, int gid, int step, const char* name, RealArrayContainer& v_arr);

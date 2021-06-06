@@ -62,7 +62,7 @@ int cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul(int fid, int gid, const char* 
 	return writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Node_Integer_WithGridId_Mul");
 }
 
-int cg_iRIC_Write_Sol_Real_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Write_Sol_Node_Real_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
 {
-	return writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Real_WithGridId_Mul");
+	return writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Node_Real_WithGridId_Mul");
 }
