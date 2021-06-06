@@ -427,8 +427,8 @@ def cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(fid, gid):
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 
-def cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(fid, gid):
-	ier, size = _iric.cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(fid, gid)
+def cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId_Mul(fid, gid):
+	ier, size = _iric.cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId_Mul(fid, gid)
 	_checkErrorCode(ier)
 	return size
 
@@ -702,8 +702,8 @@ def cg_iRIC_Read_Grid3d_Str_Size_WithGridId(gid):
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 
-def cg_iRIC_GetTriangleElementsSize_WithGridId(gid):
-	ier, size = _iric.cg_iRIC_GetTriangleElementsSize_WithGridId(gid)
+def cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId(gid):
+	ier, size = _iric.cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId(gid)
 	_checkErrorCode(ier)
 	return size
 
@@ -866,8 +866,8 @@ def cg_iRIC_Read_Grid3d_Str_Size():
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 
-def cg_iRIC_GetTriangleElementsSize():
-	ier, size = _iric.cg_iRIC_GetTriangleElementsSize()
+def cg_iRIC_Read_Grid_TriangleElementsSize():
+	ier, size = _iric.cg_iRIC_Read_Grid_TriangleElementsSize()
 	_checkErrorCode(ier)
 	return size
 
@@ -1208,8 +1208,8 @@ def cg_iRIC_Read_Grid3d_Str_Size_Mul(fid):
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 
-def cg_iRIC_GetTriangleElementsSize_Mul(fid):
-	ier, size = _iric.cg_iRIC_GetTriangleElementsSize_Mul(fid)
+def cg_iRIC_Read_Grid_TriangleElementsSize_Mul(fid):
+	ier, size = _iric.cg_iRIC_Read_Grid_TriangleElementsSize_Mul(fid)
 	_checkErrorCode(ier)
 	return size
 

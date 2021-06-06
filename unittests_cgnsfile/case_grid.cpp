@@ -131,9 +131,9 @@ void case_GridReadUnstructured()
 	std::vector<double> x, y;
 	std::vector<int> elems;
 
-	ier = cg_iRIC_GetTriangleElementsSize_Mul(fid, &elem_size);
-	VERIFY_LOG("cg_iRIC_GetTriangleElementsSize_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_GetTriangleElementsSize_Mul() elem_size == 3", elem_size == 3);
+	ier = cg_iRIC_Read_Grid_TriangleElementsSize_Mul(fid, &elem_size);
+	VERIFY_LOG("cg_iRIC_Read_Grid_TriangleElementsSize_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_TriangleElementsSize_Mul() elem_size == 3", elem_size == 3);
 
 	ier = cg_iRIC_Read_Grid_NodeCount_Mul(fid, &count);
 	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() ier == 0", ier == 0);

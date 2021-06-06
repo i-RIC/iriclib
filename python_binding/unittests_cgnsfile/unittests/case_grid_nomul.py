@@ -66,8 +66,8 @@ def case_GridReadUnstructured():
 
     iric.cg_iRIC_Init(fid)
 
-    elem_size = iric.cg_iRIC_GetTriangleElementsSize()
-    util.verify_log("cg_iRIC_GetTriangleElementsSize() elem_size == 3", elem_size == 3)
+    elem_size = iric.cg_iRIC_Read_Grid_TriangleElementsSize()
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElementsSize() elem_size == 3", elem_size == 3)
 
     node_count = iric.cg_iRIC_Read_Grid_NodeCount()
     util.verify_log("cg_iRIC_Read_Grid_NodeCount() node_count == 5", node_count == 5)
