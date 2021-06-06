@@ -42,8 +42,8 @@ void case_addGridAndResult()
 			y[i + isize * j] = j;
 		}
 	}
-	ier = cg_iRIC_WriteGridCoord2d_Mul(fid, isize, jsize, x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_WriteGridCoord2d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid2d_Coords_Mul(fid, isize, jsize, x.data(), y.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid2d_Coords_Mul() ier == 0", ier == 0);
 
 	double time = 1.0;
 	std::vector<double> depth;

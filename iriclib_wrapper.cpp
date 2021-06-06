@@ -200,9 +200,9 @@ int cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(int fid, int isize, RealArrayCont
 	return cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(fid, isize, x_arr.pointer(), gid);
 }
 
-int cg_iRIC_WriteGridCoord2d_WithGridId_Mul(int fid, int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, int* gid)
+int cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(int fid, int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, int* gid)
 {
-	return cg_iRIC_WriteGridCoord2d_WithGridId_Mul(fid, isize, jsize, x_arr.pointer(), y_arr.pointer(), gid);
+	return cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(fid, isize, jsize, x_arr.pointer(), y_arr.pointer(), gid);
 }
 
 int cg_iRIC_WriteGridCoord3d_WithGridId_Mul(int fid, int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr, int* gid)
@@ -402,9 +402,9 @@ int cg_iRIC_Write_Grid1d_Coords_WithGridId(int isize, RealArrayContainer& x_arr,
 	return cg_iRIC_Write_Grid1d_Coords_WithGridId(isize, x_arr.pointer(), gid);
 }
 
-int cg_iRIC_WriteGridCoord2d_WithGridId(int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, int* gid)
+int cg_iRIC_Write_Grid2d_Coords_WithGridId(int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, int* gid)
 {
-	return cg_iRIC_WriteGridCoord2d_WithGridId(isize, jsize, x_arr.pointer(), y_arr.pointer(), gid);
+	return cg_iRIC_Write_Grid2d_Coords_WithGridId(isize, jsize, x_arr.pointer(), y_arr.pointer(), gid);
 }
 
 int cg_iRIC_WriteGridCoord3d_WithGridId(int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr, int* gid)
@@ -582,9 +582,9 @@ int cg_iRIC_Write_Grid1d_Coords(int isize, RealArrayContainer& x_arr)
 	return cg_iRIC_Write_Grid1d_Coords(isize, x_arr.pointer());
 }
 
-int cg_iRIC_WriteGridCoord2d(int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
+int cg_iRIC_Write_Grid2d_Coords(int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
 {
-	return cg_iRIC_WriteGridCoord2d(isize, jsize, x_arr.pointer(), y_arr.pointer());
+	return cg_iRIC_Write_Grid2d_Coords(isize, jsize, x_arr.pointer(), y_arr.pointer());
 }
 
 int cg_iRIC_WriteGridCoord3d(int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
@@ -1186,9 +1186,9 @@ int cg_iRIC_Write_Grid1d_Coords_Mul(int fid, int isize, RealArrayContainer& x_ar
 	return cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x_arr.pointer());
 }
 
-int cg_iRIC_WriteGridCoord2d_Mul(int fid, int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
+int cg_iRIC_Write_Grid2d_Coords_Mul(int fid, int isize, int jsize, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
 {
-	return cg_iRIC_WriteGridCoord2d_Mul(fid, isize, jsize, x_arr.pointer(), y_arr.pointer());
+	return cg_iRIC_Write_Grid2d_Coords_Mul(fid, isize, jsize, x_arr.pointer(), y_arr.pointer());
 }
 
 int cg_iRIC_WriteGridCoord3d_Mul(int fid, int isize, int jsize, int ksize, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)

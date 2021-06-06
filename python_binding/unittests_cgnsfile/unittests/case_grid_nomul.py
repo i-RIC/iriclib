@@ -186,7 +186,7 @@ def case_GridWrite():
             x[idx] = i
             y[idx] = j
 
-    iric.cg_iRIC_WriteGridCoord2d(isize, jsize, x, y)
+    iric.cg_iRIC_Write_Grid2d_Coords(isize, jsize, x, y)
 
     real_node_write = np.zeros(isize * jsize, dtype=np.float64)
     int_node_write = np.zeros(isize * jsize, dtype=np.int32)

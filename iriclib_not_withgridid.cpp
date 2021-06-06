@@ -519,11 +519,11 @@ int cg_iRIC_Write_Grid1d_Coords_Mul(int fid, int isize, double* x_arr)
   return cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(fid, isize, x_arr, &gid);
 }
 
-int cg_iRIC_WriteGridCoord2d_Mul(int fid, int isize, int jsize, double* x_arr, double* y_arr)
+int cg_iRIC_Write_Grid2d_Coords_Mul(int fid, int isize, int jsize, double* x_arr, double* y_arr)
 {
   int gid;
 
-  return cg_iRIC_WriteGridCoord2d_WithGridId_Mul(fid, isize, jsize, x_arr, y_arr, &gid);
+  return cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(fid, isize, jsize, x_arr, y_arr, &gid);
 }
 
 int cg_iRIC_WriteGridCoord3d_Mul(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr)
