@@ -508,9 +508,6 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
-
 	readSolution(fid);
 
 	ier = cg_iRIC_Close(fid);
@@ -560,9 +557,6 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
-	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
-
 	readSolution(fid);
 	ier = cg_iRIC_Close(fid);
 	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
@@ -608,9 +602,6 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	ier = cg_iRIC_Open("case_soldivide.cgn", IRIC_MODE_READ, &fid);
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
 
 	readSolution(fid);
 
@@ -686,9 +677,6 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	ier = cg_iRIC_Open("case_soldivideiter.cgn", IRIC_MODE_READ, &fid);
 	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
 	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
 
 	// cg_iRIC_SetFilename(fid, "case_soldivideiter.cgn");
 

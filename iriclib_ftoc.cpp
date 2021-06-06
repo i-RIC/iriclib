@@ -1157,10 +1157,6 @@ void IRICLIBDLL FMNAME(cg_iric_close_f, CG_IRIC_CLOSE_F) (int* fid, int *ier) {
 	*ier = cg_iRIC_Close(*fid);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_initread_f, CG_IRIC_INITREAD_F) (int* fid, int *ier) {
-	*ier = cg_iRIC_InitRead(*fid);
-}
-
 void IRICLIBDLL FMNAME(iric_initoption_f, IRIC_INITOPTION_F) (int* option, int *ier) {
 	*ier = iRIC_InitOption(*option);
 }

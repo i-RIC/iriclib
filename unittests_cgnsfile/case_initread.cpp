@@ -24,13 +24,4 @@ void case_InitReadSuccess()
 	remove("case_initreadsuccess.cgn");
 }
 
-void case_InitReadFail()
-{
-	int fid = 1;
-
-	int ier = cg_iRIC_InitRead(fid);
-
-	VERIFY_LOG("cg_iRIC_InitRead() ier != 0", ier != 0);
-}
-
 } // extern "C"

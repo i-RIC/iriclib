@@ -67,11 +67,6 @@ int cg_iRIC_Close(int fid)
 	return _iric_h5cgnsfiles_unregister(fid);
 }
 
-int cg_iRIC_InitRead(int fid)
-{
-	return _checkFileIsOpen(fid);
-}
-
 int iRIC_InitOption(int option)
 {
 	if (option == IRIC_OPTION_CANCEL) {

@@ -19,8 +19,6 @@ def main():
 
     print('case_initread.case_InitReadSuccess()')
     case_initread.case_InitReadSuccess()
-    print('case_initread.case_InitReadFail()')
-    case_initread.case_InitReadFail()
 
     print('case_initoption_check.case_InitOptionCheck()')
     case_initoption_check.case_InitOptionCheck()

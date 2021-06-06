@@ -296,8 +296,6 @@ def case_SolWriteStd(cgnsName):
     fid = iric.cg_iRIC_Open("data/case_solstd.cgn", iric.IRIC_MODE_READ)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    iric.cg_iRIC_InitRead(fid)
-
     readSolution(fid)
 
     iric.cg_iRIC_Close(fid)
@@ -328,8 +326,6 @@ def case_SolWriteStd(cgnsName):
 
     fid = iric.cg_iRIC_Open("data/case_solstditer.cgn", iric.IRIC_MODE_READ)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
-
-    iric.cg_iRIC_InitRead(fid)
 
     readSolution(fid)
     iric.cg_iRIC_Close(fid)
