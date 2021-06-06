@@ -717,9 +717,9 @@ int cg_iRIC_Read_Sol_Node_Integer(int step, const char* name, IntArrayContainer&
 	return cg_iRIC_Read_Sol_Node_Integer(step, name, v_arr.pointer());
 }
 
-int cg_iRIC_Read_Sol_Real(int step, const char* name, RealArrayContainer& v_arr)
+int cg_iRIC_Read_Sol_Node_Real(int step, const char* name, RealArrayContainer& v_arr)
 {
-	return cg_iRIC_Read_Sol_Real(step, name, v_arr.pointer());
+	return cg_iRIC_Read_Sol_Node_Real(step, name, v_arr.pointer());
 }
 
 int cg_iRIC_Write_Sol_Integer(const char* name, IntArrayContainer& v_arr)
@@ -927,9 +927,9 @@ int cg_iRIC_Read_Sol_Node_Integer_WithGridId(int gid, int step, const char* name
 	return cg_iRIC_Read_Sol_Node_Integer_WithGridId(gid, step, name, v_arr.pointer());
 }
 
-int cg_iRIC_Read_Sol_Real_WithGridId(int gid, int step, const char* name, RealArrayContainer& v_arr)
+int cg_iRIC_Read_Sol_Node_Real_WithGridId(int gid, int step, const char* name, RealArrayContainer& v_arr)
 {
-	return cg_iRIC_Read_Sol_Real_WithGridId(gid, step, name, v_arr.pointer());
+	return cg_iRIC_Read_Sol_Node_Real_WithGridId(gid, step, name, v_arr.pointer());
 }
 
 int cg_iRIC_Write_Sol_Integer_WithGridId(int gid, const char* name, IntArrayContainer& v_arr)
@@ -1321,9 +1321,9 @@ int cg_iRIC_Read_Sol_Node_Integer_Mul(int fid, int step, const char* name, IntAr
 	return cg_iRIC_Read_Sol_Node_Integer_Mul(fid, step, name, v_arr.pointer());
 }
 
-int cg_iRIC_Read_Sol_Real_Mul(int fid, int step, const char* name, RealArrayContainer& v_arr)
+int cg_iRIC_Read_Sol_Node_Real_Mul(int fid, int step, const char* name, RealArrayContainer& v_arr)
 {
-	return cg_iRIC_Read_Sol_Real_Mul(fid, step, name, v_arr.pointer());
+	return cg_iRIC_Read_Sol_Node_Real_Mul(fid, step, name, v_arr.pointer());
 }
 
 int cg_iRIC_Write_Sol_Integer_Mul(int fid, const char* name, IntArrayContainer& v_arr)
@@ -1543,9 +1543,9 @@ int cg_iRIC_Read_Sol_Node_Integer_WithGridId_Mul(int fid, int gid, int step, con
 	return cg_iRIC_Read_Sol_Node_Integer_WithGridId_Mul(fid, gid, step, name, v_arr.pointer());
 }
 
-int cg_iRIC_Read_Sol_Real_WithGridId_Mul(int fid, int gid, int step, const char* name, RealArrayContainer& v_arr)
+int cg_iRIC_Read_Sol_Node_Real_WithGridId_Mul(int fid, int gid, int step, const char* name, RealArrayContainer& v_arr)
 {
-	return cg_iRIC_Read_Sol_Real_WithGridId_Mul(fid, gid, step, name, v_arr.pointer());
+	return cg_iRIC_Read_Sol_Node_Real_WithGridId_Mul(fid, gid, step, name, v_arr.pointer());
 }
 
 int cg_iRIC_Write_Sol_Integer_WithGridId_Mul(int fid, int gid, const char* name, IntArrayContainer& v_arr)

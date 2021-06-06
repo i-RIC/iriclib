@@ -223,7 +223,7 @@ int IRICLIBDLL cg_iRIC_Read_Sol_KFace_Real(int step, const char* name, double* v
 int IRICLIBDLL cg_iRIC_Write_Sol_KFace_Integer(const char* name, int* v_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_KFace_Real(const char* name, double* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Sol_Node_Integer(int step, const char* name, int* v_arr);
-int IRICLIBDLL cg_iRIC_Read_Sol_Real(int step, const char* name, double* v_arr);
+int IRICLIBDLL cg_iRIC_Read_Sol_Node_Real(int step, const char* name, double* v_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_Integer(const char* name, int* v_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_Real(const char* name, double* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Sol_Particle_Count(int step, int* count);
@@ -291,7 +291,7 @@ int IRICLIBDLL cg_iRIC_Write_Sol_KFace_Real_WithGridId(int gid, const char* name
 
 // from iriclib_sol_node.h
 int IRICLIBDLL cg_iRIC_Read_Sol_Node_Integer_WithGridId(int gid, int step, const char* name, int* v_arr);
-int IRICLIBDLL cg_iRIC_Read_Sol_Real_WithGridId(int gid, int step, const char* name, double* v_arr);
+int IRICLIBDLL cg_iRIC_Read_Sol_Node_Real_WithGridId(int gid, int step, const char* name, double* v_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_Integer_WithGridId(int gid, const char* name, int* v_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_Real_WithGridId(int gid, const char* name, double* v_arr);
 

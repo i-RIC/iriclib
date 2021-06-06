@@ -106,7 +106,7 @@ int IRICLIBDLL cg_iRIC_Write_Sol_KFace_Real_Mul(int fid, const char* name, doubl
 
 // from iriclib_sol_node.h
 int IRICLIBDLL cg_iRIC_Read_Sol_Node_Integer_Mul(int fid, int step, const char* name, int* v_arr);
-int IRICLIBDLL cg_iRIC_Read_Sol_Real_Mul(int fid, int step, const char* name, double* v_arr);
+int IRICLIBDLL cg_iRIC_Read_Sol_Node_Real_Mul(int fid, int step, const char* name, double* v_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_Integer_Mul(int fid, const char* name, int* v_arr);
 int IRICLIBDLL cg_iRIC_Write_Sol_Real_Mul(int fid, const char* name, double* v_arr);
 

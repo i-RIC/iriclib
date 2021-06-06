@@ -3041,12 +3041,12 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_node_integer_f, CG_IRIC_READ_SOL_NODE_IN
 	*ier = cg_iRIC_Read_Sol_Node_Integer(*step, c_name, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_read_sol_real_f, CG_IRIC_READ_SOL_REAL_F) (int* step, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
+void IRICLIBDLL FMNAME(cg_iric_read_sol_node_real_f, CG_IRIC_READ_SOL_NODE_REAL_F) (int* step, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
 	char c_name[STRINGMAXLEN + 1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name), c_name, STRINGMAXLEN, ier);
 	if (*ier != 0) return;
 
-	*ier = cg_iRIC_Read_Sol_Real(*step, c_name, v_arr);
+	*ier = cg_iRIC_Read_Sol_Node_Real(*step, c_name, v_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_integer_f, CG_IRIC_WRITE_SOL_INTEGER_F) (STR_PSTR(name), int* v_arr, int *ier STR_PLEN(name)) {
@@ -3441,12 +3441,12 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_node_integer_withgridid_f, CG_IRIC_READ_
 	*ier = cg_iRIC_Read_Sol_Node_Integer_WithGridId(*gid, *step, c_name, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_read_sol_real_withgridid_f, CG_IRIC_READ_SOL_REAL_WITHGRIDID_F) (int* gid, int* step, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
+void IRICLIBDLL FMNAME(cg_iric_read_sol_node_real_withgridid_f, CG_IRIC_READ_SOL_NODE_REAL_WITHGRIDID_F) (int* gid, int* step, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
 	char c_name[STRINGMAXLEN + 1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name), c_name, STRINGMAXLEN, ier);
 	if (*ier != 0) return;
 
-	*ier = cg_iRIC_Read_Sol_Real_WithGridId(*gid, *step, c_name, v_arr);
+	*ier = cg_iRIC_Read_Sol_Node_Real_WithGridId(*gid, *step, c_name, v_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_integer_withgridid_f, CG_IRIC_WRITE_SOL_INTEGER_WITHGRIDID_F) (int* gid, STR_PSTR(name), int* v_arr, int *ier STR_PLEN(name)) {
@@ -4683,12 +4683,12 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_node_integer_mul_f, CG_IRIC_READ_SOL_NOD
 	*ier = cg_iRIC_Read_Sol_Node_Integer_Mul(*fid, *step, c_name, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_read_sol_real_mul_f, CG_IRIC_READ_SOL_REAL_MUL_F) (int* fid, int* step, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
+void IRICLIBDLL FMNAME(cg_iric_read_sol_node_real_mul_f, CG_IRIC_READ_SOL_NODE_REAL_MUL_F) (int* fid, int* step, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
 	char c_name[STRINGMAXLEN + 1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name), c_name, STRINGMAXLEN, ier);
 	if (*ier != 0) return;
 
-	*ier = cg_iRIC_Read_Sol_Real_Mul(*fid, *step, c_name, v_arr);
+	*ier = cg_iRIC_Read_Sol_Node_Real_Mul(*fid, *step, c_name, v_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_integer_mul_f, CG_IRIC_WRITE_SOL_INTEGER_MUL_F) (int* fid, STR_PSTR(name), int* v_arr, int *ier STR_PLEN(name)) {
@@ -5184,12 +5184,12 @@ void IRICLIBDLL FMNAME(cg_iric_read_sol_node_integer_withgridid_mul_f, CG_IRIC_R
 	*ier = cg_iRIC_Read_Sol_Node_Integer_WithGridId_Mul(*fid, *gid, *step, c_name, v_arr);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_read_sol_real_withgridid_mul_f, CG_IRIC_READ_SOL_REAL_WITHGRIDID_MUL_F) (int* fid, int* gid, int* step, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
+void IRICLIBDLL FMNAME(cg_iric_read_sol_node_real_withgridid_mul_f, CG_IRIC_READ_SOL_NODE_REAL_WITHGRIDID_MUL_F) (int* fid, int* gid, int* step, STR_PSTR(name), double* v_arr, int *ier STR_PLEN(name)) {
 	char c_name[STRINGMAXLEN + 1];
 	string_2_C_string(STR_PTR(name), STR_LEN(name), c_name, STRINGMAXLEN, ier);
 	if (*ier != 0) return;
 
-	*ier = cg_iRIC_Read_Sol_Real_WithGridId_Mul(*fid, *gid, *step, c_name, v_arr);
+	*ier = cg_iRIC_Read_Sol_Node_Real_WithGridId_Mul(*fid, *gid, *step, c_name, v_arr);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_write_sol_integer_withgridid_mul_f, CG_IRIC_WRITE_SOL_INTEGER_WITHGRIDID_MUL_F) (int* fid, int* gid, STR_PSTR(name), int* v_arr, int *ier STR_PLEN(name)) {

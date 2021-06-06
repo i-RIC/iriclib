@@ -205,10 +205,10 @@ def readSolution(fid):
 
         # Vertex solutions
 
-        real_sol = iric.cg_iRIC_Read_Sol_Real(S, "Depth")
-        msg = "cg_iRIC_Read_Sol_Real() real_sol[0] == {0}".format(S - 1)
+        real_sol = iric.cg_iRIC_Read_Sol_Node_Real(S, "Depth")
+        msg = "cg_iRIC_Read_Sol_Node_Real() real_sol[0] == {0}".format(S - 1)
         util.verify_log(msg, real_sol[0] == S - 1)
-        msg = "cg_iRIC_Read_Sol_Real() real_sol[{0}] == {1}".format(real_sol.size - 1, S - 1)
+        msg = "cg_iRIC_Read_Sol_Node_Real() real_sol[{0}] == {1}".format(real_sol.size - 1, S - 1)
         util.verify_log(msg, real_sol[real_sol.size - 1] == S - 1)
 
         int_sol = iric.cg_iRIC_Read_Sol_Node_Integer(S, "IBC")

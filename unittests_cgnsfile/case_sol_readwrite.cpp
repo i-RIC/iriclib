@@ -376,11 +376,11 @@ void readSolution(int fid)
 
 		// Vertex solutions
 
-		ier = cg_iRIC_Read_Sol_Real_Mul(fid, S, "Depth", real_sol.data());
-		VERIFY_LOG("cg_iRIC_Read_Sol_Real_Mul() ier == 0", ier == 0);
-		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[0] == %g", (double)(S - 1));
+		ier = cg_iRIC_Read_Sol_Node_Real_Mul(fid, S, "Depth", real_sol.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Node_Real_Mul() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Node_Real_Mul() real_sol[0] == %g", (double)(S - 1));
 		VERIFY_LOG(buffer, real_sol[0] == (double)(S - 1));
-		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[%lu] == %g", real_sol.size() - 1, (double)(S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Node_Real_Mul() real_sol[%lu] == %g", real_sol.size() - 1, (double)(S - 1));
 		VERIFY_LOG(buffer, real_sol[real_sol.size()-1] == (double)(S - 1));
 
 		ier = cg_iRIC_Read_Sol_Node_Integer_Mul(fid, S, "IBC", int_sol.data());
