@@ -20,10 +20,10 @@ void case_GridRead()
 	fs::copy("case_init_hdf5.cgn", "case_grid.cgn");
 
 	int fid;
-	int ier = cg_open("case_grid.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_grid.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_Init(fid);
 
@@ -118,10 +118,10 @@ void case_GridReadUnstructured()
 	fs::copy("case_unst_hdf5.cgn", "case_grid_unstructured.cgn");
 
 	int fid;
-	int ier = cg_open("case_grid_unstructured.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_grid_unstructured.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_Init(fid);
 
@@ -160,10 +160,10 @@ void case_GridReadFunc()
 	fs::copy("case_gridfunc.cgn", "case_gridreadfunc.cgn");
 
 	int fid;
-	int ier = cg_open("case_gridreadfunc.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_gridreadfunc.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_Init(fid);
 
@@ -214,10 +214,10 @@ void case_GridWrite()
 	fs::copy("case_nogrid_hdf5.cgn", "case_gridwrite1d.cgn");
 
 	int fid;
-	int ier = cg_open("case_gridwrite1d.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_gridwrite1d.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_Init(fid);
 
@@ -237,9 +237,9 @@ void case_GridWrite()
 
 	cg_close(fid);
 
-	ier = cg_open("case_gridwrite1d.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	ier = cg_iRIC_Open("case_gridwrite1d.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	/*
 	ier = cg_goto(fid, 2, "iRICZone", 0, "GridCoordinates", 0, NULL);
@@ -268,10 +268,10 @@ void case_GridWrite()
 
 	fs::copy("case_nogrid_hdf5.cgn", "case_gridwrite2d.cgn");
 
-	ier = cg_open("case_gridwrite2d.cgn", CG_MODE_MODIFY, &fid);
+	ier = cg_iRIC_Open("case_gridwrite2d.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_Init(fid);
 
@@ -328,9 +328,9 @@ void case_GridWrite()
 
 	cg_close(fid);
 
-	ier = cg_open("case_gridwrite2d.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	ier = cg_iRIC_Open("case_gridwrite2d.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	/*
 	cgsize_t size[9];
@@ -405,10 +405,10 @@ void case_GridWrite()
 
 	fs::copy("case_nogrid_hdf5.cgn", "case_gridwrite3d.cgn");
 
-	ier = cg_open("case_gridwrite3d.cgn", CG_MODE_MODIFY, &fid);
+	ier = cg_iRIC_Open("case_gridwrite3d.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_Init(fid);
 
@@ -433,9 +433,9 @@ void case_GridWrite()
 
 	cg_close(fid);
 
-	ier = cg_open("case_gridwrite3d.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	ier = cg_iRIC_Open("case_gridwrite3d.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	/*
 	ier = cg_zone_read(fid, 2, 1, name, size);

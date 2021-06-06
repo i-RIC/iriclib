@@ -18,9 +18,9 @@ extern "C" {
 void case_read_adf()
 {
 	int fid;
-	int ier = cg_open("case_read_adf.cgn", CG_MODE_MODIFY, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	int ier = cg_iRIC_Open("case_read_adf.cgn", IRIC_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_InitRead(fid);
 	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
@@ -37,9 +37,9 @@ void case_read_adf()
 void case_read_hdf5()
 {
 	int fid;
-	int ier = cg_open("case_read_hdf5.cgn", CG_MODE_MODIFY, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	int ier = cg_iRIC_Open("case_read_hdf5.cgn", IRIC_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_InitRead(fid);
 	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
@@ -56,9 +56,9 @@ void case_read_hdf5()
 void case_read_adf_no_results()
 {
 	int fid;
-	int ier = cg_open("case_read_adf_no_sols.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == CG_OK", ier == CG_OK);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	int ier = cg_iRIC_Open("case_read_adf_no_sols.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == CG_OK", ier == CG_OK);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 
 	ier = cg_iRIC_InitRead(fid);
@@ -96,9 +96,9 @@ void case_read_adf_no_results()
 void case_read_hdf5_no_results()
 {
 	int fid;
-	int ier = cg_open("case_read_hdf5_no_sols.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == CG_OK", ier == CG_OK);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	int ier = cg_iRIC_Open("case_read_hdf5_no_sols.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == CG_OK", ier == CG_OK);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 
 	ier = cg_iRIC_InitRead(fid);

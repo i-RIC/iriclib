@@ -21,10 +21,10 @@ void case_BcRead()
 	fs::copy("case_init_hdf5.cgn", "case_bc.cgn");
 
 	int fid;
-	int ier = cg_open("case_bc.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_bc.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_Init(fid);
 
@@ -194,9 +194,9 @@ void case_BcWrite()
 	int fid;
 	int fid_wrong = 9999;
 
-	int ier = cg_open("case_bcwrite.cgn", CG_MODE_MODIFY, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	int ier = cg_iRIC_Open("case_bcwrite.cgn", IRIC_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_Init(fid);
 	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);

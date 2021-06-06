@@ -8,8 +8,8 @@ from . import util
 def case_GridRead():
     shutil.copy("data/case_init_hdf5.cgn", "data/case_grid.cgn")
 
-    fid = iric.cg_open("data/case_grid.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_grid.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_Init(fid)
 
@@ -61,8 +61,8 @@ def case_GridRead():
 def case_GridReadUnstructured():
     shutil.copy("data/case_unst_hdf5.cgn", "data/case_grid_unstructured.cgn")
 
-    fid = iric.cg_open("data/case_grid_unstructured.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_grid_unstructured.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_Init(fid)
 
@@ -92,8 +92,8 @@ def case_GridReadUnstructured():
 def case_GridReadFunc():
     shutil.copy("data/case_gridfunc.cgn", "data/case_gridreadfunc.cgn")
 
-    fid = iric.cg_open("data/case_gridreadfunc.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_gridreadfunc.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_Init(fid)
 
@@ -116,8 +116,8 @@ def case_GridReadFunc():
 def case_GridWrite():
     shutil.copy("data/case_nogrid_hdf5.cgn", "data/case_gridwrite1d.cgn")
 
-    fid = iric.cg_open("data/case_gridwrite1d.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_gridwrite1d.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     try:
         iric.cg_iRIC_Init(fid)
@@ -136,9 +136,9 @@ def case_GridWrite():
     iric.cg_close(fid)
 
     """
-    ier, fid = iric.cg_open("case_gridwrite1d.cgn", iric.CG_MODE_READ)
-    util.verify_log("cg_open() ier == 0", ier == 0)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    ier, fid = iric.cg_iRIC_Open("case_gridwrite1d.cgn", iric.IRIC_MODE_READ)
+    util.verify_log("cg_iRIC_Open() ier == 0", ier == 0)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     ier = iric.cg_goto(fid, 2, "iRICZone", 0, "GridCoordinates", 0, NULL)
     util.verify_log("cg_goto() ier == 0", ier == 0)
@@ -166,8 +166,8 @@ def case_GridWrite():
 
     shutil.copy("data/case_nogrid_hdf5.cgn", "data/case_gridwrite2d.cgn")
 
-    fid = iric.cg_open("data/case_gridwrite2d.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_gridwrite2d.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     try:
         iric.cg_iRIC_Init(fid)
@@ -216,9 +216,9 @@ def case_GridWrite():
     iric.cg_close(fid)
 
     """
-    ier = cg_open("case_gridwrite2d.cgn", CG_MODE_READ, &fid)
-    util.verify_log("cg_open() ier == 0", ier == 0)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    ier = cg_iRIC_Open("case_gridwrite2d.cgn", IRIC_MODE_READ, &fid)
+    util.verify_log("cg_iRIC_Open() ier == 0", ier == 0)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     cgsize_t size[9]
     ier = cg_zone_read(fid, 1, 1, name, size)
@@ -292,9 +292,9 @@ def case_GridWrite():
 
     shutil.copy("data/case_nogrid_hdf5.cgn", "data/case_gridwrite3d.cgn")
 
-    fid = iric.cg_open("data/case_gridwrite3d.cgn", iric.CG_MODE_MODIFY)
+    fid = iric.cg_iRIC_Open("data/case_gridwrite3d.cgn", iric.IRIC_MODE_MODIFY)
 
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     
     try:
@@ -324,9 +324,9 @@ def case_GridWrite():
     iric.cg_close(fid)
 
     """
-    ier = cg_open("case_gridwrite3d.cgn", CG_MODE_READ, &fid)
-    util.verify_log("cg_open() ier == 0", ier == 0)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    ier = cg_iRIC_Open("case_gridwrite3d.cgn", IRIC_MODE_READ, &fid)
+    util.verify_log("cg_iRIC_Open() ier == 0", ier == 0)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     ier = cg_zone_read(fid, 2, 1, name, size)
     util.verify_log("cg_zone_read() ier == 0", ier == 0)

@@ -1,7 +1,3 @@
-#define CG_MODE_READ	0
-#define CG_MODE_WRITE	1
-#define CG_MODE_MODIFY  2
-
 #define CG_OK 0
 
 #ifndef CGNSDLL
@@ -20,7 +16,6 @@
 extern "C" {
 #endif
 
-CGNSDLL int cg_open(const char * filename, int mode, int *fn);
 CGNSDLL int cg_close(int fn);
 
 #ifdef __cplusplus

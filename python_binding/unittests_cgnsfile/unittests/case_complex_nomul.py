@@ -7,8 +7,8 @@ from . import util
 
 def case_Complex():
     shutil.copy('data/case_init_hdf5.cgn', 'data/case_complex.cgn')
-    fid = iric.cg_open("data/case_complex.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_complex.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_Init(fid)
 
@@ -73,8 +73,8 @@ def case_Complex():
 
     iric.cg_close(fid)
 
-    fid = iric.cg_open("data/case_complex.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_complex.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_Init(fid)
 

@@ -40,7 +40,6 @@ private:
 	std::vector<double>* m_value;
 };
 
-int cg_open(const char* name, int mode, int* OUTPUT);
 int cg_close(int fin);
 
 // from iriclib_bc.h

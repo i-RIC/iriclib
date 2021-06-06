@@ -9,8 +9,8 @@ def case_CalcCondRead():
     util.remove("data/case_cc.cgn")
     shutil.copy("data/case_init_hdf5.cgn", "data/case_cc.cgn")
 
-    fid = iric.cg_open("data/case_cc.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_cc.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_Init(fid)
 
@@ -85,7 +85,7 @@ def case_CalcCondRead():
 def case_CalcCondWrite():
     shutil.copy('data/case_init_hdf5.cgn', 'data/case_ccwrite.cgn')
 
-    fid = iric.cg_open("data/case_ccwrite.cgn", iric.CG_MODE_MODIFY)
+    fid = iric.cg_iRIC_Open("data/case_ccwrite.cgn", iric.IRIC_MODE_MODIFY)
 
     fid_wrong = 9999
 

@@ -284,8 +284,8 @@ def case_SolWriteStd(cgnsName):
 
     # Test Writing
 
-    fid = iric.cg_open("data/case_solstd.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_solstd.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_Init(fid)
 
@@ -295,8 +295,8 @@ def case_SolWriteStd(cgnsName):
 
     # Test Reading with times
 
-    fid = iric.cg_open("data/case_solstd.cgn", iric.CG_MODE_READ)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_solstd.cgn", iric.IRIC_MODE_READ)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_InitRead(fid)
 
@@ -310,8 +310,8 @@ def case_SolWriteStd(cgnsName):
 
     shutil.copy(cgnsName, "data/case_solstd3d.cgn")
 
-    fid = iric.cg_open("data/case_solstd3d.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_solstd3d.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_Init(fid)
 
@@ -325,8 +325,8 @@ def case_SolWriteStd(cgnsName):
 
     shutil.copy(cgnsName, "data/case_solstditer.cgn")
 
-    fid = iric.cg_open("data/case_solstditer.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_solstditer.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_Init(fid)
 
@@ -336,8 +336,8 @@ def case_SolWriteStd(cgnsName):
 
     # Test Reading Standard (IRIC_OPTION_STDSOLUTION) with iterations
 
-    fid = iric.cg_open("data/case_solstditer.cgn", iric.CG_MODE_READ)
-    util.verify_log("cg_open() fid != 0", fid != 0)
+    fid = iric.cg_iRIC_Open("data/case_solstditer.cgn", iric.IRIC_MODE_READ)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     iric.cg_iRIC_InitRead(fid)
 

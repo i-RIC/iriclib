@@ -15,10 +15,10 @@ void case_InitCC()
 	fs::copy("case_nogrid_hdf5.cgn", "case_initcc.cgn");
 
 	int fid;
-	int ier = cg_open("case_initcc.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_initcc.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	ier = cg_iRIC_Init(fid);
 
