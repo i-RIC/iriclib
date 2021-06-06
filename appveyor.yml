@@ -36,7 +36,9 @@ init:
   # Need to set version numbers for cache:
   - echo %cd%
   - echo %TEMP%
-  - pushd %TEMP%
+  # - pushd %TEMP%
+  - set _cd = %cd%
+  - cd %TEMP%
   - echo %cd%
   - curl -L -O https://raw.githubusercontent.com/i-RIC/iricdev/master/versions.cmd
   - echo %HDF5_VER%
@@ -48,7 +50,8 @@ init:
   - echo %HDF5_VER%
   - echo %CGNSLIB_VER%
   - echo %cd%
-  - popd
+  # - popd
+  - cd %_cd%
   - echo %cd%
   - echo %HDF5_VER%
   - echo %CGNSLIB_VER%
