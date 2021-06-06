@@ -23,10 +23,6 @@ image:
 # called before clone
 init:
   - echo start init
-  - echo %cd%
-  - dir
-  - dir ..
-  - dir ..\..
   - echo %APPVEYOR_BUILD_WORKER_IMAGE%
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" (set GENERATOR="Visual Studio 15 2017 Win64" && set SGEN=vs2017-x64)
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" (set GENERATOR="Visual Studio 14 2015 Win64" && set SGEN=vs2015-x64)
@@ -39,9 +35,14 @@ init:
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
   # Need to set version numbers for cache:
-  - curl -L -O https://raw.githubusercontent.com/i-RIC/iricdev/master/versions.cmd
+  - cd C:\iricdev
+  - curl -L -O https://github.com/i-RIC/iricdev/archive/master.zip
+  - 7z e master.zip
+  - rd iricdev-master
+  - del master.zip
+  - unix2dos *
   - call versions.cmd
-  - del versions.cmd
+  - cd C:\iricdev\lib\src\iriclib-git
   - if "%CGNSLIB_VER%"=="3.2.1" (set CGNSLIB_VER=%CGNSLIB_VER%-patch1)
   - echo %HDF5_VER%
   - echo %CGNSLIB_VER%
@@ -57,7 +58,7 @@ init:
 clone_folder: C:\iricdev\lib\src\iriclib-git
 
 configuration:
-  - Debug
+#  - Debug
   - Release
 
 matrix:
@@ -70,13 +71,13 @@ matrix:
 before_build:
   - echo start before_build
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
-  - cd C:\iricdev
-  - curl -L -O https://github.com/i-RIC/iricdev/archive/master.zip
-  - 7z e master.zip
-  - rd iricdev-master
-  - del master.zip
+  # - cd C:\iricdev
+  # - curl -L -O https://github.com/i-RIC/iricdev/archive/master.zip
+  # - 7z e master.zip
+  # - rd iricdev-master
+  # - del master.zip
   # master.zip files have unix file endings
-  - unix2dos *
+  # - unix2dos *
   - copy appveyor_programs.prop programs.prop
   - tree lib\install 
   # build C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%
