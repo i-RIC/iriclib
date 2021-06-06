@@ -422,8 +422,8 @@ def cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(fid, gid):
 	_checkErrorCode(ier)
 	return isize, jsize
 
-def cg_iRIC_GotoGridCoord3d_WithGridId_Mul(fid, gid):
-	ier, isize, jsize, ksize = _iric.cg_iRIC_GotoGridCoord3d_WithGridId_Mul(fid, gid)
+def cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(fid, gid):
+	ier, isize, jsize, ksize = _iric.cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(fid, gid)
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 
@@ -697,8 +697,8 @@ def cg_iRIC_Read_Grid2d_Str_Size_WithGridId(gid):
 	_checkErrorCode(ier)
 	return isize, jsize
 
-def cg_iRIC_GotoGridCoord3d_WithGridId(gid):
-	ier, isize, jsize, ksize = _iric.cg_iRIC_GotoGridCoord3d_WithGridId(gid)
+def cg_iRIC_Read_Grid3d_Str_Size_WithGridId(gid):
+	ier, isize, jsize, ksize = _iric.cg_iRIC_Read_Grid3d_Str_Size_WithGridId(gid)
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 
@@ -861,8 +861,8 @@ def cg_iRIC_Read_Grid2d_Str_Size():
 	_checkErrorCode(ier)
 	return isize, jsize
 
-def cg_iRIC_GotoGridCoord3d():
-	ier, isize, jsize, ksize = _iric.cg_iRIC_GotoGridCoord3d()
+def cg_iRIC_Read_Grid3d_Str_Size():
+	ier, isize, jsize, ksize = _iric.cg_iRIC_Read_Grid3d_Str_Size()
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 
@@ -1203,8 +1203,8 @@ def cg_iRIC_Read_Grid2d_Str_Size_Mul(fid):
 	_checkErrorCode(ier)
 	return isize, jsize
 
-def cg_iRIC_GotoGridCoord3d_Mul(fid):
-	ier, isize, jsize, ksize = _iric.cg_iRIC_GotoGridCoord3d_Mul(fid)
+def cg_iRIC_Read_Grid3d_Str_Size_Mul(fid):
+	ier, isize, jsize, ksize = _iric.cg_iRIC_Read_Grid3d_Str_Size_Mul(fid)
 	_checkErrorCode(ier)
 	return isize, jsize, ksize
 

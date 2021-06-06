@@ -65,7 +65,7 @@ int cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, d
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_GotoGridCoord3d_WithGridId_Mul(int fid, int gid, int* isize, int* jsize, int* ksize)
+int cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, int* jsize, int* ksize)
 {
 	H5CgnsZone* z;
 	int ier = _iric_get_zone(fid, gid, &z, __func__);

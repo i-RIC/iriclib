@@ -109,7 +109,7 @@ int cg_iRIC_Read_Geo_Filename_Mul(int fid, const char* name, int geoid, char* st
 
 // from iriclib_grid.h
 int cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(int fid, int gid, int* OUTPUT, int* OUTPUT);
-int cg_iRIC_GotoGridCoord3d_WithGridId_Mul(int fid, int gid, int* OUTPUT, int* OUTPUT, int* OUTPUT);
+int cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(int fid, int gid, int* OUTPUT, int* OUTPUT, int* OUTPUT);
 int cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(int fid, int gid, int* OUTPUT);
 int cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(int fid, int gid, int* OUTPUT);
 int cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(int fid, int gid, int* OUTPUT);
@@ -174,7 +174,7 @@ int cg_iRIC_Write_Complex_FunctionalWithName_String_WithBaseId(int bid, const ch
 int cg_iRIC_Read_Geo_Count(const char* name, int* OUTPUT);
 int cg_iRIC_Read_Geo_Filename(const char* name, int geoid, char* strvalue, int* OUTPUT);
 int cg_iRIC_Read_Grid2d_Str_Size_WithGridId(int gid, int* OUTPUT, int* OUTPUT);
-int cg_iRIC_GotoGridCoord3d_WithGridId(int gid, int* OUTPUT, int* OUTPUT, int* OUTPUT);
+int cg_iRIC_Read_Grid3d_Str_Size_WithGridId(int gid, int* OUTPUT, int* OUTPUT, int* OUTPUT);
 int cg_iRIC_GetTriangleElementsSize_WithGridId(int gid, int* OUTPUT);
 int cg_iRIC_GetTriangleElementsSize2_WithGridId(int gid, int* OUTPUT);
 int cg_iRIC_Read_Grid_NodeCount_WithGridId(int gid, int* OUTPUT);
@@ -209,7 +209,7 @@ int cg_iRIC_Write_BC_Real(const char* type, int num, const char* name, double va
 int cg_iRIC_Write_BC_String(const char* type, int num, const char* name, const char* value);
 int cg_iRIC_Write_BC_FunctionalWithName_String(const char* type, int num, const char* name, const char* paramname, const char* value);
 int cg_iRIC_Read_Grid2d_Str_Size(int* OUTPUT, int* OUTPUT);
-int cg_iRIC_GotoGridCoord3d(int* OUTPUT, int* OUTPUT, int* OUTPUT);
+int cg_iRIC_Read_Grid3d_Str_Size(int* OUTPUT, int* OUTPUT, int* OUTPUT);
 int cg_iRIC_GetTriangleElementsSize(int* OUTPUT);
 int cg_iRIC_GetTriangleElementsSize2(int* OUTPUT);
 int cg_iRIC_Read_Grid_NodeCount(int* OUTPUT);
@@ -288,7 +288,7 @@ int cg_iRIC_Write_BC_Real_Mul(int fid, const char* type, int num, const char* na
 int cg_iRIC_Write_BC_String_Mul(int fid, const char* type, int num, const char* name, const char* value);
 int cg_iRIC_Write_BC_FunctionalWithName_String_Mul(int fid, const char* type, int num, const char* name, const char* paramname, const char* value);
 int cg_iRIC_Read_Grid2d_Str_Size_Mul(int fid, int* OUTPUT, int* OUTPUT);
-int cg_iRIC_GotoGridCoord3d_Mul(int fid, int* OUTPUT, int* OUTPUT, int* OUTPUT);
+int cg_iRIC_Read_Grid3d_Str_Size_Mul(int fid, int* OUTPUT, int* OUTPUT, int* OUTPUT);
 int cg_iRIC_GetTriangleElementsSize_Mul(int fid, int* OUTPUT);
 int cg_iRIC_GetTriangleElementsSize2_Mul(int fid, int* OUTPUT);
 int cg_iRIC_Read_Grid_NodeCount_Mul(int fid, int* OUTPUT);

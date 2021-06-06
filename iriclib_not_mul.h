@@ -87,7 +87,7 @@ int IRICLIBDLL cg_iRIC_Read_Geo_Filename(const char* name, int geoid, char* strv
 // from iriclib_grid.h
 int IRICLIBDLL cg_iRIC_Read_Grid2d_Str_Size_WithGridId(int gid, int* isize, int* jsize);
 int IRICLIBDLL cg_iRIC_Read_Grid2d_Coords_WithGridId(int gid, double* x_arr, double* y_arr);
-int IRICLIBDLL cg_iRIC_GotoGridCoord3d_WithGridId(int gid, int* isize, int* jsize, int* ksize);
+int IRICLIBDLL cg_iRIC_Read_Grid3d_Str_Size_WithGridId(int gid, int* isize, int* jsize, int* ksize);
 int IRICLIBDLL cg_iRIC_GetGridCoord3d_WithGridId(int gid, double* x_arr, double* y_arr, double* z_arr);
 int IRICLIBDLL cg_iRIC_GetTriangleElementsSize_WithGridId(int gid, int* size);
 int IRICLIBDLL cg_iRIC_GetTriangleElementsSize2_WithGridId(int gid, int* size);
@@ -172,7 +172,7 @@ int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Node(const char* groupname, int* v_arr
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Cell(const char* groupname, int* v_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid2d_Str_Size(int* isize, int* jsize);
 int IRICLIBDLL cg_iRIC_Read_Grid2d_Coords(double* x_arr, double* y_arr);
-int IRICLIBDLL cg_iRIC_GotoGridCoord3d(int* isize, int* jsize, int* ksize);
+int IRICLIBDLL cg_iRIC_Read_Grid3d_Str_Size(int* isize, int* jsize, int* ksize);
 int IRICLIBDLL cg_iRIC_GetGridCoord3d(double* x_arr, double* y_arr, double* z_arr);
 int IRICLIBDLL cg_iRIC_GetTriangleElementsSize(int* size);
 int IRICLIBDLL cg_iRIC_GetTriangleElementsSize2(int* size);
