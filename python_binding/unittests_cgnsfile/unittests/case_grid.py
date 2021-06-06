@@ -17,7 +17,7 @@ def case_GridRead():
     util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 11", isize == 11)
     util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 11", jsize == 11)
 
-    x, y = iric.cg_iRIC_GetGridCoord2d_Mul(fid)
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords_Mul(fid)
 
     doubleArr = iric.cg_iRIC_Read_Grid_Real_Node_Mul(fid, "node_real")
     util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[0] == 2", doubleArr[0] == 2)
@@ -72,7 +72,7 @@ def case_GridReadUnstructured():
     node_count = iric.cg_iRIC_Read_Grid_NodeCount_Mul(fid)
     util.verify_log("cg_iRIC_Read_Grid_NodeCount_Mul() node_count == 5", node_count == 5)
 
-    x, y = iric.cg_iRIC_GetGridCoord2d_Mul(fid)
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords_Mul(fid)
     elems = iric.cg_iRIC_GetTriangleElements_Mul(fid)
 
     util.verify_log("cg_iRIC_GetTriangleElements_Mul() elems[0] == 1", elems[0] == 1)
@@ -101,7 +101,7 @@ def case_GridReadFunc():
     util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 15", isize == 15)
     util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 15", jsize == 15)
 
-    x, y = iric.cg_iRIC_GetGridCoord2d_Mul(fid)
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords_Mul(fid)
 
     timeArr = iric.cg_iRIC_Read_Grid_FunctionalDimension_Real_Mul(fid, "Xrain", "Time")
     timeArr = iric.cg_iRIC_Read_Grid_FunctionalTime_Mul(fid, "Xrain")

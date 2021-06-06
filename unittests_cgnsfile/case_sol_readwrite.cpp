@@ -64,7 +64,7 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
-	ier = cg_iRIC_GetGridCoord2d_Mul(*fid, x.data(), y.data());
+	ier = cg_iRIC_Read_Grid2d_Coords_Mul(*fid, x.data(), y.data());
 
 	vx.assign(isize * jsize, 1);
 	vy.assign(isize * jsize, 0.3);
@@ -226,7 +226,7 @@ void writeSolution3d(const char* filename, int* fid)
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
 	z.assign(isize * jsize, 0);
-	ier = cg_iRIC_GetGridCoord2d_Mul(*fid, x.data(), y.data());
+	ier = cg_iRIC_Read_Grid2d_Coords_Mul(*fid, x.data(), y.data());
 
 	ier = cg_iRIC_WriteGridCoord3d_Mul(*fid, isize, jsize, 1, x.data(), y.data(), z.data());
 	VERIFY_LOG("cg_iRIC_WriteGridCoord3d_Mul() ier == 0", ier == 0);

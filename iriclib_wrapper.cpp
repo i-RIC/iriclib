@@ -125,9 +125,9 @@ int iRIC_Geo_RiverSurvey_Read_Altitudes(int id, int pointid, RealArrayContainer&
 // from iriclib_geoutil.h
 
 // from iriclib_grid.h
-int cg_iRIC_GetGridCoord2d_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
+int cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
 {
-	return cg_iRIC_GetGridCoord2d_WithGridId_Mul(fid, gid, x_arr.pointer(), y_arr.pointer());
+	return cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(fid, gid, x_arr.pointer(), y_arr.pointer());
 }
 
 int cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
@@ -327,9 +327,9 @@ int cg_iRIC_Write_Grid_Complex_Cell_WithGridId(int gid, const char* groupname, I
 	return cg_iRIC_Write_Grid_Complex_Cell_WithGridId(gid, groupname, v_arr.pointer());
 }
 
-int cg_iRIC_GetGridCoord2d_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
+int cg_iRIC_Read_Grid2d_Coords_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
 {
-	return cg_iRIC_GetGridCoord2d_WithGridId(gid, x_arr.pointer(), y_arr.pointer());
+	return cg_iRIC_Read_Grid2d_Coords_WithGridId(gid, x_arr.pointer(), y_arr.pointer());
 }
 
 int cg_iRIC_GetGridCoord3d_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
@@ -507,9 +507,9 @@ int cg_iRIC_Write_Grid_Complex_Cell(const char* groupname, IntArrayContainer& v_
 	return cg_iRIC_Write_Grid_Complex_Cell(groupname, v_arr.pointer());
 }
 
-int cg_iRIC_GetGridCoord2d(RealArrayContainer& x_arr, RealArrayContainer& y_arr)
+int cg_iRIC_Read_Grid2d_Coords(RealArrayContainer& x_arr, RealArrayContainer& y_arr)
 {
-	return cg_iRIC_GetGridCoord2d(x_arr.pointer(), y_arr.pointer());
+	return cg_iRIC_Read_Grid2d_Coords(x_arr.pointer(), y_arr.pointer());
 }
 
 int cg_iRIC_GetGridCoord3d(RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)
@@ -1111,9 +1111,9 @@ int cg_iRIC_Write_Grid_Complex_Cell_Mul(int fid, const char* groupname, IntArray
 	return cg_iRIC_Write_Grid_Complex_Cell_Mul(fid, groupname, v_arr.pointer());
 }
 
-int cg_iRIC_GetGridCoord2d_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
+int cg_iRIC_Read_Grid2d_Coords_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
 {
-	return cg_iRIC_GetGridCoord2d_Mul(fid, x_arr.pointer(), y_arr.pointer());
+	return cg_iRIC_Read_Grid2d_Coords_Mul(fid, x_arr.pointer(), y_arr.pointer());
 }
 
 int cg_iRIC_GetGridCoord3d_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr)

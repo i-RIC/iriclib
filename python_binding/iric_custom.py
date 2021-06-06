@@ -1594,11 +1594,11 @@ def iRIC_Geo_RiverSurvey_Read_Altitudes(id, pointid):
 	_checkErrorCode(ier)
 	return position.get(), height.get(), active.get()
 
-def cg_iRIC_GetGridCoord2d_WithGridId_Mul(fid, gid):
+def cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(fid, gid):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(fid, gid)
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_GetGridCoord2d_WithGridId_Mul(fid, gid, x, y)
+	ier = _iric.cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(fid, gid, x, y)
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
@@ -1878,11 +1878,11 @@ def cg_iRIC_Write_Grid_Complex_Cell_WithGridId(gid, groupname, v_arr):
 	ier = _iric.cg_iRIC_Write_Grid_Complex_Cell_WithGridId(gid, groupname, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_GetGridCoord2d_WithGridId(gid):
+def cg_iRIC_Read_Grid2d_Coords_WithGridId(gid):
 	size = cg_iRIC_Read_Grid_NodeCount_WithGridId(gid)
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_GetGridCoord2d_WithGridId(gid, x, y)
+	ier = _iric.cg_iRIC_Read_Grid2d_Coords_WithGridId(gid, x, y)
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
@@ -2133,11 +2133,11 @@ def cg_iRIC_Write_Grid_Complex_Cell(groupname, v_arr):
 	ier = _iric.cg_iRIC_Write_Grid_Complex_Cell(groupname, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_GetGridCoord2d():
+def cg_iRIC_Read_Grid2d_Coords():
 	size = cg_iRIC_Read_Grid_NodeCount()
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_GetGridCoord2d(x, y)
+	ier = _iric.cg_iRIC_Read_Grid2d_Coords(x, y)
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 
@@ -2989,11 +2989,11 @@ def cg_iRIC_Write_Grid_Complex_Cell_Mul(fid, groupname, v_arr):
 	ier = _iric.cg_iRIC_Write_Grid_Complex_Cell_Mul(fid, groupname, v)
 	_checkErrorCode(ier)
 
-def cg_iRIC_GetGridCoord2d_Mul(fid):
+def cg_iRIC_Read_Grid2d_Coords_Mul(fid):
 	size = cg_iRIC_Read_Grid_NodeCount_Mul(fid)
 	x = RealArrayContainer(size)
 	y = RealArrayContainer(size)
-	ier = _iric.cg_iRIC_GetGridCoord2d_Mul(fid, x, y)
+	ier = _iric.cg_iRIC_Read_Grid2d_Coords_Mul(fid, x, y)
 	_checkErrorCode(ier)
 	return x.get(), y.get()
 

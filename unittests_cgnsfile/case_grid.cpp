@@ -57,7 +57,7 @@ void case_GridRead()
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
 
-	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
+	ier = cg_iRIC_Read_Grid2d_Coords_Mul(fid, x.data(), y.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	std::vector<double> doubleArr;
@@ -144,7 +144,7 @@ void case_GridReadUnstructured()
 	y.assign(count, 0);
 	elems.assign(elem_size * 3, 0);
 
-	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
+	ier = cg_iRIC_Read_Grid2d_Coords_Mul(fid, x.data(), y.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	ier = cg_iRIC_GetTriangleElements_Mul(fid, elems.data());
@@ -180,7 +180,7 @@ void case_GridReadFunc()
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
 
-	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
+	ier = cg_iRIC_Read_Grid2d_Coords_Mul(fid, x.data(), y.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size_Mul() ier == 0", ier == 0);
 
 	int time_count;

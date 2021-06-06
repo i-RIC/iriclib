@@ -28,7 +28,7 @@ def writeSolution(filename, fid, iterMode):
                 jface_is_edge[j * (isize - 1) + i] = 2
                 jface_is_edge_reals[j * (isize - 1) + i] = .2
 
-    x, y = iric.cg_iRIC_GetGridCoord2d()
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords()
 
     vx = np.full(isize * jsize, 1, dtype=np.float64)
     vy = np.full(isize * jsize, 0.3, dtype=np.float64)
@@ -127,7 +127,7 @@ def writeSolution(filename, fid, iterMode):
 def writeSolution3d(filename, fid):
     isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size()
 
-    x, y = iric.cg_iRIC_GetGridCoord2d()
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords()
     z = np.zeros(isize * jsize, dtype=np.float64)
 
     iric.cg_iRIC_WriteGridCoord3d(isize, jsize, 1, x, y, z)

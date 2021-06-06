@@ -296,13 +296,13 @@ int cg_iRIC_Read_Grid2d_Str_Size_Mul(int fid, int* isize, int* jsize)
   return cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(fid, gid, isize, jsize);
 }
 
-int cg_iRIC_GetGridCoord2d_Mul(int fid, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Grid2d_Coords_Mul(int fid, double* x_arr, double* y_arr)
 {
   int gid;
   int ier = getlastGridId(fid, &gid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_GetGridCoord2d_WithGridId_Mul(fid, gid, x_arr, y_arr);
+  return cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(fid, gid, x_arr, y_arr);
 }
 
 int cg_iRIC_GotoGridCoord3d_Mul(int fid, int* isize, int* jsize, int* ksize)

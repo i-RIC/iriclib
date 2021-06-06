@@ -643,13 +643,13 @@ int cg_iRIC_Read_Grid2d_Str_Size_WithGridId(int gid, int* isize, int* jsize)
   return cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(fid, gid, isize, jsize);
 }
 
-int cg_iRIC_GetGridCoord2d_WithGridId(int gid, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Grid2d_Coords_WithGridId(int gid, double* x_arr, double* y_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_GetGridCoord2d_WithGridId_Mul(fid, gid, x_arr, y_arr);
+  return cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(fid, gid, x_arr, y_arr);
 }
 
 int cg_iRIC_GotoGridCoord3d_WithGridId(int gid, int* isize, int* jsize, int* ksize)
@@ -1375,13 +1375,13 @@ int cg_iRIC_Read_Grid2d_Str_Size(int* isize, int* jsize)
   return cg_iRIC_Read_Grid2d_Str_Size_Mul(fid, isize, jsize);
 }
 
-int cg_iRIC_GetGridCoord2d(double* x_arr, double* y_arr)
+int cg_iRIC_Read_Grid2d_Coords(double* x_arr, double* y_arr)
 {
   int fid;
   int ier = _iric_lastFileId(&fid);
   RETURN_IF_ERR;
 
-  return cg_iRIC_GetGridCoord2d_Mul(fid, x_arr, y_arr);
+  return cg_iRIC_Read_Grid2d_Coords_Mul(fid, x_arr, y_arr);
 }
 
 int cg_iRIC_GotoGridCoord3d(int* isize, int* jsize, int* ksize)

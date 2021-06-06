@@ -39,7 +39,7 @@ int IRICLIBDLL iRIC_Geo_RiverSurvey_Read_Altitudes(int id, int pointid, RealArra
 // from iriclib_geoutil.h
 
 // from iriclib_grid.h
-int IRICLIBDLL cg_iRIC_GetGridCoord2d_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
+int IRICLIBDLL cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int IRICLIBDLL cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int IRICLIBDLL cg_iRIC_GetTriangleElements_WithGridId_Mul(int fid, int gid, IntArrayContainer& id_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, RealArrayContainer& v_arr);
@@ -81,7 +81,7 @@ int IRICLIBDLL cg_iRIC_Write_Complex_Functional_WithBaseId(int bid, const char* 
 int IRICLIBDLL cg_iRIC_Write_Complex_FunctionalWithName_WithBaseId(int bid, const char* groupname, int num, const char* name, const char* paramname, RealArrayContainer& v_arr);
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Node_WithGridId(int gid, const char* groupname, IntArrayContainer& v_arr);
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Cell_WithGridId(int gid, const char* groupname, IntArrayContainer& v_arr);
-int IRICLIBDLL cg_iRIC_GetGridCoord2d_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
+int IRICLIBDLL cg_iRIC_Read_Grid2d_Coords_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int IRICLIBDLL cg_iRIC_GetGridCoord3d_WithGridId(int gid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int IRICLIBDLL cg_iRIC_GetTriangleElements_WithGridId(int gid, IntArrayContainer& id_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_Real_Node_WithGridId(int gid, const char* name, RealArrayContainer& v_arr);
@@ -117,7 +117,7 @@ int IRICLIBDLL cg_iRIC_Read_Grid_Complex_Node(const char* groupname, IntArrayCon
 int IRICLIBDLL cg_iRIC_Read_Grid_Complex_Cell(const char* groupname, IntArrayContainer& v_arr);
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Node(const char* groupname, IntArrayContainer& v_arr);
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Cell(const char* groupname, IntArrayContainer& v_arr);
-int IRICLIBDLL cg_iRIC_GetGridCoord2d(RealArrayContainer& x_arr, RealArrayContainer& y_arr);
+int IRICLIBDLL cg_iRIC_Read_Grid2d_Coords(RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int IRICLIBDLL cg_iRIC_GetGridCoord3d(RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int IRICLIBDLL cg_iRIC_GetTriangleElements(IntArrayContainer& id_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_Real_Node(const char* name, RealArrayContainer& v_arr);
@@ -241,7 +241,7 @@ int IRICLIBDLL cg_iRIC_Read_Grid_Complex_Node_Mul(int fid, const char* groupname
 int IRICLIBDLL cg_iRIC_Read_Grid_Complex_Cell_Mul(int fid, const char* groupname, IntArrayContainer& v_arr);
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Node_Mul(int fid, const char* groupname, IntArrayContainer& v_arr);
 int IRICLIBDLL cg_iRIC_Write_Grid_Complex_Cell_Mul(int fid, const char* groupname, IntArrayContainer& v_arr);
-int IRICLIBDLL cg_iRIC_GetGridCoord2d_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
+int IRICLIBDLL cg_iRIC_Read_Grid2d_Coords_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int IRICLIBDLL cg_iRIC_GetGridCoord3d_Mul(int fid, RealArrayContainer& x_arr, RealArrayContainer& y_arr, RealArrayContainer& z_arr);
 int IRICLIBDLL cg_iRIC_GetTriangleElements_Mul(int fid, IntArrayContainer& id_arr);
 int IRICLIBDLL cg_iRIC_Read_Grid_Real_Node_Mul(int fid, const char* name, RealArrayContainer& v_arr);
