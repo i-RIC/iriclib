@@ -320,7 +320,7 @@ configure_package_config_file(iriclibConfig.cmake.in
 )
 
 write_basic_package_version_file("iriclibConfigVersion.cmake"
-  VERSION ${iriclib}
+  VERSION ${iriclib_VERSION}
   COMPATIBILITY SameMajorVersion
 )
 
