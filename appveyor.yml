@@ -73,12 +73,10 @@ matrix:
 before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd C:\iricdev
-  - tree /A lib\install
   # build C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%
   - msbuild /nologo /target:hdf5-build-%config% iricdev.proj
   # build C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%
   - msbuild /nologo /target:cgnslib-build-%config% iricdev.proj
-  - tree /A lib\install
 
 
 # build using cmake tools
@@ -86,7 +84,6 @@ build_script:
   - cd C:\iricdev
   - if "%Configuration%"=="Debug"   ( msbuild /nologo /target:iriclib-git-build-%config% iricdev.proj )
   - if "%Configuration%"=="Release" ( msbuild /nologo /target:appveyor-iriclib-artifacts iricdev.proj )
-  - tree /A lib\src
 
 
 after_build:
@@ -191,7 +188,6 @@ on_success:
 
   - ps: |
       if ($CommitAndPush) {
-        Write-Output 1
         # online_update urls
         $remote_url_iric         = "https://github.com/i-RIC/online_update.git"
         $remote_url_scharlton2   = "https://github.com/scharlton2/online_update.git"
@@ -213,14 +209,12 @@ on_success:
           $access_token = $env:kskinoue0612_online_update_access_token
         }
 
-        Write-Output 2
         Set-Location \ -ErrorAction Stop
         git clone -q --branch=master --depth 1 $remote_url online_update 2>&1 | Out-Null
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         Set-Location .\online_update -ErrorAction Stop
 
-        Write-Output 3
         if ($branch) {
           # create branch when remote is not "i-RIC/prepost-gui"
           # branches starting with '__' aren't automatically built by appveyor
@@ -240,7 +234,6 @@ on_success:
           $files=@('dev_src\packages\gui.prepost\data\definition.xml', `
                   'dev_src\packages\gui.prepost\meta\package.xml')
         }
-        Write-Output 4
         $v[3] = 1 + $v[3]
         $env:VERSION = $v -join "."
         $tokyo_tz = [System.TimeZoneInfo]::FindSystemTimeZoneById("Tokyo Standard Time")
@@ -260,9 +253,8 @@ on_success:
         }
 
         if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
-          Write-Output 5
           # distribute iriclib.dll
-          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\prod_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\bin\iriclib.dll \online_update\prod_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
           # distribute SDK
           # For C
           Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.lib \online_update\prod_src\packages\gui.prepost\data\sdk\c\iriclib_x64.lib -ErrorAction Stop
@@ -279,9 +271,8 @@ on_success:
           if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
         }
         if ($env:APPVEYOR_REPO_BRANCH -eq "develop") {
-          Write-Output 6
           # distribute iriclib.dll
-          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\dev_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\bin\iriclib.dll \online_update\dev_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
           # distribute SDK
           # For C
           Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.lib \online_update\dev_src\packages\gui.prepost\data\sdk\c\iriclib_x64.lib -ErrorAction Stop
@@ -335,5 +326,5 @@ on_success:
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         Write-Output "iriclib-github-sha1=`"$env:APPVEYOR_REPO_COMMIT`""
-        Get-FileHash C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll
+        Get-FileHash C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\bin\iriclib.dll
       }
