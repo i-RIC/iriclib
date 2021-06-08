@@ -1,5 +1,7 @@
 version: '{branch}-{build}'
 
+# commit messages containing [skip ci] or [skip appveyor] won't be built
+# see https://www.appveyor.com/docs/how-to/filtering-commits/
 skip_tags: true
 
 # To create: login to AppVeyor profile and select Account->Encrypt YAML
@@ -50,7 +52,7 @@ init:
   - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "develop") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
   - ps: Write-Output $UploadRelease
   # Only commit and push to master branch or debug-appveyor branch (for testing)
-  - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "develop") -OR ($env:APPVEYOR_REPO_BRANCH -eq "push_to_online_update")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
+  - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "develop")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
   - ps: Write-Output $CommitAndPush
 
 
@@ -71,12 +73,12 @@ matrix:
 before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd C:\iricdev
-  - tree lib\install 
+  - tree /A lib\install
   # build C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%
   - msbuild /nologo /target:hdf5-build-%config% iricdev.proj
   # build C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%
   - msbuild /nologo /target:cgnslib-build-%config% iricdev.proj
-  - tree lib\install 
+  - tree /A lib\install
 
 
 # build using cmake tools
@@ -186,10 +188,10 @@ on_success:
       }
 
   - ps: |
-      if ($CommitAndPush -AND $False) {
+      if ($CommitAndPush) {
         # online_update urls
-        $remote_url_iric = "https://github.com/i-RIC/online_update.git"
-        $remote_url_scharlton2 = "https://github.com/scharlton2/online_update.git"
+        $remote_url_iric         = "https://github.com/i-RIC/online_update.git"
+        $remote_url_scharlton2   = "https://github.com/scharlton2/online_update.git"
         $remote_url_kskinoue0612 = "https://github.com/kskinoue0612/online_update.git"
 
         $branch = $True
