@@ -1,5 +1,10 @@
 version: '{branch}-{build}'
 
+# Skip any branches that start with two underscores (__)
+branches:
+  except:
+    - /__.*/
+
 # commit messages containing [skip ci] or [skip appveyor] won't be built
 # see https://www.appveyor.com/docs/how-to/filtering-commits/
 skip_tags: true
@@ -97,6 +102,64 @@ cache:
   - C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config% -> C:\iricdev\build-cgnslib.cmake
 
 on_success:
+  - ps: |
+      if ($UploadRelease) {
+
+        # set current working directory
+        Set-Location C:\iricdev\lib\src\iriclib-git -ErrorAction Stop
+
+        # update CMakeLists.txt version number for iriclib
+        (Get-Content .\CMakeLists.txt) | Foreach-Object {
+          if ($_ -match '  VERSION (?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$') {
+            $patch = 1 + $Matches['patch']
+            $env:IRICLIB_VER = $Matches['major'] + "." + $Matches['minor'] + "." + $patch
+            return "  VERSION " + $env:IRICLIB_VER
+          }
+          return $_
+        }
+
+        # configure git for commit and push
+        Add-Content "$HOME\.git-credentials" "https://$($access_token):x-oauth-basic@github.com`n" -ErrorAction Stop
+        git config --global user.email "iric.appveyor@gmail.com"
+        git config --global user.name "iric.appveyor"
+        git config --global core.safecrlf false
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+
+        # determine which access token to use and whether to use a branch
+        # or not
+        $branch = $True
+        if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
+          $access_token = $env:iric_access_token
+          # @todo set $branch to false after testing
+        }
+        if ($env:APPVEYOR_REPO_NAME -eq "scharlton2/iriclib") {
+          $releases_url = $releases_url_scharlton2
+        }
+        if ($env:APPVEYOR_REPO_NAME -eq "kskinoue0612/iriclib") {
+          $access_token = $env:kskinoue0612_access_token
+        }
+        if ($branch) {
+          # create branch when remote is not "i-RIC/iriclib"
+          # branches starting with '__' aren't automatically built by appveyor
+          git checkout -qb __$env:APPVEYOR_JOB_ID
+          if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+        }
+
+        # commit CMakeLists.txt with [skip ci]
+        git add -A .\CMakeLists.txt
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+        git commit -m "[skip ci] built by iric.appveyor"
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+        git push
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+
+        # re-run cmake with new CMAKE_INSTALL_PREFIX lib\install\iriclib-0.2.X
+
+        # zip lib\install
+
+        # upload iricsdk to iriclib repo
+      }
+
   - ps: |
       if ($UploadRelease) {
         # GET /repos/{owner}/{repo}/releases
