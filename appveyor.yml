@@ -116,7 +116,10 @@ on_success:
             return "  VERSION " + $env:IRICLIB_VER
           }
           return $_
-        }
+        } | Set-Content .\CMakeLists.txt
+
+        git config --global credential.helper store
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # configure git for commit and push
         Add-Content "$HOME\.git-credentials" "https://$($access_token):x-oauth-basic@github.com`n" -ErrorAction Stop
@@ -150,7 +153,7 @@ on_success:
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
         git commit -m "[skip ci] built by iric.appveyor"
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
-        git push
+        git push --set-upstream origin __$env:APPVEYOR_JOB_ID
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # re-run cmake with new CMAKE_INSTALL_PREFIX lib\install\iriclib-0.2.X
