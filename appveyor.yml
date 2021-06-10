@@ -142,6 +142,7 @@ on_success:
           # branches starting with '__' aren't automatically built by appveyor
           git checkout -qb __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
           if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+          echo "(git checkout -qb) LastExitCode=" + $LastExitCode
         }
 
         # configure git for commit and push
@@ -155,6 +156,7 @@ on_success:
         git add CMakeLists.txt
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
         git commit -m "[skip ci] built by iric.appveyor" 2>&1 | Out-Null
+        echo "(git commit) LastExitCode=" + $LastExitCode
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # sometimes output from a command is interpreted as an error
@@ -168,6 +170,7 @@ on_success:
         } else {
           git push 2>&1 | Out-Null
         }
+        echo "(git push) LastExitCode=" + $LastExitCode
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # re-run cmake with new CMAKE_INSTALL_PREFIX lib\install\iriclib-0.2.X
