@@ -155,12 +155,12 @@ on_success:
 
         # sometimes output from a command is interpreted as an error
         # so output needs to be redirected to null
-        if ($branch) {
-          git push --set-upstream origin __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
-        } else {
-          git push 2>&1 | Out-Null
-        }
-        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+        # if ($branch) {
+        #   git push --set-upstream origin __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
+        # } else {
+        #   git push 2>&1 | Out-Null
+        # }
+        # if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # re-run cmake with new CMAKE_INSTALL_PREFIX lib\install\iriclib-0.2.X
 
