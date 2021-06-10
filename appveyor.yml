@@ -108,7 +108,8 @@ on_success:
         Set-Location C:\iricdev\lib\src\iriclib-git -ErrorAction Stop
 
         # checkout entire branch
-        git checkout $env:APPVEYOR_REPO_BRANCH
+        git checkout $env:APPVEYOR_REPO_BRANCH 2>&1 | Out-Null
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # update CMakeLists.txt version number for iriclib
         (Get-Content .\CMakeLists.txt) | Foreach-Object {
