@@ -173,11 +173,19 @@ on_success:
         echo "(git push) LastExitCode=" + $LastExitCode
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
-        # re-run cmake with new CMAKE_INSTALL_PREFIX lib\install\iriclib-0.2.X
+        # re-run cmake with new CMAKE_INSTALL_PREFIX lib\install\iriclib-$env:IRICLIB_VER
+        Set-Location C:\iricdev\lib\src\iriclib-git\_build_release -ErrorAction Stop
+        cmake -DCMAKE_INSTALL_PREFIX:PATH=C:\iricdev\lib\install\iriclib-$env:IRICLIB_VER
+        cmake --build .  --target install
 
         # zip lib\install
+        Set-Location C:\iricdev\ -ErrorAction Stop
+        7z a -tzip iricsdk.zip .\lib\install
+        Push-AppveyorArtifact iricsdk.zip
 
-        # upload iricsdk to iriclib repo
+        # hash artifact
+        Write-Output "Get-FileHash iricsdk.zip:"
+        Get-FileHash C:\iricdev\iricsdk.zip
       }
 
   - ps: |
