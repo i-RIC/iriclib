@@ -152,17 +152,19 @@ on_success:
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # commit CMakeLists.txt with [skip ci]
-        git add -A .\CMakeLists.txt
+        git add CMakeLists.txt
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
         git commit -m "[skip ci] built by iric.appveyor" 2>&1 | Out-Null
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # sometimes output from a command is interpreted as an error
         # so output needs to be redirected to null
+        echo "git status:"
         git status
+        echo "git remote -v"
         git remote -v
         if ($branch) {
-          git push --set-upstream origin __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
+          git push --set-upstream origin __$env:APPVEYOR_JOB_ID *> | Out-Null
         } else {
           git push 2>&1 | Out-Null
         }
