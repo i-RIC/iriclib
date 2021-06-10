@@ -164,7 +164,7 @@ on_success:
         echo "git remote -v"
         git remote -v
         if ($branch) {
-          git push --set-upstream origin __$env:APPVEYOR_JOB_ID *> | Out-Null
+          git push --set-upstream origin __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
         } else {
           git push 2>&1 | Out-Null
         }
