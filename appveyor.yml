@@ -142,7 +142,6 @@ on_success:
           # branches starting with '__' aren't automatically built by appveyor
           git checkout -qb __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
           if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
-          echo "(git checkout -qb) LastExitCode=" + $LastExitCode
         }
 
         # configure git for commit and push
@@ -156,26 +155,20 @@ on_success:
         git add CMakeLists.txt
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
         git commit -m "[skip ci] built by iric.appveyor" 2>&1 | Out-Null
-        echo "(git commit) LastExitCode=" + $LastExitCode
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # sometimes output from a command is interpreted as an error
         # so output needs to be redirected to null
-        echo "git status:"
-        git status
-        echo "git remote -v"
-        git remote -v
         if ($branch) {
           git push --set-upstream origin __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
         } else {
           git push 2>&1 | Out-Null
         }
-        echo "(git push) LastExitCode=" + $LastExitCode
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         # re-run cmake with new CMAKE_INSTALL_PREFIX lib\install\iriclib-$env:IRICLIB_VER
         Set-Location C:\iricdev\lib\src\iriclib-git\_build_release -ErrorAction Stop
-        cmake -DCMAKE_INSTALL_PREFIX:PATH=C:\iricdev\lib\install\iriclib-$env:IRICLIB_VER
+        cmake -DCMAKE_INSTALL_PREFIX:PATH=C:\iricdev\lib\install\iriclib-$env:IRICLIB_VER .
         cmake --build .  --target install
 
         # zip lib\install
@@ -257,6 +250,11 @@ on_success:
         $upload_uri = $matches[1] + "?name=libs.zip"
         $h["Content-type"] = "application/zip"
         $bytes = [System.IO.File]::ReadAllBytes("$env:APPVEYOR_BUILD_FOLDER\_artifacts\libs.zip")
+        $upload = Invoke-WebRequest -Uri $upload_uri -Headers $h -Method POST -Body $bytes
+
+        # upload sdk
+        $upload_uri = $matches[1] + "?name=iricsdk.zip"
+        $bytes = [System.IO.File]::ReadAllBytes("C:\iricdev\iricsdk.zip")
         $upload = Invoke-WebRequest -Uri $upload_uri -Headers $h -Method POST -Body $bytes
 
         # Note: draft is now set to false so that notifications are sent with the correct list of assets
