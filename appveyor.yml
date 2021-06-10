@@ -159,6 +159,8 @@ on_success:
 
         # sometimes output from a command is interpreted as an error
         # so output needs to be redirected to null
+        git status
+        git remote -v
         if ($branch) {
           git push --set-upstream origin __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
         } else {
