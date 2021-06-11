@@ -125,11 +125,11 @@ target_compile_definitions(iriclib
 # iriclib include directories
 target_include_directories(iriclib
   PUBLIC
-    "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>"
-    "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/private>"
-    "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-    "${CGNS_INC}"                                          # should be unnecessary if exported
-    "${HDF5_INCLUDE_DIRS}"                                 # should be unnecessary if exported
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    ${CGNS_INC}                                            # should be unnecessary if exported
+    ${HDF5_INCLUDE_DIRS}                                   # should be unnecessary if exported
 )
 
 # iriclib link libraries
