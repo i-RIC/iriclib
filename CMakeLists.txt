@@ -26,6 +26,7 @@ endif()
 find_path(CGNS_INC cgns_io.h)
 find_library(CGNS_LIBRARY cgnsdll)
 
+# unnecessary if using ISO_C_BINDING?
 if(NOT DEFINED FORTRAN_NAMING)
   # set(FORTRAN_NAMING "UNKNOWN")
   # set(FORTRAN_NAMING "LOWERCASE")
@@ -117,7 +118,7 @@ target_compile_definitions(iriclib
     $<$<BOOL:MSVC>:_SCL_SECURE_NO_WARNINGS>
     IRICLIBDLL_LIBRARY
     IRICSOLVERLIBDLL_LIBRARY
-    ${FORTRAN_NAMING}
+    ${FORTRAN_NAMING}                                      # unnecessary if using ISO_C_BINDING?
     ${HDF5_DEFINITIONS}
 )
 
@@ -127,8 +128,8 @@ target_include_directories(iriclib
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>"
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/private>"
     "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-    "${CGNS_INC}"
-    "${HDF5_INCLUDE_DIRS}"
+    "${CGNS_INC}"                                          # should be unnecessary if exported
+    "${HDF5_INCLUDE_DIRS}"                                 # should be unnecessary if exported
 )
 
 # iriclib link libraries
@@ -140,21 +141,21 @@ target_link_libraries(iriclib
 )
 
 SET(iriclib_Headers
-  ${PROJECT_SOURCE_DIR}/filelocker.h
+  # ${PROJECT_SOURCE_DIR}/filelocker.h
   ${PROJECT_SOURCE_DIR}/iriclib.h
   ${PROJECT_SOURCE_DIR}/iriclib_f.h
   ${PROJECT_SOURCE_DIR}/iriclib_global.h
-  ${PROJECT_SOURCE_DIR}/iriclib_pointmap.h
-  ${PROJECT_SOURCE_DIR}/iriclib_polygon.h
-  ${PROJECT_SOURCE_DIR}/iriclib_polyline.h
-  ${PROJECT_SOURCE_DIR}/iriclib_riversurvey.h
-  ${PROJECT_SOURCE_DIR}/iricsolverlib.h
-  ${PROJECT_SOURCE_DIR}/iricsolverlib_api.h
+  # ${PROJECT_SOURCE_DIR}/iriclib_pointmap.h
+  # ${PROJECT_SOURCE_DIR}/iriclib_polygon.h
+  # ${PROJECT_SOURCE_DIR}/iriclib_polyline.h
+  # ${PROJECT_SOURCE_DIR}/iriclib_riversurvey.h
+  # ${PROJECT_SOURCE_DIR}/iricsolverlib.h
+  # ${PROJECT_SOURCE_DIR}/iricsolverlib_api.h
 )
 
-SET(iriclib_private_Headers
-  ${PROJECT_SOURCE_DIR}/private/filelocker_impl.h
-)
+# SET(iriclib_private_Headers
+#   ${PROJECT_SOURCE_DIR}/private/filelocker_impl.h
+# )
 
 include(CMakePackageConfigHelpers)
 
@@ -188,9 +189,9 @@ install(EXPORT iriclibTargets
 )
 
 install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
+# install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
 if(MSVC)
-  install(FILES ${PROJECT_BINARY_DIR}/Debug/iriclib.pdb
+  install(FILES ${PROJECT_BINARY_DIR}/Debug/iriclib.pdb    # @todo should be more generic
     DESTINATION ${CMAKE_INSTALL_LIBDIR}
     CONFIGURATIONS Debug RelWithDebInfo)
 endif()
