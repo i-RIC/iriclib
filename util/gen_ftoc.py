@@ -10,7 +10,6 @@ TARGET_FILES_FTOC = [
   'iriclib_grid.h',
   'iriclib_gui_coorp.h',
   'iriclib_init.h',
-  'iriclib_not_mul.h',
   'iriclib_not_withbaseid.h',
   'iriclib_not_withgridid.h',
   'iriclib_solution.h',

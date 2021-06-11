@@ -36,8 +36,8 @@ void case_addGridAndResult()
 			y[i + isize * j] = j;
 		}
 	}
-	ier = cg_iRIC_Write_Grid2d_Coords_Mul(fid, isize, jsize, x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_Write_Grid2d_Coords_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid2d_Coords(fid, isize, jsize, x.data(), y.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid2d_Coords() ier == 0", ier == 0);
 
 	double time = 1.0;
 	std::vector<double> depth;
@@ -49,22 +49,22 @@ void case_addGridAndResult()
 	std::vector<int> ccactive;
 	ccactive.assign((isize - 1) * (jsize - 1), 1);
 
-	ier = cg_iRIC_Write_Sol_Time(time);
+	ier = cg_iRIC_Write_Sol_Time(fid, time);
 	VERIFY_LOG("cg_iRIC_Write_Sol_Time() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Grid2d_Coords(x.data(), y.data());
+	ier = cg_iRIC_Write_Sol_Grid2d_Coords(fid, x.data(), y.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Grid2d_Coords() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Node_Real("Depth", depth.data());
+	ier = cg_iRIC_Write_Sol_Node_Real(fid, "Depth", depth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Node_Real() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Node_Integer("Active", active.data());
+	ier = cg_iRIC_Write_Sol_Node_Integer(fid, "Active", active.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Node_Integer() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Cell_Real("CCDepth", ccdepth.data());
+	ier = cg_iRIC_Write_Sol_Cell_Real(fid, "CCDepth", ccdepth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Real() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Cell_Integer("CCActive", ccactive.data());
+	ier = cg_iRIC_Write_Sol_Cell_Integer(fid, "CCActive", ccactive.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Integer() ier == 0", ier == 0);
 
 	time = 2.0;
@@ -72,22 +72,22 @@ void case_addGridAndResult()
 	ccdepth.assign((isize - 1) * (jsize - 1), 8.1);
 	active.assign(isize * jsize, 0);
 	ccactive.assign((isize - 1) * (jsize - 1), 0);
-	ier = cg_iRIC_Write_Sol_Time(time);
+	ier = cg_iRIC_Write_Sol_Time(fid, time);
 	VERIFY_LOG("cg_iRIC_Write_Sol_Time() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Grid2d_Coords(x.data(), y.data());
+	ier = cg_iRIC_Write_Sol_Grid2d_Coords(fid, x.data(), y.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Grid2d_Coords() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Node_Real("Depth", depth.data());
+	ier = cg_iRIC_Write_Sol_Node_Real(fid, "Depth", depth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Node_Real() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Node_Integer("Active", active.data());
+	ier = cg_iRIC_Write_Sol_Node_Integer(fid, "Active", active.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Node_Integer() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Cell_Real("CCDepth", ccdepth.data());
+	ier = cg_iRIC_Write_Sol_Cell_Real(fid, "CCDepth", ccdepth.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Real() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_Cell_Integer("CCActive", ccactive.data());
+	ier = cg_iRIC_Write_Sol_Cell_Integer(fid, "CCActive", ccactive.data());
 	VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Integer() ier == 0", ier == 0);
 
 	ier = cg_iRIC_Close(fid);

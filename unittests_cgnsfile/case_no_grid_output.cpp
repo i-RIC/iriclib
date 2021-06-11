@@ -26,10 +26,10 @@ void case_noGridOutput()
 	double time = 0.0;
 	double discharge = 0.1;
 
-	ier = cg_iRIC_Write_Sol_Time(time);
+	ier = cg_iRIC_Write_Sol_Time(fid, time);
 	VERIFY_LOG("cg_iRIC_Write_Sol_Time() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_BaseIterative_Real("Discharge", discharge);
+	ier = cg_iRIC_Write_Sol_BaseIterative_Real(fid, "Discharge", discharge);
 	VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real() ier == 0", ier == 0);
 
 	ier = cg_iRIC_Close(fid);

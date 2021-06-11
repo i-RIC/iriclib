@@ -13,7 +13,6 @@ TARGET_FILES_SWIG = [
   'iriclib_grid.h',
   'iriclib_gui_coorp.h',
   'iriclib_init.h',
-  'iriclib_not_mul.h',
   'iriclib_not_withbaseid.h',
   'iriclib_not_withgridid.h',
   'iriclib_sol_particle.h',

@@ -11,46 +11,46 @@ def case_GridRead():
     fid = iric.cg_iRIC_Open("data/case_grid.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size_Mul(fid)
-    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 11", isize == 11)
-    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 11", jsize == 11)
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size(fid)
+    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size() isize == 11", isize == 11)
+    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size() jsize == 11", jsize == 11)
 
-    x, y = iric.cg_iRIC_Read_Grid2d_Coords_Mul(fid)
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords(fid)
 
-    doubleArr = iric.cg_iRIC_Read_Grid_Real_Node_Mul(fid, "node_real")
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[0] == 2", doubleArr[0] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[1] == 2", doubleArr[1] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[2] == 2", doubleArr[2] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[3] == 2", doubleArr[3] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[4] == 2", doubleArr[4] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[5] == 2", doubleArr[5] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[6] == 2", doubleArr[6] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[7] == 0", doubleArr[7] == 0)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[8] == 0", doubleArr[8] == 0)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Node_Mul() value[9] == 0", doubleArr[9] == 0)
+    doubleArr = iric.cg_iRIC_Read_Grid_Real_Node(fid, "node_real")
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[0] == 2", doubleArr[0] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[1] == 2", doubleArr[1] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[2] == 2", doubleArr[2] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[3] == 2", doubleArr[3] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[4] == 2", doubleArr[4] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[5] == 2", doubleArr[5] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[6] == 2", doubleArr[6] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[7] == 0", doubleArr[7] == 0)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[8] == 0", doubleArr[8] == 0)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Node() value[9] == 0", doubleArr[9] == 0)
 
-    intArr = iric.cg_iRIC_Read_Grid_Integer_Node_Mul(fid, "node_int")
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[0] == 0", intArr[0] == 0)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[1] == 0", intArr[1] == 0)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[2] == 0", intArr[2] == 0)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[3] == 0", intArr[3] == 0)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[4] == 0", intArr[4] == 0)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[5] == 1", intArr[5] == 1)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[6] == 1", intArr[6] == 1)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[7] == 1", intArr[7] == 1)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[8] == 1", intArr[8] == 1)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Node_Mul() value[9] == 1", intArr[9] == 1)
+    intArr = iric.cg_iRIC_Read_Grid_Integer_Node(fid, "node_int")
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[0] == 0", intArr[0] == 0)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[1] == 0", intArr[1] == 0)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[2] == 0", intArr[2] == 0)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[3] == 0", intArr[3] == 0)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[4] == 0", intArr[4] == 0)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[5] == 1", intArr[5] == 1)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[6] == 1", intArr[6] == 1)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[7] == 1", intArr[7] == 1)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[8] == 1", intArr[8] == 1)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Node() value[9] == 1", intArr[9] == 1)
 
-    doubleArr = iric.cg_iRIC_Read_Grid_Real_Cell_Mul(fid, "cell_real")
-    util.verify_log("cg_iRIC_Read_Grid_Real_Cell_Mul() value[0] == 4.2", doubleArr[0] == 4.2)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Cell_Mul() value[1] == 4.2", doubleArr[1] == 4.2)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Cell_Mul() value[2] == 0", doubleArr[2] == 0)
-    util.verify_log("cg_iRIC_Read_Grid_Real_Cell_Mul() value[3] == 0", doubleArr[3] == 0)
+    doubleArr = iric.cg_iRIC_Read_Grid_Real_Cell(fid, "cell_real")
+    util.verify_log("cg_iRIC_Read_Grid_Real_Cell() value[0] == 4.2", doubleArr[0] == 4.2)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Cell() value[1] == 4.2", doubleArr[1] == 4.2)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Cell() value[2] == 0", doubleArr[2] == 0)
+    util.verify_log("cg_iRIC_Read_Grid_Real_Cell() value[3] == 0", doubleArr[3] == 0)
 
-    intArr = iric.cg_iRIC_Read_Grid_Integer_Cell_Mul(fid, "cell_int")
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[0] == 0", intArr[0] == 0)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[15] == 1", intArr[15] == 1)
-    util.verify_log("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[16] == 0", intArr[16] == 0)
+    intArr = iric.cg_iRIC_Read_Grid_Integer_Cell(fid, "cell_int")
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Cell() value[0] == 0", intArr[0] == 0)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Cell() value[15] == 1", intArr[15] == 1)
+    util.verify_log("cg_iRIC_Read_Grid_Integer_Cell() value[16] == 0", intArr[16] == 0)
 
     iric.cg_iRIC_Close(fid)
 
@@ -62,24 +62,24 @@ def case_GridReadUnstructured():
     fid = iric.cg_iRIC_Open("data/case_grid_unstructured.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    elem_size = iric.cg_iRIC_Read_Grid_TriangleElementsSize_Mul(fid)
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElementsSize_Mul() elem_size == 3", elem_size == 3)
+    elem_size = iric.cg_iRIC_Read_Grid_TriangleElementsSize(fid)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElementsSize() elem_size == 3", elem_size == 3)
 
-    node_count = iric.cg_iRIC_Read_Grid_NodeCount_Mul(fid)
-    util.verify_log("cg_iRIC_Read_Grid_NodeCount_Mul() node_count == 5", node_count == 5)
+    node_count = iric.cg_iRIC_Read_Grid_NodeCount(fid)
+    util.verify_log("cg_iRIC_Read_Grid_NodeCount() node_count == 5", node_count == 5)
 
-    x, y = iric.cg_iRIC_Read_Grid2d_Coords_Mul(fid)
-    elems = iric.cg_iRIC_Read_Grid_TriangleElements_Mul(fid)
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords(fid)
+    elems = iric.cg_iRIC_Read_Grid_TriangleElements(fid)
 
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[0] == 1", elems[0] == 1)
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[1] == 2", elems[1] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[2] == 5", elems[2] == 5)
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[3] == 4", elems[3] == 4)
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[4] == 5", elems[4] == 5)
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[5] == 2", elems[5] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[6] == 4", elems[6] == 4)
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[7] == 2", elems[7] == 2)
-    util.verify_log("cg_iRIC_Read_Grid_TriangleElements_Mul() elems[8] == 3", elems[8] == 3)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[0] == 1", elems[0] == 1)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[1] == 2", elems[1] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[2] == 5", elems[2] == 5)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[3] == 4", elems[3] == 4)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[4] == 5", elems[4] == 5)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[5] == 2", elems[5] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[6] == 4", elems[6] == 4)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[7] == 2", elems[7] == 2)
+    util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[8] == 3", elems[8] == 3)
 
     iric.cg_iRIC_Close(fid)
 
@@ -91,17 +91,17 @@ def case_GridReadFunc():
     fid = iric.cg_iRIC_Open("data/case_gridreadfunc.cgn", iric.IRIC_MODE_MODIFY)
     util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
-    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size_Mul(fid)
-    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() isize == 15", isize == 15)
-    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size_Mul() jsize == 15", jsize == 15)
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size(fid)
+    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size() isize == 15", isize == 15)
+    util.verify_log("cg_iRIC_Read_Grid2d_Str_Size() jsize == 15", jsize == 15)
 
-    x, y = iric.cg_iRIC_Read_Grid2d_Coords_Mul(fid)
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords(fid)
 
-    timeArr = iric.cg_iRIC_Read_Grid_FunctionalDimension_Real_Mul(fid, "Xrain", "Time")
-    timeArr = iric.cg_iRIC_Read_Grid_FunctionalTime_Mul(fid, "Xrain")
+    timeArr = iric.cg_iRIC_Read_Grid_FunctionalDimension_Real(fid, "Xrain", "Time")
+    timeArr = iric.cg_iRIC_Read_Grid_FunctionalTime(fid, "Xrain")
 
     for i in range(timeArr.size):
-        rain = iric.cg_iRIC_Read_Grid_Functional_Real_Node_Mul(fid, "Xrain", i + 1)
+        rain = iric.cg_iRIC_Read_Grid_Functional_Real_Node(fid, "Xrain", i + 1)
 
     iric.cg_iRIC_Close(fid)
 
@@ -119,7 +119,7 @@ def case_GridWrite():
     for i in range(isize):
         x[i] = i * 2
 
-    iric.cg_iRIC_Write_Grid1d_Coords_Mul(fid, isize, x)
+    iric.cg_iRIC_Write_Grid1d_Coords(fid, isize, x)
 
     iric.cg_iRIC_Close(fid)
 
@@ -168,7 +168,7 @@ def case_GridWrite():
             x[idx] = i
             y[idx] = j
 
-    iric.cg_iRIC_Write_Grid2d_Coords_Mul(fid, isize, jsize, x, y)
+    iric.cg_iRIC_Write_Grid2d_Coords(fid, isize, jsize, x, y)
 
     real_node_write = np.zeros(isize * jsize, dtype=np.float64)
     int_node_write = np.zeros(isize * jsize, dtype=np.int32)
@@ -187,13 +187,13 @@ def case_GridWrite():
     for i in range(int_cell_write.size):
         int_cell_write[i] = i * i - i * 4 + 414
 
-    iric.cg_iRIC_Write_Grid_Real_Node_Mul(fid, "realnode_test", real_node_write)
+    iric.cg_iRIC_Write_Grid_Real_Node(fid, "realnode_test", real_node_write)
 
-    iric.cg_iRIC_Write_Grid_Integer_Node_Mul(fid, "intnode_test", int_node_write)
+    iric.cg_iRIC_Write_Grid_Integer_Node(fid, "intnode_test", int_node_write)
 
-    iric.cg_iRIC_Write_Grid_Real_Cell_Mul(fid, "realcell_test", real_cell_write)
+    iric.cg_iRIC_Write_Grid_Real_Cell(fid, "realcell_test", real_cell_write)
 
-    iric.cg_iRIC_Write_Grid_Integer_Cell_Mul(fid, "intcell_test", int_cell_write)
+    iric.cg_iRIC_Write_Grid_Integer_Cell(fid, "intcell_test", int_cell_write)
 
     iric.cg_iRIC_Close(fid)
 
@@ -294,7 +294,7 @@ def case_GridWrite():
                 y[idx] = j
                 z[idx] = k
 
-    iric.cg_iRIC_Write_Grid3d_Coords_Mul(fid, isize, jsize, ksize, x, y, z)
+    iric.cg_iRIC_Write_Grid3d_Coords(fid, isize, jsize, ksize, x, y, z)
 
     iric.cg_iRIC_Close(fid)
 

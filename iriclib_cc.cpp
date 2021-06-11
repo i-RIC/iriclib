@@ -9,7 +9,7 @@
 
 using namespace iRICLib;
 
-int cg_iRIC_Read_Integer_Mul(int fid, const char* name, int* value)
+int cg_iRIC_Read_Integer(int fid, const char* name, int* value)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -21,7 +21,7 @@ int cg_iRIC_Read_Integer_Mul(int fid, const char* name, int* value)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Real_Mul(int fid, const char* name, double* value)
+int cg_iRIC_Read_Real(int fid, const char* name, double* value)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -33,7 +33,7 @@ int cg_iRIC_Read_Real_Mul(int fid, const char* name, double* value)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_RealSingle_Mul(int fid, const char* name, float* value)
+int cg_iRIC_Read_RealSingle(int fid, const char* name, float* value)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -45,7 +45,7 @@ int cg_iRIC_Read_RealSingle_Mul(int fid, const char* name, float* value)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_StringLen_Mul(int fid, const char* name, int* length)
+int cg_iRIC_Read_StringLen(int fid, const char* name, int* length)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -57,7 +57,7 @@ int cg_iRIC_Read_StringLen_Mul(int fid, const char* name, int* length)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_String_Mul(int fid, const char* name, char* strvalue)
+int cg_iRIC_Read_String(int fid, const char* name, char* strvalue)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -68,7 +68,7 @@ int cg_iRIC_Read_String_Mul(int fid, const char* name, char* strvalue)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_FunctionalSize_Mul(int fid, const char* name, int* size)
+int cg_iRIC_Read_FunctionalSize(int fid, const char* name, int* size)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -80,7 +80,7 @@ int cg_iRIC_Read_FunctionalSize_Mul(int fid, const char* name, int* size)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Functional_Mul(int fid, const char* name, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Functional(int fid, const char* name, double* x_arr, double* y_arr)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -92,7 +92,7 @@ int cg_iRIC_Read_Functional_Mul(int fid, const char* name, double* x_arr, double
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_FunctionalWithName_Mul(int fid, const char* name, const char* paramname, double* v_arr)
+int cg_iRIC_Read_FunctionalWithName(int fid, const char* name, const char* paramname, double* v_arr)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -104,7 +104,7 @@ int cg_iRIC_Read_FunctionalWithName_Mul(int fid, const char* name, const char* p
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Functional_RealSingle_Mul(int fid, const char* name, float* x_arr, float* y_arr)
+int cg_iRIC_Read_Functional_RealSingle(int fid, const char* name, float* x_arr, float* y_arr)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -115,7 +115,7 @@ int cg_iRIC_Read_Functional_RealSingle_Mul(int fid, const char* name, float* x_a
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_FunctionalWithName_RealSingle_Mul(int fid, const char* name, const char* paramname, float* v_arr)
+int cg_iRIC_Read_FunctionalWithName_RealSingle(int fid, const char* name, const char* paramname, float* v_arr)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -126,7 +126,7 @@ int cg_iRIC_Read_FunctionalWithName_RealSingle_Mul(int fid, const char* name, co
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_FunctionalWithName_String_Mul(int fid, const char* name, const char* paramname, char* strvalue)
+int cg_iRIC_Read_FunctionalWithName_String(int fid, const char* name, const char* paramname, char* strvalue)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -137,7 +137,7 @@ int cg_iRIC_Read_FunctionalWithName_String_Mul(int fid, const char* name, const 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_FunctionalWithName_StringLen_Mul(int fid, const char* name, const char* paramname, int* length)
+int cg_iRIC_Read_FunctionalWithName_StringLen(int fid, const char* name, const char* paramname, int* length)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -149,7 +149,7 @@ int cg_iRIC_Read_FunctionalWithName_StringLen_Mul(int fid, const char* name, con
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Integer_Mul(int fid, const char* name, int value)
+int cg_iRIC_Write_Integer(int fid, const char* name, int value)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -161,7 +161,7 @@ int cg_iRIC_Write_Integer_Mul(int fid, const char* name, int value)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Real_Mul(int fid, const char* name, double value)
+int cg_iRIC_Write_Real(int fid, const char* name, double value)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -173,7 +173,7 @@ int cg_iRIC_Write_Real_Mul(int fid, const char* name, double value)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_String_Mul(int fid, const char* name, const char* value)
+int cg_iRIC_Write_String(int fid, const char* name, const char* value)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -185,7 +185,7 @@ int cg_iRIC_Write_String_Mul(int fid, const char* name, const char* value)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Functional_Mul(int fid, const char* name, int length, double* x_arr, double* y_arr)
+int cg_iRIC_Write_Functional(int fid, const char* name, int length, double* x_arr, double* y_arr)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -197,7 +197,7 @@ int cg_iRIC_Write_Functional_Mul(int fid, const char* name, int length, double* 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_FunctionalWithName_Mul(int fid, const char* name, const char* paramname, int length, double* v_arr)
+int cg_iRIC_Write_FunctionalWithName(int fid, const char* name, const char* paramname, int length, double* v_arr)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -209,7 +209,7 @@ int cg_iRIC_Write_FunctionalWithName_Mul(int fid, const char* name, const char* 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_FunctionalWithName_String_Mul(int fid, const char* name, const char* paramname, const char* value)
+int cg_iRIC_Write_FunctionalWithName_String(int fid, const char* name, const char* paramname, const char* value)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);

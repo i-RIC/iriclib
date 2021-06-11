@@ -47,22 +47,22 @@ int writeSolutionT(int fid, int gid, const std::string& name, V* v_arr, const st
 
 } // namespace
 
-int cg_iRIC_Read_Sol_Cell_Integer_WithGridId_Mul(int fid, int gid, int step, const char* name, int* v_arr)
+int cg_iRIC_Read_Sol_Cell_Integer_WithGridId(int fid, int gid, int step, const char* name, int* v_arr)
 {
-	return readSolutionT(fid, gid, step, name, v_arr, "cg_iRIC_Read_Sol_Integer_WithGridId_Mul");
+	return readSolutionT(fid, gid, step, name, v_arr, "cg_iRIC_Read_Sol_Integer_WithGridId");
 }
 
-int cg_iRIC_Read_Sol_Cell_Real_WithGridId_Mul(int fid, int gid, int step, const char* name, double* v_arr)
+int cg_iRIC_Read_Sol_Cell_Real_WithGridId(int fid, int gid, int step, const char* name, double* v_arr)
 {
-	return readSolutionT(fid, gid, step, name, v_arr, "cg_iRIC_Read_Sol_Real_WithGridId_Mul");
+	return readSolutionT(fid, gid, step, name, v_arr, "cg_iRIC_Read_Sol_Real_WithGridId");
 }
 
-int cg_iRIC_Write_Sol_Cell_Integer_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Write_Sol_Cell_Integer_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
-	return writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Integer_WithGridId_Mul");
+	return writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Integer_WithGridId");
 }
 
-int cg_iRIC_Write_Sol_Cell_Real_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Write_Sol_Cell_Real_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
-	return writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Real_WithGridId_Mul");
+	return writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Real_WithGridId");
 }

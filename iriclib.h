@@ -44,4 +44,3 @@
 #include "iriclib_sol_polydata.h" // solution at lines, polygons
 #include "iriclib_not_withbaseid.h" // not withbaseid
 #include "iriclib_not_withgridid.h" // not withgridid
-#include "iriclib_not_mul.h" // not mul

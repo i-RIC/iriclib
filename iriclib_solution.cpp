@@ -19,7 +19,7 @@ using namespace iRICLib;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);\
 	RETURN_IF_ERR;
 
-int cg_iRIC_Read_Sol_Count_Mul(int fid, int* count)
+int cg_iRIC_Read_Sol_Count(int fid, int* count)
 {
 	GET_F;
 
@@ -35,7 +35,7 @@ int cg_iRIC_Read_Sol_Count_Mul(int fid, int* count)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_Time_Mul(int fid, int step, double* time)
+int cg_iRIC_Read_Sol_Time(int fid, int step, double* time)
 {
 	GET_F;
 
@@ -45,7 +45,7 @@ int cg_iRIC_Read_Sol_Time_Mul(int fid, int step, double* time)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_Iteration_Mul(int fid, int step, int* index)
+int cg_iRIC_Read_Sol_Iteration(int fid, int step, int* index)
 {
 	GET_F;
 
@@ -55,7 +55,7 @@ int cg_iRIC_Read_Sol_Iteration_Mul(int fid, int step, int* index)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_BaseIterative_Integer_Mul(int fid, int step, const char* name, int* value)
+int cg_iRIC_Read_Sol_BaseIterative_Integer(int fid, int step, const char* name, int* value)
 {
 	GET_F;
 
@@ -65,7 +65,7 @@ int cg_iRIC_Read_Sol_BaseIterative_Integer_Mul(int fid, int step, const char* na
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_BaseIterative_Real_Mul(int fid, int step, const char* name, double* value)
+int cg_iRIC_Read_Sol_BaseIterative_Real(int fid, int step, const char* name, double* value)
 {
 	GET_F;
 
@@ -75,7 +75,7 @@ int cg_iRIC_Read_Sol_BaseIterative_Real_Mul(int fid, int step, const char* name,
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(int fid, int step, const char* name, int* length)
+int cg_iRIC_Read_Sol_BaseIterative_StringLen(int fid, int step, const char* name, int* length)
 {
 	GET_F;
 
@@ -88,7 +88,7 @@ int cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(int fid, int step, const char* 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_BaseIterative_String_Mul(int fid, int step, const char* name, char* strvalue)
+int cg_iRIC_Read_Sol_BaseIterative_String(int fid, int step, const char* name, char* strvalue)
 {
 	GET_F;
 
@@ -104,7 +104,7 @@ int cg_iRIC_Read_Sol_BaseIterative_String_Mul(int fid, int step, const char* nam
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_Time_Mul(int fid, double time)
+int cg_iRIC_Write_Sol_Time(int fid, double time)
 {
 	GET_F;
 
@@ -114,7 +114,7 @@ int cg_iRIC_Write_Sol_Time_Mul(int fid, double time)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_Iteration_Mul(int fid, int index)
+int cg_iRIC_Write_Sol_Iteration(int fid, int index)
 {
 	GET_F;
 
@@ -124,7 +124,7 @@ int cg_iRIC_Write_Sol_Iteration_Mul(int fid, int index)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(int fid, const char* name, int value)
+int cg_iRIC_Write_Sol_BaseIterative_Integer(int fid, const char* name, int value)
 {
 	GET_F;
 
@@ -134,7 +134,7 @@ int cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(int fid, const char* name, int v
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_BaseIterative_Real_Mul(int fid, const char* name, double value)
+int cg_iRIC_Write_Sol_BaseIterative_Real(int fid, const char* name, double value)
 {
 	GET_F;
 
@@ -144,7 +144,7 @@ int cg_iRIC_Write_Sol_BaseIterative_Real_Mul(int fid, const char* name, double v
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_BaseIterative_String_Mul(int fid, const char* name, const char* value)
+int cg_iRIC_Write_Sol_BaseIterative_String(int fid, const char* name, const char* value)
 {
 	GET_F;
 
@@ -154,7 +154,7 @@ int cg_iRIC_Write_Sol_BaseIterative_String_Mul(int fid, const char* name, const 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_ErrorCode_Mul(int fid, int errorcode)
+int cg_iRIC_Write_ErrorCode(int fid, int errorcode)
 {
 	GET_F;
 

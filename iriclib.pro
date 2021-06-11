@@ -95,7 +95,6 @@ HEADERS += error_macros.h \
            iriclib_gui_coorp.h \
            iriclib_h5.h \
            iriclib_init.h \
-           iriclib_not_mul.h \
            iriclib_not_withbaseid.h \
            iriclib_not_withgridid.h \
            iriclib_pointmap.h \
@@ -200,7 +199,6 @@ SOURCES += h5attributecloser.cpp \
            iriclib_grid.cpp \
            iriclib_gui_coorp.cpp \
            iriclib_init.cpp \
-           iriclib_not_mul.cpp \
            iriclib_not_withbaseid.cpp \
            iriclib_not_withgridid.cpp \
            iriclib_pointmap.cpp \

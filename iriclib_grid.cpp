@@ -17,7 +17,7 @@
 
 using namespace iRICLib;
 
-int cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, int* jsize)
+int cg_iRIC_Read_Grid2d_Str_Size_WithGridId(int fid, int gid, int* isize, int* jsize)
 {
 	H5CgnsZone* z;
 	int ier = _iric_get_zone(fid, gid, &z, __func__);
@@ -25,13 +25,13 @@ int cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, in
 
 	if (z->type() == H5CgnsZone::Type::Unstructured) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
+		ss << "In cg_iRIC_Read_Grid2d_Str_Size_WithGridId(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_GRIDTYPE;
 	}
 	if (z->base()->dimension() != 2) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
+		ss << "In cg_iRIC_Read_Grid2d_Str_Size_WithGridId(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}
@@ -42,7 +42,7 @@ int cg_iRIC_Read_Grid2d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, in
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Grid2d_Coords_WithGridId(int fid, int gid, double* x_arr, double* y_arr)
 {
 	H5CgnsZone* z;
 	int ier = _iric_get_zone(fid, gid, &z, __func__);
@@ -50,7 +50,7 @@ int cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, d
 
 	if (z->base()->dimension() != 2) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GetGridCoord2d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
+		ss << "In cg_iRIC_GetGridCoord2d_WithGridId(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}
@@ -65,7 +65,7 @@ int cg_iRIC_Read_Grid2d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, d
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, int* jsize, int* ksize)
+int cg_iRIC_Read_Grid3d_Str_Size_WithGridId(int fid, int gid, int* isize, int* jsize, int* ksize)
 {
 	H5CgnsZone* z;
 	int ier = _iric_get_zone(fid, gid, &z, __func__);
@@ -73,13 +73,13 @@ int cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, in
 
 	if (z->type() == H5CgnsZone::Type::Unstructured) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
+		ss << "In cg_iRIC_Read_Grid3d_Str_Size_WithGridId(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_GRIDTYPE;
 	}
 	if (z->base()->dimension() != 3) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
+		ss << "In cg_iRIC_Read_Grid3d_Str_Size_WithGridId(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}
@@ -91,7 +91,7 @@ int cg_iRIC_Read_Grid3d_Str_Size_WithGridId_Mul(int fid, int gid, int* isize, in
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Read_Grid3d_Coords_WithGridId(int fid, int gid, double* x_arr, double* y_arr, double* z_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -99,7 +99,7 @@ int cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, d
 
 	if (zone->base()->dimension() != 3) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << zone->base()->dimension();
+		ss << "In cg_iRIC_Read_Grid3d_Coords_WithGridId(), grid for fid " << fid << ", gid " << gid << " has dimension " << zone->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}
@@ -119,7 +119,7 @@ int cg_iRIC_Read_Grid3d_Coords_WithGridId_Mul(int fid, int gid, double* x_arr, d
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId_Mul(int fid, int gid, int* size)
+int cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId(int fid, int gid, int* size)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -131,7 +131,7 @@ int cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId_Mul(int fid, int gid, int*
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_TriangleElementsSize2_WithGridId_Mul(int fid, int gid, int* size)
+int cg_iRIC_Read_Grid_TriangleElementsSize2_WithGridId(int fid, int gid, int* size)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -143,7 +143,7 @@ int cg_iRIC_Read_Grid_TriangleElementsSize2_WithGridId_Mul(int fid, int gid, int
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_TriangleElements_WithGridId_Mul(int fid, int gid, int* id_arr)
+int cg_iRIC_Read_Grid_TriangleElements_WithGridId(int fid, int gid, int* id_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -158,7 +158,7 @@ int cg_iRIC_Read_Grid_TriangleElements_WithGridId_Mul(int fid, int gid, int* id_
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_NodeCount_WithGridId(int fid, int gid, int* count)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -169,7 +169,7 @@ int cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(int fid, int gid, int* count)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_CellCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_CellCount_WithGridId(int fid, int gid, int* count)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -180,7 +180,7 @@ int cg_iRIC_Read_Grid_CellCount_WithGridId_Mul(int fid, int gid, int* count)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_IFaceCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_IFaceCount_WithGridId(int fid, int gid, int* count)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -191,7 +191,7 @@ int cg_iRIC_Read_Grid_IFaceCount_WithGridId_Mul(int fid, int gid, int* count)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_JFaceCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_JFaceCount_WithGridId(int fid, int gid, int* count)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -202,7 +202,7 @@ int cg_iRIC_Read_Grid_JFaceCount_WithGridId_Mul(int fid, int gid, int* count)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_KFaceCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_KFaceCount_WithGridId(int fid, int gid, int* count)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -213,7 +213,7 @@ int cg_iRIC_Read_Grid_KFaceCount_WithGridId_Mul(int fid, int gid, int* count)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Read_Grid_Real_Node_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -227,7 +227,7 @@ int cg_iRIC_Read_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* nam
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Read_Grid_Integer_Node_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -241,7 +241,7 @@ int cg_iRIC_Read_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char* 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Read_Grid_Real_Cell_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -256,7 +256,7 @@ int cg_iRIC_Read_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* nam
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Integer_Cell_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Read_Grid_Integer_Cell_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -271,7 +271,7 @@ int cg_iRIC_Read_Grid_Integer_Cell_WithGridId_Mul(int fid, int gid, const char* 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId_Mul(int fid, int gid, const char* name, const char* dimname, int* count)
+int cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId(int fid, int gid, const char* name, const char* dimname, int* count)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -283,7 +283,7 @@ int cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId_Mul(int fid, int gid, c
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_FunctionalDimension_Integer_WithGridId_Mul(int fid, int gid, const char* name, const char* dimname, int* v_arr)
+int cg_iRIC_Read_Grid_FunctionalDimension_Integer_WithGridId(int fid, int gid, const char* name, const char* dimname, int* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -298,7 +298,7 @@ int cg_iRIC_Read_Grid_FunctionalDimension_Integer_WithGridId_Mul(int fid, int gi
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId_Mul(int fid, int gid, const char* name, const char* dimname, double* v_arr)
+int cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId(int fid, int gid, const char* name, const char* dimname, double* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -313,47 +313,17 @@ int cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId_Mul(int fid, int gid, 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_FunctionalTimeSize_WithGridId_Mul(int fid, int gid, const char* name, int* count)
+int cg_iRIC_Read_Grid_FunctionalTimeSize_WithGridId(int fid, int gid, const char* name, int* count)
 {
-	return cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId_Mul(fid, gid, name, "Time", count);
+	return cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId(fid, gid, name, "Time", count);
 }
 
-int cg_iRIC_Read_Grid_FunctionalTime_WithGridId_Mul(int fid, int gid, const char* name, double* time_arr)
+int cg_iRIC_Read_Grid_FunctionalTime_WithGridId(int fid, int gid, const char* name, double* time_arr)
 {
-	return cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId_Mul(fid, gid, name, "Time", time_arr);
+	return cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId(fid, gid, name, "Time", time_arr);
 }
 
-int cg_iRIC_Read_Grid_Functional_Integer_Node_WithGridId_Mul(int fid, int gid, const char* name, int dimid, int* v_arr)
-{
-	H5CgnsZone* zone;
-	int ier = _iric_get_zone(fid, gid, &zone, __func__);
-	RETURN_IF_ERR;
-
-	std::vector<int> buffer;
-	ier = zone->gridAttributes()->readFunctional(name, dimid, &buffer);
-	RETURN_IF_ERR;
-
-	_vectorToPointerT(buffer, v_arr);
-
-	return IRIC_NO_ERROR;
-}
-
-int cg_iRIC_Read_Grid_Functional_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, int dimid, double* v_arr)
-{
-	H5CgnsZone* zone;
-	int ier = _iric_get_zone(fid, gid, &zone, __func__);
-	RETURN_IF_ERR;
-
-	std::vector<double> buffer;
-	ier = zone->gridAttributes()->readFunctional(name, dimid, &buffer);
-	RETURN_IF_ERR;
-
-	_vectorToPointerT(buffer, v_arr);
-
-	return IRIC_NO_ERROR;
-}
-
-int cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId_Mul(int fid, int gid, const char* name, int dimid, int* v_arr)
+int cg_iRIC_Read_Grid_Functional_Integer_Node_WithGridId(int fid, int gid, const char* name, int dimid, int* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -368,7 +338,7 @@ int cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId_Mul(int fid, int gid, c
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, int dimid, double* v_arr)
+int cg_iRIC_Read_Grid_Functional_Real_Node_WithGridId(int fid, int gid, const char* name, int dimid, double* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -383,7 +353,37 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(int fid, int gid, cons
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(int fid, int isize, double* x_arr, int* gid)
+int cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId(int fid, int gid, const char* name, int dimid, int* v_arr)
+{
+	H5CgnsZone* zone;
+	int ier = _iric_get_zone(fid, gid, &zone, __func__);
+	RETURN_IF_ERR;
+
+	std::vector<int> buffer;
+	ier = zone->gridAttributes()->readFunctional(name, dimid, &buffer);
+	RETURN_IF_ERR;
+
+	_vectorToPointerT(buffer, v_arr);
+
+	return IRIC_NO_ERROR;
+}
+
+int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId(int fid, int gid, const char* name, int dimid, double* v_arr)
+{
+	H5CgnsZone* zone;
+	int ier = _iric_get_zone(fid, gid, &zone, __func__);
+	RETURN_IF_ERR;
+
+	std::vector<double> buffer;
+	ier = zone->gridAttributes()->readFunctional(name, dimid, &buffer);
+	RETURN_IF_ERR;
+
+	_vectorToPointerT(buffer, v_arr);
+
+	return IRIC_NO_ERROR;
+}
+
+int cg_iRIC_Write_Grid1d_Coords_WithGridId(int fid, int isize, double* x_arr, int* gid)
 {
 	H5CgnsFile* file = nullptr;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -405,7 +405,7 @@ int cg_iRIC_Write_Grid1d_Coords_WithGridId_Mul(int fid, int isize, double* x_arr
 	return file->getGridId(zone, gid);
 }
 
-int cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(int fid, int isize, int jsize, double* x_arr, double* y_arr, int* gid)
+int cg_iRIC_Write_Grid2d_Coords_WithGridId(int fid, int isize, int jsize, double* x_arr, double* y_arr, int* gid)
 {
 	H5CgnsFile* file = nullptr;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -436,7 +436,7 @@ int cg_iRIC_Write_Grid2d_Coords_WithGridId_Mul(int fid, int isize, int jsize, do
 	return file->getGridId(zone, gid);
 }
 
-int cg_iRIC_Write_Grid3d_Coords_WithGridId_Mul(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid)
+int cg_iRIC_Write_Grid3d_Coords_WithGridId(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid)
 {
 	H5CgnsFile* file = nullptr;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
@@ -472,7 +472,7 @@ int cg_iRIC_Write_Grid3d_Coords_WithGridId_Mul(int fid, int isize, int jsize, in
 	return file->getGridId(zone, gid);
 }
 
-int cg_iRIC_Write_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Write_Grid_Real_Node_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -487,7 +487,7 @@ int cg_iRIC_Write_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* na
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Write_Grid_Integer_Node_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -502,7 +502,7 @@ int cg_iRIC_Write_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char*
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Write_Grid_Real_Cell_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -517,7 +517,7 @@ int cg_iRIC_Write_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* na
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Grid_Integer_Cell_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Write_Grid_Integer_Cell_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);

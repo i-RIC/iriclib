@@ -51,7 +51,7 @@ int getBcForRead(int fid, int gid, const std::string& typeName, int num, H5CgnsB
 
 } // namespace
 
-void cg_iRIC_Read_BC_Count_WithGridId_Mul(int fid, int gid, const char* type, int* num)
+void cg_iRIC_Read_BC_Count_WithGridId(int fid, int gid, const char* type, int* num)
 {
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
@@ -60,7 +60,7 @@ void cg_iRIC_Read_BC_Count_WithGridId_Mul(int fid, int gid, const char* type, in
 	*num = zoneBc->bcCount(type);
 }
 
-int cg_iRIC_Read_BC_IndicesSize_WithGridId_Mul(int fid, int gid, const char* type, int num, int* size)
+int cg_iRIC_Read_BC_IndicesSize_WithGridId(int fid, int gid, const char* type, int num, int* size)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -72,7 +72,7 @@ int cg_iRIC_Read_BC_IndicesSize_WithGridId_Mul(int fid, int gid, const char* typ
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_IndicesSize2_WithGridId_Mul(int fid, int gid, const char* type, int num, int* size)
+int cg_iRIC_Read_BC_IndicesSize2_WithGridId(int fid, int gid, const char* type, int num, int* size)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -84,7 +84,7 @@ int cg_iRIC_Read_BC_IndicesSize2_WithGridId_Mul(int fid, int gid, const char* ty
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_Indices_WithGridId_Mul(int fid, int gid, const char* type, int num, int* idx_arr)
+int cg_iRIC_Read_BC_Indices_WithGridId(int fid, int gid, const char* type, int num, int* idx_arr)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -99,7 +99,7 @@ int cg_iRIC_Read_BC_Indices_WithGridId_Mul(int fid, int gid, const char* type, i
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_Integer_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, int* value)
+int cg_iRIC_Read_BC_Integer_WithGridId(int fid, int gid, const char* type, int num, const char* name, int* value)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -111,7 +111,7 @@ int cg_iRIC_Read_BC_Integer_WithGridId_Mul(int fid, int gid, const char* type, i
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_Real_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, double* value)
+int cg_iRIC_Read_BC_Real_WithGridId(int fid, int gid, const char* type, int num, const char* name, double* value)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -123,7 +123,7 @@ int cg_iRIC_Read_BC_Real_WithGridId_Mul(int fid, int gid, const char* type, int 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_RealSingle_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, float* value)
+int cg_iRIC_Read_BC_RealSingle_WithGridId(int fid, int gid, const char* type, int num, const char* name, float* value)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -135,7 +135,7 @@ int cg_iRIC_Read_BC_RealSingle_WithGridId_Mul(int fid, int gid, const char* type
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_StringLen_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, int* length)
+int cg_iRIC_Read_BC_StringLen_WithGridId(int fid, int gid, const char* type, int num, const char* name, int* length)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -147,7 +147,7 @@ int cg_iRIC_Read_BC_StringLen_WithGridId_Mul(int fid, int gid, const char* type,
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_String_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, char* strvalue)
+int cg_iRIC_Read_BC_String_WithGridId(int fid, int gid, const char* type, int num, const char* name, char* strvalue)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -159,7 +159,7 @@ int cg_iRIC_Read_BC_String_WithGridId_Mul(int fid, int gid, const char* type, in
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_FunctionalSize_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, int* size)
+int cg_iRIC_Read_BC_FunctionalSize_WithGridId(int fid, int gid, const char* type, int num, const char* name, int* size)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -171,7 +171,7 @@ int cg_iRIC_Read_BC_FunctionalSize_WithGridId_Mul(int fid, int gid, const char* 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_Functional_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, double* x_arr, double* y_arr)
+int cg_iRIC_Read_BC_Functional_WithGridId(int fid, int gid, const char* type, int num, const char* name, double* x_arr, double* y_arr)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -183,7 +183,7 @@ int cg_iRIC_Read_BC_Functional_WithGridId_Mul(int fid, int gid, const char* type
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_FunctionalWithName_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, const char* paramname, double* v_arr)
+int cg_iRIC_Read_BC_FunctionalWithName_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, double* v_arr)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -195,7 +195,7 @@ int cg_iRIC_Read_BC_FunctionalWithName_WithGridId_Mul(int fid, int gid, const ch
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_Functional_RealSingle_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, float* x_arr, float* y_arr)
+int cg_iRIC_Read_BC_Functional_RealSingle_WithGridId(int fid, int gid, const char* type, int num, const char* name, float* x_arr, float* y_arr)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -207,7 +207,7 @@ int cg_iRIC_Read_BC_Functional_RealSingle_WithGridId_Mul(int fid, int gid, const
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_FunctionalWithName_RealSingle_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, const char* paramname, float* v_arr)
+int cg_iRIC_Read_BC_FunctionalWithName_RealSingle_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, float* v_arr)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -219,7 +219,7 @@ int cg_iRIC_Read_BC_FunctionalWithName_RealSingle_WithGridId_Mul(int fid, int gi
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_FunctionalWithName_StringLen_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, const char* paramname, int* length)
+int cg_iRIC_Read_BC_FunctionalWithName_StringLen_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, int* length)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -231,7 +231,7 @@ int cg_iRIC_Read_BC_FunctionalWithName_StringLen_WithGridId_Mul(int fid, int gid
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_BC_FunctionalWithName_String_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, const char* paramname, char* strvalue)
+int cg_iRIC_Read_BC_FunctionalWithName_String_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, char* strvalue)
 {
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
@@ -243,7 +243,7 @@ int cg_iRIC_Read_BC_FunctionalWithName_String_WithGridId_Mul(int fid, int gid, c
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Clear_BC_WithGridId_Mul(int fid, int gid)
+int cg_iRIC_Clear_BC_WithGridId(int fid, int gid)
 {
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
@@ -255,7 +255,7 @@ int cg_iRIC_Clear_BC_WithGridId_Mul(int fid, int gid)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_BC_Indices_WithGridId_Mul(int fid, int gid, const char* type, int num, int length, int* idx_arr)
+int cg_iRIC_Write_BC_Indices_WithGridId(int fid, int gid, const char* type, int num, int length, int* idx_arr)
 {
 	H5CgnsZone* zone = nullptr;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
@@ -266,10 +266,10 @@ int cg_iRIC_Write_BC_Indices_WithGridId_Mul(int fid, int gid, const char* type, 
 		length2 = length * zone->base()->dimension();
 	}
 
-	return cg_iRIC_Write_BC_Indices2_WithGridId_Mul(fid, gid, type, num, length2, idx_arr);
+	return cg_iRIC_Write_BC_Indices2_WithGridId(fid, gid, type, num, length2, idx_arr);
 }
 
-int cg_iRIC_Write_BC_Indices2_WithGridId_Mul(int fid, int gid, const char* type, int num, int length, int* idx_arr)
+int cg_iRIC_Write_BC_Indices2_WithGridId(int fid, int gid, const char* type, int num, int length, int* idx_arr)
 {
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
@@ -286,7 +286,7 @@ int cg_iRIC_Write_BC_Indices2_WithGridId_Mul(int fid, int gid, const char* type,
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_BC_Integer_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, int value)
+int cg_iRIC_Write_BC_Integer_WithGridId(int fid, int gid, const char* type, int num, const char* name, int value)
 {
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
@@ -299,7 +299,7 @@ int cg_iRIC_Write_BC_Integer_WithGridId_Mul(int fid, int gid, const char* type, 
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_BC_Real_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, double value)
+int cg_iRIC_Write_BC_Real_WithGridId(int fid, int gid, const char* type, int num, const char* name, double value)
 {
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
@@ -312,7 +312,7 @@ int cg_iRIC_Write_BC_Real_WithGridId_Mul(int fid, int gid, const char* type, int
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_BC_String_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, const char* value)
+int cg_iRIC_Write_BC_String_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* value)
 {
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
@@ -325,7 +325,7 @@ int cg_iRIC_Write_BC_String_WithGridId_Mul(int fid, int gid, const char* type, i
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_BC_Functional_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, int length, double* x_arr, double* y_arr)
+int cg_iRIC_Write_BC_Functional_WithGridId(int fid, int gid, const char* type, int num, const char* name, int length, double* x_arr, double* y_arr)
 {
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
@@ -338,7 +338,7 @@ int cg_iRIC_Write_BC_Functional_WithGridId_Mul(int fid, int gid, const char* typ
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_BC_FunctionalWithName_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, const char* paramname, int length, double* v_arr)
+int cg_iRIC_Write_BC_FunctionalWithName_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, int length, double* v_arr)
 {
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
@@ -351,7 +351,7 @@ int cg_iRIC_Write_BC_FunctionalWithName_WithGridId_Mul(int fid, int gid, const c
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_BC_FunctionalWithName_String_WithGridId_Mul(int fid, int gid, const char* type, int num, const char* name, const char* paramname, const char* value)
+int cg_iRIC_Write_BC_FunctionalWithName_String_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, const char* value)
 {
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);

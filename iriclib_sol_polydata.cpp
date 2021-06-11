@@ -33,10 +33,10 @@ int getPolyDataSolutionForWrite(int fid, int gid, H5CgnsPolyDataSolution** solut
 
 } // namespace
 
-int cg_iRIC_Read_Sol_PolyData_DataCount_WithGridId_Mul(int fid, int gid, int step, const char* groupname, int* count)
+int cg_iRIC_Read_Sol_PolyData_DataCount_WithGridId(int fid, int gid, int step, const char* groupname, int* count)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_DataCount_Mul");
+	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_DataCount");
 	RETURN_IF_ERR;
 
 	ier = solution->dataCount(groupname, count);
@@ -45,10 +45,10 @@ int cg_iRIC_Read_Sol_PolyData_DataCount_WithGridId_Mul(int fid, int gid, int ste
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_PolyData_CoordinateCount_WithGridId_Mul(int fid, int gid, int step, const char* groupname, int* count)
+int cg_iRIC_Read_Sol_PolyData_CoordinateCount_WithGridId(int fid, int gid, int step, const char* groupname, int* count)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_CoordinateCount_Mul");
+	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_CoordinateCount");
 	RETURN_IF_ERR;
 
 	ier = solution->coordinatesCount(groupname, count);
@@ -57,10 +57,10 @@ int cg_iRIC_Read_Sol_PolyData_CoordinateCount_WithGridId_Mul(int fid, int gid, i
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_PolyData_Pos2d_WithGridId_Mul(int fid, int gid, int step, const char* groupname, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Sol_PolyData_Pos2d_WithGridId(int fid, int gid, int step, const char* groupname, double* x_arr, double* y_arr)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_Pos2d_Mul");
+	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_Pos2d");
 	RETURN_IF_ERR;
 
 	std::vector<double> xvec, yvec;
@@ -75,10 +75,10 @@ int cg_iRIC_Read_Sol_PolyData_Pos2d_WithGridId_Mul(int fid, int gid, int step, c
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_PolyData_Type_WithGridId_Mul(int fid, int gid, int step, const char* groupname, int* v_arr)
+int cg_iRIC_Read_Sol_PolyData_Type_WithGridId(int fid, int gid, int step, const char* groupname, int* v_arr)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_Type_Mul");
+	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_Type");
 	RETURN_IF_ERR;
 
 	std::vector<int> buffer;
@@ -90,10 +90,10 @@ int cg_iRIC_Read_Sol_PolyData_Type_WithGridId_Mul(int fid, int gid, int step, co
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_PolyData_Real_WithGridId_Mul(int fid, int gid, int step, const char* groupname, const char* name, double* v_arr)
+int cg_iRIC_Read_Sol_PolyData_Real_WithGridId(int fid, int gid, int step, const char* groupname, const char* name, double* v_arr)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_Real_Mul");
+	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_Real");
 	RETURN_IF_ERR;
 
 	std::vector<double> buffer;
@@ -105,10 +105,10 @@ int cg_iRIC_Read_Sol_PolyData_Real_WithGridId_Mul(int fid, int gid, int step, co
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_PolyData_Integer_WithGridId_Mul(int fid, int gid, int step, const char* groupname, const char* name, int* v_arr)
+int cg_iRIC_Read_Sol_PolyData_Integer_WithGridId(int fid, int gid, int step, const char* groupname, const char* name, int* v_arr)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_Integer_Mul");
+	int ier = getPolyDataSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_PolyData_WithGridId_Integer");
 	RETURN_IF_ERR;
 
 	std::vector<int> buffer;
@@ -120,10 +120,10 @@ int cg_iRIC_Read_Sol_PolyData_Integer_WithGridId_Mul(int fid, int gid, int step,
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_PolyData_GroupBegin_WithGridId_Mul(int fid, int gid, const char* name)
+int cg_iRIC_Write_Sol_PolyData_GroupBegin_WithGridId(int fid, int gid, const char* name)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_GroupBegin_Mul");
+	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_GroupBegin");
 	RETURN_IF_ERR;
 
 	solution->writeBegin(name);
@@ -131,10 +131,10 @@ int cg_iRIC_Write_Sol_PolyData_GroupBegin_WithGridId_Mul(int fid, int gid, const
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_PolyData_GroupEnd_WithGridId_Mul(int fid, int gid)
+int cg_iRIC_Write_Sol_PolyData_GroupEnd_WithGridId(int fid, int gid)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_GroupEnd_Mul");
+	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_GroupEnd");
 	RETURN_IF_ERR;
 
 	ier = solution->writeEnd();
@@ -143,10 +143,10 @@ int cg_iRIC_Write_Sol_PolyData_GroupEnd_WithGridId_Mul(int fid, int gid)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_PolyData_Polygon_WithGridId_Mul(int fid, int gid, int numPoints, double* x_arr, double* y_arr)
+int cg_iRIC_Write_Sol_PolyData_Polygon_WithGridId(int fid, int gid, int numPoints, double* x_arr, double* y_arr)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_Polygon_Mul");
+	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_Polygon");
 	RETURN_IF_ERR;
 
 	std::vector<double> xvec(numPoints), yvec(numPoints);
@@ -159,10 +159,10 @@ int cg_iRIC_Write_Sol_PolyData_Polygon_WithGridId_Mul(int fid, int gid, int numP
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_PolyData_Polyline_WithGridId_Mul(int fid, int gid, int numPoints, double* x_arr, double* y_arr)
+int cg_iRIC_Write_Sol_PolyData_Polyline_WithGridId(int fid, int gid, int numPoints, double* x_arr, double* y_arr)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_Polyline_Mul");
+	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_Polyline");
 	RETURN_IF_ERR;
 
 	std::vector<double> xvec(numPoints), yvec(numPoints);
@@ -175,10 +175,10 @@ int cg_iRIC_Write_Sol_PolyData_Polyline_WithGridId_Mul(int fid, int gid, int num
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_PolyData_Integer_WithGridId_Mul(int fid, int gid, const char* name, int value)
+int cg_iRIC_Write_Sol_PolyData_Integer_WithGridId(int fid, int gid, const char* name, int value)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_Integer_Mul");
+	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_Integer");
 	RETURN_IF_ERR;
 
 	solution->writeValue(name, value);
@@ -186,10 +186,10 @@ int cg_iRIC_Write_Sol_PolyData_Integer_WithGridId_Mul(int fid, int gid, const ch
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_PolyData_Real_WithGridId_Mul(int fid, int gid, const char* name, double value)
+int cg_iRIC_Write_Sol_PolyData_Real_WithGridId(int fid, int gid, const char* name, double value)
 {
 	H5CgnsPolyDataSolution* solution = nullptr;
-	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_Real_Mul");
+	int ier = getPolyDataSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_PolyData_Real");
 	RETURN_IF_ERR;
 
 	solution->writeValue(name, value);
