@@ -120,7 +120,7 @@ def writeSolution(filename, fid, iterMode):
 
         iric.cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(fid)
 
-        iric.cg_iRIC_Flush(filename, fid)
+        iric.cg_iRIC_Flush(fid)
 
     return fid
 
@@ -188,7 +188,7 @@ def writeSolution3d(filename, fid):
 
         iric.cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(fid)
 
-        iric.cg_iRIC_Flush(filename, fid)
+        iric.cg_iRIC_Flush(fid)
 
     return fid
 

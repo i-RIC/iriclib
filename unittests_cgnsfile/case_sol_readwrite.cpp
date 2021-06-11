@@ -202,7 +202,7 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
 		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Flush(filename, *fid);
+		ier = cg_iRIC_Flush(*fid);
 		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
 }
@@ -326,7 +326,7 @@ void writeSolution3d(const char* filename, int* fid)
 		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
 		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Flush(filename, *fid);
+		ier = cg_iRIC_Flush(*fid);
 		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
 }

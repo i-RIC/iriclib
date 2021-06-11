@@ -1169,12 +1169,8 @@ void IRICLIBDLL FMNAME(iric_initoption_f, IRIC_INITOPTION_F) (int* option, int *
 	*ier = iRIC_InitOption(*option);
 }
 
-void IRICLIBDLL FMNAME(cg_iric_flush_f, CG_IRIC_FLUSH_F) (STR_PSTR(name), int* fid, int *ier STR_PLEN(name)) {
-	char c_name[STRINGMAXLEN + 1];
-	string_2_C_string(STR_PTR(name), STR_LEN(name), c_name, STRINGMAXLEN, ier);
-	if (*ier != 0) return;
-
-	*ier = cg_iRIC_Flush(c_name, *fid);
+void IRICLIBDLL FMNAME(cg_iric_flush_f, CG_IRIC_FLUSH_F) (int* fid, int *ier) {
+	*ier = cg_iRIC_Flush(*fid);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_gotobase_f, CG_IRIC_GOTOBASE_F) (int* fid, int* B, int *ier) {

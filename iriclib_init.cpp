@@ -100,7 +100,7 @@ int iRIC_InitOption(int option)
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Flush(const char* /*name*/, int fid)
+int cg_iRIC_Flush(int fid)
 {
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);

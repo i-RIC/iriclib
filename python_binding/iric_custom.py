@@ -513,8 +513,8 @@ def iRIC_InitOption(option):
 	ier = _iric.iRIC_InitOption(option)
 	_checkErrorCode(ier)
 
-def cg_iRIC_Flush(name, fid):
-	ier = _iric.cg_iRIC_Flush(name, fid)
+def cg_iRIC_Flush(fid):
+	ier = _iric.cg_iRIC_Flush(fid)
 	_checkErrorCode(ier)
 
 def cg_iRIC_GotoBase(fid):

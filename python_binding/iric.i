@@ -129,7 +129,7 @@ int cg_iRIC_Close(int fid);
 int cg_iRIC_Init(int fid);
 int cg_iRIC_InitRead(int fid);
 int iRIC_InitOption(int option);
-int cg_iRIC_Flush(const char* name, int fid);
+int cg_iRIC_Flush(int fid);
 int cg_iRIC_GotoBase(int fid, int* OUTPUT);
 int cg_iRIC_GotoCC(int fid);
 int cg_iRIC_GotoRawDataTop(int fid);
