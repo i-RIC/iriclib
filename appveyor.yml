@@ -207,17 +207,23 @@ on_success:
         # create headers dictionary
         $h = @{"Authorization" = "token $access_token"}
 
-        # get latest release tag
-        # GET /repos/{owner}/{repo}/releases/latest
-        # see https://docs.github.com/en/rest/reference/repos#get-the-latest-release
-        # see https://docs.github.com/ja/rest/reference/repos#get-the-latest-release
-        #
-        $latest = (Invoke-WebRequest -Uri "$releases_url/latest" -Headers $h -Method GET).Content | ConvertFrom-Json
-        if (! ($latest.tag_name -match "^v(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
-          # partially based on https://semver.org/
-          # must be v + major.minor.patch
-          throw "Bad tag"
+        # # get latest release tag
+        # # GET /repos/{owner}/{repo}/releases/latest
+        # # see https://docs.github.com/en/rest/reference/repos#get-the-latest-release
+        # # see https://docs.github.com/ja/rest/reference/repos#get-the-latest-release
+        # #
+        # $latest = (Invoke-WebRequest -Uri "$releases_url/latest" -Headers $h -Method GET).Content | ConvertFrom-Json
+        # if (! ($latest.tag_name -match "^v(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
+        #   # partially based on https://semver.org/
+        #   # must be v + major.minor.patch
+        #   throw "Bad tag"
+        # }
+        ##{{
+        echo "env:IRICLIB_VER=$env:IRICLIB_VER"
+        if (! ($$env:IRICLIB_VER -match "^(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
+          throw "Bad version"
         }
+        ##}}
 
         # Note: draft is set to true so that no notifications are sent yet
 
@@ -226,7 +232,8 @@ on_success:
         # see https://docs.github.com/en/rest/reference/repos#create-a-release
         # see https://docs.github.com/ja/rest/reference/repos#create-a-release
         #
-        $patch = 1 + $matches["patch"]
+        #$patch = 1 + $matches["patch"]
+        $patch = $matches["patch"]
         $create = @{
           "tag_name"         = "v" + $matches["major"] + "." + $matches["minor"] + "." + $patch;
           "target_commitish" = "$env:APPVEYOR_REPO_COMMIT";
