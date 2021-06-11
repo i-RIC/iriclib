@@ -38,7 +38,7 @@ def gen_ftoc_source_content(fdef):
 
   if ("Size2" in fname): return ""
 
-  content = "void IRICLIBDLL FMNAME(" + fname.lower() + "_f, " + fname.upper() + "_F)"
+  content = "void IRICLIBDLL FMNAME(" + fname.lower() + "_f2c, " + fname.upper() + "_F2C)"
   args = list()
   iargs = list()
 
