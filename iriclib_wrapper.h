@@ -61,6 +61,10 @@ int IRICLIBDLL cg_iRIC_Write_Grid_Integer_Node_WithGridId(int fid, int gid, cons
 int IRICLIBDLL cg_iRIC_Write_Grid_Real_Cell_WithGridId(int fid, int gid, const char* name, RealArrayContainer& v_arr);
 int IRICLIBDLL cg_iRIC_Write_Grid_Integer_Cell_WithGridId(int fid, int gid, const char* name, IntArrayContainer& v_arr);
 
+// from iriclib_grid_solverlib.h
+int IRICLIBDLL cg_iRIC_Read_Grid2d_Interpolate(int grid_handle, double x, double y, int* ok, int* count, IntArrayContainer& nodeids_arr, RealArrayContainer& weights_arr);
+int IRICLIBDLL cg_iRIC_Read_Grid2d_InterpolateWithCell(int grid_handle, double x, double y, int cellId, IntArrayContainer& nodeids_arr, RealArrayContainer& weights_arr);
+
 // from iriclib_not_withbaseid.h
 int IRICLIBDLL cg_iRIC_Read_Complex_Functional(int fid, const char* groupname, int num, const char* name, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int IRICLIBDLL cg_iRIC_Read_Complex_FunctionalWithName(int fid, const char* groupname, int num, const char* name, const char* paramname, RealArrayContainer& v_arr);

@@ -231,6 +231,18 @@ int cg_iRIC_Write_Grid_Integer_Cell_WithGridId(int fid, int gid, const char* nam
 }
 
 
+// from iriclib_grid_solverlib.h
+int cg_iRIC_Read_Grid2d_Interpolate(int grid_handle, double x, double y, int* ok, int* count, IntArrayContainer& nodeids_arr, RealArrayContainer& weights_arr)
+{
+	return cg_iRIC_Read_Grid2d_Interpolate(grid_handle, x, y, ok, count, nodeids_arr.pointer(), weights_arr.pointer());
+}
+
+int cg_iRIC_Read_Grid2d_InterpolateWithCell(int grid_handle, double x, double y, int cellId, IntArrayContainer& nodeids_arr, RealArrayContainer& weights_arr)
+{
+	return cg_iRIC_Read_Grid2d_InterpolateWithCell(grid_handle, x, y, cellId, nodeids_arr.pointer(), weights_arr.pointer());
+}
+
+
 // from iriclib_not_withbaseid.h
 int cg_iRIC_Read_Complex_Functional(int fid, const char* groupname, int num, const char* name, RealArrayContainer& x_arr, RealArrayContainer& y_arr)
 {

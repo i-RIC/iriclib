@@ -1,15 +1,15 @@
 #ifndef IRICSOLVERLIB_TRICELL_H
 #define IRICSOLVERLIB_TRICELL_H
 
-#include "iricsolverlib_api.h"
+#include "iriclib_global.h"
 #include "iricsolverlib_cell2d.h"
 
 namespace iRICSolverLib {
 
-class IRICSOLVERLIB_API TriCell : public Cell2D
+class IRICLIBDLL TriCell : public Cell2D
 {
 public:
-	TriCell(size_t id1, size_t id2, size_t id3, Grid2D* const grid);
+	TriCell(int id1, int id2, int id3, Grid2D* const grid);
 	~TriCell();
 
 	bool interpolate(const Point2D& point, double* weight) const;

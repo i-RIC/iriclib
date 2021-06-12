@@ -570,6 +570,26 @@ int cg_iRIC_Write_Grid_Integer_Cell(int fid, const char* name, int* v_arr)
 }
 
 
+// from iriclib_grid_solverlib.h
+int cg_iRIC_Read_Grid2d_Open(int fid, int* grid_handle)
+{
+  int gid;
+  int ier = getlastGridId(fid, &gid);
+  RETURN_IF_ERR;
+
+  return cg_iRIC_Read_Grid2d_Open_WithGridId(fid, gid, grid_handle);
+}
+
+int cg_iRIC_Read_Sol_Grid2d_Open(int fid, int solid, int* grid_handle)
+{
+  int gid;
+  int ier = getlastGridId(fid, &gid);
+  RETURN_IF_ERR;
+
+  return cg_iRIC_Read_Sol_Grid2d_Open_WithGridId(fid, gid, solid, grid_handle);
+}
+
+
 // from iriclib_sol_cell.h
 int cg_iRIC_Read_Sol_Cell_Integer(int fid, int step, const char* name, int* v_arr)
 {

@@ -92,6 +92,7 @@ HEADERS += error_macros.h \
            iriclib_geoutil.h \
            iriclib_global.h \
            iriclib_grid.h \
+           iriclib_grid_solverlib.h \
            iriclib_gui_coorp.h \
            iriclib_h5.h \
            iriclib_init.h \
@@ -112,8 +113,6 @@ HEADERS += error_macros.h \
            iriclib_sol_polydata.h \
            iriclib_solution.h \
            iriclib_wrapper.h \
-           iricsolverlib.h \
-           iricsolverlib_api.h \
            iricsolverlib_cell2d.h \
            iricsolverlib_grid2d.h \
            iricsolverlib_point2d.h \
@@ -197,6 +196,7 @@ SOURCES += h5attributecloser.cpp \
            iriclib_geo.cpp \
            iriclib_geoutil.cpp \
            iriclib_grid.cpp \
+           iriclib_grid_solverlib.cpp \
            iriclib_gui_coorp.cpp \
            iriclib_init.cpp \
            iriclib_not_withbaseid.cpp \
@@ -216,8 +216,6 @@ SOURCES += h5attributecloser.cpp \
            iriclib_sol_polydata.cpp \
            iriclib_solution.cpp \
            iriclib_wrapper.cpp \
-           iricsolver_ftoc.c \
-           iricsolverlib.cpp \
            iricsolverlib_cell2d.cpp \
            iricsolverlib_grid2d.cpp \
            iricsolverlib_quadcell.cpp \

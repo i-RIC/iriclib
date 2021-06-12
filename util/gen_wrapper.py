@@ -10,6 +10,7 @@ TARGET_FILES_WRAPPER = [
   'iriclib_geo.h',
   'iriclib_geoutil.h',
   'iriclib_grid.h',
+  'iriclib_grid_solverlib.h',
   'iriclib_not_withbaseid.h',
   'iriclib_not_withgridid.h',
   'iriclib_sol_cell.h',

@@ -117,6 +117,14 @@ int cg_iRIC_Read_Grid_KFaceCount_WithGridId(int fid, int gid, int* OUTPUT);
 int cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId(int fid, int gid, const char* name, const char* dimname, int* OUTPUT);
 int cg_iRIC_Read_Grid_FunctionalTimeSize_WithGridId(int fid, int gid, const char* name, int* OUTPUT);
 
+// from iriclib_grid_solverlib.h
+int cg_iRIC_Read_Grid2d_Open_WithGridId(int fid, int gid, int* OUTPUT);
+int cg_iRIC_Read_Sol_Grid2d_Open_WithGridId(int fid, int gid, int solid, int* OUTPUT);
+int cg_iRIC_Read_Grid2d_Close(int grid_handle);
+int cg_iRIC_Read_Grid2d_CellArea(int grid_handle, int cellId, double* OUTPUT);
+int cg_iRIC_Read_Grid2d_FindCell(int grid_handle, double x, double y, int* OUTPUT);
+int cg_iRIC_Read_Grid2d_CellNodeCount(int grid_handle, int cellId, int* OUTPUT);
+
 // from iriclib_gui_coorp.h
 int iRIC_Check_Cancel();
 
@@ -164,6 +172,8 @@ int cg_iRIC_Read_Grid_JFaceCount(int fid, int* OUTPUT);
 int cg_iRIC_Read_Grid_KFaceCount(int fid, int* OUTPUT);
 int cg_iRIC_Read_Grid_FunctionalDimensionSize(int fid, const char* name, const char* dimname, int* OUTPUT);
 int cg_iRIC_Read_Grid_FunctionalTimeSize(int fid, const char* name, int* OUTPUT);
+int cg_iRIC_Read_Grid2d_Open(int fid, int* OUTPUT);
+int cg_iRIC_Read_Sol_Grid2d_Open(int fid, int solid, int* OUTPUT);
 int cg_iRIC_Read_Sol_Particle_Count(int fid, int step, int* OUTPUT);
 int cg_iRIC_Read_Sol_ParticleGroup_Count(int fid, int step, const char* groupname, int* OUTPUT);
 int cg_iRIC_Write_Sol_ParticleGroup_GroupBegin(int fid, const char* name);
@@ -257,6 +267,7 @@ int cg_iRIC_Write_Grid_Real_Node_WithGridId(int fid, int gid, const char* name, 
 int cg_iRIC_Write_Grid_Integer_Node_WithGridId(int fid, int gid, const char* name, IntArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Real_Cell_WithGridId(int fid, int gid, const char* name, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Grid_Integer_Cell_WithGridId(int fid, int gid, const char* name, IntArrayContainer& v_arr);
+int cg_iRIC_Read_Grid2d_InterpolateWithCell(int grid_handle, double x, double y, int cellId, IntArrayContainer& nodeids_arr, RealArrayContainer& weights_arr);
 int cg_iRIC_Read_Complex_Functional(int fid, const char* groupname, int num, const char* name, RealArrayContainer& x_arr, RealArrayContainer& y_arr);
 int cg_iRIC_Read_Complex_FunctionalWithName(int fid, const char* groupname, int num, const char* name, const char* paramname, RealArrayContainer& v_arr);
 int cg_iRIC_Write_Complex_Functional(int fid, const char* groupname, int num, const char* name, RealArrayContainer& x_arr, RealArrayContainer& y_arr);

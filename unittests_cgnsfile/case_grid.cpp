@@ -103,6 +103,40 @@ void case_GridRead()
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell() value[15] == 1", intArr[15] == 1);
 	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell() value[16] == 0", intArr[16] == 0);
 
+	int grid_handle;
+	ier = cg_iRIC_Read_Grid2d_Open(fid, &grid_handle);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Open() ier == 0", ier == 0);
+
+	double area;
+	ier = cg_iRIC_Read_Grid2d_CellArea(grid_handle, 1, &area);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellArea() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellArea() area == 0.017", std::abs(area - 0.0173) < 0.0001);
+
+	int cellNodeCount;
+	ier = cg_iRIC_Read_Grid2d_CellNodeCount(grid_handle, 1, &cellNodeCount);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellNodeCount() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellNodeCount() cellNodeCount == 4", cellNodeCount == 4);
+
+	int nodeIds[4];
+	double weights[4];
+	int ok;
+	int nodeCount;
+	ier = cg_iRIC_Read_Grid2d_Interpolate(grid_handle, 0.0, 0.0, &ok, &nodeCount, nodeIds, weights);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() ok == 1", ok == 1);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeCount == 4", nodeCount == 4);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[0] == 93", nodeIds[0] == 93);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[1] == 94", nodeIds[1] == 94);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[2] == 105", nodeIds[2] == 105);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[3] == 104", nodeIds[3] == 104);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[0] == 0.3863", std::abs(weights[0] - 0.3863) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[1] == 0.4012", std::abs(weights[1] - 0.4012) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[2] == 0.2123", std::abs(weights[2] - 0.2123) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[3] == 0", std::abs(weights[3] - 0) < 0.0001);
+
+	ier = cg_iRIC_Read_Grid2d_Close(grid_handle);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Close() ier == 0", ier == 0);
+
 	cg_iRIC_Close(fid);
 
 	remove("case_grid.cgn");
@@ -140,6 +174,38 @@ void case_GridReadUnstructured()
 
 	ier = cg_iRIC_Read_Grid_TriangleElements(fid, elems.data());
 	VERIFY_LOG("cg_iRIC_Read_Grid_TriangleElements() ier == 0", ier == 0);
+
+	int grid_handle;
+	ier = cg_iRIC_Read_Grid2d_Open(fid, &grid_handle);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Open() ier == 0", ier == 0);
+
+	double area;
+	ier = cg_iRIC_Read_Grid2d_CellArea(grid_handle, 1, &area);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellArea() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellArea() area == 0.2067", std::abs(area - 0.2067) < 0.0001);
+
+	int cellNodeCount;
+	ier = cg_iRIC_Read_Grid2d_CellNodeCount(grid_handle, 1, &cellNodeCount);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellNodeCount() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellNodeCount() cellNodeCount == 3", cellNodeCount == 3);
+
+	int nodeIds[3];
+	double weights[3];
+	int ok;
+	int nodeCount;
+	ier = cg_iRIC_Read_Grid2d_Interpolate(grid_handle, 0.0, 0.0, &ok, &nodeCount, nodeIds, weights);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() ok == 1", ok == 1);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeCount == 3", nodeCount == 3);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[0] == 4", nodeIds[0] == 4);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[1] == 5", nodeIds[1] == 5);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[2] == 2", nodeIds[2] == 2);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[0] == 0.5415", std::abs(weights[0] - 0.5415) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[1] == 0.0921", std::abs(weights[1] - 0.0921) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[2] == 0.3663", std::abs(weights[2] - 0.3663) < 0.0001);
+
+	ier = cg_iRIC_Read_Grid2d_Close(grid_handle);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Close() ier == 0", ier == 0);
 
 	cg_iRIC_Close(fid);
 

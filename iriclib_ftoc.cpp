@@ -1114,6 +1114,40 @@ void IRICLIBDLL FMNAME(cg_iric_write_grid_integer_cell_withgridid_f2c, CG_IRIC_W
 }
 
 
+// from iriclib_grid_solverlib.h
+void IRICLIBDLL FMNAME(cg_iric_read_grid2d_open_withgridid_f2c, CG_IRIC_READ_GRID2D_OPEN_WITHGRIDID_F2C) (int* fid, int* gid, int* grid_handle, int *ier) {
+	*ier = cg_iRIC_Read_Grid2d_Open_WithGridId(*fid, *gid, grid_handle);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_sol_grid2d_open_withgridid_f2c, CG_IRIC_READ_SOL_GRID2D_OPEN_WITHGRIDID_F2C) (int* fid, int* gid, int* solid, int* grid_handle, int *ier) {
+	*ier = cg_iRIC_Read_Sol_Grid2d_Open_WithGridId(*fid, *gid, *solid, grid_handle);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid2d_close_f2c, CG_IRIC_READ_GRID2D_CLOSE_F2C) (int* grid_handle, int *ier) {
+	*ier = cg_iRIC_Read_Grid2d_Close(*grid_handle);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid2d_cellarea_f2c, CG_IRIC_READ_GRID2D_CELLAREA_F2C) (int* grid_handle, int* cellId, double* area, int *ier) {
+	*ier = cg_iRIC_Read_Grid2d_CellArea(*grid_handle, *cellId, area);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid2d_findcell_f2c, CG_IRIC_READ_GRID2D_FINDCELL_F2C) (int* grid_handle, double* x, double* y, int* cellId, int *ier) {
+	*ier = cg_iRIC_Read_Grid2d_FindCell(*grid_handle, *x, *y, cellId);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid2d_cellnodecount_f2c, CG_IRIC_READ_GRID2D_CELLNODECOUNT_F2C) (int* grid_handle, int* cellId, int* count, int *ier) {
+	*ier = cg_iRIC_Read_Grid2d_CellNodeCount(*grid_handle, *cellId, count);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid2d_interpolate_f2c, CG_IRIC_READ_GRID2D_INTERPOLATE_F2C) (int* grid_handle, double* x, double* y, int* ok, int* count, int* nodeids_arr, double* weights_arr, int *ier) {
+	*ier = cg_iRIC_Read_Grid2d_Interpolate(*grid_handle, *x, *y, ok, count, nodeids_arr, weights_arr);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid2d_interpolatewithcell_f2c, CG_IRIC_READ_GRID2D_INTERPOLATEWITHCELL_F2C) (int* grid_handle, double* x, double* y, int* cellId, int* nodeids_arr, double* weights_arr, int *ier) {
+	*ier = cg_iRIC_Read_Grid2d_InterpolateWithCell(*grid_handle, *x, *y, *cellId, nodeids_arr, weights_arr);
+}
+
+
 // from iriclib_gui_coorp.h
 void IRICLIBDLL FMNAME(iric_check_cancel_f2c, IRIC_CHECK_CANCEL_F2C) (int *ier) {
 	*ier = iRIC_Check_Cancel();
@@ -1894,6 +1928,14 @@ void IRICLIBDLL FMNAME(cg_iric_write_grid_integer_cell_f2c, CG_IRIC_WRITE_GRID_I
 	if (*ier != 0) return;
 
 	*ier = cg_iRIC_Write_Grid_Integer_Cell(*fid, c_name, v_arr);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_grid2d_open_f2c, CG_IRIC_READ_GRID2D_OPEN_F2C) (int* fid, int* grid_handle, int *ier) {
+	*ier = cg_iRIC_Read_Grid2d_Open(*fid, grid_handle);
+}
+
+void IRICLIBDLL FMNAME(cg_iric_read_sol_grid2d_open_f2c, CG_IRIC_READ_SOL_GRID2D_OPEN_F2C) (int* fid, int* solid, int* grid_handle, int *ier) {
+	*ier = cg_iRIC_Read_Sol_Grid2d_Open(*fid, *solid, grid_handle);
 }
 
 void IRICLIBDLL FMNAME(cg_iric_read_sol_cell_integer_f2c, CG_IRIC_READ_SOL_CELL_INTEGER_F2C) (int* fid, int* step, STR_PSTR(name), int* v_arr, int *ier STR_PLEN(name)) {

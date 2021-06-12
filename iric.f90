@@ -2247,6 +2247,105 @@ contains
 
 
 
+  ! from iriclib_grid_solverlib.h
+
+  subroutine cg_iric_read_grid2d_open_withgridid(fid, gid, grid_handle, ier)
+    integer, intent(in):: fid
+    integer, intent(in):: gid
+    integer, intent(out):: grid_handle
+    integer, intent(out):: ier
+
+    call cg_iric_read_grid2d_open_withgridid_f2c &
+      (fid, gid, grid_handle, ier)
+
+  end subroutine
+
+  subroutine cg_iric_read_sol_grid2d_open_withgridid(fid, gid, solid, grid_handle, ier)
+    integer, intent(in):: fid
+    integer, intent(in):: gid
+    integer, intent(in):: solid
+    integer, intent(out):: grid_handle
+    integer, intent(out):: ier
+
+    call cg_iric_read_sol_grid2d_open_withgridid_f2c &
+      (fid, gid, solid, grid_handle, ier)
+
+  end subroutine
+
+  subroutine cg_iric_read_grid2d_close(grid_handle, ier)
+    integer, intent(in):: grid_handle
+    integer, intent(out):: ier
+
+    call cg_iric_read_grid2d_close_f2c &
+      (grid_handle, ier)
+
+  end subroutine
+
+  subroutine cg_iric_read_grid2d_cellarea(grid_handle, cellId, area, ier)
+    integer, intent(in):: grid_handle
+    integer, intent(in):: cellId
+    double precision, intent(out):: area
+    integer, intent(out):: ier
+
+    call cg_iric_read_grid2d_cellarea_f2c &
+      (grid_handle, cellId, area, ier)
+
+  end subroutine
+
+  subroutine cg_iric_read_grid2d_findcell(grid_handle, x, y, cellId, ier)
+    integer, intent(in):: grid_handle
+    double precision, intent(in):: x
+    double precision, intent(in):: y
+    integer, intent(out):: cellId
+    integer, intent(out):: ier
+
+    call cg_iric_read_grid2d_findcell_f2c &
+      (grid_handle, x, y, cellId, ier)
+
+  end subroutine
+
+  subroutine cg_iric_read_grid2d_cellnodecount(grid_handle, cellId, count, ier)
+    integer, intent(in):: grid_handle
+    integer, intent(in):: cellId
+    integer, intent(out):: count
+    integer, intent(out):: ier
+
+    call cg_iric_read_grid2d_cellnodecount_f2c &
+      (grid_handle, cellId, count, ier)
+
+  end subroutine
+
+  subroutine cg_iric_read_grid2d_interpolate(grid_handle, x, y, ok, count, nodeids_arr, weights_arr, ier)
+    integer, intent(in):: grid_handle
+    double precision, intent(in):: x
+    double precision, intent(in):: y
+    integer, intent(out):: ok
+    integer, intent(out):: count
+    integer, dimension(:), intent(out):: nodeids_arr
+    double precision, dimension(:), intent(out):: weights_arr
+    integer, intent(out):: ier
+
+    call cg_iric_read_grid2d_interpolate_f2c &
+      (grid_handle, x, y, ok, count, nodeids_arr, weights_arr, ier)
+
+  end subroutine
+
+  subroutine cg_iric_read_grid2d_interpolatewithcell(grid_handle, x, y, cellId, nodeids_arr, weights_arr, ier)
+    integer, intent(in):: grid_handle
+    double precision, intent(in):: x
+    double precision, intent(in):: y
+    integer, intent(in):: cellId
+    integer, dimension(:), intent(out):: nodeids_arr
+    double precision, dimension(:), intent(out):: weights_arr
+    integer, intent(out):: ier
+
+    call cg_iric_read_grid2d_interpolatewithcell_f2c &
+      (grid_handle, x, y, cellId, nodeids_arr, weights_arr, ier)
+
+  end subroutine
+
+
+
   ! from iriclib_gui_coorp.h
 
   subroutine iric_check_cancel(ier)
@@ -3687,6 +3786,27 @@ contains
 
     call cg_iric_write_grid_integer_cell_f2c &
       (fid, name, v_arr, ier)
+
+  end subroutine
+
+  subroutine cg_iric_read_grid2d_open(fid, grid_handle, ier)
+    integer, intent(in):: fid
+    integer, intent(out):: grid_handle
+    integer, intent(out):: ier
+
+    call cg_iric_read_grid2d_open_f2c &
+      (fid, grid_handle, ier)
+
+  end subroutine
+
+  subroutine cg_iric_read_sol_grid2d_open(fid, solid, grid_handle, ier)
+    integer, intent(in):: fid
+    integer, intent(in):: solid
+    integer, intent(out):: grid_handle
+    integer, intent(out):: ier
+
+    call cg_iric_read_sol_grid2d_open_f2c &
+      (fid, solid, grid_handle, ier)
 
   end subroutine
 

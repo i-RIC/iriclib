@@ -30,6 +30,7 @@
 #include "iriclib_geo.h" // geographic data
 #include "iriclib_geoutil.h" // geographic data
 #include "iriclib_grid.h" // grid coordinates and attributes
+#include "iriclib_grid_solverlib.h" // iricsolverlib
 #include "iriclib_gui_coorp.h" // gui coorporation
 #include "iriclib_init.h" // initialization and finalization
 #include "iriclib_solution.h" // solution basis

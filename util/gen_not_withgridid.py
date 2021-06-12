@@ -6,6 +6,7 @@ TARGET_FILES_NOT_WITHGRIDID = [
   'iriclib_bc.h',
   'iriclib_complex.h',
   'iriclib_grid.h',
+  'iriclib_grid_solverlib.h',
   'iriclib_sol_cell.h',
   'iriclib_sol_gridcoord.h',
   'iriclib_sol_iface.h',

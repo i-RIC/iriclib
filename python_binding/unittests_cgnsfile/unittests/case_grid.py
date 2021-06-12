@@ -52,6 +52,36 @@ def case_GridRead():
     util.verify_log("cg_iRIC_Read_Grid_Integer_Cell() value[15] == 1", intArr[15] == 1)
     util.verify_log("cg_iRIC_Read_Grid_Integer_Cell() value[16] == 0", intArr[16] == 0)
 
+
+    try:
+        grid_handle = iric.cg_iRIC_Read_Grid2d_Open(fid)
+        util.verify_log("cg_iRIC_Read_Grid2d_Open ier == 0", True)
+    except:
+        pass
+
+    area = iric.cg_iRIC_Read_Grid2d_CellArea(grid_handle, 1)
+    util.verify_log("cg_iRIC_Read_Grid2d_CellArea() area == 0.017", abs(area - 0.0173) < 0.0001)
+
+    cellNodeCount = iric.cg_iRIC_Read_Grid2d_CellNodeCount(grid_handle, 1)
+    util.verify_log("cg_iRIC_Read_Grid2d_CellNodeCount() cellNodeCount == 4", cellNodeCount == 4)
+
+    try:
+        nodeIds, weights = iric.cg_iRIC_Read_Grid2d_Interpolate(grid_handle, 0.0, 0.0)
+        util.verify_log("cg_iRIC_Read_Grid2d_Interpolate ier == 0", True)
+    except:
+        pass
+
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[0] == 93", nodeIds[0] == 93)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[1] == 94", nodeIds[1] == 94)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[2] == 105", nodeIds[2] == 105)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[3] == 104", nodeIds[3] == 104)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() weights[0] == 0.3863", abs(weights[0] - 0.3863) < 0.0001)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() weights[1] == 0.4012", abs(weights[1] - 0.4012) < 0.0001)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() weights[2] == 0.2123", abs(weights[2] - 0.2123) < 0.0001)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() weights[3] == 0", abs(weights[3] - 0) < 0.0001)
+
+    iric.cg_iRIC_Read_Grid2d_Close(grid_handle)
+
     iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_grid.cgn")
@@ -80,6 +110,33 @@ def case_GridReadUnstructured():
     util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[6] == 4", elems[6] == 4)
     util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[7] == 2", elems[7] == 2)
     util.verify_log("cg_iRIC_Read_Grid_TriangleElements() elems[8] == 3", elems[8] == 3)
+
+    try:
+        grid_handle = iric.cg_iRIC_Read_Grid2d_Open(fid)
+        util.verify_log("cg_iRIC_Read_Grid2d_Open ier == 0", True)
+    except:
+        pass
+
+    area = iric.cg_iRIC_Read_Grid2d_CellArea(grid_handle, 1)
+    util.verify_log("cg_iRIC_Read_Grid2d_CellArea() area == 0.2067", abs(area - 0.2067) < 0.0001)
+
+    cellNodeCount = iric.cg_iRIC_Read_Grid2d_CellNodeCount(grid_handle, 1)
+    util.verify_log("cg_iRIC_Read_Grid2d_CellNodeCount() cellNodeCount == 3", cellNodeCount == 3)
+
+    try:
+        nodeIds, weights = iric.cg_iRIC_Read_Grid2d_Interpolate(grid_handle, 0.0, 0.0)
+        util.verify_log("cg_iRIC_Read_Grid2d_Interpolate ier == 0", True)
+    except:
+        pass
+
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[0] == 4", nodeIds[0] == 4)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[1] == 5", nodeIds[1] == 5)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[2] == 2", nodeIds[2] == 2)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() weights[0] == 0.5415", abs(weights[0] - 0.5415) < 0.0001)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() weights[1] == 0.0921", abs(weights[1] - 0.0921) < 0.0001)
+    util.verify_log("cg_iRIC_Read_Grid2d_Interpolate() weights[2] == 0.3663", abs(weights[2] - 0.3663) < 0.0001)
+
+    iric.cg_iRIC_Read_Grid2d_Close(grid_handle)
 
     iric.cg_iRIC_Close(fid)
 

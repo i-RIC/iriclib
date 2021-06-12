@@ -473,6 +473,37 @@ def cg_iRIC_Read_Grid_FunctionalTimeSize_WithGridId(fid, gid, name):
 	return count
 
 
+# from iriclib_grid_solverlib.h
+def cg_iRIC_Read_Grid2d_Open_WithGridId(fid, gid):
+	ier, grid_handle = _iric.cg_iRIC_Read_Grid2d_Open_WithGridId(fid, gid)
+	_checkErrorCode(ier)
+	return grid_handle
+
+def cg_iRIC_Read_Sol_Grid2d_Open_WithGridId(fid, gid, solid):
+	ier, grid_handle = _iric.cg_iRIC_Read_Sol_Grid2d_Open_WithGridId(fid, gid, solid)
+	_checkErrorCode(ier)
+	return grid_handle
+
+def cg_iRIC_Read_Grid2d_Close(grid_handle):
+	ier = _iric.cg_iRIC_Read_Grid2d_Close(grid_handle)
+	_checkErrorCode(ier)
+
+def cg_iRIC_Read_Grid2d_CellArea(grid_handle, cellId):
+	ier, area = _iric.cg_iRIC_Read_Grid2d_CellArea(grid_handle, cellId)
+	_checkErrorCode(ier)
+	return area
+
+def cg_iRIC_Read_Grid2d_FindCell(grid_handle, x, y):
+	ier, cellId = _iric.cg_iRIC_Read_Grid2d_FindCell(grid_handle, x, y)
+	_checkErrorCode(ier)
+	return cellId
+
+def cg_iRIC_Read_Grid2d_CellNodeCount(grid_handle, cellId):
+	ier, count = _iric.cg_iRIC_Read_Grid2d_CellNodeCount(grid_handle, cellId)
+	_checkErrorCode(ier)
+	return count
+
+
 # from iriclib_gui_coorp.h
 def iRIC_Check_Cancel():
 	ier = _iric.iRIC_Check_Cancel()
@@ -664,6 +695,16 @@ def cg_iRIC_Read_Grid_FunctionalTimeSize(fid, name):
 	ier, count = _iric.cg_iRIC_Read_Grid_FunctionalTimeSize(fid, name)
 	_checkErrorCode(ier)
 	return count
+
+def cg_iRIC_Read_Grid2d_Open(fid):
+	ier, grid_handle = _iric.cg_iRIC_Read_Grid2d_Open(fid)
+	_checkErrorCode(ier)
+	return grid_handle
+
+def cg_iRIC_Read_Sol_Grid2d_Open(fid, solid):
+	ier, grid_handle = _iric.cg_iRIC_Read_Sol_Grid2d_Open(fid, solid)
+	_checkErrorCode(ier)
+	return grid_handle
 
 def cg_iRIC_Read_Sol_Particle_Count(fid, step):
 	ier, count = _iric.cg_iRIC_Read_Sol_Particle_Count(fid, step)
@@ -1157,6 +1198,14 @@ def cg_iRIC_Write_Grid_Integer_Cell_WithGridId(fid, gid, name, v_arr):
 	v.set(v_arr)
 	ier = _iric.cg_iRIC_Write_Grid_Integer_Cell_WithGridId(fid, gid, name, v)
 	_checkErrorCode(ier)
+
+def cg_iRIC_Read_Grid2d_InterpolateWithCell(grid_handle, x, y, cellId):
+	size = cg_iRIC_Read_Grid2d_CellNodeCount(grid_handle, cellId)
+	nodeids = IntArrayContainer(size)
+	weights = RealArrayContainer(size)
+	ier = _iric.cg_iRIC_Read_Grid2d_InterpolateWithCell(grid_handle, x, y, cellId, nodeids, weights)
+	_checkErrorCode(ier)
+	return nodeids.get(), weights.get()
 
 def cg_iRIC_Read_Complex_Functional(fid, groupname, num, name):
 	size = cg_iRIC_Read_Complex_FunctionalSize(fid, groupname, num, name)
@@ -2015,3 +2064,6 @@ def cg_iRIC_Write_Sol_PolyData_Polyline_WithGridId(fid, gid, numPoints, x_arr, y
 	_checkErrorCode(ier)
 
 
+def cg_iRIC_Read_Grid2d_Interpolate(grid_handle, x, y):
+    cellId = cg_iRIC_Read_Grid2d_FindCell(grid_handle, x, y)
+    return cg_iRIC_Read_Grid2d_InterpolateWithCell(grid_handle, x, y, cellId)

@@ -8,6 +8,7 @@ TARGET_FILES_F90 = [
   'iriclib_geo.h',
   'iriclib_geoutil.h',
   'iriclib_grid.h',
+  'iriclib_grid_solverlib.h',
   'iriclib_gui_coorp.h',
   'iriclib_init.h',
   'iriclib_not_withbaseid.h',
@@ -42,6 +43,10 @@ def gen_f90_interface_content(fdef):
 
   (retval, fname, args) = m.groups()
   fname_lower = fname.lower()
+
+  if fname_lower == 'cg_iric_read_grid2d_cellarea': return ""
+  if fname_lower == 'cg_iric_read_grid2d_findcell': return ""
+  if fname_lower == 'cg_iric_read_grid2d_interpolatewithcell': return ""
 
   if ('node' in fname_lower or 'cell' in fname_lower or 'iface' in fname_lower or 'jface' in fname_lower or 'kface' in fname_lower) and not ('count' in fname_lower):
     return _gen_f90_interface_content(fname_lower, range(1, 4))
@@ -173,6 +178,13 @@ def gen_f90_source_content(fdef):
 
   (retval, fname, args) = m.groups()
   fname_lower = fname.lower()
+
+  if \
+  fname_lower == 'cg_iric_read_grid2d_cellarea' or \
+  fname_lower == 'cg_iric_read_grid2d_findcell' or \
+  fname_lower == 'cg_iric_read_grid2d_interpolatewithcell':
+
+    return _gen_f90_source_content(fdef, None)
 
   if ('node' in fname_lower or 'cell' in fname_lower or 'iface' in fname_lower or 'jface' in fname_lower or 'kface' in fname_lower) and not ('count' in fname_lower):
     cont = ''

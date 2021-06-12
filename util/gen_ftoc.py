@@ -8,6 +8,7 @@ TARGET_FILES_FTOC = [
   'iriclib_geo.h',
   'iriclib_geoutil.h',
   'iriclib_grid.h',
+  'iriclib_grid_solverlib.h',
   'iriclib_gui_coorp.h',
   'iriclib_init.h',
   'iriclib_not_withbaseid.h',

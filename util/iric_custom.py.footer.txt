@@ -1,0 +1,3 @@
+def cg_iRIC_Read_Grid2d_Interpolate(grid_handle, x, y):
+    cellId = cg_iRIC_Read_Grid2d_FindCell(grid_handle, x, y)
+    return cg_iRIC_Read_Grid2d_InterpolateWithCell(grid_handle, x, y, cellId)

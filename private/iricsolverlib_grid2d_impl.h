@@ -8,6 +8,7 @@
 namespace iRICLib
 {
 class H5CgnsGridCoordinates;
+class H5CgnsZone;
 }
 
 namespace iRICSolverLib {
@@ -18,16 +19,15 @@ public:
 	Impl(Grid2D* grid);
 	~Impl();
 
-	void loadStructuredGrid(int fn, int baseId, int zoneId, int gridId);
-	void loadUnstructuredGrid(int fn, int baseId, int zoneId, int gridId);
+	int loadNodes(iRICLib::H5CgnsGridCoordinates* coords);
+	int loadCells(const iRICLib::H5CgnsZone& zone);
+	int loadStructuredGrid(const iRICLib::H5CgnsZone& zone);
+	int loadUnstructuredGrid(const iRICLib::H5CgnsZone& zone);
+
 	void setupBackGrid();
 
-	size_t structuredIndex(size_t i, size_t j, int* size) const;
+	int structuredIndex(int i, int j, int* size) const;
 
-private:
-	void loadNodes(iRICLib::H5CgnsGridCoordinates* coords);
-
-public:
 	Grid2D* m_grid;
 	std::vector<Point2D> m_nodes;
 	std::vector<Cell2D*> m_cells;
