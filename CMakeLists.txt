@@ -141,21 +141,10 @@ target_link_libraries(iriclib
 )
 
 SET(iriclib_Headers
-  # ${PROJECT_SOURCE_DIR}/filelocker.h
   ${PROJECT_SOURCE_DIR}/iriclib.h
   ${PROJECT_SOURCE_DIR}/iriclib_f.h
   ${PROJECT_SOURCE_DIR}/iriclib_global.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_pointmap.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_polygon.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_polyline.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_riversurvey.h
-  # ${PROJECT_SOURCE_DIR}/iricsolverlib.h
-  # ${PROJECT_SOURCE_DIR}/iricsolverlib_api.h
 )
-
-# SET(iriclib_private_Headers
-#   ${PROJECT_SOURCE_DIR}/private/filelocker_impl.h
-# )
 
 include(CMakePackageConfigHelpers)
 
@@ -189,9 +178,9 @@ install(EXPORT iriclibTargets
 )
 
 install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-# install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
 if(MSVC)
-  install(FILES ${PROJECT_BINARY_DIR}/Debug/iriclib.pdb    # @todo should be more generic
+  # see https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html?highlight=target_pdb_file
+  install(FILES $<TARGET_PDB_FILE:${PROJECT_NAME}>
     DESTINATION ${CMAKE_INSTALL_LIBDIR}
     CONFIGURATIONS Debug RelWithDebInfo)
 endif()
