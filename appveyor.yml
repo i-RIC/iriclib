@@ -172,7 +172,7 @@ on_success:
         # re-run cmake with new CMAKE_INSTALL_PREFIX lib\install\iriclib-$env:IRICLIB_VER
         Set-Location C:\iricdev\lib\src\iriclib-git\_build_release -ErrorAction Stop
         cmake -DCMAKE_INSTALL_PREFIX:PATH=C:\iricdev\lib\install\iriclib-$env:IRICLIB_VER .
-        cmake --build .  --target install
+        cmake --build . --target install
 
         # zip lib\install
         Set-Location C:\iricdev\ -ErrorAction Stop
@@ -294,7 +294,7 @@ on_success:
         if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
           $remote_url = $remote_url_iric
           $access_token = $env:iric_online_update_access_token
-          $branch = $False
+          # @todo set $branch to false after testing
         }
         if ($env:APPVEYOR_REPO_NAME -eq "scharlton2/iriclib") {
           $remote_url = $remote_url_scharlton2
