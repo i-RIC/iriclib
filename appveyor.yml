@@ -1,5 +1,12 @@
 version: '{branch}-{build}'
 
+# Skip any branches that start with two underscores (__)
+branches:
+  except:
+    - /__.*/
+
+# commit messages containing [skip ci] or [skip appveyor] won't be built
+# see https://www.appveyor.com/docs/how-to/filtering-commits/
 skip_tags: true
 
 # To create: login to AppVeyor profile and select Account->Encrypt YAML
@@ -19,7 +26,6 @@ environment:
 
 image:
   - Visual Studio 2013
-  - Visual Studio 2015
 
 # called before clone
 init:
@@ -34,11 +40,26 @@ init:
   - set BUILD_TOOLS=OFF
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
-  - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "master") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
+  # Need to set version numbers for cache:
+  - cd C:\iricdev
+  - curl -L -O https://github.com/i-RIC/iricdev/archive/master.zip
+  - 7z e master.zip
+  - rd iricdev-master
+  - del master.zip
+  # master.zip files have unix file endings
+  - unix2dos *
+  - copy appveyor_programs.prop programs.prop
+  - call versions.cmd
+  - cd C:\iricdev\lib\src\iriclib-git
+  - if "%CGNSLIB_VER%"=="3.2.1" (set CGNSLIB_VER=%CGNSLIB_VER%-patch1)
+  - echo %HDF5_VER%
+  - echo %CGNSLIB_VER%
+  - ps: $UploadRelease = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_REPO_BRANCH -eq "develop") -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER) -AND ($env:SGEN -eq "vs2013-x64"))
   - ps: Write-Output $UploadRelease
   # Only commit and push to master branch or debug-appveyor branch (for testing)
-  - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "develop") -OR ($env:APPVEYOR_REPO_BRANCH -eq "push_to_online_update")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
+  - ps: $CommitAndPush = (($env:Configuration -eq "Release") -AND ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2013") -AND (($env:APPVEYOR_REPO_BRANCH -eq "master") -OR ($env:APPVEYOR_REPO_BRANCH -eq "develop")) -AND (!$env:APPVEYOR_PULL_REQUEST_NUMBER))
   - ps: Write-Output $CommitAndPush
+
 
 # doesn't seem to be able to use environmental vars
 clone_folder: C:\iricdev\lib\src\iriclib-git
@@ -55,19 +76,13 @@ matrix:
 #
 # Qt 5.5 only supports VS2013
 before_build:
-  - REM call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd C:\iricdev
-  - curl -L -O https://github.com/i-RIC/iricdev/archive/master.zip
-  - 7z e master.zip
-  - rd iricdev-master
-  - del master.zip
-  - REM master.zip files have unix file endings
-  - unix2dos *
-  - copy appveyor_programs.prop programs.prop
-  - call versions.cmd
+  # build C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%
+  - msbuild /nologo /target:hdf5-build-%config% iricdev.proj
+  # build C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config%
   - msbuild /nologo /target:cgnslib-build-%config% iricdev.proj
-  - if "%CGNSLIB_VER%"=="3.2.1" (set CGNSLIB_VER=%CGNSLIB_VER%-patch1)
+
 
 # build using cmake tools
 build_script:
@@ -75,21 +90,108 @@ build_script:
   - if "%Configuration%"=="Debug"   ( msbuild /nologo /target:iriclib-git-build-%config% iricdev.proj )
   - if "%Configuration%"=="Release" ( msbuild /nologo /target:appveyor-iriclib-artifacts iricdev.proj )
 
+
 after_build:
   - if "%Configuration%"=="Release" ( appveyor PushArtifact C:\iricdev\lib\src\iriclib-git\_artifacts\libs.zip )
 
-# ??? doesn't seem to be able to use environmental vars ???
-#  - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
+# see https://www.appveyor.com/docs/build-cache/
+# env vars used by cache: need to be set in environment: or by init:
+# see https://www.appveyor.com/docs/build-configuration/#build-pipeline
 cache:
-  - C:\iricdev\lib\install
+  - C:\iricdev\lib\install\hdf5-%HDF5_VER%\%config%       -> C:\iricdev\build-hdf5.cmake
+  - C:\iricdev\lib\install\cgnslib-%CGNSLIB_VER%\%config% -> C:\iricdev\build-cgnslib.cmake
 
 on_success:
   - ps: |
       if ($UploadRelease) {
-        # /repos/:owner/:repo/releases
+        # set current working directory
+        Set-Location C:\iricdev\lib\src\iriclib-git -ErrorAction Stop
+
+        # checkout entire branch
+        git checkout $env:APPVEYOR_REPO_BRANCH 2>&1 | Out-Null
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+
+        # update CMakeLists.txt version number for iriclib
+        (Get-Content .\CMakeLists.txt) | Foreach-Object {
+          if ($_ -match '  VERSION (?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$') {
+            $patch = 1 + $Matches['patch']
+            $env:IRICLIB_VER = $Matches['major'] + "." + $Matches['minor'] + "." + $patch
+            return "  VERSION " + $env:IRICLIB_VER
+          }
+          return $_
+        } | Set-Content .\CMakeLists.txt
+
+        git config --global credential.helper store
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+
+        # determine which access token to use and whether to use a branch
+        # or not
+        $branch = $True
+        if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
+          $access_token = $env:iric_access_token
+          # @todo set $branch to false after testing
+        }
+        if ($env:APPVEYOR_REPO_NAME -eq "scharlton2/iriclib") {
+          $access_token = $env:scharlton2_access_token
+        }
+        if ($env:APPVEYOR_REPO_NAME -eq "kskinoue0612/iriclib") {
+          $access_token = $env:kskinoue0612_access_token
+        }
+        if ($branch) {
+          # create branch when remote is not "i-RIC/iriclib"
+          # branches starting with '__' aren't automatically built by appveyor
+          git checkout -qb __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
+          if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+        }
+
+        # configure git for commit and push
+        Add-Content "$HOME\.git-credentials" "https://$($access_token):x-oauth-basic@github.com`n" -ErrorAction Stop
+        git config --global user.email "iric.appveyor@gmail.com"
+        git config --global user.name "iric.appveyor"
+        git config --global core.safecrlf false
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+
+        # commit CMakeLists.txt with [skip ci]
+        git add CMakeLists.txt
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+        git commit -m "[skip ci] built by iric.appveyor" 2>&1 | Out-Null
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+
+        # store new commit
+        $env:target_commitish = (git log -n1 --format=format:"%H")
+
+        # sometimes output from a command is interpreted as an error
+        # so output needs to be redirected to null
+        if ($branch) {
+          git push --set-upstream origin __$env:APPVEYOR_JOB_ID 2>&1 | Out-Null
+        } else {
+          git push 2>&1 | Out-Null
+        }
+        if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+
+        # re-run cmake with new CMAKE_INSTALL_PREFIX lib\install\iriclib-$env:IRICLIB_VER
+        Set-Location C:\iricdev\lib\src\iriclib-git\_build_release -ErrorAction Stop
+        cmake -DCMAKE_INSTALL_PREFIX:PATH=C:\iricdev\lib\install\iriclib-$env:IRICLIB_VER .
+        cmake --build . --target install
+
+        # zip lib\install
+        Set-Location C:\iricdev\ -ErrorAction Stop
+        7z a -tzip iricsdk.zip .\lib\install
+        Push-AppveyorArtifact iricsdk.zip
+
+        # hash artifact
+        Write-Output "Get-FileHash iricsdk.zip:"
+        Get-FileHash C:\iricdev\iricsdk.zip
+      }
+
+  - ps: |
+      if ($UploadRelease) {
+        # GET /repos/{owner}/{repo}/releases
+        # see https://docs.github.com/en/rest/reference/repos#releases
+        # see https://docs.github.com/ja/rest/reference/repos#releases
         #
-        $releases_url_iric = "https://api.github.com/repos/i-RIC/iriclib/releases"
-        $releases_url_scharlton2 = "https://api.github.com/repos/scharlton2/iriclib/releases"
+        $releases_url_iric         = "https://api.github.com/repos/i-RIC/iriclib/releases"
+        $releases_url_scharlton2   = "https://api.github.com/repos/scharlton2/iriclib/releases"
         $releases_url_kskinoue0612 = "https://api.github.com/repos/kskinoue0612/iriclib/releases"
 
         if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
@@ -108,27 +210,33 @@ on_success:
         # create headers dictionary
         $h = @{"Authorization" = "token $access_token"}
 
-        # get latest release tag
-        # GET /repos/:owner/:repo/releases/latest
-        # see https://developer.github.com/v3/repos/releases/#get-the-latest-release
-        #
-        $latest = (Invoke-WebRequest -Uri "$releases_url/latest" -Headers $h -Method GET).Content | ConvertFrom-Json
-        if (! ($latest.tag_name -match "^v(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
-          # partially based on https://semver.org/
-          # must be v + major.minor.patch
-          throw "Bad tag"
+        # # get latest release tag
+        # # GET /repos/{owner}/{repo}/releases/latest
+        # # see https://docs.github.com/en/rest/reference/repos#get-the-latest-release
+        # # see https://docs.github.com/ja/rest/reference/repos#get-the-latest-release
+        # #
+        # $latest = (Invoke-WebRequest -Uri "$releases_url/latest" -Headers $h -Method GET).Content | ConvertFrom-Json
+        # if (! ($latest.tag_name -match "^v(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
+        #   # partially based on https://semver.org/
+        #   # must be v + major.minor.patch
+        #   throw "Bad tag"
+        # }
+        if (! ($env:IRICLIB_VER -match "^(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
+          throw "Bad version"
         }
 
         # Note: draft is set to true so that no notifications are sent yet
 
         # create release
-        # POST /repos/:owner/:repo/releases
-        # see https://developer.github.com/v3/repos/releases/#create-a-release
+        # POST /repos/{owner}/{repo}/releases
+        # see https://docs.github.com/en/rest/reference/repos#create-a-release
+        # see https://docs.github.com/ja/rest/reference/repos#create-a-release
         #
-        $patch = 1 + $matches["patch"]
+        #$patch = 1 + $matches["patch"]
+        $patch = $matches["patch"]
         $create = @{
           "tag_name"         = "v" + $matches["major"] + "." + $matches["minor"] + "." + $patch;
-          "target_commitish" = "$env:APPVEYOR_REPO_COMMIT";
+          "target_commitish" = "$env:target_commitish";
           "name"             = "iriclib " + $matches["major"] + "." + $matches["minor"] + "." + $patch
           "draft"            = $true
         }
@@ -136,8 +244,9 @@ on_success:
         $release = Invoke-WebRequest -Uri "$releases_url" -Headers $h -Method POST -Body $create_json
 
         # upload artifact (asset)
-        # POST :server/repos/:owner/:repo/releases/:release_id/assets{?name,label}
-        # see https://developer.github.com/v3/repos/releases/#upload-a-release-asset
+        # POST /repos/{owner}/{repo}/releases/{release_id}/assets
+        # see https://docs.github.com/en/rest/reference/repos#upload-a-release-asset
+        # see https://docs.github.com/ja/rest/reference/repos#upload-a-release-asset
         #
         $upload_uri = ($release.Content | ConvertFrom-Json).upload_url
         if (! ($upload_uri -match  "(.*)\{\?name,label\}") ) {
@@ -145,16 +254,22 @@ on_success:
           # ie https://uploads.github.com/repos/scharlton2/iriclib/releases/24058628/assets{?name,label}
           throw "Bad upload_url"
         }
-        $upload_uri = $matches[1] + "?name=libs.zip"
+        $upload_uri = $matches[1] + "?name=libs-$env:IRICLIB_VER.zip"
         $h["Content-type"] = "application/zip"
         $bytes = [System.IO.File]::ReadAllBytes("$env:APPVEYOR_BUILD_FOLDER\_artifacts\libs.zip")
+        $upload = Invoke-WebRequest -Uri $upload_uri -Headers $h -Method POST -Body $bytes
+
+        # upload sdk
+        $upload_uri = $matches[1] + "?name=iricsdk-$env:IRICLIB_VER.zip"
+        $bytes = [System.IO.File]::ReadAllBytes("C:\iricdev\iricsdk.zip")
         $upload = Invoke-WebRequest -Uri $upload_uri -Headers $h -Method POST -Body $bytes
 
         # Note: draft is now set to false so that notifications are sent with the correct list of assets
 
         # update release
-        # PATCH /repos/:owner/:repo/releases/:release_id
-        # see https://developer.github.com/v3/repos/releases/#edit-a-release
+        # PATCH /repos/{owner}/{repo}/releases/{release_id}
+        # see https://docs.github.com/en/rest/reference/repos#update-a-release
+        # see https://docs.github.com/ja/rest/reference/repos#update-a-release
         #
         $release_id = ($release.Content | ConvertFrom-Json).id
         $h.Remove("Content-type")
@@ -165,20 +280,21 @@ on_success:
         # display download url
         Write-Output "$((($release.Content | ConvertFrom-Json).assets).browser_download_url)"
         Get-FileHash "$env:APPVEYOR_BUILD_FOLDER\_artifacts\libs.zip"
+        Get-FileHash "C:\iricdev\iricsdk.zip"
       }
 
   - ps: |
       if ($CommitAndPush) {
         # online_update urls
-        $remote_url_iric = "https://github.com/i-RIC/online_update.git"
-        $remote_url_scharlton2 = "https://github.com/scharlton2/online_update.git"
+        $remote_url_iric         = "https://github.com/i-RIC/online_update.git"
+        $remote_url_scharlton2   = "https://github.com/scharlton2/online_update.git"
         $remote_url_kskinoue0612 = "https://github.com/kskinoue0612/online_update.git"
 
         $branch = $True
         if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
           $remote_url = $remote_url_iric
           $access_token = $env:iric_online_update_access_token
-          $branch = $False
+          # @todo set $branch to false after testing
         }
         if ($env:APPVEYOR_REPO_NAME -eq "scharlton2/iriclib") {
           $remote_url = $remote_url_scharlton2
@@ -235,7 +351,7 @@ on_success:
 
         if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
           # distribute iriclib.dll
-          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\prod_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\bin\iriclib.dll \online_update\prod_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
           # distribute SDK
           # For C
           Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.lib \online_update\prod_src\packages\gui.prepost\data\sdk\c\iriclib_x64.lib -ErrorAction Stop
@@ -253,7 +369,7 @@ on_success:
         }
         if ($env:APPVEYOR_REPO_BRANCH -eq "develop") {
           # distribute iriclib.dll
-          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll \online_update\dev_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
+          Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\bin\iriclib.dll \online_update\dev_src\packages\gui.prepost\data\iriclib.dll -ErrorAction Stop
           # distribute SDK
           # For C
           Copy-Item C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.lib \online_update\dev_src\packages\gui.prepost\data\sdk\c\iriclib_x64.lib -ErrorAction Stop
@@ -307,5 +423,5 @@ on_success:
         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
 
         Write-Output "iriclib-github-sha1=`"$env:APPVEYOR_REPO_COMMIT`""
-        Get-FileHash C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\lib\iriclib.dll
+        Get-FileHash C:\iricdev\lib\src\iriclib-git\_build_release\INSTALL\bin\iriclib.dll
       }
