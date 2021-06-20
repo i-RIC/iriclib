@@ -7,6 +7,7 @@
 #include "internal/iric_h5cgnsfiles.h"
 #include "internal/iric_logger.h"
 
+#include <Poco/Environment.h>
 #include <Poco/File.h>
 
 #include <sstream>
@@ -15,7 +16,23 @@ using namespace iRICLib;
 
 namespace {
 
+const std::string IRIC_SEPARATE_OUTPUT = "IRIC_SEPARATE_OUTPUT";
+
 H5CgnsFileSolutionWriter::Mode writerMode = H5CgnsFileSolutionWriter::Mode::Standard;
+
+H5CgnsFileSolutionWriter::Mode setupWriterMode()
+{
+	auto wm = writerMode;
+
+	if (wm == H5CgnsFileSolutionWriter::Mode::Separate) {return wm;}
+
+	if (! Poco::Environment::has(IRIC_SEPARATE_OUTPUT)) {return wm;}
+
+	if (Poco::Environment::get(IRIC_SEPARATE_OUTPUT) == "1") {
+		return H5CgnsFileSolutionWriter::Mode::Separate;
+	}
+	return wm;
+}
 
 int _checkFileIsOpen(int fid)
 {
@@ -31,12 +48,13 @@ int _checkFileIsOpen(int fid)
 	return IRIC_NO_ERROR;
 }
 
-
 } // namespace
 
 int cg_iRIC_Open(const char* filename, int mode, int* fid)
 {
 	_iric_logger_init();
+
+	_IRIC_LOGGER_TRACE_ENTER();
 
 	H5CgnsFile::Mode m = H5CgnsFile::Mode::OpenReadOnly;
 
@@ -46,18 +64,24 @@ int cg_iRIC_Open(const char* filename, int mode, int* fid)
 		m = H5CgnsFile::Mode::OpenModify;
 	}
 
+	auto myWriterMode = setupWriterMode();
+
 	try {
 		auto f = new H5CgnsFile(filename, m);
-		f->setWriterMode(writerMode);
+		f->setWriterMode(myWriterMode);
 
 		int ier = _iric_h5cgnsfiles_register(f, fid);
 		RETURN_IF_ERR;
+
+		_IRIC_LOGGER_TRACE_LEAVE();
 
 		return IRIC_NO_ERROR;
 	}  catch (...) {
 		std::ostringstream ss;
 		ss << "In cg_iRIC_Open(), opening " << filename << " failed";
 		_iric_logger_error(ss.str());
+
+		_IRIC_LOGGER_TRACE_LEAVE();
 		return IRIC_H5_OPEN_FAIL;
 	}
 }
