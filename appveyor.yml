@@ -129,7 +129,7 @@ on_success:
         $branch = $True
         if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
           $access_token = $env:iric_access_token
-          # @todo set $branch to false after testing
+          $branch = $False
         }
         if ($env:APPVEYOR_REPO_NAME -eq "scharlton2/iriclib") {
           $access_token = $env:scharlton2_access_token
@@ -294,7 +294,7 @@ on_success:
         if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iriclib") {
           $remote_url = $remote_url_iric
           $access_token = $env:iric_online_update_access_token
-          # @todo set $branch to false after testing
+          $branch = $False
         }
         if ($env:APPVEYOR_REPO_NAME -eq "scharlton2/iriclib") {
           $remote_url = $remote_url_scharlton2
