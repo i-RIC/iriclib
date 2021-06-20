@@ -135,7 +135,7 @@ int H5CgnsFileSeparateSolutionUtil::clearResultFolder(const std::string& fileNam
 		return IRIC_NO_ERROR;;
 	} catch (...) {
 		std::ostringstream ss;
-		ss << "In H5CgnsFileSeparateSolutionUtil::clearResultFolder(), removing and creating result \"folder\" failed";
+		ss << "In H5CgnsFileSeparateSolutionUtil::clearResultFolder(), removing and creating folder \"result\" failed";
 		_iric_logger_error(ss.str());
 
 		return IRIC_FOLDER_CLEAR_ERROR ;
