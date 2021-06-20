@@ -14,6 +14,10 @@ public:
 	int writeTime(double time);
 	int writeIteration(int iteration);
 
+	int writeBaseIterativeData(const std::string& name, int value);
+	int writeBaseIterativeData(const std::string& name, double value);
+	int writeBaseIterativeData(const std::string& name, const std::string value);
+
 	Mode m_mode;
 
 	H5CgnsFile* m_file;

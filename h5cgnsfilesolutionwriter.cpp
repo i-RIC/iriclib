@@ -27,6 +27,21 @@ int H5CgnsFileSolutionWriter::writeIteration(int iteration)
 	return impl->writeIteration(iteration);
 }
 
+int H5CgnsFileSolutionWriter::writeBaseIterativeData(const std::string& name, int value)
+{
+	return impl->writeBaseIterativeData(name, value);
+}
+
+int H5CgnsFileSolutionWriter::writeBaseIterativeData(const std::string& name, double value)
+{
+	return impl->writeBaseIterativeData(name, value);
+}
+
+int H5CgnsFileSolutionWriter::writeBaseIterativeData(const std::string& name, const std::string value)
+{
+	return impl->writeBaseIterativeData(name, value);
+}
+
 H5CgnsFile* H5CgnsFileSolutionWriter::targetFile() const
 {
 	if (impl->m_mode == Mode::Standard) {

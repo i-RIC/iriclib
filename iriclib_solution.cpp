@@ -128,7 +128,7 @@ int cg_iRIC_Write_Sol_BaseIterative_Integer(int fid, const char* name, int value
 {
 	GET_F;
 
-	ier = file->ccBase()->biterData()->writeData(name, value);
+	ier = file->solutionWriter()->writeBaseIterativeData(name, value);
 	RETURN_IF_ERR;
 
 	return IRIC_NO_ERROR;
@@ -138,7 +138,7 @@ int cg_iRIC_Write_Sol_BaseIterative_Real(int fid, const char* name, double value
 {
 	GET_F;
 
-	ier = file->ccBase()->biterData()->writeData(name, value);
+	ier = file->solutionWriter()->writeBaseIterativeData(name, value);
 	RETURN_IF_ERR;
 
 	return IRIC_NO_ERROR;
@@ -148,7 +148,7 @@ int cg_iRIC_Write_Sol_BaseIterative_String(int fid, const char* name, const char
 {
 	GET_F;
 
-	ier = file->ccBase()->biterData()->writeData(name, value);
+	ier = file->solutionWriter()->writeBaseIterativeData(name, value);
 	RETURN_IF_ERR;
 
 	return IRIC_NO_ERROR;

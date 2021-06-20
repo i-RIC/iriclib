@@ -1,4 +1,6 @@
 #include "../error_macros.h"
+#include "../h5cgnsbase.h"
+#include "../h5cgnsbaseiterativedata.h"
 #include "../h5cgnsfile.h"
 #include "../h5cgnsfileseparatesolutionutil.h"
 #include "../iriclib_errorcodes.h"
@@ -41,6 +43,42 @@ int H5CgnsFileSolutionWriter::Impl::writeIteration(int iteration)
 		return writeIterationSeparate(iteration);
 	}
 
+	return IRIC_NO_ERROR;
+}
+
+int H5CgnsFileSolutionWriter::Impl::writeBaseIterativeData(const std::string& name, int value)
+{
+	int ier = m_file->ccBase()->biterData()->writeData(name, value);
+	RETURN_IF_ERR;
+
+	if (m_mode == Mode::Separate) {
+		ier = m_targetFile->ccBase()->biterData()->writeData(name, value);
+		RETURN_IF_ERR;
+	}
+	return IRIC_NO_ERROR;
+}
+
+int H5CgnsFileSolutionWriter::Impl::writeBaseIterativeData(const std::string& name, double value)
+{
+	int ier = m_file->ccBase()->biterData()->writeData(name, value);
+	RETURN_IF_ERR;
+
+	if (m_mode == Mode::Separate) {
+		ier = m_targetFile->ccBase()->biterData()->writeData(name, value);
+		RETURN_IF_ERR;
+	}
+	return IRIC_NO_ERROR;
+}
+
+int H5CgnsFileSolutionWriter::Impl::writeBaseIterativeData(const std::string& name, const std::string value)
+{
+	int ier = m_file->ccBase()->biterData()->writeData(name, value);
+	RETURN_IF_ERR;
+
+	if (m_mode == Mode::Separate) {
+		ier = m_targetFile->ccBase()->biterData()->writeData(name, value);
+		RETURN_IF_ERR;
+	}
 	return IRIC_NO_ERROR;
 }
 
