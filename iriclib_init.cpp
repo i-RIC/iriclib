@@ -88,6 +88,13 @@ int cg_iRIC_Open(const char* filename, int mode, int* fid)
 
 int cg_iRIC_Close(int fid)
 {
+	H5CgnsFile* file;
+	int ier = _iric_h5cgnsfiles_get(fid, &file);
+	RETURN_IF_ERR;
+
+	ier = file->solutionWriter()->close();
+	RETURN_IF_ERR;
+
 	return _iric_h5cgnsfiles_unregister(fid);
 }
 
@@ -116,9 +123,18 @@ int iRIC_InitOption(int option)
 
 int cg_iRIC_Flush(int fid)
 {
+	Poco::File f(".flush");
+	if (! f.exists()) {
+		return IRIC_NO_ERROR;
+	}
+
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
 	RETURN_IF_ERR;
 
-	return file->flush();
+	ier = file->solutionWriter()->flush();
+	RETURN_IF_ERR;
+
+	f.remove();
+	return IRIC_NO_ERROR;
 }

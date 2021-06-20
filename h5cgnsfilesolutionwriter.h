@@ -30,6 +30,7 @@ public:
 	H5CgnsFile* targetFile() const;
 
 	int flush();
+	int close();
 
 private:
 	class Impl;

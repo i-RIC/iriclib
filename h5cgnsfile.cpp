@@ -13,6 +13,8 @@
 #include "private/h5cgnsbase_impl.h"
 #include "private/h5cgnsfile_impl.h"
 
+#include <Poco/Path.h>
+
 #include <sstream>
 #include <stdexcept>
 
@@ -96,6 +98,12 @@ H5CgnsFile::Mode H5CgnsFile::mode() const
 std::string H5CgnsFile::fileName() const
 {
 	return impl->m_fileName;
+}
+
+std::string H5CgnsFile::tmpFileName() const
+{
+	Poco::Path path(impl->m_fileName);
+	return path.parent().append(Poco::Path("Case1_tmp.cgn")).toString();
 }
 
 int H5CgnsFile::baseNum() const

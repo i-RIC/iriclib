@@ -1,7 +1,11 @@
+#include "error_macros.h"
 #include "h5cgnsfilesolutionwriter.h"
 #include "h5cgnsfile.h"
+#include "iriclib_errorcodes.h"
 
 #include "private/h5cgnsfilesolutionwriter_impl.h"
+
+#include <Poco/File.h>
 
 using namespace iRICLib;
 
@@ -49,4 +53,40 @@ H5CgnsFile* H5CgnsFileSolutionWriter::targetFile() const
 	} else {
 		return impl->m_targetFile;
 	}
+}
+
+int H5CgnsFileSolutionWriter::flush()
+{
+	delete impl->m_targetFile;
+	impl->m_targetFile = nullptr;
+
+	int ier = impl->m_file->flush();
+	RETURN_IF_ERR;
+
+	Poco::File tmpFile(impl->m_file->tmpFileName());
+	if (tmpFile.exists()) {
+		try {
+			tmpFile.remove();
+		} catch (...) {
+			// do nothing
+		}
+	}
+
+	Poco::File cgnsFile(impl->m_file->fileName());
+	cgnsFile.copyTo(impl->m_file->tmpFileName());
+
+	return IRIC_NO_ERROR;
+}
+
+int H5CgnsFileSolutionWriter::close()
+{
+	Poco::File tmpFile(impl->m_file->tmpFileName());
+	if (tmpFile.exists()) {
+		try {
+			tmpFile.remove();
+		} catch (...) {
+			// do nothing
+		}
+	}
+	return IRIC_NO_ERROR;
 }

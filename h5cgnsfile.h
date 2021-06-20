@@ -27,6 +27,7 @@ public:
 
 	Mode mode() const;
 	std::string fileName() const;
+	std::string tmpFileName() const; // temporary file used to read result while running
 
 	int baseNum() const;
 
