@@ -53,15 +53,21 @@ int getBcForRead(int fid, int gid, const std::string& typeName, int num, H5CgnsB
 
 void cg_iRIC_Read_BC_Count_WithGridId(int fid, int gid, const char* type, int* num)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
 	if (ier != IRIC_NO_ERROR) {return;}
 
 	*num = zoneBc->bcCount(type);
+
+	_IRIC_LOGGER_TRACE_LEAVE();
 }
 
 int cg_iRIC_Read_BC_IndicesSize_WithGridId(int fid, int gid, const char* type, int num, int* size)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -69,11 +75,14 @@ int cg_iRIC_Read_BC_IndicesSize_WithGridId(int fid, int gid, const char* type, i
 	ier = bc->readIndicesSize(size);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_IndicesSize2_WithGridId(int fid, int gid, const char* type, int num, int* size)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -81,11 +90,14 @@ int cg_iRIC_Read_BC_IndicesSize2_WithGridId(int fid, int gid, const char* type, 
 	ier = bc->readIndicesValueCount(size);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_Indices_WithGridId(int fid, int gid, const char* type, int num, int* idx_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -96,11 +108,14 @@ int cg_iRIC_Read_BC_Indices_WithGridId(int fid, int gid, const char* type, int n
 
 	_vectorToPointerT(buffer, idx_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_Integer_WithGridId(int fid, int gid, const char* type, int num, const char* name, int* value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -108,11 +123,14 @@ int cg_iRIC_Read_BC_Integer_WithGridId(int fid, int gid, const char* type, int n
 	ier = bc->readIntegerValue(name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_Real_WithGridId(int fid, int gid, const char* type, int num, const char* name, double* value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -120,11 +138,14 @@ int cg_iRIC_Read_BC_Real_WithGridId(int fid, int gid, const char* type, int num,
 	ier = bc->readRealValueAsDouble(name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_RealSingle_WithGridId(int fid, int gid, const char* type, int num, const char* name, float* value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -132,11 +153,14 @@ int cg_iRIC_Read_BC_RealSingle_WithGridId(int fid, int gid, const char* type, in
 	ier = bc->readRealValueAsFloat(name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_StringLen_WithGridId(int fid, int gid, const char* type, int num, const char* name, int* length)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -144,11 +168,14 @@ int cg_iRIC_Read_BC_StringLen_WithGridId(int fid, int gid, const char* type, int
 	ier = bc->readStringLen(name, length);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_String_WithGridId(int fid, int gid, const char* type, int num, const char* name, char* strvalue)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -156,11 +183,14 @@ int cg_iRIC_Read_BC_String_WithGridId(int fid, int gid, const char* type, int nu
 	ier = bc->readString(name, strvalue);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_FunctionalSize_WithGridId(int fid, int gid, const char* type, int num, const char* name, int* size)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -168,11 +198,14 @@ int cg_iRIC_Read_BC_FunctionalSize_WithGridId(int fid, int gid, const char* type
 	ier = bc->readFunctionalSize(name, size);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_Functional_WithGridId(int fid, int gid, const char* type, int num, const char* name, double* x_arr, double* y_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -180,11 +213,14 @@ int cg_iRIC_Read_BC_Functional_WithGridId(int fid, int gid, const char* type, in
 	ier = bc->readFunctional(name, x_arr, y_arr);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_FunctionalWithName_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -192,11 +228,14 @@ int cg_iRIC_Read_BC_FunctionalWithName_WithGridId(int fid, int gid, const char* 
 	ier = bc->readFunctionalWithName(name, paramname, v_arr);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_Functional_RealSingle_WithGridId(int fid, int gid, const char* type, int num, const char* name, float* x_arr, float* y_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -204,11 +243,14 @@ int cg_iRIC_Read_BC_Functional_RealSingle_WithGridId(int fid, int gid, const cha
 	ier = bc->readFunctional(name, x_arr, y_arr);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_FunctionalWithName_RealSingle_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, float* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -216,11 +258,14 @@ int cg_iRIC_Read_BC_FunctionalWithName_RealSingle_WithGridId(int fid, int gid, c
 	ier = bc->readFunctionalWithName(name, paramname, v_arr);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_FunctionalWithName_StringLen_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, int* length)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -228,11 +273,14 @@ int cg_iRIC_Read_BC_FunctionalWithName_StringLen_WithGridId(int fid, int gid, co
 	ier = bc->readFunctionalWithNameStringLen(name, paramname, length);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_BC_FunctionalWithName_String_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, char* strvalue)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsBc* bc = nullptr;
 	int ier = getBcForRead(fid, gid, type, num, &bc, __func__);
 	RETURN_IF_ERR;
@@ -240,11 +288,14 @@ int cg_iRIC_Read_BC_FunctionalWithName_String_WithGridId(int fid, int gid, const
 	ier = bc->readFunctionalWithNameString(name, paramname, strvalue);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Clear_BC_WithGridId(int fid, int gid)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
 	RETURN_IF_ERR;
@@ -252,6 +303,7 @@ int cg_iRIC_Clear_BC_WithGridId(int fid, int gid)
 	ier = zoneBc->clear();
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
@@ -271,6 +323,8 @@ int cg_iRIC_Write_BC_Indices_WithGridId(int fid, int gid, const char* type, int 
 
 int cg_iRIC_Write_BC_Indices2_WithGridId(int fid, int gid, const char* type, int num, int length, int* idx_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
 	RETURN_IF_ERR;
@@ -283,11 +337,14 @@ int cg_iRIC_Write_BC_Indices2_WithGridId(int fid, int gid, const char* type, int
 	ier = bc->writeIndices(buffer);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_BC_Integer_WithGridId(int fid, int gid, const char* type, int num, const char* name, int value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
 	RETURN_IF_ERR;
@@ -296,11 +353,14 @@ int cg_iRIC_Write_BC_Integer_WithGridId(int fid, int gid, const char* type, int 
 	ier = bc->writeIntegerValue(name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_BC_Real_WithGridId(int fid, int gid, const char* type, int num, const char* name, double value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
 	RETURN_IF_ERR;
@@ -309,11 +369,14 @@ int cg_iRIC_Write_BC_Real_WithGridId(int fid, int gid, const char* type, int num
 	ier = bc->writeRealValue(name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_BC_String_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
 	RETURN_IF_ERR;
@@ -322,11 +385,14 @@ int cg_iRIC_Write_BC_String_WithGridId(int fid, int gid, const char* type, int n
 	ier = bc->writeString(name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_BC_Functional_WithGridId(int fid, int gid, const char* type, int num, const char* name, int length, double* x_arr, double* y_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
 	RETURN_IF_ERR;
@@ -335,11 +401,14 @@ int cg_iRIC_Write_BC_Functional_WithGridId(int fid, int gid, const char* type, i
 	ier = bc->writeFunctional(name, length, x_arr, y_arr);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_BC_FunctionalWithName_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, int length, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
 	RETURN_IF_ERR;
@@ -348,11 +417,14 @@ int cg_iRIC_Write_BC_FunctionalWithName_WithGridId(int fid, int gid, const char*
 	ier = bc->writeFunctionalWithName(name, paramname, length, v_arr);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_BC_FunctionalWithName_String_WithGridId(int fid, int gid, const char* type, int num, const char* name, const char* paramname, const char* value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZoneBc* zoneBc = nullptr;
 	int ier = getZoneBC(fid, gid, &zoneBc, __func__);
 	RETURN_IF_ERR;
@@ -361,5 +433,6 @@ int cg_iRIC_Write_BC_FunctionalWithName_String_WithGridId(int fid, int gid, cons
 	ier = bc->writeFunctionalWithNameString(name, paramname, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }

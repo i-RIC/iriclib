@@ -52,6 +52,8 @@ int _checkFileIsOpen(int fid)
 
 int cg_iRIC_Open(const char* filename, int mode, int* fid)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	_iric_logger_init();
 
 	_IRIC_LOGGER_TRACE_ENTER();
@@ -74,7 +76,6 @@ int cg_iRIC_Open(const char* filename, int mode, int* fid)
 		RETURN_IF_ERR;
 
 		_IRIC_LOGGER_TRACE_LEAVE();
-
 		return IRIC_NO_ERROR;
 	}  catch (...) {
 		std::ostringstream ss;
@@ -88,19 +89,28 @@ int cg_iRIC_Open(const char* filename, int mode, int* fid)
 
 int cg_iRIC_Close(int fid)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsFile* file;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
 	RETURN_IF_ERR;
 
-	return _iric_h5cgnsfiles_unregister(fid);
+	ier = _iric_h5cgnsfiles_unregister(fid);
+	RETURN_IF_ERR;
+
+	_IRIC_LOGGER_TRACE_LEAVE();
+	return IRIC_NO_ERROR;
 }
 
 int iRIC_InitOption(int option)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	if (option == IRIC_OPTION_CANCEL) {
 		try {
 			Poco::File f(".cancel_ok");
 			f.createFile();
+			_IRIC_LOGGER_TRACE_LEAVE();
 			return IRIC_NO_ERROR;
 		} catch (...) {
 			std::ostringstream ss;
@@ -109,17 +119,22 @@ int iRIC_InitOption(int option)
 		}
 	} else if (option == IRIC_OPTION_DIVIDESOLUTIONS) {
 		writerMode = H5CgnsFileSolutionWriter::Mode::Separate;
+		_IRIC_LOGGER_TRACE_LEAVE();
 		return IRIC_NO_ERROR;
 	} else if (option == IRIC_OPTION_STDSOLUTION) {
 		writerMode = H5CgnsFileSolutionWriter::Mode::Standard;
+		_IRIC_LOGGER_TRACE_LEAVE();
 		return IRIC_NO_ERROR;
 	}
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Flush(int fid)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	Poco::File f(".flush");
 	if (! f.exists()) {
 		return IRIC_NO_ERROR;
@@ -133,5 +148,7 @@ int cg_iRIC_Flush(int fid)
 	RETURN_IF_ERR;
 
 	f.remove();
+
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }

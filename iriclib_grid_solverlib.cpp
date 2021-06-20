@@ -70,28 +70,36 @@ int _getGridCell(Grid2D* grid, int cellId, Cell2D** cell, const std::string& fun
 
 int cg_iRIC_Read_Grid2d_Open_WithGridId(int fid, int gid, int* grid_handle)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	auto grid = new Grid2D();
 	grid->load(fid, gid);
 	grid2ds.push_back(grid);
 
 	*grid_handle = static_cast<int> (grid2ds.size());
 
-	return 0;
+	_IRIC_LOGGER_TRACE_LEAVE();
+	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Sol_Grid2d_Open_WithGridId(int fid, int gid, int solid, int* grid_handle)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	auto grid = new Grid2D();
 	grid->load(fid, gid, solid);
 	grid2ds.push_back(grid);
 
 	*grid_handle = static_cast<int> (grid2ds.size());
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Grid2d_Close(int grid_handle)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	if (static_cast<size_t> (grid_handle) > grid2ds.size()) {
 		_iric_logger_error("In cg_iRIC_Read_Grid2d_Close, wrong grid_handle passed");
 		return IRIC_WRONG_POINTER;
@@ -100,11 +108,14 @@ int cg_iRIC_Read_Grid2d_Close(int grid_handle)
 	delete grid2ds[grid_handle - 1];
 	grid2ds[grid_handle - 1] = nullptr;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Grid2d_CellArea(int grid_handle, int cellId, double* area)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	Grid2D* grid;
 	int ier = _getGrid(grid_handle, &grid, "cg_iRIC_Read_Grid2d_CellArea");
 	RETURN_IF_ERR;
@@ -115,11 +126,14 @@ int cg_iRIC_Read_Grid2d_CellArea(int grid_handle, int cellId, double* area)
 
 	*area = cell->area();
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Grid2d_FindCell(int grid_handle, double x, double y, int* cellId)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	Grid2D* grid;
 	int ier = _getGrid(grid_handle, &grid, "cg_iRIC_Read_Grid2d_CellArea");
 	RETURN_IF_ERR;
@@ -129,11 +143,14 @@ int cg_iRIC_Read_Grid2d_FindCell(int grid_handle, double x, double y, int* cellI
 		return IRIC_DATA_NOT_FOUND;
 	}
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Grid2d_CellNodeCount(int grid_handle, int cellId, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	Grid2D* grid;
 	int ier = _getGrid(grid_handle, &grid, "cg_iRIC_Read_Grid2d_Interpolate");
 	RETURN_IF_ERR;
@@ -144,11 +161,14 @@ int cg_iRIC_Read_Grid2d_CellNodeCount(int grid_handle, int cellId, int* count)
 
 	*count = cell->nodeCount();
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Grid2d_Interpolate(int grid_handle, double x, double y, int* ok, int* count, int* nodeids_arr, double* weights_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	Grid2D* grid;
 	int ier = _getGrid(grid_handle, &grid, "cg_iRIC_Read_Grid2d_Interpolate");
 	RETURN_IF_ERR;
@@ -158,11 +178,15 @@ int cg_iRIC_Read_Grid2d_Interpolate(int grid_handle, double x, double y, int* ok
 	if (success) {
 		*ok = 1;
 	}
-	return 0;
+
+	_IRIC_LOGGER_TRACE_LEAVE();
+	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Grid2d_InterpolateWithCell(int grid_handle, double x, double y, int cellId, int* nodeids_arr, double* weights_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	Grid2D* grid;
 	int ier = _getGrid(grid_handle, &grid, "cg_iRIC_Read_Grid2d_InterpolateWithCell");
 	RETURN_IF_ERR;
@@ -178,5 +202,6 @@ int cg_iRIC_Read_Grid2d_InterpolateWithCell(int grid_handle, double x, double y,
 	bool success = cell->interpolate(Point2D(x, y), weights_arr);
 	if (! success) {return IRIC_DATA_NOT_FOUND;}
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }

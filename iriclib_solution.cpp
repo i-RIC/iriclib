@@ -21,6 +21,8 @@ using namespace iRICLib;
 
 int cg_iRIC_Read_Sol_Count(int fid, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	std::vector<double> times;
@@ -32,51 +34,66 @@ int cg_iRIC_Read_Sol_Count(int fid, int* count)
 
 	*count = static_cast<int> (std::max(times.size(), iterations.size()));
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Sol_Time(int fid, int step, double* time)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->ccBase()->biterData()->readTime(step, time);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Sol_Iteration(int fid, int step, int* index)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->ccBase()->biterData()->readIteration(step, index);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Sol_BaseIterative_Integer(int fid, int step, const char* name, int* value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->ccBase()->biterData()->readValue(step, name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Sol_BaseIterative_Real(int fid, int step, const char* name, double* value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->ccBase()->biterData()->readValue(step, name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Sol_BaseIterative_StringLen(int fid, int step, const char* name, int* length)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	std::string value;
@@ -85,11 +102,14 @@ int cg_iRIC_Read_Sol_BaseIterative_StringLen(int fid, int step, const char* name
 
 	*length = static_cast<int> (value.length());
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Read_Sol_BaseIterative_String(int fid, int step, const char* name, char* strvalue)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	std::string value;
@@ -101,65 +121,84 @@ int cg_iRIC_Read_Sol_BaseIterative_String(int fid, int step, const char* name, c
 	}
 	*(strvalue + value.length()) = '\0';
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_Sol_Time(int fid, double time)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->solutionWriter()->writeTime(time);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_Sol_Iteration(int fid, int index)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->solutionWriter()->writeIteration(index);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_Sol_BaseIterative_Integer(int fid, const char* name, int value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->solutionWriter()->writeBaseIterativeData(name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_Sol_BaseIterative_Real(int fid, const char* name, double value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->solutionWriter()->writeBaseIterativeData(name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_Sol_BaseIterative_String(int fid, const char* name, const char* value)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->solutionWriter()->writeBaseIterativeData(name, value);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
 int cg_iRIC_Write_ErrorCode(int fid, int errorcode)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	GET_F;
 
 	ier = file->ccBase()->writeErrorCode(errorcode);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
