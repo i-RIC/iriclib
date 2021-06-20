@@ -27,6 +27,9 @@ H5CgnsFile::Impl::Impl(H5CgnsFile* file) :
 H5CgnsFile::Impl::~Impl()
 {
 	close();
+
+	delete m_solutionReader;
+	delete m_solutionWriter;
 }
 
 int H5CgnsFile::Impl::open()
@@ -42,9 +45,8 @@ int H5CgnsFile::Impl::close()
 	for (auto base : m_bases) {
 		delete base;
 	}
-
-	delete m_solutionReader;
-	delete m_solutionWriter;
+	m_bases.clear();
+	m_zones.clear();
 
 	_IRIC_LOGGER_TRACE_CALL_START("H5Fclose");
 	herr_t status = H5Fclose(m_fileId);

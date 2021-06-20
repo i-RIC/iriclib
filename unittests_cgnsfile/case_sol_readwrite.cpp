@@ -202,6 +202,12 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd(*fid);
 		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd() ier == 0", ier == 0);
 
+
+		if (i == 3) {
+			std::fstream f(".flush", std::ios_base::out);
+			f << "flush";
+		}
+
 		ier = cg_iRIC_Flush(*fid);
 		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
