@@ -142,13 +142,13 @@ int H5CgnsFileSeparateSolutionUtil::clearResultFolder(const std::string& fileNam
 	}
 }
 
-std::string H5CgnsFileSeparateSolutionUtil::fileNameForSolution(const std::string& fileName, int solId)
+std::string H5CgnsFileSeparateSolutionUtil::fileNameForSolution(const std::string& resultFolder, int solId)
 {
 	std::ostringstream ss;
 	ss << "Solution" << solId << ".cgn";
 	auto solFileName = ss.str();
 
-	return Poco::Path(resultFolder(fileName)).append(solFileName).toString();
+	return Poco::Path(resultFolder).append(solFileName).toString();
 }
 
 int H5CgnsFileSeparateSolutionUtil::getMaxSeparateResultSolutionId(const std::string& fileName, int* solutionId)

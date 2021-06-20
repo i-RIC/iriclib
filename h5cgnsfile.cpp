@@ -32,13 +32,14 @@ void _initCgnsFile(hid_t fileId)
 
 } // namespace
 
-H5CgnsFile::H5CgnsFile(const std::string &fileName, Mode mode) :
+H5CgnsFile::H5CgnsFile(const std::string &fileName, Mode mode, const std::string& resultFolder) :
 	impl {new Impl {this}}
 {
 	_iric_logger_init();
 
 	impl->m_mode = mode;
 	impl->m_fileName = fileName;
+	impl->m_resultFolder = resultFolder;
 
 	if (mode == Mode::Create) {
 		_IRIC_LOGGER_TRACE_CALL_START("H5Pcreate");
@@ -71,9 +72,7 @@ H5CgnsFile::H5CgnsFile(const std::string &fileName, Mode mode) :
 		impl->m_fileId = H5Fopen(fileName.c_str(), flags, H5P_DEFAULT);
 
 		if (impl->m_fileId >= 0) {
-			impl->loadBases();
-
-			impl->loadZones();
+			impl->open();
 		}
 	}
 
@@ -87,7 +86,31 @@ H5CgnsFile::H5CgnsFile(const std::string &fileName, Mode mode) :
 
 H5CgnsFile::~H5CgnsFile()
 {
+	if (impl->m_solutionWriter != nullptr) {
+		impl->m_solutionWriter->close();
+	}
+
 	delete impl;
+}
+
+int H5CgnsFile::open()
+{
+	unsigned int flags = H5F_ACC_RDWR;
+	if (impl->m_mode == Mode::OpenReadOnly) {
+		flags = H5F_ACC_RDONLY;
+	}
+	impl->m_fileId = H5Fopen(impl->m_fileName.c_str(), flags, H5P_DEFAULT);
+
+	if (impl->m_fileId >= 0) {
+		return impl->open();
+	} else {
+		return IRIC_H5_OPEN_FAIL;
+	}
+}
+
+int H5CgnsFile::close()
+{
+	return impl->close();
 }
 
 H5CgnsFile::Mode H5CgnsFile::mode() const
@@ -103,7 +126,13 @@ std::string H5CgnsFile::fileName() const
 std::string H5CgnsFile::tmpFileName() const
 {
 	Poco::Path path(impl->m_fileName);
-	return path.parent().append(Poco::Path("Case1_tmp.cgn")).toString();
+	return path.parent().append(Poco::Path("tmp")).append(Poco::Path(path.getFileName() + ".copy")).toString();
+}
+
+std::string H5CgnsFile::resultFolder() const
+{
+	Poco::Path path(impl->m_fileName);
+	return path.parent().append(Poco::Path(impl->m_resultFolder)).toString();
 }
 
 int H5CgnsFile::baseNum() const

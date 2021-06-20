@@ -24,7 +24,7 @@ public:
 
 	static int clearResultFolder(const std::string& fileName);
 
-	static std::string fileNameForSolution(const std::string& fileName, int solId);
+	static std::string fileNameForSolution(const std::string& resultFolder, int solId);
 
 private:
 	static int getMaxSeparateResultSolutionId(const std::string& fileName, int* solutionId);

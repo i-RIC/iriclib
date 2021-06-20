@@ -92,9 +92,6 @@ int cg_iRIC_Close(int fid)
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
 	RETURN_IF_ERR;
 
-	ier = file->solutionWriter()->close();
-	RETURN_IF_ERR;
-
 	return _iric_h5cgnsfiles_unregister(fid);
 }
 

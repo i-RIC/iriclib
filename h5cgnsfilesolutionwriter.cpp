@@ -63,6 +63,9 @@ int H5CgnsFileSolutionWriter::flush()
 	int ier = impl->m_file->flush();
 	RETURN_IF_ERR;
 
+	ier = impl->m_file->close();
+	RETURN_IF_ERR;
+
 	Poco::File tmpFile(impl->m_file->tmpFileName());
 	if (tmpFile.exists()) {
 		try {
@@ -72,8 +75,16 @@ int H5CgnsFileSolutionWriter::flush()
 		}
 	}
 
+	Poco::File tmpFolder("tmp");
+	if (! tmpFolder.exists()) {
+		tmpFolder.createDirectory();
+	}
+
 	Poco::File cgnsFile(impl->m_file->fileName());
 	cgnsFile.copyTo(impl->m_file->tmpFileName());
+
+	ier = impl->m_file->open();
+	RETURN_IF_ERR;
 
 	return IRIC_NO_ERROR;
 }

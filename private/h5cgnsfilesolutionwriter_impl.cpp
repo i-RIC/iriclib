@@ -95,7 +95,7 @@ int H5CgnsFileSolutionWriter::Impl::writeTimeSeparate(double time)
 	int ier = H5CgnsFileSeparateSolutionUtil::createResultFolderIfNotExists(m_file->fileName());
 	RETURN_IF_ERR;
 
-	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->fileName(), m_solutionId);
+	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->resultFolder(), m_solutionId);
 	try {
 		m_targetFile = new H5CgnsFile(fName, H5CgnsFile::Mode::Create);
 	} catch (...) {
@@ -142,7 +142,7 @@ int H5CgnsFileSolutionWriter::Impl::writeIterationSeparate(int iteration)
 	int ier = H5CgnsFileSeparateSolutionUtil::createResultFolderIfNotExists(m_file->fileName());
 	RETURN_IF_ERR;
 
-	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->fileName(), m_solutionId);
+	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->resultFolder(), m_solutionId);
 	try {
 		m_targetFile = new H5CgnsFile(fName, H5CgnsFile::Mode::Create);
 	} catch (...) {
