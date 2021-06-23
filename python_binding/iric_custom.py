@@ -144,15 +144,6 @@ class RealArrayContainer(object):
 # Register RealArrayContainer in _iric:
 _iric.RealArrayContainer_swigregister(RealArrayContainer)
 
-def cg_open(name, mode):
-    ier, fin = _iric.cg_open(name, mode)
-    _checkErrorCode(ier)
-    return fin
-
-def cg_close(fin):
-    ier = _iric.cg_close(fin)
-    _checkErrorCode(ier)
-
 # from iriclib_bc.h
 def cg_iRIC_Read_BC_Count_WithGridId(fid, gid, type):
 	num = _iric.cg_iRIC_Read_BC_Count_WithGridId(fid, gid, type)
