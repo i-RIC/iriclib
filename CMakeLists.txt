@@ -151,12 +151,12 @@ SET(iriclib_SOURCES
   iriclib_global.h
   iriclib_grid.cpp
   iriclib_grid.h
+  iriclib_grid_solverlib.cpp
+  iriclib_grid_solverlib.h
   iriclib_gui_coorp.cpp
   iriclib_gui_coorp.h
   iriclib_init.cpp
   iriclib_init.h
-  iriclib_not_mul.cpp
-  iriclib_not_mul.h
   iriclib_not_withbaseid.cpp
   iriclib_not_withbaseid.h
   iriclib_not_withgridid.cpp
@@ -191,10 +191,6 @@ SET(iriclib_SOURCES
   iriclib_solution.h
   iriclib_wrapper.cpp
   iriclib_wrapper.h
-  iricsolver_ftoc.c
-  iricsolverlib.cpp
-  iricsolverlib.h
-  iricsolverlib_api.h
   iricsolverlib_cell2d.cpp
   iricsolverlib_cell2d.h
   iricsolverlib_grid2d.cpp
@@ -350,8 +346,6 @@ if(MSVC)
     DESTINATION ${CMAKE_INSTALL_LIBDIR}
     CONFIGURATIONS Debug)
 endif()
-
-add_subdirectory(cgnslib_dummy)
 
 include(CTest)
 

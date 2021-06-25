@@ -47,18 +47,11 @@ target_compile_definitions(unittests_cgnsfile
     _SCL_SECURE_NO_WARNINGS
 )
 
-# unittests_cgnsfile include directories
-target_include_directories(unittests_cgnsfile
-  PRIVATE
-  "${cgnslib_dummy_SOURCE_DIR}"
-)
-
 # unittests_cgnsfile link libraries
 target_link_libraries(unittests_cgnsfile
   PRIVATE
     iriclib
     # ${CGNS_LIBRARY}
-    cgnslib_dummy
     ${HDF5_LIBRARIES}
 )
 
@@ -68,11 +61,6 @@ if (WIN32)
   add_custom_command(TARGET unittests_cgnsfile POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
     "$<TARGET_FILE:iriclib>"
-    "$<TARGET_FILE_DIR:unittests_cgnsfile>"
-    )
-  add_custom_command(TARGET unittests_cgnsfile POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "$<TARGET_FILE:cgnslib_dummy>"
     "$<TARGET_FILE_DIR:unittests_cgnsfile>"
     )
 endif()
