@@ -5,7 +5,6 @@
 %{
 #include "../iriclib.h"
 #include "../iriclib_wrapper.h"
-#include "../cgnslib_dummy/cgnslib.h"
 %}
 
 %cstring_bounded_output(char *strvalue, 2048);
@@ -40,6 +39,4 @@ private:
 	std::vector<double>* m_value;
 };
 
-int cg_open(const char* name, int mode, int* OUTPUT);
-int cg_close(int fin);
 

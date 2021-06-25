@@ -1,7 +1,0 @@
-#include "error_macros.h"
-#include "iriclib.h"
-
-#include "internal/iric_h5cgnsfiles.h"
-
-using namespace iRICLib;
-

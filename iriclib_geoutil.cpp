@@ -37,8 +37,10 @@ int getGeoGraphicDataGroup(int fid, const std::string& name, H5CgnsGeographicDat
 
 } // namespace
 
-int cg_iRIC_Read_Geo_Count_Mul(int fid, const char* name, int* count)
+int cg_iRIC_Read_Geo_Count(int fid, const char* name, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsGeographicDataGroup* group;
 	int ier = getGeoGraphicDataGroup(fid, name, &group);
 	RETURN_IF_ERR;
@@ -46,11 +48,14 @@ int cg_iRIC_Read_Geo_Count_Mul(int fid, const char* name, int* count)
 	ier = group->count(count);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Geo_Filename_Mul(int fid, const char* name, int geoid, char* strvalue, int* type)
+int cg_iRIC_Read_Geo_Filename(int fid, const char* name, int geoid, char* strvalue, int* type)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsGeographicDataGroup* group;
 	int ier = getGeoGraphicDataGroup(fid, name, &group);
 	RETURN_IF_ERR;
@@ -66,5 +71,6 @@ int cg_iRIC_Read_Geo_Filename_Mul(int fid, const char* name, int geoid, char* st
 	*(strvalue + fname.length()) = 0;
 	*type = static_cast<int> (t);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }

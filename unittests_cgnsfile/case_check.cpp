@@ -1,18 +1,11 @@
 #include "macros.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>
 #include <iostream>
 
 extern "C" {
-
-void case_CheckLock()
-{
-	// to test for Case1.cgn.lock creation this needs to be
-	// multi-threaded or multi-process
-}
 
 void case_CheckCancel()
 {

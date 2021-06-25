@@ -1,11 +1,13 @@
 #ifndef H5CGNSFILESEPARATESOLUTIONUTIL_H
 #define H5CGNSFILESEPARATESOLUTIONUTIL_H
 
+#include "iriclib_global.h"
+
 #include <string>
 
 namespace iRICLib {
 
-class H5CgnsFileSeparateSolutionUtil
+class IRICLIBDLL H5CgnsFileSeparateSolutionUtil
 {
 public:
 	enum class Status {
@@ -22,7 +24,7 @@ public:
 
 	static int clearResultFolder(const std::string& fileName);
 
-	static std::string fileNameForSolution(const std::string& fileName, int solId);
+	static std::string fileNameForSolution(const std::string& resultFolder, int solId);
 
 private:
 	static int getMaxSeparateResultSolutionId(const std::string& fileName, int* solutionId);

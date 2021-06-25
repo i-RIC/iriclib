@@ -11,9 +11,9 @@ TARGET_FILES_SWIG = [
   'iriclib_geo.h',
   'iriclib_geoutil.h',
   'iriclib_grid.h',
+  'iriclib_grid_solverlib.h',
   'iriclib_gui_coorp.h',
   'iriclib_init.h',
-  'iriclib_not_mul.h',
   'iriclib_not_withbaseid.h',
   'iriclib_not_withgridid.h',
   'iriclib_sol_particle.h',
@@ -30,6 +30,8 @@ def gen_swig_i_content(fdef):
   m = re.search(r'(\w+) (\w+)\((.*)\)', fdef2)
 
   (retval, fname, args) = m.groups()
+
+  if fname == 'cg_iRIC_Read_Grid2d_Interpolate': return ''
 
   arglist = args.split(',')
   args = list()
@@ -124,6 +126,12 @@ def gen_size_func(fname, args):
 
     return 'cg_iRIC_Read_Grid_NodeCount' + suffix, args
 
+  m = re.search('(cg_iRIC_Read_Grid[1-3]d_Coords)(.*)', fname)
+  if m:
+    m, suffix = m.groups()
+
+    return 'cg_iRIC_Read_Grid_NodeCount' + suffix, args
+
   m = re.search('(cg_iRIC_Read_Grid_FunctionalDimension_(Integer|Real))(.*)', fname)
   if m:
     m, d1, suffix = m.groups()
@@ -135,6 +143,15 @@ def gen_size_func(fname, args):
     m, suffix = m.groups()
 
     return 'cg_iRIC_Read_Grid_FunctionalTimeSize' + suffix, args
+
+  m = re.search('(cg_iRIC_Read_Sol_Node_(Integer|Real))(.*)', fname)
+  if m:
+    m, d1, suffix = m.groups()
+    args2 = copy.copy(args)
+    args2.pop()
+    args2.pop()
+
+    return 'cg_iRIC_Read_Grid_NodeCount' + suffix, args2
 
   m = re.search('(cg_iRIC_Read_Sol_Cell_(Integer|Real))(.*)', fname)
   if m:
@@ -173,6 +190,14 @@ def gen_size_func(fname, args):
     return 'cg_iRIC_Read_Grid_KFaceCount' + suffix, args2
 
   m = re.search('(cg_iRIC_Read_Sol_GridCoord[1-3]d)(.*)', fname)
+  if m:
+    m, suffix = m.groups()
+    args2 = copy.copy(args)
+    args2.pop()
+
+    return 'cg_iRIC_Read_Grid_NodeCount' + suffix, args2
+
+  m = re.search('(cg_iRIC_Read_Sol_Grid[1-3]d_Coords)(.*)', fname)
   if m:
     m, suffix = m.groups()
     args2 = copy.copy(args)
@@ -237,11 +262,11 @@ def gen_size_func(fname, args):
 
     return 'cg_iRIC_Read_Sol_PolyData_CoordinateCount' + suffix, args
 
-  m = re.search('(cg_iRIC_GetTriangleElements)(.*)', fname)
+  m = re.search('(cg_iRIC_Read_Grid_TriangleElements)(.*)', fname)
   if m:
     m, suffix = m.groups()
 
-    return 'cg_iRIC_GetTriangleElementsSize2' + suffix, args
+    return 'cg_iRIC_Read_Grid_TriangleElementsSize2' + suffix, args
 
   if fname == 'iRIC_Geo_Polygon_Read_Points':
     return 'iRIC_Geo_Polygon_Read_PointCount', args
@@ -251,6 +276,9 @@ def gen_size_func(fname, args):
   
   if fname == 'iRIC_Geo_RiverSurvey_Read_Altitudes':
     return 'iRIC_Geo_RiverSurvey_Read_AltitudeCount', args
+
+  if fname == 'cg_iRIC_Read_Grid2d_InterpolateWithCell':
+    return 'cg_iRIC_Read_Grid2d_CellNodeCount', ['grid_handle', 'cellId']
 
   m = re.search("((cg_iRIC_Read_(.*))Functional)(.*)", fname)
   if m:
@@ -266,6 +294,8 @@ def gen_iric_py_content(fdef):
   m = re.search(r'(\w+) (\w+)\((.*)\)', fdef2)
 
   (retval, fname, args) = m.groups()
+
+  if fname == 'cg_iRIC_Read_Grid2d_Interpolate': return ''
 
   arglist = args.split(',')
 

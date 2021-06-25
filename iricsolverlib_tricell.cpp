@@ -13,7 +13,7 @@ const double INSIDE_DELTA = 1.0E-8;
 
 } // namespace
 
-TriCell::TriCell(size_t id1, size_t id2, size_t id3, Grid2D* const grid) :
+TriCell::TriCell(int id1, int id2, int id3, Grid2D* const grid) :
 	Cell2D(grid)
 {
 	addNode(id1);

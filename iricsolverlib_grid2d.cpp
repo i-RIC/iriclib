@@ -1,3 +1,4 @@
+#include "error_macros.h"
 #include "h5cgnsbase.h"
 #include "h5cgnsfile.h"
 #include "h5cgnsfilesolutionreader.h"
@@ -10,6 +11,7 @@
 #include "iricsolverlib_quadcell.h"
 #include "iricsolverlib_rect2d.h"
 #include "iricsolverlib_tricell.h"
+#include "iriclib_errorcodes.h"
 
 #include "internal/iric_util.h"
 
@@ -37,67 +39,15 @@ Grid2D::Impl::~Impl()
 	}
 }
 
-void Grid2D::Impl::loadStructuredGrid(int fn, int /*baseId*/, int zoneId, int gridId)
-{
-	H5CgnsZone* zone = nullptr;
-	H5CgnsGridCoordinates* coords = nullptr;
-	int ier = 0;
-
-	if (gridId == 1) {
-		ier = _iric_get_zone(fn, zoneId, &zone, "Grid2D::Impl::loadStructuredGrid");
-		coords = zone->gridCoordinates();
-	} else {
-		ier = _iric_get_zone_for_solread(fn, zoneId, gridId - 1, &zone, "Grid2D::Impl::loadStructuredGrid");
-		coords = zone->gridCoordinatesForSolution();
-	}
-
-	loadNodes(coords);
-
-	std::vector<int> size = zone->size();
-
-	for (int i = 0; i < size[0] - 1; ++i) {
-		for (int j = 0; j < size[1] - 1; ++j) {
-			size_t id0 = structuredIndex(i    , j    , size.data());
-			size_t id1 = structuredIndex(i + 1, j    , size.data());
-			size_t id2 = structuredIndex(i + 1, j + 1, size.data());
-			size_t id3 = structuredIndex(i    , j + 1, size.data());
-			m_cells.push_back(new QuadCell(id0 + 1, id1 + 1, id2 + 1, id3 + 1, m_grid));
-		}
-	}
-}
-
-void Grid2D::Impl::loadUnstructuredGrid(int fn, int /*baseId*/, int zoneId, int gridId)
-{
-	H5CgnsZone* zone = nullptr;
-	H5CgnsGridCoordinates* coords = nullptr;
-
-	if (gridId == 1) {
-		_iric_get_zone(fn, zoneId, &zone, "Grid2D::Impl::loadStructuredGrid");
-		coords = zone->gridCoordinates();
-	} else {
-		_iric_get_zone_for_solread(fn, zoneId, gridId - 1, &zone, "Grid2D::Impl::loadStructuredGrid");
-		coords = zone->gridCoordinatesForSolution();
-	}
-
-	loadNodes(coords);
-
-	std::vector<int> indices;
-	zone->readTriangleElements(&indices);
-
-	for (int i = 0; i < static_cast<int> (indices.size()) / 3; ++i) {
-		int id1 = indices.at(i * 3 + 0);
-		int id2 = indices.at(i * 3 + 1);
-		int id3 = indices.at(i * 3 + 2);
-
-		m_cells.push_back(new TriCell(id1, id2, id3, m_grid));
-	}
-}
-
-void Grid2D::Impl::loadNodes(iRICLib::H5CgnsGridCoordinates* coords)
+int Grid2D::Impl::loadNodes(iRICLib::H5CgnsGridCoordinates* coords)
 {
 	std::vector<double> xvec, yvec;
-	coords->readCoordinatesX(&xvec);
-	coords->readCoordinatesY(&yvec);
+	int ier = 0;
+	ier = coords->readCoordinatesX(&xvec);
+	RETURN_IF_ERR;
+
+	ier = coords->readCoordinatesY(&yvec);
+	RETURN_IF_ERR;
 
 	m_nodes.clear();
 	m_nodes.reserve(xvec.size());
@@ -108,6 +58,54 @@ void Grid2D::Impl::loadNodes(iRICLib::H5CgnsGridCoordinates* coords)
 
 		m_nodes.push_back(Point2D(x, y));
 	}
+	return IRIC_NO_ERROR;
+}
+
+int Grid2D::Impl::loadCells(const iRICLib::H5CgnsZone& zone)
+{
+	if (zone.type() == iRICLib::H5CgnsZone::Type::Structured) {
+		return loadStructuredGrid(zone);
+	} else if (zone.type() == iRICLib::H5CgnsZone::Type::Unstructured) {
+		return loadUnstructuredGrid(zone);
+	}
+}
+
+int Grid2D::Impl::loadStructuredGrid(const iRICLib::H5CgnsZone& zone)
+{
+	std::vector<int> size = zone.size();
+
+	for (int i = 0; i < size[0] - 1; ++i) {
+		for (int j = 0; j < size[1] - 1; ++j) {
+			int id0 = structuredIndex(i    , j    , size.data());
+			int id1 = structuredIndex(i + 1, j    , size.data());
+			int id2 = structuredIndex(i + 1, j + 1, size.data());
+			int id3 = structuredIndex(i    , j + 1, size.data());
+			auto cell = new QuadCell(id0 + 1, id1 + 1, id2 + 1, id3 + 1, m_grid);
+			cell->setId(static_cast<int> (m_cells.size()) + 1);
+			m_cells.push_back(cell);
+		}
+	}
+
+	return IRIC_NO_ERROR;
+}
+
+int Grid2D::Impl::loadUnstructuredGrid(const iRICLib::H5CgnsZone& zone)
+{
+	std::vector<int> indices;
+	int ier = zone.readTriangleElements(&indices);
+	RETURN_IF_ERR;
+
+	for (int i = 0; i < static_cast<int> (indices.size()) / 3; ++i) {
+		int id1 = indices.at(i * 3 + 0);
+		int id2 = indices.at(i * 3 + 1);
+		int id3 = indices.at(i * 3 + 2);
+
+		auto cell = new TriCell(id1, id2, id3, m_grid);
+		cell->setId(static_cast<int> (m_cells.size()) + 1);
+		m_cells.push_back(cell);
+	}
+
+	return IRIC_NO_ERROR;
 }
 
 void Grid2D::Impl::setupBackGrid()
@@ -163,7 +161,7 @@ void Grid2D::Impl::setupBackGrid()
 	}
 }
 
-size_t Grid2D::Impl::structuredIndex(size_t i, size_t j, int* size) const
+int Grid2D::Impl::structuredIndex(int i, int j, int* size) const
 {
 	return i + j * (*size);
 }
@@ -182,35 +180,60 @@ Grid2D::~Grid2D()
 	delete impl;
 }
 
-void Grid2D::load(int cgnsIn, int baseId, int zoneId, int gridId)
+int Grid2D::load(int fid, int gid)
 {
 	H5CgnsZone* zone = nullptr;
-	_iric_get_zone(cgnsIn, zoneId, &zone, "Grid2D::load");
+	int ier = _iric_get_zone(fid, gid, &zone, "Grid2D::load");
+	RETURN_IF_ERR;
 
-	if (zone->type() == H5CgnsZone::Type::Structured) {
-		impl->loadStructuredGrid(cgnsIn, baseId, zoneId, gridId);
-	} else {
-		impl->loadUnstructuredGrid(cgnsIn, baseId, zoneId, gridId);
-	}
+	auto coords = zone->gridCoordinates();
+	ier = impl->loadNodes(coords);
+	RETURN_IF_ERR;
+
+	ier = impl->loadCells(*zone);
+	RETURN_IF_ERR;
+
 	impl->setupBackGrid();
+
+	return IRIC_NO_ERROR;
 }
 
-size_t Grid2D::nodeCount() const
+int Grid2D::load(int fid, int gid, int solid)
 {
-	return impl->m_nodes.size();
+	H5CgnsZone* zone = nullptr;
+	int ier = _iric_get_zone(fid, gid, &zone, "Grid2D::load");
+	RETURN_IF_ERR;
+
+	zone->setSolutionId(solid);
+	auto coords = zone->gridCoordinatesForSolution();
+	impl->loadNodes(coords);
+	ier = impl->loadNodes(coords);
+	RETURN_IF_ERR;
+
+	ier = impl->loadCells(*zone);
+	RETURN_IF_ERR;
+
+	impl->setupBackGrid();
+
+	return IRIC_NO_ERROR;
 }
 
-Point2D Grid2D::node(size_t nodeId) const
+int Grid2D::nodeCount() const
+{
+	return static_cast<int> (impl->m_nodes.size());
+}
+
+Point2D Grid2D::node(int nodeId) const
 {
 	return impl->m_nodes.at(nodeId - 1);
 }
 
-size_t Grid2D::cellCount() const
+int Grid2D::cellCount() const
 {
-	return impl->m_cells.size();
+	return static_cast<int> (impl->m_cells.size());
 }
 
-Cell2D* Grid2D::cell(size_t cellId) const
+Cell2D* Grid2D::cell(int cellId) const
 {
 	return impl->m_cells.at(cellId - 1);
 }
@@ -229,7 +252,34 @@ Rect2D Grid2D::boundingRect() const
 	return ret;
 }
 
-bool Grid2D::interpolate(const Point2D& point, int *count, size_t* nodeIds, double* weight) const
+bool Grid2D::findCell(const Point2D& point, int* cellId) const
+{
+	std::vector<double>::iterator lb_x = std::lower_bound(impl->m_backGridX.begin(), impl->m_backGridX.end(), point.x());
+	if (lb_x == impl->m_backGridX.end()) {return false;}
+	if (*lb_x != point.x() && lb_x != impl->m_backGridX.begin()) {-- lb_x;}
+
+	std::vector<double>::iterator lb_y = std::lower_bound(impl->m_backGridY.begin(), impl->m_backGridY.end(), point.y());
+	if (lb_y == impl->m_backGridY.end()) {return false;}
+	if (*lb_y != point.y() && lb_y != impl->m_backGridY.begin()) {--lb_y;}
+
+	size_t bgCellIdx = (lb_x - impl->m_backGridX.begin()) +
+			(lb_y - impl->m_backGridY.begin()) * (impl->m_backGridX.size() - 1);
+
+	const std::vector<Cell2D*>& cells = impl->m_backGridCells.at(bgCellIdx);
+	for (int i = 0; i < static_cast<int> (cells.size()); ++i) {
+		Cell2D* cell = cells.at(i);
+		int nodeCount = cell->nodeCount();
+		std::vector<double> weights(nodeCount, 0);
+		bool ok = cell->interpolate(point, weights.data());
+		if (ok) {
+			*cellId = cell->id();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Grid2D::interpolate(const Point2D& point, int *count, int* nodeIds, double* weight) const
 {
 	std::vector<double>::iterator lb_x = std::lower_bound(impl->m_backGridX.begin(), impl->m_backGridX.end(), point.x());
 	if (lb_x == impl->m_backGridX.end()) {return false;}
@@ -248,7 +298,7 @@ bool Grid2D::interpolate(const Point2D& point, int *count, size_t* nodeIds, doub
 		*count = cell->nodeCount();
 		bool ok = cell->interpolate(point, weight);
 		if (ok) {
-			for (size_t j = 0; j < cell->nodeCount(); ++j) {
+			for (int j = 0; j < cell->nodeCount(); ++j) {
 				*(nodeIds + j) = cell->nodeId(j + 1);
 			}
 			return true;
@@ -267,12 +317,12 @@ void Grid2D::addNode(double x, double y)
 	addNode(Point2D(x, y));
 }
 
-void Grid2D::addTriCell(size_t id1, size_t id2, size_t id3)
+void Grid2D::addTriCell(int id1, int id2, int id3)
 {
 	impl->m_cells.push_back(new TriCell(id1, id2, id3, this));
 }
 
-void Grid2D::addQuadCell(size_t id1, size_t id2, size_t id3, size_t id4)
+void Grid2D::addQuadCell(int id1, int id2, int id3, int id4)
 {
 	impl->m_cells.push_back(new QuadCell(id1, id2, id3, id4, this));
 }

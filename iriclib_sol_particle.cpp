@@ -5,6 +5,7 @@
 #include "iriclib_sol_particle.h"
 #include "vectorutil.h"
 
+#include "internal/iric_logger.h"
 #include "internal/iric_util.h"
 
 using namespace iRICLib;
@@ -33,22 +34,27 @@ int getParticleSolutionForWrite(int fid, int gid, H5CgnsParticleSolution** solut
 
 } // namespace
 
-int cg_iRIC_Read_Sol_Particle_Count_WithGridId_Mul(int fid, int gid, int step, int* count)
+int cg_iRIC_Read_Sol_Particle_Count_WithGridId(int fid, int gid, int step, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsParticleSolution* solution = nullptr;
-	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Count_Mul");
+	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Count");
 	RETURN_IF_ERR;
 
 	ier = solution->count(count);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_Particle_Pos2d_WithGridId_Mul(int fid, int gid, int step, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Sol_Particle_Pos2d_WithGridId(int fid, int gid, int step, double* x_arr, double* y_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsParticleSolution* solution = nullptr;
-	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Pos2d_Mul");
+	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Pos2d");
 	RETURN_IF_ERR;
 
 	std::vector<double> xvec, yvec;
@@ -60,13 +66,16 @@ int cg_iRIC_Read_Sol_Particle_Pos2d_WithGridId_Mul(int fid, int gid, int step, d
 	_vectorToPointerT(xvec, x_arr);
 	_vectorToPointerT(yvec, y_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_Particle_Pos3d_WithGridId_Mul(int fid, int gid, int step, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Read_Sol_Particle_Pos3d_WithGridId(int fid, int gid, int step, double* x_arr, double* y_arr, double* z_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsParticleSolution* solution = nullptr;
-	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Pos3d_Mul");
+	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Pos3d");
 	RETURN_IF_ERR;
 
 	std::vector<double> xvec, yvec, zvec;
@@ -81,13 +90,16 @@ int cg_iRIC_Read_Sol_Particle_Pos3d_WithGridId_Mul(int fid, int gid, int step, d
 	_vectorToPointerT(yvec, y_arr);
 	_vectorToPointerT(zvec, z_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_Particle_Real_WithGridId_Mul(int fid, int gid, int step, const char* name, double* v_arr)
+int cg_iRIC_Read_Sol_Particle_Real_WithGridId(int fid, int gid, int step, const char* name, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsParticleSolution* solution = nullptr;
-	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Real_Mul");
+	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Real");
 	RETURN_IF_ERR;
 
 	std::vector<double> buffer;
@@ -96,13 +108,16 @@ int cg_iRIC_Read_Sol_Particle_Real_WithGridId_Mul(int fid, int gid, int step, co
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_Particle_Integer_WithGridId_Mul(int fid, int gid, int step, const char* name, int* v_arr)
+int cg_iRIC_Read_Sol_Particle_Integer_WithGridId(int fid, int gid, int step, const char* name, int* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsParticleSolution* solution = nullptr;
-	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Integer_Mul");
+	int ier = getParticleSolutionForRead(fid, gid, step, &solution, "cg_iRIC_Read_Sol_Particle_WithGridId_Integer");
 	RETURN_IF_ERR;
 
 	std::vector<int> buffer;
@@ -111,13 +126,16 @@ int cg_iRIC_Read_Sol_Particle_Integer_WithGridId_Mul(int fid, int gid, int step,
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_Particle_Pos2d_WithGridId_Mul(int fid, int gid, int count, double* x_arr, double* y_arr)
+int cg_iRIC_Write_Sol_Particle_Pos2d_WithGridId(int fid, int gid, int count, double* x_arr, double* y_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsParticleSolution* solution = nullptr;
-	int ier = getParticleSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_Particle_WithGridId_Pos2d_Mul");
+	int ier = getParticleSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_Particle_WithGridId_Pos2d");
 	RETURN_IF_ERR;
 
 	std::vector<double> xvec(count), yvec(count);
@@ -130,13 +148,16 @@ int cg_iRIC_Write_Sol_Particle_Pos2d_WithGridId_Mul(int fid, int gid, int count,
 	ier = solution->writeCoordinatesY(yvec);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_Particle_Pos3d_WithGridId_Mul(int fid, int gid, int count, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Write_Sol_Particle_Pos3d_WithGridId(int fid, int gid, int count, double* x_arr, double* y_arr, double* z_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsParticleSolution* solution = nullptr;
-	int ier = getParticleSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_Particle_WithGridId_Pos3d_Mul");
+	int ier = getParticleSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_Particle_WithGridId_Pos3d");
 	RETURN_IF_ERR;
 
 	std::vector<double> xvec(count), yvec(count), zvec(count);
@@ -152,13 +173,16 @@ int cg_iRIC_Write_Sol_Particle_Pos3d_WithGridId_Mul(int fid, int gid, int count,
 	ier = solution->writeCoordinatesZ(zvec);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_Particle_Real_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Write_Sol_Particle_Real_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsParticleSolution* solution = nullptr;
-	int ier = getParticleSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_Particle_WithGridId_Real_Mul");
+	int ier = getParticleSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_Particle_WithGridId_Real");
 	RETURN_IF_ERR;
 
 	int count;
@@ -172,13 +196,16 @@ int cg_iRIC_Write_Sol_Particle_Real_WithGridId_Mul(int fid, int gid, const char*
 	ier = solution->writeValue(name, buffer);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_Particle_Integer_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Write_Sol_Particle_Integer_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsParticleSolution* solution = nullptr;
-	int ier = getParticleSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_Particle_WithGridId_Integer_Mul");
+	int ier = getParticleSolutionForWrite(fid, gid, &solution, "cg_iRIC_Write_Sol_Particle_WithGridId_Integer");
 	RETURN_IF_ERR;
 
 	int count;
@@ -192,5 +219,6 @@ int cg_iRIC_Write_Sol_Particle_Integer_WithGridId_Mul(int fid, int gid, const ch
 	ier = solution->writeValue(name, buffer);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }

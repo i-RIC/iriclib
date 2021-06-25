@@ -1,9 +1,7 @@
 #ifndef IRICSOLVERLIB_GRID2D_H
 #define IRICSOLVERLIB_GRID2D_H
 
-#include "iricsolverlib_api.h"
-
-#include <stdlib.h>
+#include "iriclib_global.h"
 
 namespace iRICSolverLib {
 
@@ -11,29 +9,31 @@ class Cell2D;
 class Point2D;
 class Rect2D;
 
-class IRICSOLVERLIB_API Grid2D
+class IRICLIBDLL Grid2D
 {
 public:
 	Grid2D();
 	~Grid2D();
 
-	void load(int cgnsIn, int baseId, int zoneId, int gridId);
+	int load(int fid, int gid);
+	int load(int fid, int gid, int solid);
 
-	size_t nodeCount() const;
-	Point2D node(size_t nodeId) const;
+	int nodeCount() const;
+	Point2D node(int nodeId) const;
 
-	size_t cellCount() const;
-	Cell2D* cell(size_t cellId) const;
+	int cellCount() const;
+	Cell2D* cell(int cellId) const;
 
 	Rect2D boundingRect() const;
 
-	bool interpolate(const Point2D& point, int *count, size_t* nodeIds, double* weight) const;
+	bool findCell(const Point2D& point, int* cellId) const;
+	bool interpolate(const Point2D& point, int *count, int* nodeIds, double* weight) const;
 
 	void addNode(const Point2D& p);
 	void addNode(double x, double y);
 
-	void addTriCell(size_t id1, size_t id2, size_t id3);
-	void addQuadCell(size_t id1, size_t id2, size_t id3, size_t id4);
+	void addTriCell(int id1, int id2, int id3);
+	void addQuadCell(int id1, int id2, int id3, int id4);
 
 	void setupBackGrid();
 

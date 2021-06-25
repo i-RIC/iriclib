@@ -6,7 +6,7 @@ import iric
 from . import util
 
 def writeSolution(filename, fid, iterMode):
-    isize, jsize = iric.cg_iRIC_GotoGridCoord2d()
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size()
 
     # fill iface
     iface_is_edge = np.zeros(isize * (jsize - 1), dtype=np.int32)
@@ -28,7 +28,7 @@ def writeSolution(filename, fid, iterMode):
                 jface_is_edge[j * (isize - 1) + i] = 2
                 jface_is_edge_reals[j * (isize - 1) + i] = .2
 
-    x, y = iric.cg_iRIC_GetGridCoord2d()
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords()
 
     vx = np.full(isize * jsize, 1, dtype=np.float64)
     vy = np.full(isize * jsize, 0.3, dtype=np.float64)
@@ -53,17 +53,17 @@ def writeSolution(filename, fid, iterMode):
             TimeVal = i * 2.13
             iric.cg_iRIC_Write_Sol_Time(TimeVal)
 
-        iric.cg_iRIC_Write_Sol_GridCoord2d(x, y)
+        iric.cg_iRIC_Write_Sol_Grid2d_Coords(x, y)
 
         # Vertex solutions
 
         depth[:] = i
-        iric.cg_iRIC_Write_Sol_Real("Depth", depth)
-        iric.cg_iRIC_Write_Sol_Real("VelocityX", vx)
-        iric.cg_iRIC_Write_Sol_Real("VelocityY", vy)
+        iric.cg_iRIC_Write_Sol_Node_Real("Depth", depth)
+        iric.cg_iRIC_Write_Sol_Node_Real("VelocityX", vx)
+        iric.cg_iRIC_Write_Sol_Node_Real("VelocityY", vy)
 
         wet[:] = i
-        iric.cg_iRIC_Write_Sol_Integer("IBC", wet)
+        iric.cg_iRIC_Write_Sol_Node_Integer("IBC", wet)
 
         # CellCenter solutions
 
@@ -120,17 +120,17 @@ def writeSolution(filename, fid, iterMode):
 
         iric.cg_iRIC_Write_Sol_ParticleGroup_GroupEnd()
 
-        iric.cg_iRIC_Flush(filename, fid)
+        iric.cg_iRIC_Flush(fid)
 
     return fid
 
 def writeSolution3d(filename, fid):
-    isize, jsize = iric.cg_iRIC_GotoGridCoord2d()
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size()
 
-    x, y = iric.cg_iRIC_GetGridCoord2d()
+    x, y = iric.cg_iRIC_Read_Grid2d_Coords()
     z = np.zeros(isize * jsize, dtype=np.float64)
 
-    iric.cg_iRIC_WriteGridCoord3d(isize, jsize, 1, x, y, z)
+    iric.cg_iRIC_Write_Grid3d_Coords(isize, jsize, 1, x, y, z)
 
     vx = np.full(isize * jsize, 1, dtype=np.float64)
     vy = np.full(isize * jsize, 0.3, dtype=np.float64)
@@ -153,12 +153,12 @@ def writeSolution3d(filename, fid):
         TimeVal = i * 2.13
         iric.cg_iRIC_Write_Sol_Time(TimeVal)
 
-        iric.cg_iRIC_Write_Sol_GridCoord3d(x, y, z)
-        iric.cg_iRIC_Write_Sol_Real("Depth", depth)
-        iric.cg_iRIC_Write_Sol_Real("VelocityX", vx)
-        iric.cg_iRIC_Write_Sol_Real("VelocityY", vy)
+        iric.cg_iRIC_Write_Sol_Grid3d_Coords(x, y, z)
+        iric.cg_iRIC_Write_Sol_Node_Real("Depth", depth)
+        iric.cg_iRIC_Write_Sol_Node_Real("VelocityX", vx)
+        iric.cg_iRIC_Write_Sol_Node_Real("VelocityY", vy)
 
-        iric.cg_iRIC_Write_Sol_Integer("IBC", wet)
+        iric.cg_iRIC_Write_Sol_Node_Integer("IBC", wet)
 
         Dist = i * - 0.2 + 20
         iric.cg_iRIC_Write_Sol_BaseIterative_Real("Discharge", Dist)
@@ -188,7 +188,7 @@ def writeSolution3d(filename, fid):
 
         iric.cg_iRIC_Write_Sol_ParticleGroup_GroupEnd()
 
-        iric.cg_iRIC_Flush(filename, fid)
+        iric.cg_iRIC_Flush(fid)
 
     return fid
 
@@ -196,25 +196,25 @@ def readSolution(fid):
     sol_count = iric.cg_iRIC_Read_Sol_Count()
     util.verify_log("cg_iRIC_Read_Sol_Count() sol_count == 5", sol_count == 5)
 
-    isize, jsize = iric.cg_iRIC_GotoGridCoord2d()
+    isize, jsize = iric.cg_iRIC_Read_Grid2d_Str_Size()
 
     for S in range(1, sol_count + 1):
         # GridCoord
 
-        x, y = iric.cg_iRIC_Read_Sol_GridCoord2d(S)
+        x, y = iric.cg_iRIC_Read_Sol_Grid2d_Coords(S)
 
         # Vertex solutions
 
-        real_sol = iric.cg_iRIC_Read_Sol_Real(S, "Depth")
-        msg = "cg_iRIC_Read_Sol_Real() real_sol[0] == {0}".format(S - 1)
+        real_sol = iric.cg_iRIC_Read_Sol_Node_Real(S, "Depth")
+        msg = "cg_iRIC_Read_Sol_Node_Real() real_sol[0] == {0}".format(S - 1)
         util.verify_log(msg, real_sol[0] == S - 1)
-        msg = "cg_iRIC_Read_Sol_Real() real_sol[{0}] == {1}".format(real_sol.size - 1, S - 1)
+        msg = "cg_iRIC_Read_Sol_Node_Real() real_sol[{0}] == {1}".format(real_sol.size - 1, S - 1)
         util.verify_log(msg, real_sol[real_sol.size - 1] == S - 1)
 
-        int_sol = iric.cg_iRIC_Read_Sol_Integer(S, "IBC")
-        msg = "cg_iRIC_Read_Sol_Integer() int_sol[0] == {0}".format(S - 1)
+        int_sol = iric.cg_iRIC_Read_Sol_Node_Integer(S, "IBC")
+        msg = "cg_iRIC_Read_Sol_Node_Integer() int_sol[0] == {0}".format(S - 1)
         util.verify_log(msg, int_sol[0] == S - 1)
-        msg = "cg_iRIC_Read_Sol_Integer() int_sol[{0}] == {1}".format(int_sol.size - 1, S - 1)
+        msg = "cg_iRIC_Read_Sol_Node_Integer() int_sol[{0}] == {1}".format(int_sol.size - 1, S - 1)
         util.verify_log(msg, int_sol[int_sol.size - 1] == S - 1)
 
         # CellCenter solutions
@@ -284,25 +284,21 @@ def case_SolWriteStd(cgnsName):
 
     # Test Writing
 
-    fid = iric.cg_open("data/case_solstd.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
-
-    iric.cg_iRIC_Init(fid)
+    fid = iric.cg_iRIC_Open("data/case_solstd.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     fid = writeSolution("data/case_solstd.cgn", fid, False)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     # Test Reading with times
 
-    fid = iric.cg_open("data/case_solstd.cgn", iric.CG_MODE_READ)
-    util.verify_log("cg_open() fid != 0", fid != 0)
-
-    iric.cg_iRIC_InitRead(fid)
+    fid = iric.cg_iRIC_Open("data/case_solstd.cgn", iric.IRIC_MODE_READ)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     readSolution(fid)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_solstd.cgn")
 
@@ -310,14 +306,12 @@ def case_SolWriteStd(cgnsName):
 
     shutil.copy(cgnsName, "data/case_solstd3d.cgn")
 
-    fid = iric.cg_open("data/case_solstd3d.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
-
-    iric.cg_iRIC_Init(fid)
+    fid = iric.cg_iRIC_Open("data/case_solstd3d.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     fid = writeSolution3d("data/case_solstd3d.cgn", fid)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_solstd3d.cgn")
 
@@ -325,24 +319,20 @@ def case_SolWriteStd(cgnsName):
 
     shutil.copy(cgnsName, "data/case_solstditer.cgn")
 
-    fid = iric.cg_open("data/case_solstditer.cgn", iric.CG_MODE_MODIFY)
-    util.verify_log("cg_open() fid != 0", fid != 0)
-
-    iric.cg_iRIC_Init(fid)
+    fid = iric.cg_iRIC_Open("data/case_solstditer.cgn", iric.IRIC_MODE_MODIFY)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     fid = writeSolution("data/case_solstditer.cgn", fid, True)
 
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     # Test Reading Standard (IRIC_OPTION_STDSOLUTION) with iterations
 
-    fid = iric.cg_open("data/case_solstditer.cgn", iric.CG_MODE_READ)
-    util.verify_log("cg_open() fid != 0", fid != 0)
-
-    iric.cg_iRIC_InitRead(fid)
+    fid = iric.cg_iRIC_Open("data/case_solstditer.cgn", iric.IRIC_MODE_READ)
+    util.verify_log("cg_iRIC_Open() fid != 0", fid != 0)
 
     readSolution(fid)
-    iric.cg_close(fid)
+    iric.cg_iRIC_Close(fid)
 
     util.remove("data/case_solstditer.cgn")
 

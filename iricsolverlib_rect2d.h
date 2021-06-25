@@ -1,13 +1,13 @@
 #ifndef IRICSOLVERLIB_RECT2D_H
 #define IRICSOLVERLIB_RECT2D_H
 
-#include "iricsolverlib_api.h"
+#include "iriclib_global.h"
 
 namespace iRICSolverLib {
 
 class Point2D;
 
-class IRICSOLVERLIB_API Rect2D
+class IRICLIBDLL Rect2D
 {
 public:
 	Rect2D();

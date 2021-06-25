@@ -99,8 +99,8 @@ int H5CgnsBc::writeIndices(const std::vector<int>& indices) const
 	}
 	auto count = indices.size() / indexDim;
 	std::vector<hsize_t> dims;
-	dims.push_back(indexDim);
 	dims.push_back(count);
+	dims.push_back(indexDim);
 
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::createGroupWithValue");
 	int ier = H5Util::createGroupWithValue(impl->m_groupId, POINTLIST, H5Util::indexArrayLabel(), indices, dims);

@@ -135,20 +135,20 @@ int H5CgnsFileSeparateSolutionUtil::clearResultFolder(const std::string& fileNam
 		return IRIC_NO_ERROR;;
 	} catch (...) {
 		std::ostringstream ss;
-		ss << "In H5CgnsFileSeparateSolutionUtil::clearResultFolder(), removing and creating result \"folder\" failed";
+		ss << "In H5CgnsFileSeparateSolutionUtil::clearResultFolder(), removing and creating folder \"result\" failed";
 		_iric_logger_error(ss.str());
 
 		return IRIC_FOLDER_CLEAR_ERROR ;
 	}
 }
 
-std::string H5CgnsFileSeparateSolutionUtil::fileNameForSolution(const std::string& fileName, int solId)
+std::string H5CgnsFileSeparateSolutionUtil::fileNameForSolution(const std::string& resultFolder, int solId)
 {
 	std::ostringstream ss;
 	ss << "Solution" << solId << ".cgn";
 	auto solFileName = ss.str();
 
-	return Poco::Path(resultFolder(fileName)).append(solFileName).toString();
+	return Poco::Path(resultFolder).append(solFileName).toString();
 }
 
 int H5CgnsFileSeparateSolutionUtil::getMaxSeparateResultSolutionId(const std::string& fileName, int* solutionId)
