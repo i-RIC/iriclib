@@ -45,13 +45,17 @@ void H5CgnsFileSolutionReader::Impl::detectMode()
 
 	std::vector<double> timeVals;
 	std::vector<int> iterVals;
-	m_file->ccBase()->biterData()->readTime(&timeVals);
-	m_file->ccBase()->biterData()->readIteration(&iterVals);
+	auto biterData = m_file->ccBase()->biterData();
+
+	if (biterData == nullptr) {return;}
+
+	biterData->readTime(&timeVals);
+	biterData->readIteration(&iterVals);
 
 	auto maxSolId = static_cast<int> (max(timeVals.size(), iterVals.size()));
 	if (maxSolId == 0) {return;}
 
-	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->fileName(), maxSolId);
+	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->resultFolder(), maxSolId);
 	Poco::File f(fName);
 	if (f.exists()) {
 		m_mode = Mode::Separate;
@@ -79,7 +83,7 @@ int H5CgnsFileSolutionReader::Impl::setSolutionIdSeparate(int id)
 	delete m_targetFile;
 	m_targetFile = nullptr;
 
-	auto Fname = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->fileName(), id);
+	auto Fname = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->resultFolder(), id);
 	try {
 		m_targetFile = new H5CgnsFile(Fname, H5CgnsFile::Mode::OpenReadOnly);
 		_IRIC_LOGGER_TRACE_CALL_START("H5CgnsFile::setSolutionId");

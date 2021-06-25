@@ -7,9 +7,6 @@
 extern "C" {
 #endif
 
-int IRICLIBDLL iRIC_Write_Sol_Start(const char* fname);
-int IRICLIBDLL iRIC_Write_Sol_End(const char* fname);
-int IRICLIBDLL iRIC_Check_Lock(const char* fname);
 int IRICLIBDLL iRIC_Check_Cancel();
 
 #ifdef __cplusplus

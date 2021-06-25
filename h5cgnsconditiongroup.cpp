@@ -367,7 +367,7 @@ int H5CgnsConditionGroup::writeRealValue(const std::string& name, double value)
 	std::string name2 = "Value";
 	hid_t gid;
 	_IRIC_LOGGER_TRACE_CALL_START("H5CgnsConditionGroup::Impl::openOrCreateGroups");
-	int ier = impl->openOrCreateGroups(name, name2, "I4", &gid);
+	int ier = impl->openOrCreateGroups(name, name2, "R8", &gid);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5CgnsConditionGroup::Impl::openOrCreateGroups", ier);
 	RETURN_IF_ERR;
 
@@ -398,7 +398,7 @@ int H5CgnsConditionGroup::writeString(const std::string& name, const std::string
 	std::string name2 = "Value";
 	hid_t gid;
 	_IRIC_LOGGER_TRACE_CALL_START("H5CgnsConditionGroup::Impl::openOrCreateGroups");
-	int ier = impl->openOrCreateGroups(name, name2, "I4", &gid);
+	int ier = impl->openOrCreateGroups(name, name2, "C1", &gid);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5CgnsConditionGroup::Impl::openOrCreateGroups", ier);
 	RETURN_IF_ERR;
 
@@ -487,7 +487,7 @@ int H5CgnsConditionGroup::writeFunctionalWithNameString(const std::string& name,
 
 	hid_t gid;
 	_IRIC_LOGGER_TRACE_CALL_START("H5CgnsConditionGroup::Impl::openOrCreateGroups");
-	int ier = impl->openOrCreateGroups(name, paramName, "R8", &gid);
+	int ier = impl->openOrCreateGroups(name, paramName, "C1", &gid);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5CgnsConditionGroup::Impl::openOrCreateGroups", ier);
 	RETURN_IF_ERR;
 

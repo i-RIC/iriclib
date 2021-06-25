@@ -3,6 +3,8 @@
 
 #include "iriclib_global.h"
 
+#include <string>
+
 namespace iRICLib {
 
 class H5CgnsFile;
@@ -21,7 +23,14 @@ public:
 	int writeTime(double time);
 	int writeIteration(int iteration);
 
+	int writeBaseIterativeData(const std::string& name, int value);
+	int writeBaseIterativeData(const std::string& name, double value);
+	int writeBaseIterativeData(const std::string& name, const std::string value);
+
 	H5CgnsFile* targetFile() const;
+
+	int flush();
+	int close();
 
 private:
 	class Impl;

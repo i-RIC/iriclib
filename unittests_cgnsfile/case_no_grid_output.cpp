@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>
@@ -19,26 +18,22 @@ void case_noGridOutput()
 	fs::copy("case_nogrid_hdf5.cgn", "case_nogrid_output.cgn");
 
 	int fid;
-	int ier = cg_open("case_nogrid_output.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_nogrid_output.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	double time = 0.0;
 	double discharge = 0.1;
 
-	ier = cg_iRIC_Write_Sol_Time(time);
+	ier = cg_iRIC_Write_Sol_Time(fid, time);
 	VERIFY_LOG("cg_iRIC_Write_Sol_Time() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Sol_BaseIterative_Real("Discharge", discharge);
+	ier = cg_iRIC_Write_Sol_BaseIterative_Real(fid, "Discharge", discharge);
 	VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real() ier == 0", ier == 0);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	remove("case_nogrid_output.cgn");
 }

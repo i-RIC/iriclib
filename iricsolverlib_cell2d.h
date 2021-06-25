@@ -1,7 +1,7 @@
 #ifndef IRICSOLVERLIB_CELL2D_H
 #define IRICSOLVERLIB_CELL2D_H
 
-#include "iricsolverlib_api.h"
+#include "iriclib_global.h"
 
 #include <cstdlib>
 
@@ -11,14 +11,17 @@ class Grid2D;
 class Point2D;
 class Rect2D;
 
-class IRICSOLVERLIB_API Cell2D
+class IRICLIBDLL Cell2D
 {
 public:
 	Cell2D(Grid2D* const grid);
 	virtual ~Cell2D();
 
-	size_t nodeCount() const;
-	size_t nodeId(int id) const;
+	int id() const;
+	void setId(int id);
+
+	int nodeCount() const;
+	int nodeId(int id) const;
 	Point2D node(int id) const;
 
 	Rect2D boundingRect() const;
@@ -27,7 +30,7 @@ public:
 	virtual double area() const = 0;
 
 protected:
-	void addNode(size_t id);
+	void addNode(int id);
 
 private:
 	class Impl;

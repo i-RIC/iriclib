@@ -21,7 +21,7 @@ using namespace iRICLib;
 
 #define LABEL "Zone_t"
 #define ELEMENT "Element"
-#define ELEMENT_LABEL "Element_t"
+#define ELEMENT_LABEL "Elements_t"
 #define ELEMENT_CONNECTIVITY "ElementConnectivity"
 #define ELEMENT_RANGE "ElementRange"
 #define INDEXRANGE_LABEL "IndexRange_t"
@@ -349,6 +349,8 @@ int H5CgnsZone::writeTriangleElements(const std::vector<int>& indices) const
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::createGroupWithValue", ier);
 	RETURN_IF_ERR;
 
+	H5GroupCloser elementCloser(element_id);
+
 	_IRIC_LOGGER_TRACE_CALL_START("H5Util::createDataArray");
 	ier = H5Util::createDataArray(element_id, ELEMENT_CONNECTIVITY, indices);
 	_IRIC_LOGGER_TRACE_CALL_END_WITHVAL("H5Util::createDataArray", ier);
@@ -396,6 +398,8 @@ bool H5CgnsZone::solutionExists(SolutionPosition pos) const
 		return jFaceSolutionExists();
 	case SolutionPosition::KFace:
 		return kFaceSolutionExists();
+	default:
+		return false;
 	}
 }
 
@@ -412,6 +416,8 @@ H5CgnsFlowSolution* H5CgnsZone::solution(SolutionPosition pos)
 		return jFaceSolution();
 	case SolutionPosition::KFace:
 		return kFaceSolution();
+	default:
+		return nullptr;
 	}
 }
 

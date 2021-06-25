@@ -26,20 +26,36 @@ H5CgnsFile::Impl::Impl(H5CgnsFile* file) :
 
 H5CgnsFile::Impl::~Impl()
 {
-	for (auto base : m_bases) {
-		delete base;
-	}
+	close();
 
 	delete m_solutionReader;
 	delete m_solutionWriter;
+}
+
+int H5CgnsFile::Impl::open()
+{
+	loadBases();
+	loadZones();
+
+	return IRIC_NO_ERROR;
+}
+
+int H5CgnsFile::Impl::close()
+{
+	for (auto base : m_bases) {
+		delete base;
+	}
+	m_bases.clear();
+	m_zones.clear();
 
 	_IRIC_LOGGER_TRACE_CALL_START("H5Fclose");
 	herr_t status = H5Fclose(m_fileId);
 	_IRIC_LOGGER_TRACE_CALL_END("H5Fclose");
 
 	if (status < 0) {
-		_iric_logger_error("H5CgnsFile::Impl::~Impl", "H5Fclose", status);
+		_iric_logger_error("H5CgnsFile::Impl::close", "H5Fclose", status);
 	}
+	return IRIC_NO_ERROR;
 }
 
 void H5CgnsFile::Impl::loadBases()

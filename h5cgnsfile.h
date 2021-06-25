@@ -22,11 +22,16 @@ public:
 		OpenReadOnly
 	};
 
-	H5CgnsFile(const std::string& fileName, Mode mode);
+	H5CgnsFile(const std::string& fileName, Mode mode, const std::string& resultFolder = "result");
 	~H5CgnsFile();
+
+	int open();
+	int close();
 
 	Mode mode() const;
 	std::string fileName() const;
+	std::string tmpFileName() const; // temporary file used to read result while running
+	std::string resultFolder() const;
 
 	int baseNum() const;
 

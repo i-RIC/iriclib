@@ -17,21 +17,23 @@
 
 using namespace iRICLib;
 
-int cg_iRIC_GotoGridCoord2d_WithGridId_Mul(int fid, int gid, int* isize, int* jsize)
+int cg_iRIC_Read_Grid2d_Str_Size_WithGridId(int fid, int gid, int* isize, int* jsize)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* z;
 	int ier = _iric_get_zone(fid, gid, &z, __func__);
 	RETURN_IF_ERR;
 
 	if (z->type() == H5CgnsZone::Type::Unstructured) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GotoGridCoord2d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
+		ss << "In cg_iRIC_Read_Grid2d_Str_Size_WithGridId(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_GRIDTYPE;
 	}
 	if (z->base()->dimension() != 2) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GotoGridCoord2d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
+		ss << "In cg_iRIC_Read_Grid2d_Str_Size_WithGridId(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}
@@ -39,18 +41,21 @@ int cg_iRIC_GotoGridCoord2d_WithGridId_Mul(int fid, int gid, int* isize, int* js
 	*isize = s.at(0);
 	*jsize = s.at(1);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_GetGridCoord2d_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr)
+int cg_iRIC_Read_Grid2d_Coords_WithGridId(int fid, int gid, double* x_arr, double* y_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* z;
 	int ier = _iric_get_zone(fid, gid, &z, __func__);
 	RETURN_IF_ERR;
 
 	if (z->base()->dimension() != 2) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GetGridCoord2d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
+		ss << "In cg_iRIC_GetGridCoord2d_WithGridId(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}
@@ -62,24 +67,27 @@ int cg_iRIC_GetGridCoord2d_WithGridId_Mul(int fid, int gid, double* x_arr, doubl
 	_vectorToPointerT(xbuffer, x_arr);
 	_vectorToPointerT(ybuffer, y_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_GotoGridCoord3d_WithGridId_Mul(int fid, int gid, int* isize, int* jsize, int* ksize)
+int cg_iRIC_Read_Grid3d_Str_Size_WithGridId(int fid, int gid, int* isize, int* jsize, int* ksize)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* z;
 	int ier = _iric_get_zone(fid, gid, &z, __func__);
 	RETURN_IF_ERR;
 
 	if (z->type() == H5CgnsZone::Type::Unstructured) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GotoGridCoord3d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
+		ss << "In cg_iRIC_Read_Grid3d_Str_Size_WithGridId(), grid for fid " << fid << ", gid " << gid << " is an unstructured grid";
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_GRIDTYPE;
 	}
 	if (z->base()->dimension() != 3) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GotoGridCoord3d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
+		ss << "In cg_iRIC_Read_Grid3d_Str_Size_WithGridId(), grid for fid " << fid << ", gid " << gid << " has dimension " << z->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}
@@ -88,18 +96,21 @@ int cg_iRIC_GotoGridCoord3d_WithGridId_Mul(int fid, int gid, int* isize, int* js
 	*jsize = s.at(1);
 	*ksize = s.at(2);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, double* x_arr, double* y_arr, double* z_arr)
+int cg_iRIC_Read_Grid3d_Coords_WithGridId(int fid, int gid, double* x_arr, double* y_arr, double* z_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
 
 	if (zone->base()->dimension() != 3) {
 		std::ostringstream ss;
-		ss << "In cg_iRIC_GetGridCoord3d_WithGridId_Mul(), grid for fid " << fid << ", gid " << gid << " has dimension " << zone->base()->dimension();
+		ss << "In cg_iRIC_Read_Grid3d_Coords_WithGridId(), grid for fid " << fid << ", gid " << gid << " has dimension " << zone->base()->dimension();
 		_iric_logger_error(ss.str());
 		return IRIC_INVALID_DIMENSION;
 	}
@@ -116,11 +127,14 @@ int cg_iRIC_GetGridCoord3d_WithGridId_Mul(int fid, int gid, double* x_arr, doubl
 	_vectorToPointerT(ybuffer, y_arr);
 	_vectorToPointerT(zbuffer, z_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(int fid, int gid, int* size)
+int cg_iRIC_Read_Grid_TriangleElementsSize_WithGridId(int fid, int gid, int* size)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -128,11 +142,14 @@ int cg_iRIC_GetTriangleElementsSize_WithGridId_Mul(int fid, int gid, int* size)
 	ier = zone->readTriangleElementsSize(size);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(int fid, int gid, int* size)
+int cg_iRIC_Read_Grid_TriangleElementsSize2_WithGridId(int fid, int gid, int* size)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -140,11 +157,14 @@ int cg_iRIC_GetTriangleElementsSize2_WithGridId_Mul(int fid, int gid, int* size)
 	ier = zone->readTriangleElementsValueCount(size);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_GetTriangleElements_WithGridId_Mul(int fid, int gid, int* id_arr)
+int cg_iRIC_Read_Grid_TriangleElements_WithGridId(int fid, int gid, int* id_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -155,66 +175,84 @@ int cg_iRIC_GetTriangleElements_WithGridId_Mul(int fid, int gid, int* id_arr)
 
 	_vectorToPointerT(indices, id_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_NodeCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_NodeCount_WithGridId(int fid, int gid, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
 
 	*count = zone->nodeCount();
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_CellCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_CellCount_WithGridId(int fid, int gid, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
 
 	*count = zone->cellCount();
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_IFaceCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_IFaceCount_WithGridId(int fid, int gid, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
 
 	*count = zone->iFaceCount();
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_JFaceCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_JFaceCount_WithGridId(int fid, int gid, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
 
 	*count = zone->jFaceCount();
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_KFaceCount_WithGridId_Mul(int fid, int gid, int* count)
+int cg_iRIC_Read_Grid_KFaceCount_WithGridId(int fid, int gid, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
 
 	*count = zone->kFaceCount();
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Read_Grid_Real_Node_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -224,11 +262,14 @@ int cg_iRIC_Read_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* nam
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Read_Grid_Integer_Node_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -238,11 +279,14 @@ int cg_iRIC_Read_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char* 
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Read_Grid_Real_Cell_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -253,11 +297,14 @@ int cg_iRIC_Read_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* nam
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Integer_Cell_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Read_Grid_Integer_Cell_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -268,11 +315,14 @@ int cg_iRIC_Read_Grid_Integer_Cell_WithGridId_Mul(int fid, int gid, const char* 
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId_Mul(int fid, int gid, const char* name, const char* dimname, int* count)
+int cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId(int fid, int gid, const char* name, const char* dimname, int* count)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -280,11 +330,14 @@ int cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId_Mul(int fid, int gid, c
 	ier = zone->gridAttributes()->readFunctionalDimensionSize(name, dimname, count);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_FunctionalDimension_Integer_WithGridId_Mul(int fid, int gid, const char* name, const char* dimname, int* v_arr)
+int cg_iRIC_Read_Grid_FunctionalDimension_Integer_WithGridId(int fid, int gid, const char* name, const char* dimname, int* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -295,11 +348,14 @@ int cg_iRIC_Read_Grid_FunctionalDimension_Integer_WithGridId_Mul(int fid, int gi
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId_Mul(int fid, int gid, const char* name, const char* dimname, double* v_arr)
+int cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId(int fid, int gid, const char* name, const char* dimname, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -310,21 +366,24 @@ int cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId_Mul(int fid, int gid, 
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_FunctionalTimeSize_WithGridId_Mul(int fid, int gid, const char* name, int* count)
+int cg_iRIC_Read_Grid_FunctionalTimeSize_WithGridId(int fid, int gid, const char* name, int* count)
 {
-	return cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId_Mul(fid, gid, name, "Time", count);
+	return cg_iRIC_Read_Grid_FunctionalDimensionSize_WithGridId(fid, gid, name, "Time", count);
 }
 
-int cg_iRIC_Read_Grid_FunctionalTime_WithGridId_Mul(int fid, int gid, const char* name, double* time_arr)
+int cg_iRIC_Read_Grid_FunctionalTime_WithGridId(int fid, int gid, const char* name, double* time_arr)
 {
-	return cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId_Mul(fid, gid, name, "Time", time_arr);
+	return cg_iRIC_Read_Grid_FunctionalDimension_Real_WithGridId(fid, gid, name, "Time", time_arr);
 }
 
-int cg_iRIC_Read_Grid_Functional_Integer_Node_WithGridId_Mul(int fid, int gid, const char* name, int dimid, int* v_arr)
+int cg_iRIC_Read_Grid_Functional_Integer_Node_WithGridId(int fid, int gid, const char* name, int dimid, int* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -335,11 +394,14 @@ int cg_iRIC_Read_Grid_Functional_Integer_Node_WithGridId_Mul(int fid, int gid, c
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Functional_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, int dimid, double* v_arr)
+int cg_iRIC_Read_Grid_Functional_Real_Node_WithGridId(int fid, int gid, const char* name, int dimid, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -350,11 +412,14 @@ int cg_iRIC_Read_Grid_Functional_Real_Node_WithGridId_Mul(int fid, int gid, cons
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId_Mul(int fid, int gid, const char* name, int dimid, int* v_arr)
+int cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId(int fid, int gid, const char* name, int dimid, int* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -365,11 +430,14 @@ int cg_iRIC_Read_Grid_Functional_Integer_Cell_WithGridId_Mul(int fid, int gid, c
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, int dimid, double* v_arr)
+int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId(int fid, int gid, const char* name, int dimid, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -380,11 +448,14 @@ int cg_iRIC_Read_Grid_Functional_Real_Cell_WithGridId_Mul(int fid, int gid, cons
 
 	_vectorToPointerT(buffer, v_arr);
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_WriteGridCoord1d_WithGridId_Mul(int fid, int isize, double* x_arr, int* gid)
+int cg_iRIC_Write_Grid1d_Coords_WithGridId(int fid, int isize, double* x_arr, int* gid)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsFile* file = nullptr;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
 	RETURN_IF_ERR;
@@ -402,11 +473,14 @@ int cg_iRIC_WriteGridCoord1d_WithGridId_Mul(int fid, int isize, double* x_arr, i
 	ier = zone->gridCoordinates()->writeCoordinatesX(coords);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return file->getGridId(zone, gid);
 }
 
-int cg_iRIC_WriteGridCoord2d_WithGridId_Mul(int fid, int isize, int jsize, double* x_arr, double* y_arr, int* gid)
+int cg_iRIC_Write_Grid2d_Coords_WithGridId(int fid, int isize, int jsize, double* x_arr, double* y_arr, int* gid)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsFile* file = nullptr;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
 	RETURN_IF_ERR;
@@ -433,11 +507,14 @@ int cg_iRIC_WriteGridCoord2d_WithGridId_Mul(int fid, int isize, int jsize, doubl
 	ier = zone->gridCoordinates()->writeCoordinatesY(yVec);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return file->getGridId(zone, gid);
 }
 
-int cg_iRIC_WriteGridCoord3d_WithGridId_Mul(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid)
+int cg_iRIC_Write_Grid3d_Coords_WithGridId(int fid, int isize, int jsize, int ksize, double* x_arr, double* y_arr, double* z_arr, int* gid)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsFile* file = nullptr;
 	int ier = _iric_h5cgnsfiles_get(fid, &file);
 	RETURN_IF_ERR;
@@ -469,11 +546,14 @@ int cg_iRIC_WriteGridCoord3d_WithGridId_Mul(int fid, int isize, int jsize, int k
 	ier = zone->gridCoordinates()->writeCoordinatesZ(zVec);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return file->getGridId(zone, gid);
 }
 
-int cg_iRIC_Write_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Write_Grid_Real_Node_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -484,11 +564,14 @@ int cg_iRIC_Write_Grid_Real_Node_WithGridId_Mul(int fid, int gid, const char* na
 	ier = zone->gridAttributes()->writeValue(name, buffer);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Write_Grid_Integer_Node_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -499,11 +582,14 @@ int cg_iRIC_Write_Grid_Integer_Node_WithGridId_Mul(int fid, int gid, const char*
 	ier = zone->gridAttributes()->writeValue(name, buffer);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Write_Grid_Real_Cell_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -514,11 +600,14 @@ int cg_iRIC_Write_Grid_Real_Cell_WithGridId_Mul(int fid, int gid, const char* na
 	ier = zone->gridAttributes()->writeValue(name, buffer);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Grid_Integer_Cell_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Write_Grid_Integer_Cell_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
+	_IRIC_LOGGER_TRACE_ENTER();
+
 	H5CgnsZone* zone;
 	int ier = _iric_get_zone(fid, gid, &zone, __func__);
 	RETURN_IF_ERR;
@@ -529,6 +618,6 @@ int cg_iRIC_Write_Grid_Integer_Cell_WithGridId_Mul(int fid, int gid, const char*
 	ier = zone->gridAttributes()->writeValue(name, buffer);
 	RETURN_IF_ERR;
 
+	_IRIC_LOGGER_TRACE_LEAVE();
 	return IRIC_NO_ERROR;
 }
-

@@ -28,7 +28,7 @@ bool interpolateTri(const QuadCell& cell, const Point2D& point, int id1, int id2
 
 } // namespace
 
-QuadCell::QuadCell(size_t id1, size_t id2, size_t id3, size_t id4, Grid2D* const grid) :
+QuadCell::QuadCell(int id1, int id2, int id3, int id4, Grid2D* const grid) :
 	Cell2D(grid)
 {
 	addNode(id1);

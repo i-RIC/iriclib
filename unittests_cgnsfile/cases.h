@@ -1,14 +1,9 @@
 extern "C" {
 
 void case_InitSuccess();
-void case_InitFail();
-void case_gotoRawDataTop();
 void case_InitReadSuccess();
-void case_InitReadFail();
 void case_InitOptionCheck();
-void case_InitCC();
 
-void case_CheckLock();
 void case_CheckCancel();
 
 void case_CalcCondRead();
@@ -23,8 +18,6 @@ void case_GridRead();
 void case_GridReadUnstructured();
 void case_GridReadFunc();
 void case_GridWrite();
-
-void case_SolStartEnd();
 
 void case_SolWriteStd_adf();
 void case_SolWriteStd_hdf5();

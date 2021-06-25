@@ -4,8 +4,7 @@ swig -c++ -python -cppext cpp iric.i
 cl /LD iric_wrap.cpp ^
   -I"D:\iRIC_dev\Miniconda3\envs\iric_hdf5\include" ^
   "D:\iRIC_dev\Miniconda3\envs\iric_hdf5\libs\python38.lib" ^
-  "..\release\iriclib.lib" ^
-  "..\cgnslib_dummy\release\cgnsdll.lib"
+  "..\release\iriclib.lib"
 
 rename iric_wrap.dll _iric.pyd
 del iric_wrap.lib

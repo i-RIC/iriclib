@@ -1,5 +1,0 @@
-#ifdef __cplusplus
-}
-#endif
-
-#endif // IRICLIB_NOT_MUL_H
