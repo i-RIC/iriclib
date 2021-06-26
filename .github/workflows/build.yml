@@ -87,3 +87,12 @@ jobs:
 
     - name: Build iriclib
       run: msbuild /noLogo /maxCpuCount /target:iriclib-build-2019 iricdev.proj
+
+    - name: 7z sdk
+      run: 7z a iricsdk.7z .\lib\install
+
+    - name: Archive sdk
+      uses: actions/upload-artifact@v2
+      with:
+        name: iricsdk
+        path: lib/install
