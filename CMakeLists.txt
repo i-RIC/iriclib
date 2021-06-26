@@ -1,10 +1,8 @@
-##cmake_minimum_required (VERSION 2.8)
-##cmake_minimum_required(VERSION 3.15)
 cmake_minimum_required(VERSION 3.12)
 
 project (
   iriclib
-  VERSION 0.0.0
+  VERSION 4.0.0
   LANGUAGES CXX C
 )
 
@@ -24,28 +22,9 @@ else()
   endif()  
 endif()
 
-# # cgns (set CMAKE_PREFIX_PATH)
-# find_path(CGNS_INC cgns_io.h)
-# find_library(CGNS_LIBRARY cgnsdll)
-# message(STATUS "CGNS_INC=${CGNS_INC}")
-# message(STATUS "CGNS_LIBRARY=${CGNS_LIBRARY}")
-
 find_package(HDF5 1.8 REQUIRED)
 
 find_package(PocoFoundation REQUIRED)
-
-if(NOT DEFINED FORTRAN_NAMING)
-  # set(FORTRAN_NAMING "UNKNOWN")
-  # set(FORTRAN_NAMING "LOWERCASE")
-  set(FORTRAN_NAMING "LOWERCASE_")  # gfortran and ifort
-  # set(FORTRAN_NAMING "LOWERCASE__")
-  # set(FORTRAN_NAMING "UPPERCASE")
-  # set(FORTRAN_NAMING "UPPERCASE_")
-  # set(FORTRAN_NAMING "UPPERCASE__")
-  if(WIN32)
-    set(FORTRAN_NAMING "UPPERCASE")
-  endif()
-endif()
 
 SET(iriclib_SOURCES
   error_macros.h
@@ -265,11 +244,10 @@ target_compile_features(iriclib
 # iriclib compile definitions
 target_compile_definitions(iriclib
   PRIVATE
-    _CRT_SECURE_NO_DEPRECATE
-    _SCL_SECURE_NO_WARNINGS
+    $<$<BOOL:MSVC>:_CRT_SECURE_NO_DEPRECATE>
+    $<$<BOOL:MSVC>:_SCL_SECURE_NO_WARNINGS>
     IRICLIBDLL_LIBRARY
     IRICSOLVERLIBDLL_LIBRARY
-    ${FORTRAN_NAMING}
     ${HDF5_DEFINITIONS}
 )
 
@@ -279,8 +257,7 @@ target_include_directories(iriclib
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>"
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/private>"
     "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-    # "${CGNS_INC}"
-    "${HDF5_INCLUDE_DIRS}"
+##    "${HDF5_INCLUDE_DIRS}"
 )
 
 # iriclib link libraries
@@ -288,7 +265,6 @@ target_link_libraries(iriclib
   PRIVATE
     ${HDF5_LIBRARIES}
     Poco::Foundation
-  # ${CGNS_LIBRARY}
 )
 
 SET(iriclib_Headers

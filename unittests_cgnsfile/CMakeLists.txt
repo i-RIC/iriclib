@@ -43,15 +43,14 @@ target_sources(unittests_cgnsfile
 # unittests_cgnsfile compile definitions
 target_compile_definitions(unittests_cgnsfile
   PRIVATE
-    _CRT_SECURE_NO_DEPRECATE
-    _SCL_SECURE_NO_WARNINGS
+  $<$<BOOL:MSVC>:_CRT_SECURE_NO_DEPRECATE>
+  $<$<BOOL:MSVC>:_SCL_SECURE_NO_WARNINGS>
 )
 
 # unittests_cgnsfile link libraries
 target_link_libraries(unittests_cgnsfile
   PRIVATE
     iriclib
-    # ${CGNS_LIBRARY}
     ${HDF5_LIBRARIES}
 )
 
