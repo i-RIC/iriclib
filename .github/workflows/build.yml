@@ -9,8 +9,8 @@ env:
   BUILD_TYPE: Release
   GENERATOR: 'Visual Studio 16 2019'
   SGEN: vs2019-x64
-  HDF5_VER: 1.8.21
-  POCO_VER: 1.9.4
+  HDF5_VER: 1.8.21      # @todo load from versions.cmd
+  POCO_VER: 1.9.4       # @todo load from versions.cmd
 
 jobs:
   build:
@@ -111,9 +111,8 @@ jobs:
     - name: Commit and push branch
       uses: actions-js/push@master
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{secrets.GITHUB_TOKEN}}
         directory: lib/src/iriclib-git
-        branch: __${{github.event.repository.name}}_${{github.run_number}}        # @todo remove branch
 
     - name: Create release
       run: |
