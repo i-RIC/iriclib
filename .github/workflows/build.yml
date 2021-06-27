@@ -117,3 +117,34 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         directory: lib/src/iriclib-git
         branch: __${{github.event.repository.name}}_${{github.run_number}}        # @todo remove branch
+
+
+    - name: Create release
+      run: |
+        Set-Location lib/src/iriclib-git
+
+        # store new commit
+        $target_commitish = (git log -n1 --format=format:"%H")
+
+        if (! ($env:IRICLIB_VER -match "^(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
+          throw "Bad version"
+        }
+
+        # create headers dictionary
+        $h = @{"Authorization" = "token ${{secrets.GITHUB_TOKEN}}"}
+
+        $releases_url = "https://api.github.com/repos/scharlton2/iriclib_v4/releases"
+
+        # create release
+        # POST /repos/{owner}/{repo}/releases
+        # see https://docs.github.com/en/rest/reference/repos#create-a-release
+        # see https://docs.github.com/ja/rest/reference/repos#create-a-release
+        #
+        $create = @{
+          "tag_name"         = "v" + $matches[0]
+          "target_commitish" = "$target_commitish"
+          "name"             = "iriclib " + $matches[0]
+          "draft"            = $true
+        }
+        $create_json = $create | ConvertTo-Json
+        $release = Invoke-WebRequest -Uri "$releases_url" -Headers $h -Method POST -Body $create_json
