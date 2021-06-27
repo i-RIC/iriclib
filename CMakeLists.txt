@@ -268,21 +268,36 @@ target_link_libraries(iriclib
 )
 
 SET(iriclib_Headers
-  # ${PROJECT_SOURCE_DIR}/filelocker.h
-  # ${PROJECT_SOURCE_DIR}/iriclib.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_f.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_global.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_pointmap.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_polygon.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_polyline.h
-  # ${PROJECT_SOURCE_DIR}/iriclib_riversurvey.h
-  # ${PROJECT_SOURCE_DIR}/iricsolverlib.h
-  # ${PROJECT_SOURCE_DIR}/iricsolverlib_api.h
+  ${PROJECT_SOURCE_DIR}/iriclib.h
+  ${PROJECT_SOURCE_DIR}/iriclib_global.h
+  ${PROJECT_SOURCE_DIR}/iriclib_bc.h
+  ${PROJECT_SOURCE_DIR}/iriclib_cc.h
+  ${PROJECT_SOURCE_DIR}/iriclib_combine.h
+  ${PROJECT_SOURCE_DIR}/iriclib_complex.h
+  ${PROJECT_SOURCE_DIR}/iriclib_errorcodes.h
+  ${PROJECT_SOURCE_DIR}/iriclib_geo.h
+  ${PROJECT_SOURCE_DIR}/iriclib_geoutil.h
+  ${PROJECT_SOURCE_DIR}/iriclib_grid.h
+  ${PROJECT_SOURCE_DIR}/iriclib_grid_solverlib.h
+  ${PROJECT_SOURCE_DIR}/iriclib_gui_coorp.h
+  ${PROJECT_SOURCE_DIR}/iriclib_init.h
+  ${PROJECT_SOURCE_DIR}/iriclib_solution.h
+  ${PROJECT_SOURCE_DIR}/iriclib_sol_cell.h
+  ${PROJECT_SOURCE_DIR}/iriclib_sol_gridcoord.h
+  ${PROJECT_SOURCE_DIR}/iriclib_sol_iface.h
+  ${PROJECT_SOURCE_DIR}/iriclib_sol_jface.h
+  ${PROJECT_SOURCE_DIR}/iriclib_sol_kface.h
+  ${PROJECT_SOURCE_DIR}/iriclib_sol_node.h
+  ${PROJECT_SOURCE_DIR}/iriclib_sol_particle.h
+  ${PROJECT_SOURCE_DIR}/iriclib_sol_particlegroup.h
+  ${PROJECT_SOURCE_DIR}/iriclib_sol_polydata.h
+  ${PROJECT_SOURCE_DIR}/iriclib_not_withbaseid.h
+  ${PROJECT_SOURCE_DIR}/iriclib_not_withgridid.h
 )
 
-SET(iriclib_private_Headers
-  # ${PROJECT_SOURCE_DIR}/private/filelocker_impl.h
-)
+# SET(iriclib_private_Headers
+#   # ${PROJECT_SOURCE_DIR}/private/filelocker_impl.h
+# )
 
 include(CMakePackageConfigHelpers)
   
@@ -291,7 +306,7 @@ configure_package_config_file(iriclibConfig.cmake.in
   INSTALL_DESTINATION cmake/iriclib
 )
 
-write_basic_package_version_file("iriclibConfigVersion.cmake"
+write_basic_package_version_file(
   VERSION ${iriclib_VERSION}
   COMPATIBILITY SameMajorVersion
 )
@@ -316,7 +331,7 @@ install(EXPORT iriclibTargets
 )
 
 install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
+# install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
 if(MSVC)
   install(FILES ${PROJECT_BINARY_DIR}/Debug/iriclib.pdb
     DESTINATION ${CMAKE_INSTALL_LIBDIR}
