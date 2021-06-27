@@ -113,6 +113,7 @@ jobs:
       with:
         github_token: ${{secrets.GITHUB_TOKEN}}
         directory: lib/src/iriclib-git
+        branch: ${{github.ref}}
 
     - name: Create release
       run: |
