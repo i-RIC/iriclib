@@ -68,10 +68,11 @@ jobs:
         Get-Command ctest
         Write-Output ${{ env.GENERATOR }}
         Get-Command 7z
-        Write-Output ${{ env.YYY }}
+        Write-Output ${{ env.IRICLIB_VER }}
         Get-Command msbuild
         Write-Output "key = ${{runner.os}}-build-poco-${{hashFiles('./poco.*')}}"
         Get-Command python
+        Write-Output "key = ${{runner.os}}-build-hdf5-${{hashFiles('./hdf5.*')}}"
 
     - name: Cache poco
       id: cache-poco
