@@ -145,7 +145,7 @@ jobs:
           "tag_name"         = "v" + $matches[0]
           "target_commitish" = "$target_commitish"
           "name"             = "iriclib " + $matches[0]
-          # "draft"            = $true
+          "draft"            = $true
         }
         $create_json = $create | ConvertTo-Json
         $release = Invoke-WebRequest -Uri "$releases_url" -Headers $h -Method POST -Body $create_json
