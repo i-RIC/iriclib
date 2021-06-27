@@ -297,7 +297,7 @@ write_basic_package_version_file("iriclibConfigVersion.cmake"
 )
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/iriclibConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/iriclibConfigVersion.cmake
-  DESTINATION cmake/iriclib
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/iriclib
 )
 
 # install
@@ -312,7 +312,7 @@ install(TARGETS iriclib
 install(EXPORT iriclibTargets
   FILE iriclibTargets.cmake
   NAMESPACE iriclib::
-  DESTINATION cmake/iriclib
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/iriclib
 )
 
 install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
