@@ -103,13 +103,10 @@ jobs:
       run: cd lib/build/iriclib-${{env.IRICLIB_VER}} && ctest -C release
 
     - name: 7z sdk
-      run: 7z a iricsdk.7z .\lib\install
-
-    - name: Archive sdk
-      uses: actions/upload-artifact@v2
-      with:
-        name: iricsdk
-        path: lib/install
+      run: |
+        Rename-Item .\lib\install iricsdk
+        7z a iricsdk.7z .\lib\iricsdk
+        Rename-Item .\lib\iricsdk install
 
     - name: Commit and push branch
       uses: actions-js/push@master
