@@ -118,13 +118,14 @@ jobs:
         directory: lib/src/iriclib-git
         branch: __${{github.event.repository.name}}_${{github.run_number}}        # @todo remove branch
 
-
     - name: Create release
       run: |
-        Set-Location lib/src/iriclib-git
+        Push-Location lib/src/iriclib-git
 
         # store new commit
         $target_commitish = (git log -n1 --format=format:"%H")
+
+        Pop-Location
 
         if (! ($env:IRICLIB_VER -match "^(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
           throw "Bad version"
@@ -148,3 +149,36 @@ jobs:
         }
         $create_json = $create | ConvertTo-Json
         $release = Invoke-WebRequest -Uri "$releases_url" -Headers $h -Method POST -Body $create_json
+
+        # upload artifact (asset)
+        # POST /repos/{owner}/{repo}/releases/{release_id}/assets
+        # see https://docs.github.com/en/rest/reference/repos#upload-a-release-asset
+        # see https://docs.github.com/ja/rest/reference/repos#upload-a-release-asset
+        #
+        $upload_uri = ($release.Content | ConvertFrom-Json).upload_url
+        if (! ($upload_uri -match  "(.*)\{\?name,label\}") ) {
+          # expecting URI{?name,label}
+          # ie https://uploads.github.com/repos/scharlton2/iriclib_v4/releases/24058628/assets{?name,label}
+          throw "Bad upload_url"
+        }
+        $upload_uri = $matches[1] + "?name=iricsdk-$env:IRICLIB_VER.7z"
+        $h["Content-type"] = "application/x-7z-compressed"
+        $bytes = [System.IO.File]::ReadAllBytes("iricsdk.7z")
+        $upload = Invoke-WebRequest -Uri $upload_uri -Headers $h -Method POST -Body $bytes
+
+        # update release
+        # PATCH /repos/{owner}/{repo}/releases/{release_id}
+        # see https://docs.github.com/en/rest/reference/repos#update-a-release
+        # see https://docs.github.com/ja/rest/reference/repos#update-a-release
+        #
+        $release_id = ($release.Content | ConvertFrom-Json).id
+        $h.Remove("Content-type")
+        $update = @{ "draft" = $false }
+        $update_json = $update | ConvertTo-Json
+        $release = Invoke-WebRequest -Uri "$releases_url/$release_id" -Headers $h -Method PATCH -Body $update_json
+
+        # display download url
+        Write-Output "$((($release.Content | ConvertFrom-Json).assets).browser_download_url)"
+        Get-FileHash "iricsdk.7z"
+
+
