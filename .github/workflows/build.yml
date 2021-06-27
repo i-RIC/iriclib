@@ -110,3 +110,11 @@ jobs:
       with:
         name: iricsdk
         path: lib/install
+
+    - name: Commit and push branch
+      uses: actions-js/push@master
+      with:
+        # github_token: ${{secrets.SOLVER_TUTORIAL_PAT}}
+        # repository: ${{env.ONLINE_UPDATE_REPO}}
+        directory: lib/src/iriclib-git
+        branch: __${{github.event.repository.name}}_${{github.run_number}}        # @todo remove branch
