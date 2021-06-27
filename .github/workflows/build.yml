@@ -99,6 +99,9 @@ jobs:
     - name: Build iriclib
       run: msbuild /noLogo /maxCpuCount /target:iriclib-build-2019 iricdev.proj
 
+    - name: Test iriclib
+      run: cd lib/build/iriclib-${{env.IRICLIB_VER}} && ctest -C release
+
     - name: 7z sdk
       run: 7z a iricsdk.7z .\lib\install
 
