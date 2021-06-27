@@ -306,7 +306,7 @@ configure_package_config_file(iriclibConfig.cmake.in
   INSTALL_DESTINATION cmake/iriclib
 )
 
-write_basic_package_version_file(
+write_basic_package_version_file("iriclibConfigVersion.cmake"
   VERSION ${iriclib_VERSION}
   COMPATIBILITY SameMajorVersion
 )
