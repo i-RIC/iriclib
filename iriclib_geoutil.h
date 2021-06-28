@@ -7,8 +7,8 @@
 extern "C" {
 #endif
 
-int IRICLIBDLL cg_iRIC_Read_Geo_Count_Mul(int fid, const char* name, int* count);
-int IRICLIBDLL cg_iRIC_Read_Geo_Filename_Mul(int fid, const char* name, int geoid, char* strvalue, int* type);
+int IRICLIBDLL cg_iRIC_Read_Geo_Count(int fid, const char* name, int* count);
+int IRICLIBDLL cg_iRIC_Read_Geo_Filename(int fid, const char* name, int geoid, char* strvalue, int* type);
 
 #ifdef __cplusplus
 }

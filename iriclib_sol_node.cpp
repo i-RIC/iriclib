@@ -5,6 +5,7 @@
 #include "iriclib_sol_node.h"
 #include "vectorutil.h"
 
+#include "internal/iric_logger.h"
 #include "internal/iric_util.h"
 
 using namespace iRICLib;
@@ -47,22 +48,42 @@ int writeSolutionT(int fid, int gid, const std::string& name, V* v_arr, const st
 
 } // namespace
 
-int cg_iRIC_Read_Sol_Integer_WithGridId_Mul(int fid, int gid, int step, const char* name, int* v_arr)
+int cg_iRIC_Read_Sol_Node_Integer_WithGridId(int fid, int gid, int step, const char* name, int* v_arr)
 {
-	return readSolutionT(fid, gid, step, name, v_arr, "cg_iRIC_Read_Sol_Integer_WithGridId_Mul");
+	_IRIC_LOGGER_TRACE_ENTER();
+	int ier = readSolutionT(fid, gid, step, name, v_arr, "cg_iRIC_Read_Sol_Node_Integer_WithGridId");
+	RETURN_IF_ERR;
+
+	_IRIC_LOGGER_TRACE_LEAVE();
+	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Read_Sol_Real_WithGridId_Mul(int fid, int gid, int step, const char* name, double* v_arr)
+int cg_iRIC_Read_Sol_Node_Real_WithGridId(int fid, int gid, int step, const char* name, double* v_arr)
 {
-	return readSolutionT(fid, gid, step, name, v_arr, "cg_iRIC_Read_Sol_Real_WithGridId_Mul");
+	_IRIC_LOGGER_TRACE_ENTER();
+	int ier = readSolutionT(fid, gid, step, name, v_arr, "cg_iRIC_Read_Sol_Node_Real_WithGridId");
+	RETURN_IF_ERR;
+
+	_IRIC_LOGGER_TRACE_LEAVE();
+	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_Integer_WithGridId_Mul(int fid, int gid, const char* name, int* v_arr)
+int cg_iRIC_Write_Sol_Node_Integer_WithGridId(int fid, int gid, const char* name, int* v_arr)
 {
-	return writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Integer_WithGridId_Mul");
+	_IRIC_LOGGER_TRACE_ENTER();
+	int ier = writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Node_Integer_WithGridId");
+	RETURN_IF_ERR;
+
+	_IRIC_LOGGER_TRACE_LEAVE();
+	return IRIC_NO_ERROR;
 }
 
-int cg_iRIC_Write_Sol_Real_WithGridId_Mul(int fid, int gid, const char* name, double* v_arr)
+int cg_iRIC_Write_Sol_Node_Real_WithGridId(int fid, int gid, const char* name, double* v_arr)
 {
-	return writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Real_WithGridId_Mul");
+	_IRIC_LOGGER_TRACE_ENTER();
+	int ier = writeSolutionT(fid, gid, name, v_arr, "cg_iRIC_Write_Sol_Node_Real_WithGridId");
+	RETURN_IF_ERR;
+
+	_IRIC_LOGGER_TRACE_LEAVE();
+	return IRIC_NO_ERROR;
 }

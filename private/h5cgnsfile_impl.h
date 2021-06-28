@@ -18,6 +18,9 @@ public:
 	Impl(H5CgnsFile* file);
 	~Impl();
 
+	int open();
+	int close();
+
 	void loadBases();
 	H5CgnsBase* createBase(int dimension);
 	static std::string baseName(int dimension);
@@ -34,6 +37,7 @@ public:
 	hid_t m_fileId;
 	Mode m_mode;
 	std::string m_fileName;
+	std::string m_resultFolder;
 
 	H5CgnsFileSolutionReader* m_solutionReader;
 	H5CgnsFileSolutionWriter* m_solutionWriter;

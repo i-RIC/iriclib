@@ -8,9 +8,9 @@ TARGET_FILES_FTOC = [
   'iriclib_geo.h',
   'iriclib_geoutil.h',
   'iriclib_grid.h',
+  'iriclib_grid_solverlib.h',
   'iriclib_gui_coorp.h',
   'iriclib_init.h',
-  'iriclib_not_mul.h',
   'iriclib_not_withbaseid.h',
   'iriclib_not_withgridid.h',
   'iriclib_solution.h',
@@ -39,7 +39,7 @@ def gen_ftoc_source_content(fdef):
 
   if ("Size2" in fname): return ""
 
-  content = "void IRICLIBDLL FMNAME(" + fname.lower() + "_f, " + fname.upper() + "_F)"
+  content = "void IRICLIBDLL FMNAME(" + fname.lower() + "_f2c, " + fname.upper() + "_F2C)"
   args = list()
   iargs = list()
 

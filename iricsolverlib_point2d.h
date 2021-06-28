@@ -1,8 +1,6 @@
 #ifndef IRICSOLVERLIB_POINT2D_H
 #define IRICSOLVERLIB_POINT2D_H
 
-#include "iricsolverlib_api.h"
-
 namespace iRICSolverLib {
 
 class Point2D

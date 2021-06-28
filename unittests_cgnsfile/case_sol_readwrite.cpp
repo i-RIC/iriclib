@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 #ifdef _MSC_VER
 #endif
@@ -21,8 +20,8 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 {
 	int isize, jsize;
 
-	int ier = cg_iRIC_GotoGridCoord2d_Mul(*fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	int ier = cg_iRIC_Read_Grid2d_Str_Size(*fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() ier == 0", ier == 0);
 
 	std::vector<double> x, y;
 	std::vector<double> vx, vy, depth;
@@ -64,7 +63,7 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
-	ier = cg_iRIC_GetGridCoord2d_Mul(*fid, x.data(), y.data());
+	ier = cg_iRIC_Read_Grid2d_Coords(*fid, x.data(), y.data());
 
 	vx.assign(isize * jsize, 1);
 	vy.assign(isize * jsize, 0.3);
@@ -85,125 +84,131 @@ void writeSolution(const char* filename, int* fid, bool iterMode)
 	for (int i = 0; i < 5; ++i) {
 		if (iterMode) {
 			int IterVal = i;
-			ier = cg_iRIC_Write_Sol_Iteration_Mul(*fid, IterVal);
-			VERIFY_LOG("cg_iRIC_Write_Sol_Iteration_Mul() ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_Iteration(*fid, IterVal);
+			VERIFY_LOG("cg_iRIC_Write_Sol_Iteration() ier == 0", ier == 0);
 		} else {
 			double TimeVal = i * 2.13;
-			ier = cg_iRIC_Write_Sol_Time_Mul(*fid, TimeVal);
-			VERIFY_LOG("cg_iRIC_Write_Sol_Time_Mul() ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_Time(*fid, TimeVal);
+			VERIFY_LOG("cg_iRIC_Write_Sol_Time() ier == 0", ier == 0);
 		}
 
-		ier = cg_iRIC_Write_Sol_GridCoord2d_Mul(*fid, x.data(), y.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_GridCoord2d_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Grid2d_Coords(*fid, x.data(), y.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Grid2d_Coords() ier == 0", ier == 0);
 
 		// Vertex solutions
 
 		depth.assign(isize * jsize, (double)i);
-		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "Depth", depth.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for Depth ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Real(*fid, "Depth", depth.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Real() for Depth ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityX", vx.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityX ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Real(*fid, "VelocityX", vx.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Real() for VelocityX ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityY", vy.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Real(*fid, "VelocityY", vy.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Real() for VelocityY ier == 0", ier == 0);
 
 		wet.assign(isize * jsize, i);
-		ier = cg_iRIC_Write_Sol_Integer_Mul(*fid, "IBC", wet.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Integer(*fid, "IBC", wet.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Integer() for IBC ier == 0", ier == 0);
 
 		// CellCenter solutions
 
 		ccdepth.assign((isize - 1) * (jsize - 1), 0.2 + i);
-		ier = cg_iRIC_Write_Sol_Cell_Real("CCDepth", ccdepth.data());
+		ier = cg_iRIC_Write_Sol_Cell_Real(*fid, "CCDepth", ccdepth.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Real() ier == 0", ier == 0);
 
 		ccwet.assign((isize - 1) * (jsize - 1), i + 1);
-		ier = cg_iRIC_Write_Sol_Cell_Integer("CCWet", ccwet.data());
+		ier = cg_iRIC_Write_Sol_Cell_Integer(*fid, "CCWet", ccwet.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_Cell_Integer() ier == 0", ier == 0);
 
 		// IFaceCenter solutions
 
-		ier = cg_iRIC_Write_Sol_IFace_Integer_Mul(*fid, "IFaceIsEdge", iface_is_edge.data());
+		ier = cg_iRIC_Write_Sol_IFace_Integer(*fid, "IFaceIsEdge", iface_is_edge.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_IFace_Integer() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_IFace_Real_Mul(*fid, "IFaceIsEdgeReals", iface_is_edge_reals.data());
+		ier = cg_iRIC_Write_Sol_IFace_Real(*fid, "IFaceIsEdgeReals", iface_is_edge_reals.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_IFace_Real() ier == 0", ier == 0);
 
 		// JFaceCenter solutions
 
-		ier = cg_iRIC_Write_Sol_JFace_Integer_Mul(*fid, "JFaceIsEdge", jface_is_edge.data());
+		ier = cg_iRIC_Write_Sol_JFace_Integer(*fid, "JFaceIsEdge", jface_is_edge.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_JFace_Integer() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_JFace_Real_Mul(*fid, "JFaceIsEdgeReals", jface_is_edge_reals.data());
+		ier = cg_iRIC_Write_Sol_JFace_Real(*fid, "JFaceIsEdgeReals", jface_is_edge_reals.data());
 		VERIFY_LOG("cg_iRIC_Write_Sol_JFace_Real() ier == 0", ier == 0);
 
 		// BaseIterativeData
 
 		double Dist = i * - 0.2 + 20;
-		ier = cg_iRIC_Write_Sol_BaseIterative_Real_Mul(*fid, "Discharge", Dist);
-		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real_Mul() for Discharge ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Real(*fid, "Discharge", Dist);
+		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real() for Discharge ier == 0", ier == 0);
 		int DamOpen = i;
-		ier = cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(*fid, "DamOpen", DamOpen);
-		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Integer(*fid, "DamOpen", DamOpen);
+		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer() for DamOpen ier == 0", ier == 0);
 		std::ostringstream ss;
 		ss << "Test" << i;
-		ier = cg_iRIC_Write_Sol_BaseIterative_String_Mul(*fid, "TestStr", ss.str().c_str());
-		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_String_Mul() for TestStr ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_BaseIterative_String(*fid, "TestStr", ss.str().c_str());
+		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_String() for TestStr ier == 0", ier == 0);
 
 		// Particle solutions
 
-		ier = cg_iRIC_Write_Sol_Particle_Pos2d_Mul(*fid, particle_num, particle_x.data(), particle_y.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Pos2d_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Particle_Pos2d(*fid, particle_num, particle_x.data(), particle_y.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Pos2d() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, "VelX", particle_vx.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelX ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Particle_Real(*fid, "VelX", particle_vx.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real() for VelX ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, "VelY", particle_vy.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelY ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Particle_Real(*fid, "VelY", particle_vy.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real() for VelY ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(*fid, "Active", particle_active.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer_Mul() for Active ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Particle_Integer(*fid, "Active", particle_active.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer() for Active ier == 0", ier == 0);
 
 		// ParticleGroup solutions
 
-		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(*fid, "group1");
-		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin(*fid, "group1");
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin() ier == 0", ier == 0);
 		for (int j = 0; j < particle_num; ++j) {
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul(*fid, particle_x.at(j), particle_y.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos2d(*fid, particle_x.at(j), particle_y.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos2d() for VelX ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelX", particle_vx.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real(*fid, "VelX", particle_vx.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real() for VelX ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelY", particle_vy.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelY ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real(*fid, "VelY", particle_vy.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real() for VelY ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(*fid, "Active", particle_active.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer(*fid, "Active", particle_active.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer() for VelX ier == 0", ier == 0);
 		}
-		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
-		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd(*fid);
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(*fid, "group2");
-		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin(*fid, "group2");
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin() ier == 0", ier == 0);
 		for (int j = 0; j < particle_num; ++j) {
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul(*fid, particle_x.at(j), 2);
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos2d_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos2d(*fid, particle_x.at(j), 2);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos2d() for VelX ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelX", particle_vx.at(j) + 2);
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real(*fid, "VelX", particle_vx.at(j) + 2);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real() for VelX ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelY", particle_vy.at(j) + 1);
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelY ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real(*fid, "VelY", particle_vy.at(j) + 1);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real() for VelY ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(*fid, "Active", particle_active.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer(*fid, "Active", particle_active.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer() for VelX ier == 0", ier == 0);
 		}
-		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
-		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd(*fid);
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Flush(filename, *fid);
+
+		if (i == 3) {
+			std::fstream f(".flush", std::ios_base::out);
+			f << "flush";
+		}
+
+		ier = cg_iRIC_Flush(*fid);
 		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
 }
@@ -212,8 +217,8 @@ void writeSolution3d(const char* filename, int* fid)
 {
 	int isize, jsize;
 
-	int ier = cg_iRIC_GotoGridCoord2d_Mul(*fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	int ier = cg_iRIC_Read_Grid2d_Str_Size(*fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() ier == 0", ier == 0);
 
 	std::vector<double> x, y, z;
 	std::vector<double> vx, vy, depth;
@@ -226,10 +231,10 @@ void writeSolution3d(const char* filename, int* fid)
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
 	z.assign(isize * jsize, 0);
-	ier = cg_iRIC_GetGridCoord2d_Mul(*fid, x.data(), y.data());
+	ier = cg_iRIC_Read_Grid2d_Coords(*fid, x.data(), y.data());
 
-	ier = cg_iRIC_WriteGridCoord3d_Mul(*fid, isize, jsize, 1, x.data(), y.data(), z.data());
-	VERIFY_LOG("cg_iRIC_WriteGridCoord3d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid3d_Coords(*fid, isize, jsize, 1, x.data(), y.data(), z.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid3d_Coords() ier == 0", ier == 0);
 
 	vx.assign(isize * jsize, 1);
 	vy.assign(isize * jsize, 0.3);
@@ -251,83 +256,83 @@ void writeSolution3d(const char* filename, int* fid)
 
 	for (int i = 0; i < 5; ++i) {
 		double TimeVal = i * 2.13;
-		ier = cg_iRIC_Write_Sol_Time_Mul(*fid, TimeVal);
-		VERIFY_LOG("cg_iRIC_Write_Sol_Time_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Time(*fid, TimeVal);
+		VERIFY_LOG("cg_iRIC_Write_Sol_Time() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_GridCoord3d_Mul(*fid, x.data(), y.data(), z.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_GridCoord3d_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Grid3d_Coords(*fid, x.data(), y.data(), z.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Grid3d_Coords() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "Depth", depth.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for Depth ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Real(*fid, "Depth", depth.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Real() for Depth ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityX", vx.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityX ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Real(*fid, "VelocityX", vx.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Real() for VelocityX ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Real_Mul(*fid, "VelocityY", vy.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Real_Mul() for VelocityY ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Real(*fid, "VelocityY", vy.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Real() for VelocityY ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Integer_Mul(*fid, "IBC", wet.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Integer_Mul() for IBC ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Node_Integer(*fid, "IBC", wet.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Node_Integer() for IBC ier == 0", ier == 0);
 
 		double Dist = i * - 0.2 + 20;
-		ier = cg_iRIC_Write_Sol_BaseIterative_Real_Mul(*fid, "Discharge", Dist);
-		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real_Mul() for Discharge ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Real(*fid, "Discharge", Dist);
+		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Real() for Discharge ier == 0", ier == 0);
 		int DamOpen = i;
-		ier = cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(*fid, "DamOpen", DamOpen);
-		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_BaseIterative_Integer(*fid, "DamOpen", DamOpen);
+		VERIFY_LOG("cg_iRIC_Write_Sol_BaseIterative_Integer() for DamOpen ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Pos3d_Mul(*fid, particle_num, particle_x.data(), particle_y.data(), particle_z.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Pos2d_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Particle_Pos3d(*fid, particle_num, particle_x.data(), particle_y.data(), particle_z.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Pos2d() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, "VelX", particle_vx.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelX ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Particle_Real(*fid, "VelX", particle_vx.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real() for VelX ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, "VelY", particle_vy.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelY ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Particle_Real(*fid, "VelY", particle_vy.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real() for VelY ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Real_Mul(*fid, "VelZ", particle_vz.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real_Mul() for VelZ ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Particle_Real(*fid, "VelZ", particle_vz.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Real() for VelZ ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_Particle_Integer_Mul(*fid, "Active", particle_active.data());
-		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer_Mul() for Active ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_Particle_Integer(*fid, "Active", particle_active.data());
+		VERIFY_LOG("cg_iRIC_Write_Sol_Particle_Integer() for Active ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(*fid, "group1");
-		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin(*fid, "group1");
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin() ier == 0", ier == 0);
 		for (int j = 0; j < particle_num; ++j) {
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul(*fid, particle_x.at(j), particle_y.at(j), particle_z.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos3d(*fid, particle_x.at(j), particle_y.at(j), particle_z.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos3d() for VelX ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelX", particle_vx.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real(*fid, "VelX", particle_vx.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real() for VelX ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelY", particle_vy.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelY ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real(*fid, "VelY", particle_vy.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real() for VelY ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(*fid, "Active", particle_active.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer(*fid, "Active", particle_active.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer() for VelX ier == 0", ier == 0);
 		}
-		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
-		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd(*fid);
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul(*fid, "group2");
-		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupBegin(*fid, "group2");
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupBegin() ier == 0", ier == 0);
 		for (int j = 0; j < particle_num; ++j) {
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul(*fid, particle_x.at(j), particle_y.at(j), 2);
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos3d_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Pos3d(*fid, particle_x.at(j), particle_y.at(j), 2);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Pos3d() for VelX ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelX", particle_vx.at(j) + 1);
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real(*fid, "VelX", particle_vx.at(j) + 1);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real() for VelX ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Real_Mul(*fid, "VelY", particle_vy.at(j) + 2);
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real_Mul() for VelY ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Real(*fid, "VelY", particle_vy.at(j) + 2);
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Real() for VelY ier == 0", ier == 0);
 
-			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul(*fid, "Active", particle_active.at(j));
-			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer_Mul() for VelX ier == 0", ier == 0);
+			ier = cg_iRIC_Write_Sol_ParticleGroup_Integer(*fid, "Active", particle_active.at(j));
+			VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_Integer() for VelX ier == 0", ier == 0);
 		}
-		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul(*fid);
-		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Write_Sol_ParticleGroup_GroupEnd(*fid);
+		VERIFY_LOG("cg_iRIC_Write_Sol_ParticleGroup_GroupEnd() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Flush(filename, *fid);
+		ier = cg_iRIC_Flush(*fid);
 		VERIFY_LOG("cg_iRIC_Flush() ier == 0", ier == 0);
 	}
 }
@@ -336,9 +341,9 @@ void readSolution(int fid)
 {
 	char buffer[200];
 	int sol_count;
-	int ier = cg_iRIC_Read_Sol_Count_Mul(fid, &sol_count);
-	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Sol_Count_Mul() sol_count == 5", sol_count == 5);
+	int ier = cg_iRIC_Read_Sol_Count(fid, &sol_count);
+	VERIFY_LOG("cg_iRIC_Read_Sol_Count() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Sol_Count() sol_count == 5", sol_count == 5);
 
 	//double t;
 	int isize, jsize;
@@ -353,8 +358,8 @@ void readSolution(int fid)
 	std::vector<int> jface_is_edge;
 	std::vector<double> jface_is_edge_reals;
 
-	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid2d_Str_Size(fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() ier == 0", ier == 0);
 
 	grid_x.assign(isize * jsize, 0);
 	grid_y.assign(isize * jsize, 0);
@@ -371,56 +376,56 @@ void readSolution(int fid)
 
 		// GridCoord
 
-		ier = cg_iRIC_Read_Sol_GridCoord2d_Mul(fid, S, grid_x.data(), grid_y.data());
-		VERIFY_LOG("cg_iRIC_Read_Sol_GridCoord2d_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Read_Sol_Grid2d_Coords(fid, S, grid_x.data(), grid_y.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Grid2d_Coords() ier == 0", ier == 0);
 
 		// Vertex solutions
 
-		ier = cg_iRIC_Read_Sol_Real_Mul(fid, S, "Depth", real_sol.data());
-		VERIFY_LOG("cg_iRIC_Read_Sol_Real_Mul() ier == 0", ier == 0);
-		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[0] == %g", (double)(S - 1));
+		ier = cg_iRIC_Read_Sol_Node_Real(fid, S, "Depth", real_sol.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Node_Real() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Node_Real() real_sol[0] == %g", (double)(S - 1));
 		VERIFY_LOG(buffer, real_sol[0] == (double)(S - 1));
-		sprintf(buffer, "cg_iRIC_Read_Sol_Real_Mul() real_sol[%lu] == %g", real_sol.size() - 1, (double)(S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Node_Real() real_sol[%lu] == %g", real_sol.size() - 1, (double)(S - 1));
 		VERIFY_LOG(buffer, real_sol[real_sol.size()-1] == (double)(S - 1));
 
-		ier = cg_iRIC_Read_Sol_Integer_Mul(fid, S, "IBC", int_sol.data());
-		VERIFY_LOG("cg_iRIC_Read_Sol_Integer_Mul() ier == 0", ier == 0);
-		sprintf(buffer, "cg_iRIC_Read_Sol_Integer_Mul() int_sol[0] == %d", (S - 1));
+		ier = cg_iRIC_Read_Sol_Node_Integer(fid, S, "IBC", int_sol.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Node_Integer() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Node_Integer() int_sol[0] == %d", (S - 1));
 		VERIFY_LOG(buffer, int_sol[0] == (S - 1));
-		sprintf(buffer, "cg_iRIC_Read_Sol_Integer_Mul() int_sol[%lu] == %d", int_sol.size() - 1, (S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Node_Integer() int_sol[%lu] == %d", int_sol.size() - 1, (S - 1));
 		VERIFY_LOG(buffer, int_sol[int_sol.size() - 1] == (S - 1));
 
 		// CellCenter solutions
 
-		ier = cg_iRIC_Read_Sol_Cell_Real_Mul(fid, S, "CCDepth", real_ccsol.data());
-		VERIFY_LOG("cg_iRIC_Read_Sol_Cell_Real_Mul() ier == 0", ier == 0);
-		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Real_Mul() real_ccsol[0] == %g", 0.2 + (S - 1));
+		ier = cg_iRIC_Read_Sol_Cell_Real(fid, S, "CCDepth", real_ccsol.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Cell_Real() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Real() real_ccsol[0] == %g", 0.2 + (S - 1));
 		VERIFY_LOG(buffer, real_ccsol[0] == 0.2 + (S - 1));
-		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Real_Mul() real_ccsol[%lu] == %g", real_ccsol.size() - 1, 0.2 + (S - 1));
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Real() real_ccsol[%lu] == %g", real_ccsol.size() - 1, 0.2 + (S - 1));
 		VERIFY_LOG(buffer, real_ccsol[real_ccsol.size() - 1] == 0.2 + (S - 1));
 
-		ier = cg_iRIC_Read_Sol_Cell_Integer_Mul(fid, S, "CCWet", int_ccsol.data());
-		VERIFY_LOG("cg_iRIC_Read_Sol_Cell_Integer_Mul() ier == 0", ier == 0);
-		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer_Mul() int_ccsol[0] == %d", S);
+		ier = cg_iRIC_Read_Sol_Cell_Integer(fid, S, "CCWet", int_ccsol.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_Cell_Integer() ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer() int_ccsol[0] == %d", S);
 		VERIFY_LOG(buffer, int_ccsol[0] == S);
-		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer_Mul() int_ccsol[%lu] == %d", int_ccsol.size() - 1, S);
+		sprintf(buffer, "cg_iRIC_Read_Sol_Cell_Integer() int_ccsol[%lu] == %d", int_ccsol.size() - 1, S);
 		VERIFY_LOG(buffer, int_ccsol[int_ccsol.size() - 1] == S);
 
 		// IFaceCenter solutions
 
-		ier = cg_iRIC_Read_Sol_IFace_Integer_Mul(fid, S, "IFaceIsEdge", iface_is_edge.data());
+		ier = cg_iRIC_Read_Sol_IFace_Integer(fid, S, "IFaceIsEdge", iface_is_edge.data());
 		VERIFY_LOG("cg_iRIC_Read_Sol_IFace_Integer() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Read_Sol_IFace_Real_Mul(fid, S, "IFaceIsEdgeReals", iface_is_edge_reals.data());
+		ier = cg_iRIC_Read_Sol_IFace_Real(fid, S, "IFaceIsEdgeReals", iface_is_edge_reals.data());
 		VERIFY_LOG("cg_iRIC_Read_Sol_IFace_Real() ier == 0", ier == 0);
 
 		// verify iface
 		for (int j = 0; j < jsize - 1; ++j) {
 			for (int i = 0; i < isize; ++i) {
 				if (j == 0 || j == (jsize - 2) || i == 0 || i == (isize - 1)) {
-					sprintf(buffer, "cg_iRIC_Read_Sol_IFace_Integer_Mul() iface_is_edge[%d] == %d", j * isize + i, 1);
+					sprintf(buffer, "cg_iRIC_Read_Sol_IFace_Integer() iface_is_edge[%d] == %d", j * isize + i, 1);
 					VERIFY_LOG(buffer, iface_is_edge[j * isize + i] == 1);
-					sprintf(buffer, "cg_iRIC_Read_Sol_IFace_Integer_Mul() iface_is_edge[%d] == %g", j * isize + i, .1);
+					sprintf(buffer, "cg_iRIC_Read_Sol_IFace_Integer() iface_is_edge[%d] == %g", j * isize + i, .1);
 					VERIFY_LOG(buffer, iface_is_edge_reals[j * isize + i] == .1);
 				}
 			}
@@ -428,19 +433,19 @@ void readSolution(int fid)
 
 		// JFaceCenter solutions
 
-		ier = cg_iRIC_Read_Sol_JFace_Integer_Mul(fid, S, "JFaceIsEdge", jface_is_edge.data());
+		ier = cg_iRIC_Read_Sol_JFace_Integer(fid, S, "JFaceIsEdge", jface_is_edge.data());
 		VERIFY_LOG("cg_iRIC_Read_Sol_JFace_Integer() ier == 0", ier == 0);
 
-		ier = cg_iRIC_Read_Sol_JFace_Real_Mul(fid, S, "JFaceIsEdgeReals", jface_is_edge_reals.data());
+		ier = cg_iRIC_Read_Sol_JFace_Real(fid, S, "JFaceIsEdgeReals", jface_is_edge_reals.data());
 		VERIFY_LOG("cg_iRIC_Read_Sol_JFace_Real() ier == 0", ier == 0);
 
 		// verify jface
 		for (int j = 0; j < jsize; ++j) {
 			for (int i = 0; i < isize - 1; ++i) {
 				if (j == 0 || j == (jsize - 1) || i == 0 || i == (isize - 2)) {
-					sprintf(buffer, "cg_iRIC_Read_Sol_JFace_Integer_Mul() jface_is_edge[%d] == %d", j * (isize - 1) + i, 2);
+					sprintf(buffer, "cg_iRIC_Read_Sol_JFace_Integer() jface_is_edge[%d] == %d", j * (isize - 1) + i, 2);
 					VERIFY_LOG(buffer, jface_is_edge[j * (isize - 1) + i] == 2);
-					sprintf(buffer, "cg_iRIC_Read_Sol_IFace_Integer_Mul() jface_is_edge_reals[%d] == %g", j * (isize - 1) + i, .2);
+					sprintf(buffer, "cg_iRIC_Read_Sol_IFace_Integer() jface_is_edge_reals[%d] == %g", j * (isize - 1) + i, .2);
 					VERIFY_LOG(buffer, jface_is_edge_reals[j * (isize - 1) + i] == .2);
 				}
 			}
@@ -450,16 +455,16 @@ void readSolution(int fid)
 
 		double d;
 		double Dist = (S - 1) * -0.2 + 20;
-		ier = cg_iRIC_Read_Sol_BaseIterative_Real_Mul(fid, S, "Discharge", &d);
-		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_Real_Mul() for Discharge ier == 0", ier == 0);
-		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_Real_Mul() for Discharge d == %g", Dist);
+		ier = cg_iRIC_Read_Sol_BaseIterative_Real(fid, S, "Discharge", &d);
+		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_Real() for Discharge ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_Real() for Discharge d == %g", Dist);
 		VERIFY_LOG(buffer, d == Dist);
 
 		int i;
 		int DamOpen = (S - 1);
-		ier = cg_iRIC_Read_Sol_BaseIterative_Integer_Mul(fid, S, "DamOpen", &i);
-		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_Integer_Mul() for DamOpen ier == 0", ier == 0);
-		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_Integer_Mul() for DamOpen i == %d", DamOpen);
+		ier = cg_iRIC_Read_Sol_BaseIterative_Integer(fid, S, "DamOpen", &i);
+		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_Integer() for DamOpen ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_Integer() for DamOpen i == %d", DamOpen);
 		VERIFY_LOG(buffer, i == DamOpen);
 
 		std::ostringstream ss;
@@ -467,12 +472,12 @@ void readSolution(int fid)
 		std::string validVal = ss.str();
 		std::vector<char> retval;
 		int len;
-		ier = cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul(fid, S, "TestStr", &len);
-		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_StringLen_Mul() for TestStr ier == 0", ier == 0);
+		ier = cg_iRIC_Read_Sol_BaseIterative_StringLen(fid, S, "TestStr", &len);
+		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_StringLen() for TestStr ier == 0", ier == 0);
 		retval.assign(len + 1, '\0');
-		ier = cg_iRIC_Read_Sol_BaseIterative_String_Mul(fid, S, "TestStr", retval.data());
-		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_String_Mul() for TestStr ier == 0", ier == 0);
-		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_String_Mul() for TestStr s == %s", validVal.c_str());
+		ier = cg_iRIC_Read_Sol_BaseIterative_String(fid, S, "TestStr", retval.data());
+		VERIFY_LOG("cg_iRIC_Read_Sol_BaseIterative_String() for TestStr ier == 0", ier == 0);
+		sprintf(buffer, "cg_iRIC_Read_Sol_BaseIterative_String() for TestStr s == %s", validVal.c_str());
 		VERIFY_LOG(buffer, validVal == retval.data());
 	}
 }
@@ -492,34 +497,27 @@ void case_SolWriteStd(const std::string& origCgnsName)
 	fs::copy(origCgnsName, "case_solstd.cgn");
 
 	int fid;
-	int ier = cg_open("case_solstd.cgn", CG_MODE_MODIFY, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	int ier = cg_iRIC_Open("case_solstd.cgn", IRIC_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	writeSolution("case_solstd.cgn", &fid, false);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	//
 	// Test Reading Standard (IRIC_OPTION_STDSOLUTION) with times
 	//
 
-	ier = cg_open("case_solstd.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
+	ier = cg_iRIC_Open("case_solstd.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	readSolution(fid);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_solstd.cgn", hdf);
 
@@ -529,18 +527,14 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	fs::copy(origCgnsName, "case_solstd3d.cgn");
 
-	ier = cg_open("case_solstd3d.cgn", CG_MODE_MODIFY, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	ier = cg_iRIC_Open("case_solstd3d.cgn", IRIC_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	writeSolution3d("case_solstd3d.cgn", &fid);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_solstd3d.cgn", hdf);
 
@@ -552,33 +546,26 @@ void case_SolWriteStd(const std::string& origCgnsName)
 
 	fs::copy(origCgnsName, "case_solstditer.cgn");
 
-	ier = cg_open("case_solstditer.cgn", CG_MODE_MODIFY, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	ier = cg_iRIC_Open("case_solstditer.cgn", IRIC_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	writeSolution("case_solstditer.cgn", &fid, true);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	//
 	// Test Reading Standard (IRIC_OPTION_STDSOLUTION) with iterations
 	//
 
-	ier = cg_open("case_solstditer.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
+	ier = cg_iRIC_Open("case_solstditer.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	readSolution(fid);
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_solstditer.cgn", hdf);
 
@@ -605,34 +592,27 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 	fs::copy(origCgnsName, "case_soldivide.cgn");
 
 	int fid;
-	int ier = cg_open("case_soldivide.cgn", CG_MODE_MODIFY, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	int ier = cg_iRIC_Open("case_soldivide.cgn", IRIC_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	writeSolution("case_soldivide.cgn", &fid, false);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	//
 	// Test Reading Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with times
 	//
 
-	ier = cg_open("case_soldivide.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
+	ier = cg_iRIC_Open("case_soldivide.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	readSolution(fid);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_soldivide.cgn", hdf);
 	VERIFY_REMOVE("result/Solution1.cgn", hdf);
@@ -656,18 +636,14 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	fs::copy(origCgnsName, "case_soldivide3d.cgn");
 
-	ier = cg_open("case_soldivide3d.cgn", CG_MODE_MODIFY, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	ier = cg_iRIC_Open("case_soldivide3d.cgn", IRIC_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	writeSolution3d("case_soldivide3d.cgn", &fid);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_soldivide3d.cgn", hdf);
 	VERIFY_REMOVE("result/Solution1.cgn", hdf);
@@ -691,35 +667,28 @@ void case_SolWriteDivide(const std::string& origCgnsName)
 
 	fs::copy(origCgnsName, "case_soldivideiter.cgn");
 
-	ier = cg_open("case_soldivideiter.cgn", CG_MODE_MODIFY, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	ier = cg_iRIC_Open("case_soldivideiter.cgn", IRIC_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	writeSolution("case_soldivideiter.cgn", &fid, true);
 
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	//
 	// Test Reading Divided Solutions (IRIC_OPTION_DIVIDESOLUTIONS) with iterations
 	//
 
-	ier = cg_open("case_soldivideiter.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_InitRead(fid);
-	VERIFY_LOG("cg_iRIC_InitRead() ier == 0", ier == 0);
+	ier = cg_iRIC_Open("case_soldivideiter.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	// cg_iRIC_SetFilename(fid, "case_soldivideiter.cgn");
 
 	readSolution(fid);
-	ier = cg_close(fid);
-	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+	ier = cg_iRIC_Close(fid);
+	VERIFY_LOG("cg_iRIC_Close() ier == 0", ier == 0);
 
 	VERIFY_REMOVE("case_soldivideiter.cgn", hdf);
 	VERIFY_REMOVE("result/Solution1.cgn", hdf);

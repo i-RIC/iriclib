@@ -21,12 +21,22 @@ Cell2D::~Cell2D()
 	delete impl;
 }
 
-size_t Cell2D::nodeCount() const
+int Cell2D::id() const
 {
-	return impl->m_nodeIds.size();
+	return impl->m_id;
 }
 
-size_t Cell2D::nodeId(int id) const
+void Cell2D::setId(int id)
+{
+	impl->m_id = id;
+}
+
+int Cell2D::nodeCount() const
+{
+	return static_cast<int> (impl->m_nodeIds.size());
+}
+
+int Cell2D::nodeId(int id) const
 {
 	return impl->m_nodeIds.at(id - 1) + 1;
 }
@@ -39,7 +49,7 @@ Point2D Cell2D::node(int id) const
 Rect2D Cell2D::boundingRect() const
 {
 	double xmin, xmax, ymin, ymax;
-	for (size_t i = 0; i < nodeCount(); ++i) {
+	for (int i = 0; i < nodeCount(); ++i) {
 		Point2D p = node(i + 1);
 		if (i == 0 || xmin > p.x()) {xmin = p.x();}
 		if (i == 0 || xmax < p.x()) {xmax = p.x();}
@@ -49,7 +59,7 @@ Rect2D Cell2D::boundingRect() const
 	return Rect2D(xmin, xmax, ymin, ymax);
 }
 
-void Cell2D::addNode(size_t id)
+void Cell2D::addNode(int id)
 {
 	impl->m_nodeIds.push_back(id - 1);
 }

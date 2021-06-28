@@ -18,7 +18,7 @@ void writeSolution(int fid, int i)
 {
 	cgsize_t isize, jsize;
 
-	int ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
+	int ier = cg_iRIC_GotoGridCoord2d(fid, &isize, &jsize);
 
 	std::vector<double> x, y;
 	std::vector<double> vx, vy, depth;
@@ -30,7 +30,7 @@ void writeSolution(int fid, int i)
 
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
-	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
+	ier = cg_iRIC_GetGridCoord2d(fid, x.data(), y.data());
 
 	vx.assign(isize * jsize, 1);
 	vy.assign(isize * jsize, 0.3);
@@ -38,28 +38,28 @@ void writeSolution(int fid, int i)
 	wet.assign(isize * jsize, 0);
 
 	double TimeVal = i * 2.13;
-	ier = cg_iRIC_Write_Sol_Time_Mul(fid, TimeVal);
+	ier = cg_iRIC_Write_Sol_Time(fid, TimeVal);
 
-	cg_iRIC_Write_Sol_GridCoord2d_Mul(fid, x.data(), y.data());
+	cg_iRIC_Write_Sol_GridCoord2d(fid, x.data(), y.data());
 
 	// Vertex solutions
 
 	depth.assign(isize * jsize, (double)i);
-	cg_iRIC_Write_Sol_Real_Mul(fid, "Depth", depth.data());
+	cg_iRIC_Write_Sol_Real(fid, "Depth", depth.data());
 
-	cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityX", vx.data());
+	cg_iRIC_Write_Sol_Real(fid, "VelocityX", vx.data());
 
-	cg_iRIC_Write_Sol_Real_Mul(fid, "VelocityY", vy.data());
+	cg_iRIC_Write_Sol_Real(fid, "VelocityY", vy.data());
 
 	wet.assign(isize * jsize, i);
-	cg_iRIC_Write_Sol_Integer_Mul(fid, "IBC", wet.data());
+	cg_iRIC_Write_Sol_Integer(fid, "IBC", wet.data());
 
 	// BaseIterativeData
 
 	double Dist = i * - 0.2 + 20;
-	cg_iRIC_Write_Sol_BaseIterative_Real_Mul(fid, "Discharge", Dist);
+	cg_iRIC_Write_Sol_BaseIterative_Real(fid, "Discharge", Dist);
 	int DamOpen = i;
-	cg_iRIC_Write_Sol_BaseIterative_Integer_Mul(fid, "DamOpen", DamOpen);
+	cg_iRIC_Write_Sol_BaseIterative_Integer(fid, "DamOpen", DamOpen);
 }
 
 int main(int, char* [])

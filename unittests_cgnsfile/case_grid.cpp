@@ -2,7 +2,6 @@
 
 #include "fs_copy.h"
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <stdio.h>
@@ -20,45 +19,41 @@ void case_GridRead()
 	fs::copy("case_init_hdf5.cgn", "case_grid.cgn");
 
 	int fid;
-	int ier = cg_open("case_grid.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_grid.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	int isize, jsize;
 	int count;
 	std::vector<double> x, y;
 
-	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() isize == 11", isize == 11);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() jsize == 11", jsize == 11);
+	ier = cg_iRIC_Read_Grid2d_Str_Size(fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() isize == 11", isize == 11);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() jsize == 11", jsize == 11);
 
-	ier = cg_iRIC_Read_Grid_NodeCount_Mul(fid, &count);
-	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() count == 121", count == 121);
+	ier = cg_iRIC_Read_Grid_NodeCount(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount() count == 121", count == 121);
 
-	ier = cg_iRIC_Read_Grid_CellCount_Mul(fid, &count);
-	VERIFY_LOG("cg_iRIC_Read_Grid_CellCount_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_CellCount_Mul() count == 100", count == 100);
+	ier = cg_iRIC_Read_Grid_CellCount(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_CellCount() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_CellCount() count == 100", count == 100);
 
-	ier = cg_iRIC_Read_Grid_IFaceCount_Mul(fid, &count);
-	VERIFY_LOG("cg_iRIC_Read_Grid_IFaceCount_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_IFaceCount_Mul() count == 110", count == 110);
+	ier = cg_iRIC_Read_Grid_IFaceCount(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_IFaceCount() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_IFaceCount() count == 110", count == 110);
 
-	ier = cg_iRIC_Read_Grid_JFaceCount_Mul(fid, &count);
-	VERIFY_LOG("cg_iRIC_Read_Grid_JFaceCount_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_JFaceCount_Mul() count == 110", count == 110);
+	ier = cg_iRIC_Read_Grid_JFaceCount(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_JFaceCount() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_JFaceCount() count == 110", count == 110);
 
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
 
-	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid2d_Coords(fid, x.data(), y.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() ier == 0", ier == 0);
 
 	std::vector<double> doubleArr;
 	std::vector<int> intArr;
@@ -66,49 +61,83 @@ void case_GridRead()
 	doubleArr.assign(isize * jsize, 0);
 	intArr.assign(isize * jsize, 0);
 
-	ier = cg_iRIC_Read_Grid_Real_Node_Mul(fid, "node_real", doubleArr.data());
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[0] == 2", doubleArr[0] == 2);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[1] == 2", doubleArr[1] == 2);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[2] == 2", doubleArr[2] == 2);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[3] == 2", doubleArr[3] == 2);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[4] == 2", doubleArr[4] == 2);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[5] == 2", doubleArr[5] == 2);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[6] == 2", doubleArr[6] == 2);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[7] == 0", doubleArr[7] == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[8] == 0", doubleArr[8] == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node_Mul() value[9] == 0", doubleArr[9] == 0);
+	ier = cg_iRIC_Read_Grid_Real_Node(fid, "node_real", doubleArr.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[0] == 2", doubleArr[0] == 2);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[1] == 2", doubleArr[1] == 2);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[2] == 2", doubleArr[2] == 2);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[3] == 2", doubleArr[3] == 2);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[4] == 2", doubleArr[4] == 2);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[5] == 2", doubleArr[5] == 2);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[6] == 2", doubleArr[6] == 2);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[7] == 0", doubleArr[7] == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[8] == 0", doubleArr[8] == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Node() value[9] == 0", doubleArr[9] == 0);
 
-	ier = cg_iRIC_Read_Grid_Integer_Node_Mul(fid, "node_int", intArr.data());
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[0] == 0", intArr[0] == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[1] == 0", intArr[1] == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[2] == 0", intArr[2] == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[3] == 0", intArr[3] == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[4] == 0", intArr[4] == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[5] == 1", intArr[5] == 1);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[6] == 1", intArr[6] == 1);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[7] == 1", intArr[7] == 1);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[8] == 1", intArr[8] == 1);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node_Mul() value[9] == 1", intArr[9] == 1);
+	ier = cg_iRIC_Read_Grid_Integer_Node(fid, "node_int", intArr.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[0] == 0", intArr[0] == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[1] == 0", intArr[1] == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[2] == 0", intArr[2] == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[3] == 0", intArr[3] == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[4] == 0", intArr[4] == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[5] == 1", intArr[5] == 1);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[6] == 1", intArr[6] == 1);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[7] == 1", intArr[7] == 1);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[8] == 1", intArr[8] == 1);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Node() value[9] == 1", intArr[9] == 1);
 
 	doubleArr.assign((isize - 1) * (jsize - 1), 0);
 	intArr.assign((isize - 1) * (jsize - 1), 0);
 
-	ier = cg_iRIC_Read_Grid_Real_Cell_Mul(fid, "cell_real", doubleArr.data());
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() value[0] == 4.2", doubleArr[0] == 4.2);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() value[1] == 4.2", doubleArr[1] == 4.2);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() value[2] == 0", doubleArr[2] == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell_Mul() value[3] == 0", doubleArr[3] == 0);
+	ier = cg_iRIC_Read_Grid_Real_Cell(fid, "cell_real", doubleArr.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell() value[0] == 4.2", doubleArr[0] == 4.2);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell() value[1] == 4.2", doubleArr[1] == 4.2);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell() value[2] == 0", doubleArr[2] == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Real_Cell() value[3] == 0", doubleArr[3] == 0);
 
-	ier = cg_iRIC_Read_Grid_Integer_Cell_Mul(fid, "cell_int", intArr.data());
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[0] == 0", intArr[0] == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[15] == 1", intArr[15] == 1);
-	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell_Mul() value[16] == 0", intArr[16] == 0);
+	ier = cg_iRIC_Read_Grid_Integer_Cell(fid, "cell_int", intArr.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell() value[0] == 0", intArr[0] == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell() value[15] == 1", intArr[15] == 1);
+	VERIFY_LOG("cg_iRIC_Read_Grid_Integer_Cell() value[16] == 0", intArr[16] == 0);
 
-	cg_close(fid);
+	int grid_handle;
+	ier = cg_iRIC_Read_Grid2d_Open(fid, &grid_handle);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Open() ier == 0", ier == 0);
+
+	double area;
+	ier = cg_iRIC_Read_Grid2d_CellArea(grid_handle, 1, &area);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellArea() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellArea() area == 0.017", std::abs(area - 0.0173) < 0.0001);
+
+	int cellNodeCount;
+	ier = cg_iRIC_Read_Grid2d_CellNodeCount(grid_handle, 1, &cellNodeCount);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellNodeCount() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellNodeCount() cellNodeCount == 4", cellNodeCount == 4);
+
+	int nodeIds[4];
+	double weights[4];
+	int ok;
+	int nodeCount;
+	ier = cg_iRIC_Read_Grid2d_Interpolate(grid_handle, 0.0, 0.0, &ok, &nodeCount, nodeIds, weights);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() ok == 1", ok == 1);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeCount == 4", nodeCount == 4);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[0] == 93", nodeIds[0] == 93);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[1] == 94", nodeIds[1] == 94);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[2] == 105", nodeIds[2] == 105);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[3] == 104", nodeIds[3] == 104);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[0] == 0.3863", std::abs(weights[0] - 0.3863) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[1] == 0.4012", std::abs(weights[1] - 0.4012) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[2] == 0.2123", std::abs(weights[2] - 0.2123) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[3] == 0", std::abs(weights[3] - 0) < 0.0001);
+
+	ier = cg_iRIC_Read_Grid2d_Close(grid_handle);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Close() ier == 0", ier == 0);
+
+	cg_iRIC_Close(fid);
 
 	remove("case_grid.cgn");
 }
@@ -118,39 +147,67 @@ void case_GridReadUnstructured()
 	fs::copy("case_unst_hdf5.cgn", "case_grid_unstructured.cgn");
 
 	int fid;
-	int ier = cg_open("case_grid_unstructured.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_grid_unstructured.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	int elem_size;
 	int count;
 	std::vector<double> x, y;
 	std::vector<int> elems;
 
-	ier = cg_iRIC_GetTriangleElementsSize_Mul(fid, &elem_size);
-	VERIFY_LOG("cg_iRIC_GetTriangleElementsSize_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_GetTriangleElementsSize_Mul() elem_size == 3", elem_size == 3);
+	ier = cg_iRIC_Read_Grid_TriangleElementsSize(fid, &elem_size);
+	VERIFY_LOG("cg_iRIC_Read_Grid_TriangleElementsSize() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_TriangleElementsSize() elem_size == 3", elem_size == 3);
 
-	ier = cg_iRIC_Read_Grid_NodeCount_Mul(fid, &count);
-	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount_Mul() count == 5", count == 5);
+	ier = cg_iRIC_Read_Grid_NodeCount(fid, &count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_NodeCount() count == 5", count == 5);
 
 	x.assign(count, 0);
 	y.assign(count, 0);
 	elems.assign(elem_size * 3, 0);
 
-	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid2d_Coords(fid, x.data(), y.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() ier == 0", ier == 0);
 
-	ier = cg_iRIC_GetTriangleElements_Mul(fid, elems.data());
-	VERIFY_LOG("cg_iRIC_GetTriangleElements_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid_TriangleElements(fid, elems.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid_TriangleElements() ier == 0", ier == 0);
 
-	cg_close(fid);
+	int grid_handle;
+	ier = cg_iRIC_Read_Grid2d_Open(fid, &grid_handle);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Open() ier == 0", ier == 0);
+
+	double area;
+	ier = cg_iRIC_Read_Grid2d_CellArea(grid_handle, 1, &area);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellArea() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellArea() area == 0.2067", std::abs(area - 0.2067) < 0.0001);
+
+	int cellNodeCount;
+	ier = cg_iRIC_Read_Grid2d_CellNodeCount(grid_handle, 1, &cellNodeCount);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellNodeCount() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_CellNodeCount() cellNodeCount == 3", cellNodeCount == 3);
+
+	int nodeIds[3];
+	double weights[3];
+	int ok;
+	int nodeCount;
+	ier = cg_iRIC_Read_Grid2d_Interpolate(grid_handle, 0.0, 0.0, &ok, &nodeCount, nodeIds, weights);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() ok == 1", ok == 1);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeCount == 3", nodeCount == 3);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[0] == 4", nodeIds[0] == 4);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[1] == 5", nodeIds[1] == 5);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() nodeIds[2] == 2", nodeIds[2] == 2);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[0] == 0.5415", std::abs(weights[0] - 0.5415) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[1] == 0.0921", std::abs(weights[1] - 0.0921) < 0.0001);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Interpolate() weights[2] == 0.3663", std::abs(weights[2] - 0.3663) < 0.0001);
+
+	ier = cg_iRIC_Read_Grid2d_Close(grid_handle);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Close() ier == 0", ier == 0);
+
+	cg_iRIC_Close(fid);
 
 	remove("case_grid_unstructured.cgn");
 }
@@ -160,51 +217,47 @@ void case_GridReadFunc()
 	fs::copy("case_gridfunc.cgn", "case_gridreadfunc.cgn");
 
 	int fid;
-	int ier = cg_open("case_gridreadfunc.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_gridreadfunc.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	int isize, jsize;
 	std::vector<double> x, y;
 
-	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() isize == 15", isize == 15);
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() jsize == 15", jsize == 15);
+	ier = cg_iRIC_Read_Grid2d_Str_Size(fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() isize == 15", isize == 15);
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() jsize == 15", jsize == 15);
 
 	x.assign(isize * jsize, 0);
 	y.assign(isize * jsize, 0);
 
-	ier = cg_iRIC_GetGridCoord2d_Mul(fid, x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid2d_Coords(fid, x.data(), y.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid2d_Str_Size() ier == 0", ier == 0);
 
 	int time_count;
-	ier = cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul(fid, "Xrain", "Time", &time_count);
-	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul() ier == 0", ier == 0);
-	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalDimensionSize_Mul() time_count == 24", time_count == 24);
+	ier = cg_iRIC_Read_Grid_FunctionalDimensionSize(fid, "Xrain", "Time", &time_count);
+	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalDimensionSize() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalDimensionSize() time_count == 24", time_count == 24);
 
 	std::vector<double> timeArr;
 	timeArr.assign(time_count, 0);
-	ier = cg_iRIC_Read_Grid_FunctionalDimension_Real_Mul(fid, "Xrain", "Time", timeArr.data());
-	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalDimension_Real_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid_FunctionalDimension_Real(fid, "Xrain", "Time", timeArr.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalDimension_Real() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Read_Grid_FunctionalTime_Mul(fid, "Xrain", timeArr.data());
-	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalTime_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Read_Grid_FunctionalTime(fid, "Xrain", timeArr.data());
+	VERIFY_LOG("cg_iRIC_Read_Grid_FunctionalTime() ier == 0", ier == 0);
 
 	std::vector<double> rain;
 	rain.assign(isize * jsize, 0);
 
 	for (int i = 0; i < timeArr.size(); ++i) {
-		ier = cg_iRIC_Read_Grid_Functional_Real_Node_Mul(fid, "Xrain", i + 1, rain.data());
-		VERIFY_LOG("cg_iRIC_Read_Grid_Functional_Real_Node_Mul() ier == 0", ier == 0);
+		ier = cg_iRIC_Read_Grid_Functional_Real_Node(fid, "Xrain", i + 1, rain.data());
+		VERIFY_LOG("cg_iRIC_Read_Grid_Functional_Real_Node() ier == 0", ier == 0);
 	}
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_gridreadfunc.cgn");
 }
@@ -214,14 +267,10 @@ void case_GridWrite()
 	fs::copy("case_nogrid_hdf5.cgn", "case_gridwrite1d.cgn");
 
 	int fid;
-	int ier = cg_open("case_gridwrite1d.cgn", CG_MODE_MODIFY, &fid);
+	int ier = cg_iRIC_Open("case_gridwrite1d.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	int isize, jsize, ksize;
 	std::vector<double> x, y, z;
@@ -232,14 +281,14 @@ void case_GridWrite()
 	for (int i = 0; i < isize; ++i) {
 		x[i] = i * 2;
 	}
-	ier = cg_iRIC_WriteGridCoord1d_Mul(fid, isize, x.data());
-	VERIFY_LOG("cg_iRIC_WriteGridCoord1d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid1d_Coords(fid, isize, x.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid1d_Coords() ier == 0", ier == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
-	ier = cg_open("case_gridwrite1d.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	ier = cg_iRIC_Open("case_gridwrite1d.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	/*
 	ier = cg_goto(fid, 2, "iRICZone", 0, "GridCoordinates", 0, NULL);
@@ -262,20 +311,16 @@ void case_GridWrite()
 	VERIFY_LOG("cg_array_read() value valid", x == read_x);
 	*/
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_gridwrite1d.cgn");
 
 	fs::copy("case_nogrid_hdf5.cgn", "case_gridwrite2d.cgn");
 
-	ier = cg_open("case_gridwrite2d.cgn", CG_MODE_MODIFY, &fid);
+	ier = cg_iRIC_Open("case_gridwrite2d.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	isize = 10; jsize = 8;
 	x.assign(isize * jsize, 0);
@@ -287,8 +332,8 @@ void case_GridWrite()
 			y[i + isize * j] = j;
 		}
 	}
-	ier = cg_iRIC_WriteGridCoord2d_Mul(fid, isize, jsize, x.data(), y.data());
-	VERIFY_LOG("cg_iRIC_WriteGridCoord2d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid2d_Coords(fid, isize, jsize, x.data(), y.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid2d_Coords() ier == 0", ier == 0);
 
 	std::vector<double> real_node_write, real_cell_write;
 	std::vector<int> int_node_write, int_cell_write;
@@ -314,23 +359,23 @@ void case_GridWrite()
 		int_cell_write[i] = i * i - i * 4 + 414;
 	}
 
-	ier = cg_iRIC_Write_Grid_Real_Node_Mul(fid, "realnode_test", real_node_write.data());
-	VERIFY_LOG("cg_iRIC_Write_Grid_Real_Node_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid_Real_Node(fid, "realnode_test", real_node_write.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid_Real_Node() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Grid_Integer_Node_Mul(fid, "intnode_test", int_node_write.data());
-	VERIFY_LOG("cg_iRIC_Write_Grid_Integer_Node_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid_Integer_Node(fid, "intnode_test", int_node_write.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid_Integer_Node() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Grid_Real_Cell_Mul(fid, "realcell_test", real_cell_write.data());
-	VERIFY_LOG("cg_iRIC_Write_Grid_Real_Cell_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid_Real_Cell(fid, "realcell_test", real_cell_write.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid_Real_Cell() ier == 0", ier == 0);
 
-	ier = cg_iRIC_Write_Grid_Integer_Cell_Mul(fid, "intcell_test", int_cell_write.data());
-	VERIFY_LOG("cg_iRIC_Write_Grid_Integer_Cell_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid_Integer_Cell(fid, "intcell_test", int_cell_write.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid_Integer_Cell() ier == 0", ier == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
-	ier = cg_open("case_gridwrite2d.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	ier = cg_iRIC_Open("case_gridwrite2d.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	/*
 	cgsize_t size[9];
@@ -399,20 +444,16 @@ void case_GridWrite()
 	VERIFY_LOG("intcell_test value check", int_cell_read == int_cell_write);
 	*/
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_gridwrite2d.cgn");
 
 	fs::copy("case_nogrid_hdf5.cgn", "case_gridwrite3d.cgn");
 
-	ier = cg_open("case_gridwrite3d.cgn", CG_MODE_MODIFY, &fid);
+	ier = cg_iRIC_Open("case_gridwrite3d.cgn", IRIC_MODE_MODIFY, &fid);
 
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
-
-	ier = cg_iRIC_Init(fid);
-
-	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	isize = 11; jsize = 9; ksize = 5;
 	x.assign(isize * jsize * ksize, 0);
@@ -428,14 +469,14 @@ void case_GridWrite()
 			}
 		}
 	}
-	ier = cg_iRIC_WriteGridCoord3d_Mul(fid, isize, jsize, ksize, x.data(), y.data(), z.data());
-	VERIFY_LOG("cg_iRIC_WriteGridCoord3d_Mul() ier == 0", ier == 0);
+	ier = cg_iRIC_Write_Grid3d_Coords(fid, isize, jsize, ksize, x.data(), y.data(), z.data());
+	VERIFY_LOG("cg_iRIC_Write_Grid3d_Coords() ier == 0", ier == 0);
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
-	ier = cg_open("case_gridwrite3d.cgn", CG_MODE_READ, &fid);
-	VERIFY_LOG("cg_open() ier == 0", ier == 0);
-	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+	ier = cg_iRIC_Open("case_gridwrite3d.cgn", IRIC_MODE_READ, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
 
 	/*
 	ier = cg_zone_read(fid, 2, 1, name, size);
@@ -475,7 +516,7 @@ void case_GridWrite()
 	VERIFY_LOG("cg_array_read() value valid", z == read_z);
 	*/
 
-	cg_close(fid);
+	cg_iRIC_Close(fid);
 
 	remove("case_gridwrite3d.cgn");
 }

@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 
-#include <cgnslib.h>
 #include <iriclib.h>
 
 #include <iostream>

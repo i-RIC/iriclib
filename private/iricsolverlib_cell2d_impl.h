@@ -13,7 +13,8 @@ public:
 	Impl(Grid2D* const grid);
 
 	Grid2D* const m_grid;
-	std::vector<size_t> m_nodeIds;
+	int m_id;
+	std::vector<int> m_nodeIds;
 };
 
 } // iRICSolverLib

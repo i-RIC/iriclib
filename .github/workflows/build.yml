@@ -1,0 +1,180 @@
+name: cmake-build
+
+on:
+  push:
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  GENERATOR: 'Visual Studio 16 2019'
+  SGEN: vs2019-x64
+  HDF5_VER: 1.8.21      # @todo load from versions.cmd
+  POCO_VER: 1.9.4       # @todo load from versions.cmd
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout iricdev
+      uses: actions/checkout@v2
+      with:
+        repository: scharlton2/iricdev-2019
+        ref: 2019_solver
+                
+    - name: Checkout iriclib
+      uses: actions/checkout@v2
+      with:
+        path: lib/src/iriclib-git
+
+    - name: Set file mtimes for msbuild
+      run: |
+        curl -L -O https://raw.githubusercontent.com/MestreLion/git-tools/cd87904e0b85d74b1d05f6acbd10553a0ceaceb0/git-restore-mtime
+        python git-restore-mtime
+
+    - name: Setup path for msbuild
+      uses: microsoft/setup-msbuild@v1.0.2
+      with:
+        vs-version: '[16.9,17)'
+
+    - name: Export iriclib version
+      run: |
+        # update CMakeLists.txt version number for iriclib
+        Set-Location .\lib\src\iriclib-git
+        (Get-Content .\CMakeLists.txt) | Foreach-Object {
+          if ($_ -match '  VERSION (?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$') {
+            $patch = 1 + $Matches['patch']
+            $env:IRICLIB_VER = $Matches['major'] + "." + $Matches['minor'] + "." + $patch
+            return "  VERSION " + $env:IRICLIB_VER
+          }
+          return $_
+        } | Set-Content .\CMakeLists.txt
+        echo "IRICLIB_VER=$env:IRICLIB_VER" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+    - name: Setup programs
+      run: Copy-Item .\programs_std.prop .\programs.prop
+
+    - name: debug
+      run: |
+        Get-Command curl
+        Write-Output ${{ env.HDF5_VER }}
+        Get-Command cmake
+        Write-Output ${{ env.POCO_VER }}
+        Get-Command ctest
+        Write-Output ${{ env.GENERATOR }}
+        Get-Command 7z
+        Write-Output ${{ env.IRICLIB_VER }}
+        Get-Command msbuild
+        Write-Output "key = ${{runner.os}}-build-poco-${{hashFiles('./poco.*')}}"
+        Get-Command python
+        Write-Output "key = ${{runner.os}}-build-hdf5-${{hashFiles('./hdf5.*')}}"
+
+    - name: Cache poco
+      id: cache-poco
+      uses: actions/cache@v2
+      with:
+        path: ${{github.workspace}}/lib/install/poco-${{env.POCO_VER}}
+        key: ${{runner.os}}-build-poco-${{hashFiles('./poco.*')}}
+
+    - name: Build poco
+      if: steps.cache-poco.outputs.cache-hit != 'true'
+      run: msbuild /noLogo /maxCpuCount /target:poco-build-release iricdev.proj
+
+    - name: Cache hdf5
+      id: cache-hdf5
+      uses: actions/cache@v2
+      with:
+        path: ${{github.workspace}}/lib/install/hdf5-${{env.HDF5_VER}}
+        key: ${{runner.os}}-build-hdf5-${{hashFiles('./hdf5.*')}}
+
+    - name: Build hdf5
+      if: steps.cache-hdf5.outputs.cache-hit != 'true'
+      run: msbuild /noLogo /maxCpuCount /target:hdf5-build-release iricdev.proj
+
+    - name: Build iriclib
+      run: msbuild /noLogo /maxCpuCount /target:iriclib-build-2019 iricdev.proj
+
+    - name: Test iriclib
+      run: cd lib/build/iriclib-${{env.IRICLIB_VER}} && ctest -C release
+
+    - name: 7z sdk
+      run: |
+        Rename-Item .\lib\install iricsdk
+        7z a iricsdk.7z .\lib\iricsdk
+        Rename-Item .\lib\iricsdk install
+
+    - name: Commit and push branch
+      uses: actions-js/push@master
+      with:
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        directory: lib/src/iriclib-git
+        branch: ${{github.ref}}
+
+    - name: Create release
+      run: |
+        Push-Location lib/src/iriclib-git
+
+        # store new commit
+        $target_commitish = (git log -n1 --format=format:"%H")
+
+        Pop-Location
+
+        if (! ($env:IRICLIB_VER -match "^(?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$") ) {
+          throw "Bad version"
+        }
+
+        # create headers dictionary
+        $h = @{"Authorization" = "token ${{secrets.GITHUB_TOKEN}}"}
+
+        $releases_url = "https://api.github.com/repos/scharlton2/iriclib_v4/releases"
+
+        # create release
+        # POST /repos/{owner}/{repo}/releases
+        # see https://docs.github.com/en/rest/reference/repos#create-a-release
+        # see https://docs.github.com/ja/rest/reference/repos#create-a-release
+        #
+        $create = @{
+          "tag_name"         = "v" + $matches[0]
+          "target_commitish" = "$target_commitish"
+          "name"             = "iriclib " + $matches[0]
+          "draft"            = $true
+        }
+        $create_json = $create | ConvertTo-Json
+        $release = Invoke-WebRequest -Uri "$releases_url" -Headers $h -Method POST -Body $create_json
+
+        # upload artifact (asset)
+        # POST /repos/{owner}/{repo}/releases/{release_id}/assets
+        # see https://docs.github.com/en/rest/reference/repos#upload-a-release-asset
+        # see https://docs.github.com/ja/rest/reference/repos#upload-a-release-asset
+        #
+        $upload_uri = ($release.Content | ConvertFrom-Json).upload_url
+        if (! ($upload_uri -match  "(.*)\{\?name,label\}") ) {
+          # expecting URI{?name,label}
+          # ie https://uploads.github.com/repos/scharlton2/iriclib_v4/releases/24058628/assets{?name,label}
+          throw "Bad upload_url"
+        }
+        $upload_uri = $matches[1] + "?name=iricsdk-$env:IRICLIB_VER.7z"
+        $h["Content-type"] = "application/x-7z-compressed"
+        $bytes = [System.IO.File]::ReadAllBytes("iricsdk.7z")
+        $upload = Invoke-WebRequest -Uri $upload_uri -Headers $h -Method POST -Body $bytes
+
+        # update release
+        # PATCH /repos/{owner}/{repo}/releases/{release_id}
+        # see https://docs.github.com/en/rest/reference/repos#update-a-release
+        # see https://docs.github.com/ja/rest/reference/repos#update-a-release
+        #
+        $release_id = ($release.Content | ConvertFrom-Json).id
+        $h.Remove("Content-type")
+        $update = @{ "draft" = $false }
+        $update_json = $update | ConvertTo-Json
+        $release = Invoke-WebRequest -Uri "$releases_url/$release_id" -Headers $h -Method PATCH -Body $update_json
+
+        # display download url
+        Write-Output "$((($release.Content | ConvertFrom-Json).assets).browser_download_url)"
+        Get-FileHash "iricsdk.7z"
+
+

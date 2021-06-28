@@ -1,4 +1,6 @@
 #include "../error_macros.h"
+#include "../h5cgnsbase.h"
+#include "../h5cgnsbaseiterativedata.h"
 #include "../h5cgnsfile.h"
 #include "../h5cgnsfileseparatesolutionutil.h"
 #include "../iriclib_errorcodes.h"
@@ -44,6 +46,42 @@ int H5CgnsFileSolutionWriter::Impl::writeIteration(int iteration)
 	return IRIC_NO_ERROR;
 }
 
+int H5CgnsFileSolutionWriter::Impl::writeBaseIterativeData(const std::string& name, int value)
+{
+	int ier = m_file->ccBase()->biterData()->writeData(name, value);
+	RETURN_IF_ERR;
+
+	if (m_mode == Mode::Separate) {
+		ier = m_targetFile->ccBase()->biterData()->writeData(name, value);
+		RETURN_IF_ERR;
+	}
+	return IRIC_NO_ERROR;
+}
+
+int H5CgnsFileSolutionWriter::Impl::writeBaseIterativeData(const std::string& name, double value)
+{
+	int ier = m_file->ccBase()->biterData()->writeData(name, value);
+	RETURN_IF_ERR;
+
+	if (m_mode == Mode::Separate) {
+		ier = m_targetFile->ccBase()->biterData()->writeData(name, value);
+		RETURN_IF_ERR;
+	}
+	return IRIC_NO_ERROR;
+}
+
+int H5CgnsFileSolutionWriter::Impl::writeBaseIterativeData(const std::string& name, const std::string value)
+{
+	int ier = m_file->ccBase()->biterData()->writeData(name, value);
+	RETURN_IF_ERR;
+
+	if (m_mode == Mode::Separate) {
+		ier = m_targetFile->ccBase()->biterData()->writeData(name, value);
+		RETURN_IF_ERR;
+	}
+	return IRIC_NO_ERROR;
+}
+
 int H5CgnsFileSolutionWriter::Impl::writeTimeStandard(double time)
 {
 	return m_file->writeTime(time);
@@ -57,7 +95,7 @@ int H5CgnsFileSolutionWriter::Impl::writeTimeSeparate(double time)
 	int ier = H5CgnsFileSeparateSolutionUtil::createResultFolderIfNotExists(m_file->fileName());
 	RETURN_IF_ERR;
 
-	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->fileName(), m_solutionId);
+	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->resultFolder(), m_solutionId);
 	try {
 		m_targetFile = new H5CgnsFile(fName, H5CgnsFile::Mode::Create);
 	} catch (...) {
@@ -104,7 +142,7 @@ int H5CgnsFileSolutionWriter::Impl::writeIterationSeparate(int iteration)
 	int ier = H5CgnsFileSeparateSolutionUtil::createResultFolderIfNotExists(m_file->fileName());
 	RETURN_IF_ERR;
 
-	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->fileName(), m_solutionId);
+	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->resultFolder(), m_solutionId);
 	try {
 		m_targetFile = new H5CgnsFile(fName, H5CgnsFile::Mode::Create);
 	} catch (...) {
