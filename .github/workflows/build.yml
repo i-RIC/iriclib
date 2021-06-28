@@ -122,7 +122,7 @@ jobs:
         # create headers dictionary
         $h = @{"Authorization" = "token ${{secrets.GITHUB_TOKEN}}"}
 
-        $releases_url = ${{env.releases_url}}
+        $releases_url = "${{env.releases_url}}"
 
         # create release
         # POST /repos/{owner}/{repo}/releases
@@ -136,7 +136,7 @@ jobs:
           "draft"            = $true
         }
         $create_json = $create | ConvertTo-Json
-        $release = Invoke-WebRequest -Uri "$releases_url" -Headers $h -Method POST -Body $create_json
+        $release = Invoke-WebRequest -Uri $releases_url -Headers $h -Method POST -Body $create_json
 
         # upload artifact (asset)
         # POST /repos/{owner}/{repo}/releases/{release_id}/assets
