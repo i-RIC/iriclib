@@ -46,8 +46,13 @@ jobs:
         # update CMakeLists.txt version number for iriclib
         Set-Location .\lib\src\iriclib-git
         (Get-Content .\CMakeLists.txt) | Foreach-Object {
-          if ($_ -match '  VERSION (?<major>0|[1-9]\d*)\.(?<minor>[0|1-9]\d*)\.(?<patch>[0|1-9]\d*)$') {
-            $patch = 1 + $Matches['patch']
+          if ($_ -match '  VERSION (?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)(?:\.(?<patch>0|[1-9]\d*))?$') {
+            if ($Matches.ContainsKey('patch')) {
+              $patch = 1 + $Matches['patch']
+            }
+            else {
+              $patch = 0
+            }
             $env:IRICLIB_VER = $Matches['major'] + "." + $Matches['minor'] + "." + $patch
             return "  VERSION " + $env:IRICLIB_VER
           }
@@ -57,21 +62,6 @@ jobs:
 
     - name: Setup programs
       run: Copy-Item .\programs_std.prop .\programs.prop
-
-    - name: debug
-      run: |
-        Get-Command curl
-        Write-Output ${{ env.HDF5_VER }}
-        Get-Command cmake
-        Write-Output ${{ env.POCO_VER }}
-        Get-Command ctest
-        Write-Output ${{ env.GENERATOR }}
-        Get-Command 7z
-        Write-Output ${{ env.IRICLIB_VER }}
-        Get-Command msbuild
-        Write-Output "key = ${{runner.os}}-build-poco-${{hashFiles('./poco.*')}}"
-        Get-Command python
-        Write-Output "key = ${{runner.os}}-build-hdf5-${{hashFiles('./hdf5.*')}}"
 
     - name: Cache poco
       id: cache-poco
@@ -115,6 +105,8 @@ jobs:
         branch: ${{github.ref}}
 
     - name: Create release
+      env:
+        releases_url: ${{github.api_url}}/repos/${{github.repository}}/releases
       run: |
         Push-Location lib/src/iriclib-git
 
@@ -130,7 +122,7 @@ jobs:
         # create headers dictionary
         $h = @{"Authorization" = "token ${{secrets.GITHUB_TOKEN}}"}
 
-        $releases_url = "https://api.github.com/repos/scharlton2/iriclib_v4/releases"
+        $releases_url = ${{env.releases_url}}
 
         # create release
         # POST /repos/{owner}/{repo}/releases
@@ -138,9 +130,9 @@ jobs:
         # see https://docs.github.com/ja/rest/reference/repos#create-a-release
         #
         $create = @{
-          "tag_name"         = "v" + $matches[0]
+          "tag_name"         = "v" + $Matches[0]
           "target_commitish" = "$target_commitish"
-          "name"             = "iriclib " + $matches[0]
+          "name"             = "iriclib " + $Matches[0]
           "draft"            = $true
         }
         $create_json = $create | ConvertTo-Json
@@ -157,7 +149,7 @@ jobs:
           # ie https://uploads.github.com/repos/scharlton2/iriclib_v4/releases/24058628/assets{?name,label}
           throw "Bad upload_url"
         }
-        $upload_uri = $matches[1] + "?name=iricsdk-$env:IRICLIB_VER.7z"
+        $upload_uri = $Matches[1] + "?name=iricsdk-$env:IRICLIB_VER.7z"
         $h["Content-type"] = "application/x-7z-compressed"
         $bytes = [System.IO.File]::ReadAllBytes("iricsdk.7z")
         $upload = Invoke-WebRequest -Uri $upload_uri -Headers $h -Method POST -Body $bytes
