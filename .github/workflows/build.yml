@@ -25,8 +25,8 @@ jobs:
     - name: Checkout iricdev
       uses: actions/checkout@v2
       with:
-        repository: scharlton2/iricdev-2019
-        ref: 2019_solver
+        repository: scharlton2/iricdev-2019       # @todo change to i-RIC/iricdev-2019 or i-RIC/iricdev_v4
+        ref: 2019_solver                          # @todo change to 2019 or master_v4 or develop_v4
                 
     - name: Checkout iriclib
       uses: actions/checkout@v2
@@ -100,7 +100,7 @@ jobs:
         Rename-Item .\lib\iricsdk install
 
     - name: Commit and push
-      if: ${{github.repository}} == 'i-RIC/iriclib_v4'
+      if: ${{ github.repository == 'i-RIC/iriclib_v4' }}
       uses: actions-js/push@master
       with:
         github_token: ${{secrets.GITHUB_TOKEN}}
@@ -109,7 +109,7 @@ jobs:
         branch: develop_v4
 
     - name: Commit and push branch
-      if: ${{github.repository}} != 'i-RIC/iriclib_v4'
+      if: ${{ github.repository != 'i-RIC/iriclib_v4' }}
       uses: actions-js/push@master
       with:
         github_token: ${{secrets.GITHUB_TOKEN}}
