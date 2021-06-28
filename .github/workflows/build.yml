@@ -2,6 +2,8 @@ name: cmake-build
 
 on:
   push:
+    branches:
+      - develop_v4
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -97,12 +99,22 @@ jobs:
         7z a iricsdk.7z .\lib\iricsdk
         Rename-Item .\lib\iricsdk install
 
-    - name: Commit and push branch
+    - name: Commit and push
+      if: ${{github.repository}} == 'i-RIC/iriclib_v4'
       uses: actions-js/push@master
       with:
         github_token: ${{secrets.GITHUB_TOKEN}}
         directory: lib/src/iriclib-git
-        branch: ${{github.ref}}
+        # branch: ${{github.ref}}
+        branch: develop_v4
+
+    - name: Commit and push branch
+      if: ${{github.repository}} != 'i-RIC/iriclib_v4'
+      uses: actions-js/push@master
+      with:
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        directory: lib/src/iriclib-git
+        branch: __${{github.event.repository.name}}_${{github.run_number}}
 
     - name: Create release
       env:
