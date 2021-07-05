@@ -249,6 +249,7 @@ target_compile_definitions(iriclib
     IRICLIBDLL_LIBRARY
     IRICSOLVERLIBDLL_LIBRARY
     ${HDF5_DEFINITIONS}
+    UPPERCASE                         # @todo
 )
 
 # iriclib include directories
@@ -342,14 +343,15 @@ include(CTest)
 
 if (BUILD_TESTING)
   add_subdirectory(unittests_cgnsfile)
+  # add_subdirectory(unittests)                         # @todo
   # add_subdirectory(unittest_lock)
   # add_subdirectory(unittest_cg_open_modify)
   # add_subdirectory(unittest_cg_open_read)
   # add_subdirectory(unittests_h5)
 endif()
 
-get_cmake_property(_variableNames VARIABLES)
-list (SORT _variableNames)
-foreach (_variableName ${_variableNames})
-  message(STATUS "${_variableName}=${${_variableName}}")
-endforeach()
+# get_cmake_property(_variableNames VARIABLES)
+# list (SORT _variableNames)
+# foreach (_variableName ${_variableNames})
+#   message(STATUS "${_variableName}=${${_variableName}}")
+# endforeach()
