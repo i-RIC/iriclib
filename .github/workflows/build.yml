@@ -25,7 +25,7 @@ jobs:
     - name: Checkout iricdev
       uses: actions/checkout@v2
       with:
-        repository: scharlton2/iricdev-2019       # @todo change to i-RIC/iricdev-2019 or i-RIC/iricdev_v4
+        repository: i-RIC/iricdev-2019            # @todo change to i-RIC/iricdev-2019 or i-RIC/iricdev_v4
         ref: 2019_solver                          # @todo change to 2019 or master_v4 or develop_v4
                 
     - name: Checkout iriclib
