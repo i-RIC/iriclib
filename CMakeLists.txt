@@ -241,8 +241,14 @@ target_compile_definitions(iriclib
     $<$<BOOL:MSVC>:_SCL_SECURE_NO_WARNINGS>
     IRICLIBDLL_LIBRARY
     IRICSOLVERLIBDLL_LIBRARY
-    ${HDF5_DEFINITIONS}
-    UPPERCASE                         # @todo
+    UPPERCASE                                                  # @todo
+)
+
+# this works except it also adds iric.f90 to CXX/C projects
+target_sources(iriclib
+  INTERFACE
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/iric.f90>"
+    "$<INSTALL_INTERFACE:src/iric.f90>"
 )
 
 # iriclib include directories
@@ -251,7 +257,6 @@ target_include_directories(iriclib
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>"
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/private>"
     "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-##    "${HDF5_INCLUDE_DIRS}"
 )
 
 # iriclib link libraries
@@ -327,10 +332,12 @@ install(EXPORT iriclibTargets
 install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 # install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
 if(MSVC)
-  install(FILES ${PROJECT_BINARY_DIR}/Debug/iriclib.pdb
+  install(FILES $<TARGET_PDB_FILE:iriclib>
     DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    CONFIGURATIONS Debug)
+    CONFIGURATIONS Debug RelWithDebInfo)
 endif()
+
+install(FILES ${PROJECT_SOURCE_DIR}/iric.f90 DESTINATION src)           # @todo check non-windows builds
 
 include(CTest)
 
