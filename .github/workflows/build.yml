@@ -88,6 +88,8 @@ jobs:
       run: msbuild /noLogo /maxCpuCount /target:hdf5-build-release iricdev.proj
 
     - name: Build iriclib
+      env:
+        X_CMAKE_INSTALL_PREFIX: ${{github.workspace}}/lib/install/poco-${{env.POCO_VER}}/lib/cmake/Poco;${{github.workspace}}/lib/install/hdf5-${{env.HDF5_VER}}/release/cmake/hdf5
       run: msbuild /noLogo /maxCpuCount /target:iriclib-build-2019 iricdev.proj
 
     - name: Test iriclib

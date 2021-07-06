@@ -9,17 +9,10 @@ project (
 # set standard directory locations
 include(GNUInstallDirs)
 
-# Fortran (Not currently used)
-if (NOT IRICLIB_FORTRAN_TESTING)
-  if (NOT CMAKE_Fortran_COMPILER OR CMAKE_Fortran_COMPILER STREQUAL "CMAKE_Fortran_COMPILER-NOTFOUND")
-    option (IRICLIB_FORTRAN_TESTING "Build Fortran test" OFF)
-  else()
-    option (IRICLIB_FORTRAN_TESTING "Build Fortran test" ON)
-  endif()
-else()
-  if (IRICLIB_FORTRAN_TESTING)
-    enable_language(Fortran)
-  endif()  
+# Fortran
+option(IRICLIB_FORTRAN_TESTING "Build Fortran unittests" ON)
+if(IRICLIB_FORTRAN_TESTING)
+  enable_language(Fortran)
 endif()
 
 find_package(HDF5 1.8 REQUIRED)
@@ -341,9 +334,11 @@ endif()
 
 include(CTest)
 
-if (BUILD_TESTING)
+if(BUILD_TESTING)
   add_subdirectory(unittests_cgnsfile)
-  # add_subdirectory(unittests)                         # @todo
+  if(IRICLIB_FORTRAN_TESTING)
+    add_subdirectory(unittests)
+  endif()
   # add_subdirectory(unittest_lock)
   # add_subdirectory(unittest_cg_open_modify)
   # add_subdirectory(unittest_cg_open_read)
