@@ -28,7 +28,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: i-RIC/iricdev-2019
-        ref: 2019_solver                          # @todo change to 2019 or master_v4 or develop_v4
+        ref: 2019                                   # @todo change to master_v4 or develop_v4
                 
     - name: Checkout iriclib
       uses: actions/checkout@v2
@@ -72,7 +72,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ${{github.workspace}}/lib/install/poco-${{env.POCO_VER}}
-        key: ${{runner.os}}-poco-install-${{hashFiles('./poco.*')}}
+        key: ${{runner.os}}-poco-${{hashFiles('./poco.*')}}
 
     - name: Build poco
       if: steps.cache-poco.outputs.cache-hit != 'true'
@@ -83,7 +83,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ${{github.workspace}}/lib/install/hdf5-${{env.HDF5_VER}}
-        key: ${{runner.os}}-hdf5-install-${{hashFiles('./hdf5.*')}}
+        key: ${{runner.os}}-hdf5-${{hashFiles('./hdf5.*')}}
 
     - name: Build hdf5
       if: steps.cache-hdf5.outputs.cache-hit != 'true'
@@ -93,9 +93,12 @@ jobs:
       env:
         X_CMAKE_INSTALL_PREFIX: ${{github.workspace}}/lib/install/poco-${{env.POCO_VER}}/lib/cmake/Poco;${{github.workspace}}/lib/install/hdf5-${{env.HDF5_VER}}/release/cmake/hdf5
         IFORT_COMPILER21: C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\windows\
-      run: msbuild /noLogo /maxCpuCount /target:iriclib-build-2019 iricdev.proj
+      run: msbuild /noLogo /maxCpuCount /target:iriclib_v4-build iricdev.proj
 
-    - name: Test iriclib
+    - name: Test iriclib debug
+      run: cd lib/build/iriclib-${{env.IRICLIB_VER}} && ctest -C debug
+
+    - name: Test iriclib release
       run: cd lib/build/iriclib-${{env.IRICLIB_VER}} && ctest -C release
 
     - name: 7z sdk
