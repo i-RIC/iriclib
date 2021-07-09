@@ -9,6 +9,9 @@ project (
 # set standard directory locations
 include(GNUInstallDirs)
 
+# Add a d to debug library
+set(CMAKE_DEBUG_POSTFIX "d" CACHE STRING "Set Debug library postfix" FORCE)
+
 # Fortran
 option(IRICLIB_FORTRAN_TESTING "Build Fortran unittests" ON)
 if(IRICLIB_FORTRAN_TESTING)
@@ -262,7 +265,7 @@ target_include_directories(iriclib
 # iriclib link libraries
 target_link_libraries(iriclib
   PRIVATE
-    ${HDF5_LIBRARIES}
+    hdf5::hdf5-shared           #  ${HDF5_LIBRARIES}  @todo test non-windows builds
     Poco::Foundation
 )
 
