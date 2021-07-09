@@ -14,9 +14,6 @@ configure_file(case_read_hdf5.cgn         case_read_hdf5.cgn         COPYONLY)
 configure_file(case_read_hdf5_no_sols.cgn case_read_hdf5_no_sols.cgn COPYONLY)
 configure_file(case_unst_hdf5.cgn         case_unst_hdf5.cgn         COPYONLY)
 
-# extra dependencies
-find_package(HDF5 1.8 REQUIRED)
-
 # unittests_cgnsfile target
 add_executable(unittests_cgnsfile main.cpp)
 
@@ -51,16 +48,17 @@ target_compile_definitions(unittests_cgnsfile
 target_link_libraries(unittests_cgnsfile
   PRIVATE
     iriclib
-    ${HDF5_LIBRARIES}
 )
 
 # POST_BUILD
 if (WIN32)
-  # copy iriclib.dll to unittests_cgnsfile directory
+  # copy reqd dlls to test1 directory
   add_custom_command(TARGET unittests_cgnsfile POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "$<TARGET_FILE:iriclib>"
-    "$<TARGET_FILE_DIR:unittests_cgnsfile>"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:iriclib>"            "$<TARGET_FILE_DIR:unittests_cgnsfile>"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:Poco::Foundation>"   "$<TARGET_FILE_DIR:unittests_cgnsfile>"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:hdf5::hdf5-shared>"  "$<TARGET_FILE_DIR:unittests_cgnsfile>"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:zlib-shared>"        "$<TARGET_FILE_DIR:unittests_cgnsfile>"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:szip-shared>"        "$<TARGET_FILE_DIR:unittests_cgnsfile>"
     )
 endif()
 

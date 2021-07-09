@@ -12,6 +12,8 @@ env:
   SGEN: vs2019-x64
   HDF5_VER: 1.8.21      # @todo load from versions.cmd
   POCO_VER: 1.9.4       # @todo load from versions.cmd
+  IFORT_COMPILER21: C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\windows\
+
 
 jobs:
   build:
@@ -90,6 +92,7 @@ jobs:
     - name: Build iriclib
       env:
         X_CMAKE_INSTALL_PREFIX: ${{github.workspace}}/lib/install/poco-${{env.POCO_VER}}/lib/cmake/Poco;${{github.workspace}}/lib/install/hdf5-${{env.HDF5_VER}}/release/cmake/hdf5
+        IFORT_COMPILER21: C:\Program Files (x86)\Intel\oneAPI\compiler\2021.2.0\windows\
       run: msbuild /noLogo /maxCpuCount /target:iriclib-build-2019 iricdev.proj
 
     - name: Test iriclib
