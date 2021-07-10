@@ -28,7 +28,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: i-RIC/iricdev-2019
-        ref: 2019                                   # @todo change to master_v4 or develop_v4
+        ref: 2019                                # @todo change to master_v4 or develop_v4
                 
     - name: Checkout iriclib
       uses: actions/checkout@v2
