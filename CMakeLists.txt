@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project (
   iriclib
-  VERSION 4.0.9
+  VERSION 4.0.10
   LANGUAGES CXX C
 )
 
