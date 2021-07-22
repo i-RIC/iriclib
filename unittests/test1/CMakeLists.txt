@@ -8,14 +8,14 @@ add_executable(test1
 
 target_link_libraries(test1
   PRIVATE
-    iriclib
+    iriclib::iriclib
 )
 
 # POST_BUILD
 if (WIN32)
   # copy reqd dlls to test1 directory
   add_custom_command(TARGET test1 POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:iriclib>"            "$<TARGET_FILE_DIR:test1>"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:iriclib::iriclib>"   "$<TARGET_FILE_DIR:test1>"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:Poco::Foundation>"   "$<TARGET_FILE_DIR:test1>"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:hdf5::hdf5-shared>"  "$<TARGET_FILE_DIR:test1>"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE:zlib-shared>"        "$<TARGET_FILE_DIR:test1>"

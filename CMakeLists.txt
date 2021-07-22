@@ -342,6 +342,8 @@ endif()
 
 install(FILES ${PROJECT_SOURCE_DIR}/iric.f90 DESTINATION src)           # @todo check non-windows builds
 
+add_library(iriclib::iriclib ALIAS iriclib)
+
 include(CTest)
 
 if(BUILD_TESTING)
