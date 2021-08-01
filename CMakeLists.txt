@@ -270,20 +270,65 @@ target_link_libraries(iriclib
 )
 
 SET(iriclib_Headers
+  ${PROJECT_SOURCE_DIR}/error_macros.h
+  ${PROJECT_SOURCE_DIR}/fortran_macros.h
+  ${PROJECT_SOURCE_DIR}/h5attributecloser.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsbase.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsbaseiterativedata.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsbc.h
+  ${PROJECT_SOURCE_DIR}/h5cgnscellflowsolution.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsconditiongroup.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsfile.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsfiles.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsfileseparatesolutionutil.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsfilesolutionreader.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsfilesolutionwriter.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsflowsolution.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsgeographicdatagroup.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsgeographicdatatop.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsgridattributes.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsgridcomplexconditiongroup.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsgridcomplexconditiontop.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsgridcoordinates.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsifaceflowsolution.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsjfaceflowsolution.h
+  ${PROJECT_SOURCE_DIR}/h5cgnskfaceflowsolution.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsnodeflowsolution.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsparticlegroupsolution.h
+  ${PROJECT_SOURCE_DIR}/h5cgnsparticlesolution.h
+  ${PROJECT_SOURCE_DIR}/h5cgnspolydatasolution.h
+  ${PROJECT_SOURCE_DIR}/h5cgnssolutioni.h
+  ${PROJECT_SOURCE_DIR}/h5cgnssolverinformation.h
+  ${PROJECT_SOURCE_DIR}/h5cgnszone.h
+  ${PROJECT_SOURCE_DIR}/h5cgnszonebc.h
+  ${PROJECT_SOURCE_DIR}/h5datasetcloser.h
+  ${PROJECT_SOURCE_DIR}/h5dataspacecloser.h
+  ${PROJECT_SOURCE_DIR}/h5datatypecloser.h
+  ${PROJECT_SOURCE_DIR}/h5groupcloser.h
+  ${PROJECT_SOURCE_DIR}/h5objectcloser.h
+  ${PROJECT_SOURCE_DIR}/h5propertylistcloser.h
+  ${PROJECT_SOURCE_DIR}/h5util.h
+  ${PROJECT_SOURCE_DIR}/intarraycontainer.h
   ${PROJECT_SOURCE_DIR}/iriclib.h
-  ${PROJECT_SOURCE_DIR}/iriclib_global.h
   ${PROJECT_SOURCE_DIR}/iriclib_bc.h
+  ${PROJECT_SOURCE_DIR}/iriclib_bstream.h
   ${PROJECT_SOURCE_DIR}/iriclib_cc.h
   ${PROJECT_SOURCE_DIR}/iriclib_combine.h
   ${PROJECT_SOURCE_DIR}/iriclib_complex.h
   ${PROJECT_SOURCE_DIR}/iriclib_errorcodes.h
   ${PROJECT_SOURCE_DIR}/iriclib_geo.h
   ${PROJECT_SOURCE_DIR}/iriclib_geoutil.h
+  ${PROJECT_SOURCE_DIR}/iriclib_global.h
   ${PROJECT_SOURCE_DIR}/iriclib_grid.h
   ${PROJECT_SOURCE_DIR}/iriclib_grid_solverlib.h
   ${PROJECT_SOURCE_DIR}/iriclib_gui_coorp.h
   ${PROJECT_SOURCE_DIR}/iriclib_init.h
-  ${PROJECT_SOURCE_DIR}/iriclib_solution.h
+  ${PROJECT_SOURCE_DIR}/iriclib_not_withbaseid.h
+  ${PROJECT_SOURCE_DIR}/iriclib_not_withgridid.h
+  ${PROJECT_SOURCE_DIR}/iriclib_pointmap.h
+  ${PROJECT_SOURCE_DIR}/iriclib_polygon.h
+  ${PROJECT_SOURCE_DIR}/iriclib_polyline.h
+  ${PROJECT_SOURCE_DIR}/iriclib_riversurvey.h
   ${PROJECT_SOURCE_DIR}/iriclib_sol_cell.h
   ${PROJECT_SOURCE_DIR}/iriclib_sol_gridcoord.h
   ${PROJECT_SOURCE_DIR}/iriclib_sol_iface.h
@@ -293,8 +338,18 @@ SET(iriclib_Headers
   ${PROJECT_SOURCE_DIR}/iriclib_sol_particle.h
   ${PROJECT_SOURCE_DIR}/iriclib_sol_particlegroup.h
   ${PROJECT_SOURCE_DIR}/iriclib_sol_polydata.h
-  ${PROJECT_SOURCE_DIR}/iriclib_not_withbaseid.h
-  ${PROJECT_SOURCE_DIR}/iriclib_not_withgridid.h
+  ${PROJECT_SOURCE_DIR}/iriclib_solution.h
+  ${PROJECT_SOURCE_DIR}/iriclib_wrapper.h
+  ${PROJECT_SOURCE_DIR}/iricsolverlib_cell2d.h
+  ${PROJECT_SOURCE_DIR}/iricsolverlib_grid2d.h
+  ${PROJECT_SOURCE_DIR}/iricsolverlib_point2d.h
+  ${PROJECT_SOURCE_DIR}/iricsolverlib_quadcell.h
+  ${PROJECT_SOURCE_DIR}/iricsolverlib_rect2d.h
+  ${PROJECT_SOURCE_DIR}/iricsolverlib_tricell.h
+  ${PROJECT_SOURCE_DIR}/public/h5cgnsparticlegroupsolution_groupreader.h
+  ${PROJECT_SOURCE_DIR}/public/h5cgnspolydatasolution_groupreader.h
+  ${PROJECT_SOURCE_DIR}/realarraycontainer.h
+  ${PROJECT_SOURCE_DIR}/vectorutil.h
 )
 
 # SET(iriclib_private_Headers
