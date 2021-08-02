@@ -309,6 +309,10 @@ SET(iriclib_Headers
   ${PROJECT_SOURCE_DIR}/h5propertylistcloser.h
   ${PROJECT_SOURCE_DIR}/h5util.h
   ${PROJECT_SOURCE_DIR}/intarraycontainer.h
+  ${PROJECT_SOURCE_DIR}/internal/iric_h5cgnsfiles.h
+  ${PROJECT_SOURCE_DIR}/internal/iric_logger.h
+  ${PROJECT_SOURCE_DIR}/internal/iric_outputerror.h
+  ${PROJECT_SOURCE_DIR}/internal/iric_util.h
   ${PROJECT_SOURCE_DIR}/iriclib.h
   ${PROJECT_SOURCE_DIR}/iriclib_bc.h
   ${PROJECT_SOURCE_DIR}/iriclib_bstream.h
@@ -346,6 +350,30 @@ SET(iriclib_Headers
   ${PROJECT_SOURCE_DIR}/iricsolverlib_quadcell.h
   ${PROJECT_SOURCE_DIR}/iricsolverlib_rect2d.h
   ${PROJECT_SOURCE_DIR}/iricsolverlib_tricell.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsbase_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsbaseiterativedata_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsbc_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsconditiongroup_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsfile_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsfilesolutionreader_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsfilesolutionwriter_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsflowsolution_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsgeographicdatagroup_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsgeographicdatatop_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsgridattributes_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsgridcomplexconditiongroup_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsgridcomplexconditiontop_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsgridcoordinates_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsparticlegroupsolution_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnsparticlesolution_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnspolydatasolution_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnssolverinformation_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnszone_impl.h
+  ${PROJECT_SOURCE_DIR}/private/h5cgnszonebc_impl.h
+  ${PROJECT_SOURCE_DIR}/private/iricsolverlib_cell2d_impl.h
+  ${PROJECT_SOURCE_DIR}/private/iricsolverlib_grid2d_impl.h
+  ${PROJECT_SOURCE_DIR}/private/iricsolverlib_point2d_detail.h
+  ${PROJECT_SOURCE_DIR}/private/vectorutil_detail.h
   ${PROJECT_SOURCE_DIR}/public/h5cgnsparticlegroupsolution_groupreader.h
   ${PROJECT_SOURCE_DIR}/public/h5cgnspolydatasolution_groupreader.h
   ${PROJECT_SOURCE_DIR}/realarraycontainer.h
