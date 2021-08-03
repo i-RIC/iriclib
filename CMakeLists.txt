@@ -309,10 +309,6 @@ SET(iriclib_Headers
   ${PROJECT_SOURCE_DIR}/h5propertylistcloser.h
   ${PROJECT_SOURCE_DIR}/h5util.h
   ${PROJECT_SOURCE_DIR}/intarraycontainer.h
-  ${PROJECT_SOURCE_DIR}/internal/iric_h5cgnsfiles.h
-  ${PROJECT_SOURCE_DIR}/internal/iric_logger.h
-  ${PROJECT_SOURCE_DIR}/internal/iric_outputerror.h
-  ${PROJECT_SOURCE_DIR}/internal/iric_util.h
   ${PROJECT_SOURCE_DIR}/iriclib.h
   ${PROJECT_SOURCE_DIR}/iriclib_bc.h
   ${PROJECT_SOURCE_DIR}/iriclib_bstream.h
@@ -350,6 +346,18 @@ SET(iriclib_Headers
   ${PROJECT_SOURCE_DIR}/iricsolverlib_quadcell.h
   ${PROJECT_SOURCE_DIR}/iricsolverlib_rect2d.h
   ${PROJECT_SOURCE_DIR}/iricsolverlib_tricell.h
+  ${PROJECT_SOURCE_DIR}/realarraycontainer.h
+  ${PROJECT_SOURCE_DIR}/vectorutil.h
+)
+
+SET(iriclib_internal_Headers
+  ${PROJECT_SOURCE_DIR}/internal/iric_h5cgnsfiles.h
+  ${PROJECT_SOURCE_DIR}/internal/iric_logger.h
+  ${PROJECT_SOURCE_DIR}/internal/iric_outputerror.h
+  ${PROJECT_SOURCE_DIR}/internal/iric_util.h
+)
+
+SET(iriclib_private_Headers
   ${PROJECT_SOURCE_DIR}/private/h5cgnsbase_impl.h
   ${PROJECT_SOURCE_DIR}/private/h5cgnsbaseiterativedata_impl.h
   ${PROJECT_SOURCE_DIR}/private/h5cgnsbc_impl.h
@@ -374,15 +382,12 @@ SET(iriclib_Headers
   ${PROJECT_SOURCE_DIR}/private/iricsolverlib_grid2d_impl.h
   ${PROJECT_SOURCE_DIR}/private/iricsolverlib_point2d_detail.h
   ${PROJECT_SOURCE_DIR}/private/vectorutil_detail.h
-  ${PROJECT_SOURCE_DIR}/public/h5cgnsparticlegroupsolution_groupreader.h
-  ${PROJECT_SOURCE_DIR}/public/h5cgnspolydatasolution_groupreader.h
-  ${PROJECT_SOURCE_DIR}/realarraycontainer.h
-  ${PROJECT_SOURCE_DIR}/vectorutil.h
 )
 
-# SET(iriclib_private_Headers
-#   # ${PROJECT_SOURCE_DIR}/private/filelocker_impl.h
-# )
+SET(iriclib_public_Headers
+  ${PROJECT_SOURCE_DIR}/public/h5cgnsparticlegroupsolution_groupreader.h
+  ${PROJECT_SOURCE_DIR}/public/h5cgnspolydatasolution_groupreader.h
+)
 
 include(CMakePackageConfigHelpers)
   
@@ -416,7 +421,10 @@ install(EXPORT iriclibTargets
 )
 
 install(FILES ${iriclib_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-# install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
+install(FILES ${iriclib_internal_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/internal)
+install(FILES ${iriclib_private_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/private)
+install(FILES ${iriclib_public_Headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/public)
+
 if(MSVC)
   install(FILES $<TARGET_PDB_FILE:iriclib>
     DESTINATION ${CMAKE_INSTALL_LIBDIR}
