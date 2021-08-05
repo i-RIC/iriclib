@@ -1,3 +1,4 @@
+#include <cstring>
 #include <vector>
 #include "iriclib.h"
 #include "iriclib_polygon.h"

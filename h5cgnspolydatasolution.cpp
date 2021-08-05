@@ -11,6 +11,9 @@
 
 using namespace iRICLib;
 
+const int H5CgnsPolyDataSolution::POLYGON;
+const int H5CgnsPolyDataSolution::POLYLINE;
+
 H5CgnsPolyDataSolution::H5CgnsPolyDataSolution(const std::string& name, hid_t groupId, H5CgnsZone* zone) :
 	impl {new Impl {}}
 {

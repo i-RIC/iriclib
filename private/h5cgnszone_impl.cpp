@@ -22,6 +22,7 @@
 
 #include "h5cgnszone_impl.h"
 
+#include <cstring>
 #include <sstream>
 
 using namespace iRICLib;

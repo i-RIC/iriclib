@@ -11,6 +11,7 @@
 
 #include "internal/iric_logger.h"
 
+#include <cstring>
 #include <sstream>
 #include <string>
 
