@@ -52,7 +52,7 @@ void H5CgnsFileSolutionReader::Impl::detectMode()
 	biterData->readTime(&timeVals);
 	biterData->readIteration(&iterVals);
 
-	auto maxSolId = static_cast<int> (std::max(timeVals.size(), iterVals.size()));
+	auto maxSolId = static_cast<int> ((std::max)(timeVals.size(), iterVals.size()));
 	if (maxSolId == 0) {return;}
 
 	auto fName = H5CgnsFileSeparateSolutionUtil::fileNameForSolution(m_file->resultFolder(), maxSolId);
