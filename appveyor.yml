@@ -4,6 +4,7 @@ version: '{branch}-{build}'
 branches:
   except:
     - /__.*/
+    - develop_v4
 
 # commit messages containing [skip ci] or [skip appveyor] won't be built
 # see https://www.appveyor.com/docs/how-to/filtering-commits/
