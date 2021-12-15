@@ -9,6 +9,8 @@ configure_file(case_read_adf.cgn case_read_adf.cgn COPYONLY)
 configure_file(case_read_hdf5.cgn case_read_hdf5.cgn COPYONLY)
 configure_file(case_read_adf_no_sols.cgn case_read_adf_no_sols.cgn COPYONLY)
 configure_file(case_read_hdf5_no_sols.cgn case_read_hdf5_no_sols.cgn COPYONLY)
+configure_file(case_init_fm.cgn case_init_fm.cgn COPYONLY)
+configure_file(case_init_fm_3d.cgn case_init_fm_3d.cgn COPYONLY)
 
 find_package(HDF5 1.8 REQUIRED)
 

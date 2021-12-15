@@ -28,6 +28,8 @@ int main(int argc, char* argv[])
 	case_Complex();
 
 	case_GridRead();
+	case_GridRead_FaSTMECH();
+	case_GridRead_FaSTMECH_3d_results();
 	case_GridReadFunc();
 	case_GridWrite();
 
