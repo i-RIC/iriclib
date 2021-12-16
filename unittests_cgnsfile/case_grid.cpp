@@ -113,6 +113,56 @@ void case_GridRead()
 	remove("case_grid.cgn");
 }
 
+void case_GridRead_FaSTMECH()
+{
+	// fastmech ex3 with no results
+	fs::copy("case_init_fm.cgn", "case_fm.cgn");
+
+	int fid;
+	int ier = cg_open("case_fm.cgn", CG_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_iRIC_Open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_Open() fid != 0", fid != 0);
+
+	ier = cg_iRIC_Init(fid);
+	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+
+	cgsize_t isize, jsize;
+	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() isize == 181", isize == 181);
+	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() jsize == 81", jsize == 81);
+
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+
+	remove("case_fm.cgn");
+}
+
+void case_GridRead_FaSTMECH_3d_results()
+{
+	// fastmech ex3 with 3d results
+	fs::copy("case_init_fm_3d.cgn", "case_fm_3d.cgn");
+
+	int fid;
+	int ier = cg_open("case_fm_3d.cgn", CG_MODE_MODIFY, &fid);
+	VERIFY_LOG("cg_open() ier == 0", ier == 0);
+	VERIFY_LOG("cg_open() fid != 0", fid != 0);
+
+	ier = cg_iRIC_Init(fid);
+	VERIFY_LOG("cg_iRIC_Init() ier == 0", ier == 0);
+
+	cgsize_t isize, jsize;
+	ier = cg_iRIC_GotoGridCoord2d_Mul(fid, &isize, &jsize);
+	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() ier == 0", ier == 0);
+	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() isize == 181", isize == 181);
+	VERIFY_LOG("cg_iRIC_GotoGridCoord2d_Mul() jsize == 81", jsize == 81);
+
+	ier = cg_close(fid);
+	VERIFY_LOG("cg_close() ier == 0", ier == 0);
+
+	remove("case_fm_3d.cgn");
+}
+
 void case_GridReadFunc()
 {
 	fs::copy("case_gridfunc.cgn", "case_gridreadfunc.cgn");
